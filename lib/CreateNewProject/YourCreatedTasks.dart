@@ -22,6 +22,7 @@ class _YourCreatedTasksState extends State<YourCreatedTasks> {
 
   final databaseReference = FirebaseDatabase.instance.reference();
   List allTasks;
+  String projectName,siteAddress;
   Map allTasksMap = Map();
   String uid="8YiMHLBnBaNjmr3yPvk8NWvNPmm2";
 
@@ -29,8 +30,18 @@ class _YourCreatedTasksState extends State<YourCreatedTasks> {
   Future<List> getCreatedTasks() async {
 
 
-    databaseReference.child("projects").child(widget.projectID).child("tasks").once().then((DataSnapshot snapshot) {
 
+    databaseReference.child("projects").child(widget.projectID).once().then((DataSnapshot snapshot) {
+      setState(() {
+        projectName= snapshot.value["projectName"].toString();
+        siteAddress= snapshot.value["siteAddress"].toString();
+      });
+
+    });
+
+
+
+    databaseReference.child("projects").child(widget.projectID).child("tasks").once().then((DataSnapshot snapshot) {
 
       allTasksMap = snapshot.value;
 
@@ -182,6 +193,29 @@ class _YourCreatedTasksState extends State<YourCreatedTasks> {
                 return
         new Column(
           children: <Widget>[
+
+
+
+          Container(
+          margin: EdgeInsets.only(left:15 ,right:15 ,top: 7,bottom: 7),
+          color: Colors.amberAccent.shade50,
+            child:Column(children: <Widget>[
+              Text(
+                "Project Name" +": "+projectName,
+                style: TextStyle(fontSize: 18),
+
+              ),
+              SizedBox(height: 10,),
+
+              Text(
+                "Site Address" +": "+siteAddress,
+                style: TextStyle(fontSize: 16),
+
+              ),
+
+            ],)
+          ),
+
 
 
             new Expanded(

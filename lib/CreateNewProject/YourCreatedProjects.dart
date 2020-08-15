@@ -101,7 +101,7 @@ class _YourCreatedProjectsState extends State<YourCreatedProjects> {
                                 SizedBox(height: 5,),
 
                                 Text(
-                                  "Site Adress: " +myCreatedProjects[index]["siteAdress"],
+                                  "Site Address: " +myCreatedProjects[index]["siteAddress"],
                                   overflow: TextOverflow.clip,
                                   maxLines: 2,
                                   softWrap: false,
