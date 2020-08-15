@@ -31,7 +31,7 @@ class _YourCreatedProjectsState extends State<YourCreatedProjects> {
       allProjectsMap = snapshot.value;
       allProjects = allProjectsMap.values.toList();
 
-      
+
 
       for (int i = 0; i < allProjects.length; i++) {
         if(allProjects[i]["managerUID"]==uid)
