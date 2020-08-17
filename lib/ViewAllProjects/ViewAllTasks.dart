@@ -3,30 +3,69 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_timeline/CreateNewProject/CreateNewProject.dart';
-import 'package:project_timeline/CreateNewProject/YourCreatedTasks.dart';
-import 'package:project_timeline/ViewAllProjects/ViewAllTasks.dart';
+import 'package:project_timeline/CommonWidgets.dart';
+import 'package:project_timeline/CreateNewProject/CreateNewTask.dart';
+import 'package:project_timeline/CreateNewProject/EditTask.dart';
+import 'package:project_timeline/CreateNewProject/YourCreatedProjects.dart';
 
+class ViewAllTasks extends StatefulWidget {
 
-class ViewAllProjects extends StatefulWidget {
+  final String projectID;
+  ViewAllTasks({Key key, this.projectID}) : super(key: key);
 
   @override
-  _ViewAllProjectsState createState() => _ViewAllProjectsState();
+  _ViewAllTasksState createState() => _ViewAllTasksState();
 }
 
-class _ViewAllProjectsState extends State<ViewAllProjects> {
+class _ViewAllTasksState extends State<ViewAllTasks> {
 
 
   final databaseReference = FirebaseDatabase.instance.reference();
-  List allProjects=List() ;
-
+  List allTasks;
+  String projectName,siteAddress;
   String uid="8YiMHLBnBaNjmr3yPvk8NWvNPmm2";
 
+  // Get json result and convert it to model. Then add
+  getProjectDetails() async {
+
+    databaseReference.child("projects").child(widget.projectID).once().then((DataSnapshot snapshot) {
+      setState(() {
+        projectName= snapshot.value["projectName"].toString();
+        siteAddress= snapshot.value["siteAddress"].toString();
+
+
+        Map alltasks= snapshot.value["tasks"];
+
+        debugPrint(alltasks.values.toList().toString());
+        List temp=alltasks.values.toList();
+        debugPrint(temp[0]["taskName"]);
+        debugPrint(temp[0]["status"]);
+
+      });
+
+    });
+
+  }
+
+  deleteTask(String taskID)
+  {
+    try {
+      databaseReference.child("projects").child(widget.projectID)
+          .child("tasks")
+          .child(taskID)
+          .remove();
+      showToast("Removed Sucessfully");
+    }
+    catch(e){
+      showToast("Check your internet");
+    }
+  }
 
 
   @override
   void initState() {
     super.initState();
+    getProjectDetails();
   }
 
 
@@ -64,7 +103,7 @@ class _ViewAllProjectsState extends State<ViewAllProjects> {
 
 
                                 Text(
-                                  "Project: "+allProjects[index]["projectName"],
+                                  "task Name: "+allTasks[index]["taskName"],
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
                                   softWrap: false,
@@ -72,8 +111,9 @@ class _ViewAllProjectsState extends State<ViewAllProjects> {
                                 ),
                                 SizedBox(height: 5,),
 
+
                                 Text(
-                                  "Site Address: " +allProjects[index]["siteAddress"],
+                                  "Progress" +": "+allTasks[index]["progress"].toString()+"%",
                                   overflow: TextOverflow.clip,
                                   maxLines: 2,
                                   softWrap: false,
@@ -81,41 +121,16 @@ class _ViewAllProjectsState extends State<ViewAllProjects> {
 
                                 ),
 
+
+                                SizedBox(width: 10,),
+
                                 Text(
-                                  "Supervisor Name" +": "+allProjects[index]["supervisorName"],
+                                  "Status" +": "+allTasks[index]["status"],
                                   overflow: TextOverflow.clip,
                                   maxLines: 2,
                                   softWrap: false,
                                   style: TextStyle(fontSize: 14),
 
-                                ),
-
-                                Row(
-                                  children: <Widget>[
-
-                                    Text(
-                                      "Progress" +": "+allProjects[index]["progress"].toString()+"%",
-                                      overflow: TextOverflow.clip,
-                                      maxLines: 2,
-                                      softWrap: false,
-                                      style: TextStyle(fontSize: 14),
-
-                                    ),
-
-
-                                    SizedBox(width: 10,),
-
-                                    Text(
-                                      "Status" +": "+allProjects[index]["status"],
-                                      overflow: TextOverflow.clip,
-                                      maxLines: 2,
-                                      softWrap: false,
-                                      style: TextStyle(fontSize: 14),
-
-                                    ),
-
-
-                                  ],
                                 ),
 
 
@@ -131,19 +146,18 @@ class _ViewAllProjectsState extends State<ViewAllProjects> {
                               children: <Widget>[
 
 
+                                SizedBox(width: 10,),
 
 
                                 IconButton(
                                   icon: Icon(Icons.arrow_forward_ios),
                                   color: Colors.grey,
                                   onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => ViewAllTasks(projectID:allProjects[index]["projectID"] ,)),
-                                    );
 
                                   },
                                 ),
+
+
 
 
                               ],
@@ -167,33 +181,53 @@ class _ViewAllProjectsState extends State<ViewAllProjects> {
 
       appBar: AppBar(
 
-        title: Text("All Projects"),
+        title: Text("View All Tasks"),
       ),
 
       body: StreamBuilder(
-          stream: databaseReference.child("projects").onValue,
+          stream: databaseReference.child("projects").child(widget.projectID).child("tasks").onValue,
           builder: (context, snap) {
             if (snap.hasData &&
                 !snap.hasError &&
                 snap.data.snapshot.value != null) {
               Map data = snap.data.snapshot.value;
-              allProjects = [];
+              allTasks = [];
               data.forEach(
-                    (index, data) => allProjects.add({"key": index, ...data}),
+                    (index, data) => allTasks.add({"key": index, ...data}),
               );
 
-//              for (int i = 0; i < allProjects.length; i++) {
-//                if(allProjects[i]["managerUID"]==uid)
-//                  myCreatedProjects.add(allProjects[i]);
-//              }
+
+
               return
                 new Column(
                   children: <Widget>[
 
 
+
+                    Container(
+                        margin: EdgeInsets.only(left:15 ,right:15 ,top: 7,bottom: 7),
+                        color: Colors.amberAccent.shade50,
+                        child:Column(children: <Widget>[
+                          Text(
+                            "Project Name" +": "+projectName,
+                            style: TextStyle(fontSize: 18),
+
+                          ),
+                          SizedBox(height: 10,),
+
+                          Text(
+                            "Site Address" +": "+siteAddress,
+                            style: TextStyle(fontSize: 16),
+
+                          ),
+                        ],)
+                    ),
+
+
+
                     new Expanded(
                       child: new ListView.builder(
-                        itemCount: allProjects.length,
+                        itemCount: allTasks.length,
                         itemBuilder: (context, index) {
                           return displayProject(index);
                         },

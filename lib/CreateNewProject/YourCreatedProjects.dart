@@ -3,6 +3,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_timeline/CreateNewProject/CreateNewProject.dart';
 
 import 'YourCreatedTasks.dart';
 
@@ -18,43 +19,14 @@ class _YourCreatedProjectsState extends State<YourCreatedProjects> {
   final databaseReference = FirebaseDatabase.instance.reference();
   List myCreatedProjects=List() ;
   List allProjects =List();
-  Map allProjectsMap = Map();
+
   String uid="8YiMHLBnBaNjmr3yPvk8NWvNPmm2";
 
-  // Get json result and convert it to model. Then add
-  Future<List> getCreatedProjects() async {
-
-    databaseReference.child("projects").once().then((DataSnapshot snapshot) {
-
-      allProjects.clear();
-      myCreatedProjects.clear();
-      allProjectsMap = snapshot.value;
-      allProjects = allProjectsMap.values.toList();
-
-
-
-      for (int i = 0; i < allProjects.length; i++) {
-        if(allProjects[i]["managerUID"]==uid)
-          myCreatedProjects.add(allProjects[i]);
-      }
-      setState(() {
-        myCreatedProjects = myCreatedProjects;
-      });
-
-     // debugPrint(myCreatedProjects.toString());
-
-    }).catchError((onError) {
-      debugPrint(onError.toString());
-    });
-    return myCreatedProjects;
-
-  }
 
 
   @override
   void initState() {
     super.initState();
-    getCreatedProjects();
   }
 
 
@@ -209,13 +181,22 @@ class _YourCreatedProjectsState extends State<YourCreatedProjects> {
           title: Text("Your Created Projects"),
         ),
 
-        body:
-        FutureBuilder(
-            future: getCreatedProjects(),
-            builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
-              if (snapshot.hasData) {
+        body: StreamBuilder(
+            stream: databaseReference.child("projects").onValue,
+            builder: (context, snap) {
+              if (snap.hasData &&
+                  !snap.hasError &&
+                  snap.data.snapshot.value != null) {
+                Map data = snap.data.snapshot.value;
+                allProjects = [];
+                data.forEach(
+                      (index, data) => allProjects.add({"key": index, ...data}),
+                );
 
-                myCreatedProjects=myCreatedProjects;
+                for (int i = 0; i < allProjects.length; i++) {
+                  if(allProjects[i]["managerUID"]==uid)
+                    myCreatedProjects.add(allProjects[i]);
+                }
                 return
                   new Column(
                   children: <Widget>[
@@ -235,7 +216,18 @@ class _YourCreatedProjectsState extends State<YourCreatedProjects> {
               } else {
                 return Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),));
               }
-            })
+            }),
+
+
+        floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CreateNewProject()),
+          );
+    },
+    child: Icon(Icons.add),
+    ),
     );
   }
 

@@ -5,6 +5,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
+import '../CommonWidgets.dart';
+
 class CreateNewTask extends StatefulWidget {
   final String projectID;
   CreateNewTask({Key key, this.projectID}) : super(key: key);
@@ -26,17 +28,6 @@ class _CreateNewTaskState extends State<CreateNewTask> with SingleTickerProvider
   TextEditingController hoursController = TextEditingController();
 
   final databaseReference = FirebaseDatabase.instance.reference();
-
-  showToast(String msg) {
-    return Fluttertoast.showToast(
-        msg: msg,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.grey[800],
-        textColor: Colors.white,
-        fontSize: 18.0);
-  }
 
   addTask() async {
     if (_formKey.currentState.validate()) {

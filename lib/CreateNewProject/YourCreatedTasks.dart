@@ -3,7 +3,9 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_timeline/CommonWidgets.dart';
 import 'package:project_timeline/CreateNewProject/CreateNewTask.dart';
+import 'package:project_timeline/CreateNewProject/EditTask.dart';
 import 'package:project_timeline/CreateNewProject/YourCreatedProjects.dart';
 
 class YourCreatedTasks extends StatefulWidget {
@@ -23,13 +25,10 @@ class _YourCreatedTasksState extends State<YourCreatedTasks> {
   final databaseReference = FirebaseDatabase.instance.reference();
   List allTasks;
   String projectName,siteAddress;
-  Map allTasksMap = Map();
   String uid="8YiMHLBnBaNjmr3yPvk8NWvNPmm2";
 
   // Get json result and convert it to model. Then add
-  Future<List> getCreatedTasks() async {
-
-
+ getProjectDetails() async {
 
     databaseReference.child("projects").child(widget.projectID).once().then((DataSnapshot snapshot) {
       setState(() {
@@ -39,30 +38,27 @@ class _YourCreatedTasksState extends State<YourCreatedTasks> {
 
     });
 
+  }
 
-
-    databaseReference.child("projects").child(widget.projectID).child("tasks").once().then((DataSnapshot snapshot) {
-
-      allTasksMap = snapshot.value;
-
-      setState(() {
-        allTasks = allTasksMap.values.toList();
-      });
-
-
-
-    }).catchError((onError) {
-      debugPrint(onError.toString());
-    });
-    return allTasks;
-
+  deleteTask(String taskID)
+  {
+    try {
+      databaseReference.child("projects").child(widget.projectID)
+          .child("tasks")
+          .child(taskID)
+          .remove();
+      showToast("Removed Sucessfully");
+    }
+    catch(e){
+      showToast("Check your internet");
+    }
   }
 
 
   @override
   void initState() {
     super.initState();
-    getCreatedTasks();
+    getProjectDetails();
   }
 
 
@@ -147,13 +143,21 @@ class _YourCreatedTasksState extends State<YourCreatedTasks> {
                                 IconButton(
                                   icon: Icon(Icons.edit),
                                   color: Colors.grey,
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (_) => EditTask(projectID: widget.projectID,taskDetails:allTasks[index]),
+                                    );
+
+                                  },
                                 ),
 
                                 IconButton(
                                   icon: Icon(Icons.delete),
                                   color: Colors.grey,
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    deleteTask(allTasks[index]["taskID"],);
+                                  },
                                 ),
 
 
@@ -183,13 +187,20 @@ class _YourCreatedTasksState extends State<YourCreatedTasks> {
           title: Text("Your Created Tasks"),
         ),
 
-        body:
-        FutureBuilder(
-            future: getCreatedTasks(),
-            builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
-              if (snapshot.hasData) {
+      body: StreamBuilder(
+          stream: databaseReference.child("projects").child(widget.projectID).child("tasks").onValue,
+          builder: (context, snap) {
+            if (snap.hasData &&
+                !snap.hasError &&
+                snap.data.snapshot.value != null) {
+              Map data = snap.data.snapshot.value;
+               allTasks = [];
+              data.forEach(
+                    (index, data) => allTasks.add({"key": index, ...data}),
+              );
 
-                allTasks=allTasks;
+
+
                 return
         new Column(
           children: <Widget>[
@@ -212,7 +223,6 @@ class _YourCreatedTasksState extends State<YourCreatedTasks> {
                 style: TextStyle(fontSize: 16),
 
               ),
-
             ],)
           ),
 
