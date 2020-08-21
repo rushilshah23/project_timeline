@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 import 'CreateNewProject/YourCreatedProjects.dart';
 import 'UpdateProjectStatus/UpdateProjectStutus.dart';
 import 'ViewAllProjects/ViewAllProjects.dart';
@@ -8,8 +7,6 @@ import 'ViewAllProjects/ViewAllProjects.dart';
 void main() {
   runApp(MyApp());
 }
-
-
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -65,7 +62,8 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => YourCreatedProjects()),
+                  MaterialPageRoute(
+                      builder: (context) => YourCreatedProjects()),
                 );
               },
             ),
@@ -75,18 +73,16 @@ class _MyHomePageState extends State<MyHomePage> {
             RaisedButton(
               child: Text("Update Project Status(supervisor)"),
               onPressed: () {
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => UpdateProjectStatus()),
-                  );
-
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => UpdateProjectStatus()),
+                );
               },
             ),
             SizedBox(
               height: 20,
             ),
-
           ],
         ),
       ),
