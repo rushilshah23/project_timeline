@@ -10,17 +10,18 @@ import '../CommonWidgets.dart';
 class EditTask extends StatefulWidget {
   final String projectID;
   Map taskDetails;
-  EditTask({Key key, this.projectID,this.taskDetails}) : super(key: key);
+  EditTask({Key key, this.projectID, this.taskDetails}) : super(key: key);
 
   @override
   _EditTaskState createState() => _EditTaskState();
 }
 
-class _EditTaskState extends State<EditTask> with SingleTickerProviderStateMixin {
-  String taskName,description,start,end,hours;
+class _EditTaskState extends State<EditTask>
+    with SingleTickerProviderStateMixin {
+  String taskName, description, start, end, hours;
   String supervisorUID = "cHvmoDkm5fQC34NalR0GFa9ZMMJ2";
 
-  DateTime startDate,endDate;
+  DateTime startDate, endDate;
   int noOfRequest, selectedProjectIndex;
   final _formKey = GlobalKey<FormState>();
 
@@ -29,8 +30,6 @@ class _EditTaskState extends State<EditTask> with SingleTickerProviderStateMixin
   TextEditingController hoursController = TextEditingController();
 
   final databaseReference = FirebaseDatabase.instance.reference();
-
-
 
   addTask() async {
     if (_formKey.currentState.validate()) {
@@ -50,12 +49,12 @@ class _EditTaskState extends State<EditTask> with SingleTickerProviderStateMixin
       else
         end = endDate.toString();
 
-      if (description == "" ||description ==null)
+      if (description == "" || description == null)
         description = "not specified";
       else
         description = description;
 
-      if (hours == "" ||hours == null)
+      if (hours == "" || hours == null)
         hours = "not specified";
       else
         hours = hours;
@@ -68,14 +67,18 @@ class _EditTaskState extends State<EditTask> with SingleTickerProviderStateMixin
       final String requestTime = formatter.format(now);
 
       try {
-        databaseReference.child("projects").child(widget.projectID).child("tasks").child(widget.taskDetails["taskID"].toString()).update({
-
+        databaseReference
+            .child("projects")
+            .child(widget.projectID)
+            .child("tasks")
+            .child(widget.taskDetails["taskID"].toString())
+            .update({
           'taskName': taskName,
           'taskDescription': description,
           'hoursOfWorks': hours,
-          'duration':{
-            'startDate':start,
-            'endDate':end,
+          'duration': {
+            'startDate': start,
+            'endDate': end,
           }
         });
         showToast("Edited \nSuccessfully");
@@ -85,19 +88,18 @@ class _EditTaskState extends State<EditTask> with SingleTickerProviderStateMixin
     }
   }
 
-
   @override
   void initState() {
     super.initState();
     debugPrint(widget.taskDetails.toString());
 
     setState(() {
-      taskNameController.text=widget.taskDetails["taskName"].toString();
-      descriptionController.text=widget.taskDetails["taskDescription"].toString();
-      hoursController.text=widget.taskDetails["hoursOfWorks"].toString();
-      start=widget.taskDetails["duration"]["startDate"].toString();
-      end=widget.taskDetails["duration"]["endDate"].toString();
-
+      taskNameController.text = widget.taskDetails["taskName"].toString();
+      descriptionController.text =
+          widget.taskDetails["taskDescription"].toString();
+      hoursController.text = widget.taskDetails["hoursOfWorks"].toString();
+      start = widget.taskDetails["duration"]["startDate"].toString();
+      end = widget.taskDetails["duration"]["endDate"].toString();
     });
   }
 
@@ -116,57 +118,54 @@ class _EditTaskState extends State<EditTask> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Center(
-        child : Material(
+        child: Material(
 //      appBar: AppBar(
 //        title: Text(
 //          "Send Request",
 //        ),
 //      ),
             child: Container(
-
-              height: MediaQuery.of(context).size.height/1.3,
-              width: MediaQuery.of(context).size.width/1.2,
-              // Center is a layout widget. It takes a single child and positions it
-              // in the middle of the parent.
-              padding: EdgeInsets.all(20),
-              child: Form(
-                key: _formKey,
-                child: ListView(
-                  children: <Widget>[
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "Add a new Task",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-
-                        TextFormField(
-                          minLines: 1,
-                          maxLines: 2,
-                          validator: (String content) {
-                            if (content.length == 0) {
-                              return "Please enter task name";
-                            } else {
-                              return null;
-                            }
-                          },
-                          controller: taskNameController,
-                          decoration: InputDecoration(
-                            labelText: "Task Name",
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-
-                        SizedBox(
-                          height: 20,
-                        ),
-                        TextFormField(
-                          minLines: 1,
-                          maxLines: 4,
+      height: MediaQuery.of(context).size.height / 1.3,
+      width: MediaQuery.of(context).size.width / 1.2,
+      // Center is a layout widget. It takes a single child and positions it
+      // in the middle of the parent.
+      padding: EdgeInsets.all(20),
+      child: Form(
+        key: _formKey,
+        child: ListView(
+          children: <Widget>[
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "Add a new Task",
+                  style: TextStyle(fontSize: 20),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  minLines: 1,
+                  maxLines: 2,
+                  validator: (String content) {
+                    if (content.length == 0) {
+                      return "Please enter task name";
+                    } else {
+                      return null;
+                    }
+                  },
+                  controller: taskNameController,
+                  decoration: InputDecoration(
+                    labelText: "Task Name",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  minLines: 1,
+                  maxLines: 4,
 //                      validator: (String content) {
 //                        if (content.length == 0) {
 //                          return "Please enter valid address";
@@ -174,117 +173,105 @@ class _EditTaskState extends State<EditTask> with SingleTickerProviderStateMixin
 //                          return null;
 //                        }
 //                      },
-                          controller: descriptionController,
-                          decoration: InputDecoration(
-                            labelText: "Task description(Optional)",
-                            border: OutlineInputBorder(),
-                          ),
+                  controller: descriptionController,
+                  decoration: InputDecoration(
+                    labelText: "Task description(Optional)",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Duration (optional)",
+                  style: TextStyle(fontSize: 16),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Start Date: " + start,
+                  style: TextStyle(fontSize: 16),
+                ),
+                Text(
+                  "End Date: " + end,
+                  style: TextStyle(fontSize: 16),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    new Container(
+                      width: MediaQuery.of(context).size.width / 3,
+                      child: Card(
+                          child: ListTile(
+                        leading: Icon(
+                          Icons.date_range,
                         ),
-                        SizedBox(
-                          height: 20,
+                        title: Text(
+                          (startDate == null)
+                              ? 'start'
+                              : DateFormat.yMMMd().format(startDate),
+                          textAlign: TextAlign.left,
                         ),
-
-                        Text(
-                          "Duration (optional)",
-                          style: TextStyle(fontSize: 16),
+                        onTap: () {
+                          _selectDate(context).then((date) {
+                            setState(() {
+                              startDate = date;
+                              start = startDate.toString();
+                            });
+                          });
+                        },
+                      )),
+                    ),
+                    new Container(
+                      width: MediaQuery.of(context).size.width / 3,
+                      child: Card(
+                          child: ListTile(
+                        leading: Icon(
+                          Icons.date_range,
                         ),
-
-                        SizedBox(height: 10,),
-
-
-                        Text(
-                          "Start Date: " +start,
-                          style: TextStyle(fontSize: 16),
+                        title: Text(
+                          (endDate == null)
+                              ? 'end'
+                              : DateFormat.yMMMd().format(endDate),
+                          textAlign: TextAlign.left,
                         ),
-
-                        Text(
-                          "End Date: "+end,
-                          style: TextStyle(fontSize: 16),
-                        ),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            new Container(
-                              width: MediaQuery.of(context).size.width/3,
-
-                              child: Card(
-
-                                  child: ListTile(
-                                    leading: Icon(
-                                      Icons.date_range,
-                                    ),
-                                    title: Text(
-                                      (startDate == null)
-                                          ? 'start'
-                                          : DateFormat.yMMMd().format(startDate),
-                                      textAlign: TextAlign.left,
-                                    ),
-                                    onTap: () {
-                                      _selectDate(context).then((date) {
-                                        setState(() {
-                                          startDate = date;
-                                          start=startDate.toString();
-                                        });
-                                      });
-                                    },
-                                  )),
-                            ),
-
-                            new Container(
-                              width: MediaQuery.of(context).size.width/3,
-
-                              child: Card(
-
-                                  child: ListTile(
-                                    leading: Icon(
-                                      Icons.date_range,
-                                    ),
-                                    title: Text(
-                                      (endDate == null)
-                                          ? 'end'
-                                          : DateFormat.yMMMd().format(endDate),
-                                      textAlign: TextAlign.left,
-                                    ),
-                                    onTap: () {
-                                      _selectDate(context).then((date) {
-                                        setState(() {
-                                          endDate = date;
-                                          end=endDate.toString();
-                                        });
-                                      });
-                                    },
-                                  )),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-
-
-                        TextFormField(
-
-                          controller: hoursController,
-                          decoration: InputDecoration(
-                            labelText: "Hours/day (Optional)",
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        RaisedButton(
-                          child: Text("Add task"),
-                          onPressed: () {
-                            addTask();
-                          },
-                        ),
-                      ],
+                        onTap: () {
+                          _selectDate(context).then((date) {
+                            setState(() {
+                              endDate = date;
+                              end = endDate.toString();
+                            });
+                          });
+                        },
+                      )),
                     ),
                   ],
                 ),
-              ),
-            )));
+                SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  controller: hoursController,
+                  decoration: InputDecoration(
+                    labelText: "Hours/day (Optional)",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                RaisedButton(
+                  child: Text("Add task"),
+                  onPressed: () {
+                    addTask();
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    )));
   }
 }
