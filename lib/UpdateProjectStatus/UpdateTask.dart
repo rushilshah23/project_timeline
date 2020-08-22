@@ -17,8 +17,10 @@ class UpdateTask extends StatefulWidget {
 class _UpdateTaskState extends State<UpdateTask> {
   final databaseReference = FirebaseDatabase.instance.reference();
   String taskName, taskDescription;
+  double statusProgress;
   List taskDetails;
-
+  String dropdownValue = "Not Started";
+  double _currentSliderValue = 25;
   final String test = "asfasfdas";
 
   final _formKey = GlobalKey<FormState>();
@@ -35,58 +37,61 @@ class _UpdateTaskState extends State<UpdateTask> {
         .child("projects")
         .child(widget.projectID)
         .child("tasks")
-        // .child(widget.taskID["taskID"].toString())
         .once()
         .then((DataSnapshot snapshot) {
       setState(() {
-        taskName = snapshot.value[widget.taskID["taskID"]].toString();
-        taskDescription = snapshot.value["taskDescription"].toString();
+        taskName = snapshot.value[widget.taskID["taskID"]]["taskID"].toString();
+        // taskDescription = snapshot.value["taskDescription"].toString();
+        // statusProgress = snapshot.value["progress"];
       });
     });
 
-    debugPrint(taskName);
+    debugPrint("this is just a taste" + taskName);
     debugPrint(taskDescription);
+    debugPrint(statusProgress.toString());
   }
 
   updateTask() async {
-    if (_formKey.currentState.validate()) {
-      setState(() {
-        // taskName = taskNameController.text;
-        taskDescription = statusDescriptionController.text;
-        // hours = hoursController.text;
+    // if (_formKey.currentState.validate()) {
+    setState(() {
+      // taskName = taskNameController.text;
+      taskDescription = statusDescriptionController.text;
+      // hours = hoursController.text;
+    });
+
+    if (taskDescription == "" || taskDescription == null)
+      taskDescription = "not specified";
+    else
+      taskDescription = taskDescription;
+
+    // if (hours == "" || hours == null)
+    //   hours = "not specified";
+    // else
+    //   hours = hours;
+
+    var uuid = Uuid();
+    String uniqueID = uuid.v1();
+
+    // final DateTime now = DateTime.now();
+    // final DateFormat formatter = DateFormat('yyyy-MM-dd hh:mm');
+    // final String requestTime = formatter.format(now);
+
+    try {
+      databaseReference
+          .child("projects")
+          .child(widget.projectID)
+          .child("tasks")
+          .child(widget.taskID["taskID"])
+          .update({
+        'taskDescription': taskDescription,
+        'status': dropdownValue,
+        'progress': _currentSliderValue,
       });
-
-      if (taskDescription == "" || taskDescription == null)
-        taskDescription = "not specified";
-      else
-        taskDescription = taskDescription;
-
-      // if (hours == "" || hours == null)
-      //   hours = "not specified";
-      // else
-      //   hours = hours;
-
-      var uuid = Uuid();
-      String uniqueID = uuid.v1();
-
-      // final DateTime now = DateTime.now();
-      // final DateFormat formatter = DateFormat('yyyy-MM-dd hh:mm');
-      // final String requestTime = formatter.format(now);
-
-      try {
-        databaseReference
-            .child("projects")
-            .child(widget.projectID)
-            .child("tasks")
-            .child(widget.taskID["taskID"].toString())
-            .update({
-          'taskDescription': taskDescription,
-        });
-        showToast("Edited \nSuccessfully");
-      } catch (e) {
-        showToast("Failed. check your internet!");
-      }
+      showToast("Edited \nSuccessfully");
+    } catch (e) {
+      showToast("Failed. check your internet!");
     }
+    // }
   }
 
   @override
@@ -217,12 +222,60 @@ class _UpdateTaskState extends State<UpdateTask> {
               SizedBox(
                 height: 20,
               ),
+              DropdownButton<String>(
+                value: dropdownValue,
+                icon: Icon(Icons.arrow_downward),
+                iconSize: 24,
+                elevation: 16,
+                hint: Text('What is the work Status '),
+                style: TextStyle(color: Colors.black),
+                underline: Container(
+                  height: 2,
+                  color: Colors.blue[300],
+                ),
+                onChanged: (String newValue) {
+                  setState(() {
+                    dropdownValue = newValue;
+                  });
+                },
+                items: <String>['Not Started', 'On Going', 'Completed', 'Stuck']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+
+              Text(
+                _currentSliderValue.toString(),
+                style: TextStyle(fontSize: 20),
+              ),
+              Slider(
+                value: _currentSliderValue,
+                min: 0,
+                max: 100,
+                divisions: 100,
+                label: _currentSliderValue.round().toString(),
+                onChanged: (double value) {
+                  setState(() {
+                    _currentSliderValue = value;
+                  });
+                },
+              ),
+
               RaisedButton(
                   color: Colors.amber[300],
                   onPressed: () {
                     updateTask();
                   },
                   child: Text("Update")),
+              SizedBox(
+                height: 20,
+              ),
             ],
           ),
         ),
