@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_timeline/ProjectProgress/ProgressPage.dart';
 
 import 'CreateNewProject/YourCreatedProjects.dart';
 import 'UpdateProjectStatus/UpdateProjectStutus.dart';
@@ -77,6 +78,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => UpdateProjectStatus()),
+                );
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            RaisedButton(
+              child: Text("Progress Timeline"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProgressPage()),
                 );
               },
             ),

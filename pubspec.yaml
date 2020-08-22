@@ -32,6 +32,7 @@ dependencies:
   uuid: ^2.2.0
   fluttertoast: ^7.0.2
   intl: ^0.16.1
+  percent_indicator: ^2.1.5
 
 
 dev_dependencies:
