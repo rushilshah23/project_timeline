@@ -137,12 +137,14 @@ class _UpdateTaskState extends State<UpdateTask> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(
-                      "Task Desc: " + widget.taskID["taskDescription"],
-                      overflow: TextOverflow.clip,
-                      maxLines: 3,
-                      softWrap: false,
-                      style: TextStyle(fontSize: 16),
+                    Flexible(
+                      child: Text(
+                        "Task Desc: " + widget.taskID["taskDescription"],
+                        overflow: TextOverflow.clip,
+                        maxLines: 3,
+                        softWrap: true,
+                        style: TextStyle(fontSize: 16),
+                      ),
                     ),
                   ],
                 ),
