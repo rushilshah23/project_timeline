@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_timeline/ProjectProgress/ProgressPage.dart';
-
-import 'CreateNewProject/YourCreatedProjects.dart';
-import 'UpdateProjectStatus/UpdateProjectStutus.dart';
-import 'ViewAllProjects/ViewAllProjects.dart';
+import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
 
 void main() {
   runApp(MyApp());
@@ -47,11 +43,11 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             RaisedButton(
-              child: Text("All Projects \n(manager and supervisor)"),
+              child: Text("Add New Project"),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ViewAllProjects()),
+                  MaterialPageRoute(builder: (context) => PetrolMaster()),
                 );
               },
             ),
@@ -59,12 +55,11 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 20,
             ),
             RaisedButton(
-              child: Text("Create New Project(manager)"),
+              child: Text("Machine Master"),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => YourCreatedProjects()),
+                  MaterialPageRoute(builder: (context) => PetrolMaster()),
                 );
               },
             ),
@@ -72,12 +67,11 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 20,
             ),
             RaisedButton(
-              child: Text("Update Project Status(supervisor)"),
+              child: Text("Supervisor Section"),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => UpdateProjectStatus()),
+                  MaterialPageRoute(builder: (context) => PetrolMaster()),
                 );
               },
             ),
@@ -85,11 +79,11 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 20,
             ),
             RaisedButton(
-              child: Text("Progress Timeline"),
+              child: Text("Petrol Module"),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ProgressPage()),
+                  MaterialPageRoute(builder: (context) => PetrolMaster()),
                 );
               },
             ),
