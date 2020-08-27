@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:project_timeline/manager/master/petrolMaster/AddPetrolLocation.dart';
 
 class PetrolMaster extends StatefulWidget {
   @override
@@ -79,7 +80,21 @@ class _PetrolMasterState extends State<PetrolMaster> {
       //     }
       //   },
       // )
-      body: petrolMaster("est"),
+      body: Container(
+          child: Column(
+        children: [
+          petrolMaster("est"),
+        ],
+      )),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (_) => AddPetrolLocation(),
+          );
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
 }

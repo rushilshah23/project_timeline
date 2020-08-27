@@ -5,7 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
-import '../CommonWidgets.dart';
+import '../../CommonWidgets.dart';
 
 class EditTask extends StatefulWidget {
   final String projectID;
@@ -119,11 +119,6 @@ class _EditTaskState extends State<EditTask>
   Widget build(BuildContext context) {
     return Center(
         child: Material(
-//      appBar: AppBar(
-//        title: Text(
-//          "Send Request",
-//        ),
-//      ),
             child: Container(
       height: MediaQuery.of(context).size.height / 1.3,
       width: MediaQuery.of(context).size.width / 1.2,

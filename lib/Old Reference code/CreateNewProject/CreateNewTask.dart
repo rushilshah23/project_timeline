@@ -5,7 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
-import '../CommonWidgets.dart';
+import '../../CommonWidgets.dart';
 
 class CreateNewTask extends StatefulWidget {
   final String projectID;
@@ -15,11 +15,12 @@ class CreateNewTask extends StatefulWidget {
   _CreateNewTaskState createState() => _CreateNewTaskState();
 }
 
-class _CreateNewTaskState extends State<CreateNewTask> with SingleTickerProviderStateMixin {
-  String taskName,description,start,end,hours;
+class _CreateNewTaskState extends State<CreateNewTask>
+    with SingleTickerProviderStateMixin {
+  String taskName, description, start, end, hours;
   String supervisorUID = "cHvmoDkm5fQC34NalR0GFa9ZMMJ2";
 
-  DateTime startDate,endDate;
+  DateTime startDate, endDate;
   int noOfRequest, selectedProjectIndex;
   final _formKey = GlobalKey<FormState>();
 
@@ -47,12 +48,12 @@ class _CreateNewTaskState extends State<CreateNewTask> with SingleTickerProvider
       else
         end = endDate.toString();
 
-      if (description == "" ||description ==null)
+      if (description == "" || description == null)
         description = "not specified";
       else
         description = description;
 
-      if (hours == "" ||hours == null)
+      if (hours == "" || hours == null)
         hours = "not specified";
       else
         hours = hours;
@@ -65,17 +66,21 @@ class _CreateNewTaskState extends State<CreateNewTask> with SingleTickerProvider
       final String requestTime = formatter.format(now);
 
       try {
-        databaseReference.child("projects").child(widget.projectID).child("tasks").child(uniqueID).set({
-
+        databaseReference
+            .child("projects")
+            .child(widget.projectID)
+            .child("tasks")
+            .child(uniqueID)
+            .set({
           'taskName': taskName,
           'taskID': uniqueID,
           'taskDescription': description,
           'status': "Not started",
           'hoursOfWorks': hours,
           'progress': "0",
-          'duration':{
-            'startDate':start,
-            'endDate':end,
+          'duration': {
+            'startDate': start,
+            'endDate': end,
           }
         });
         showToast("Task added \nSuccessfully");
@@ -84,7 +89,6 @@ class _CreateNewTaskState extends State<CreateNewTask> with SingleTickerProvider
       }
     }
   }
-
 
   @override
   void initState() {
@@ -106,57 +110,54 @@ class _CreateNewTaskState extends State<CreateNewTask> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     return Center(
-      child : Material(
+        child: Material(
 //      appBar: AppBar(
 //        title: Text(
 //          "Send Request",
 //        ),
 //      ),
-        child: Container(
-
-          height: MediaQuery.of(context).size.height/1.3,
-          width: MediaQuery.of(context).size.width/1.2,
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
-          padding: EdgeInsets.all(20),
-          child: Form(
-            key: _formKey,
-            child: ListView(
+            child: Container(
+      height: MediaQuery.of(context).size.height / 1.3,
+      width: MediaQuery.of(context).size.width / 1.2,
+      // Center is a layout widget. It takes a single child and positions it
+      // in the middle of the parent.
+      padding: EdgeInsets.all(20),
+      child: Form(
+        key: _formKey,
+        child: ListView(
+          children: <Widget>[
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "Add a new Task",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-
-                    TextFormField(
-                      minLines: 1,
-                      maxLines: 2,
-                      validator: (String content) {
-                        if (content.length == 0) {
-                          return "Please enter task name";
-                        } else {
-                          return null;
-                        }
-                      },
-                      controller: taskNameController,
-                      decoration: InputDecoration(
-                        labelText: "Task Name",
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      minLines: 1,
-                      maxLines: 4,
+                Text(
+                  "Add a new Task",
+                  style: TextStyle(fontSize: 20),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  minLines: 1,
+                  maxLines: 2,
+                  validator: (String content) {
+                    if (content.length == 0) {
+                      return "Please enter task name";
+                    } else {
+                      return null;
+                    }
+                  },
+                  controller: taskNameController,
+                  decoration: InputDecoration(
+                    labelText: "Task Name",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  minLines: 1,
+                  maxLines: 4,
 //                      validator: (String content) {
 //                        if (content.length == 0) {
 //                          return "Please enter valid address";
@@ -164,102 +165,92 @@ class _CreateNewTaskState extends State<CreateNewTask> with SingleTickerProvider
 //                          return null;
 //                        }
 //                      },
-                      controller: descriptionController,
-                      decoration: InputDecoration(
-                        labelText: "Task description(Optional)",
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-
-                    Text(
-                      "Duration (optional)",
-                      style: TextStyle(fontSize: 16),
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        new Container(
-                            width: MediaQuery.of(context).size.width/3,
-
-                            child: Card(
-
-                                child: ListTile(
-                                  leading: Icon(
-                                    Icons.date_range,
-                                  ),
-                                  title: Text(
-                                    (startDate == null)
-                                        ? 'start'
-                                        : DateFormat.yMMMd().format(startDate),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                  onTap: () {
-                                    _selectDate(context).then((date) {
-                                      setState(() {
-                                        startDate = date;
-                                      });
-                                    });
-                                  },
-                                )),
+                  controller: descriptionController,
+                  decoration: InputDecoration(
+                    labelText: "Task description(Optional)",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Duration (optional)",
+                  style: TextStyle(fontSize: 16),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    new Container(
+                      width: MediaQuery.of(context).size.width / 3,
+                      child: Card(
+                          child: ListTile(
+                        leading: Icon(
+                          Icons.date_range,
                         ),
-
-                        new Container(
-                            width: MediaQuery.of(context).size.width/3,
-
-                            child: Card(
-
-                                child: ListTile(
-                                  leading: Icon(
-                                    Icons.date_range,
-                                  ),
-                                  title: Text(
-                                    (endDate == null)
-                                        ? 'end'
-                                        : DateFormat.yMMMd().format(endDate),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                  onTap: () {
-                                    _selectDate(context).then((date) {
-                                      setState(() {
-                                        endDate = date;
-                                      });
-                                    });
-                                  },
-                                )),
+                        title: Text(
+                          (startDate == null)
+                              ? 'start'
+                              : DateFormat.yMMMd().format(startDate),
+                          textAlign: TextAlign.left,
                         ),
-                      ],
+                        onTap: () {
+                          _selectDate(context).then((date) {
+                            setState(() {
+                              startDate = date;
+                            });
+                          });
+                        },
+                      )),
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-
-
-                    TextFormField(
-
-                      controller: hoursController,
-                      decoration: InputDecoration(
-                        labelText: "Hours/day (Optional)",
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    RaisedButton(
-                      child: Text("Add task"),
-                      onPressed: () {
-                        addTask();
-                      },
+                    new Container(
+                      width: MediaQuery.of(context).size.width / 3,
+                      child: Card(
+                          child: ListTile(
+                        leading: Icon(
+                          Icons.date_range,
+                        ),
+                        title: Text(
+                          (endDate == null)
+                              ? 'end'
+                              : DateFormat.yMMMd().format(endDate),
+                          textAlign: TextAlign.left,
+                        ),
+                        onTap: () {
+                          _selectDate(context).then((date) {
+                            setState(() {
+                              endDate = date;
+                            });
+                          });
+                        },
+                      )),
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  controller: hoursController,
+                  decoration: InputDecoration(
+                    labelText: "Hours/day (Optional)",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                RaisedButton(
+                  child: Text("Add task"),
+                  onPressed: () {
+                    addTask();
+                  },
+                ),
               ],
             ),
-          ),
-        )));
+          ],
+        ),
+      ),
+    )));
   }
 }
