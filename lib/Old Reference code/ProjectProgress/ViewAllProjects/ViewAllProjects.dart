@@ -1,9 +1,12 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_timeline/ProjectProgress/ViewAllProjects/ViewAllTasks.dart';
+
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:project_timeline/ProjectProgress/theme.dart';
+
+import '../../ViewAllProjects/ViewAllTasks.dart';
+import '../theme.dart';
+
 
 class ViewAllProjects extends StatefulWidget {
   @override

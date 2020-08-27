@@ -5,7 +5,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
-import '../CommonWidgets.dart';
+import '../../CommonWidgets.dart';
+
 
 class EditTask extends StatefulWidget {
   final String projectID;
