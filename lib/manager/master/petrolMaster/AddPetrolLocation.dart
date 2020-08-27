@@ -15,7 +15,7 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
       petrolPumpDistrict,
       petrolPumpTown,
       petrolPumpPinCode;
-  GlobalKey<FormState> _formKey;
+  final _formKey = GlobalKey<FormState>();
   TextEditingController petrolPumpNameController = TextEditingController();
   TextEditingController petrolPumpAddressController = TextEditingController();
   TextEditingController petrolPumpPhoneNumberController =
@@ -28,62 +28,63 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
 
   addPetrolPump() async {
     debugPrint("testing add petrol pump");
-    // if (_formKey.currentState.validate()) {
-    setState(() {
-      petrolPumpName = petrolPumpNameController.text;
-      petrolPumpAddress = petrolPumpAddressController.text;
-      petrolPumpPhoneNumber = petrolPumpPhoneNumberController.text;
-      petrolPumpDistrict = petrolPumpDistrictController.text;
-      petrolPumpTown = petrolPumpTownController.text;
-      petrolPumpPinCode = petrolPumpPinCodeController.text;
-    });
-
-    if (petrolPumpName == null) {
-      return "Not Specified ";
-    } else
-      petrolPumpName = petrolPumpName;
-
-    // if (petrolPumpAddress == null) {
-    //   petrolPumpAddress = "Not Specified ";
-    // } else
-    //   petrolPumpAddress = petrolPumpAddress;
-
-    // if (petrolPumpPhoneNumber == null) {
-    //   petrolPumpPhoneNumber = "Not Specified ";
-    // } else
-    //   petrolPumpPhoneNumber = petrolPumpPhoneNumber;
-
-    var uuid = Uuid();
-    String uniqueID = uuid.v1();
-
-    // try {
-    //   databaseReference.child("masters").child("petrolMaster").update({
-    //     '$uniqueID',
-    //   });
-    //   showToast("Added successfully");
-    // } catch (e) {
-    //   showToast("Failed. Check your Internet");
-    // }
-
-    try {
-      databaseReference
-          .child("masters")
-          .child("petrolMaster")
-          .child(uniqueID)
-          .update({
-        'petrolPumpName': petrolPumpName,
-        'petrolPumpAddress': petrolPumpAddress,
-        'petrolPumpAddress': petrolPumpAddress,
-        'petrolPumpDistrict': petrolPumpDistrict,
-        'petrolPumpTown': petrolPumpTown,
-        'petrolPumpPinCode': petrolPumpPinCode,
-        'petrolPumpPhoneNumber': petrolPumpPhoneNumber,
+    if (_formKey.currentState.validate()) {
+      setState(() {
+        petrolPumpName = petrolPumpNameController.text;
+        petrolPumpAddress = petrolPumpAddressController.text;
+        petrolPumpPhoneNumber = petrolPumpPhoneNumberController.text;
+        petrolPumpDistrict = petrolPumpDistrictController.text;
+        petrolPumpTown = petrolPumpTownController.text;
+        petrolPumpPinCode = petrolPumpPinCodeController.text;
       });
-      showToast("Added successfully");
-    } catch (e) {
-      showToast("Failed. Check your Internet");
+
+      if (petrolPumpName == null) {
+        return "Not Specified ";
+      } else
+        petrolPumpName = petrolPumpName;
+
+      // if (petrolPumpAddress == null) {
+      //   petrolPumpAddress = "Not Specified ";
+      // } else
+      //   petrolPumpAddress = petrolPumpAddress;
+
+      // if (petrolPumpPhoneNumber == null) {
+      //   petrolPumpPhoneNumber = "Not Specified ";
+      // } else
+      //   petrolPumpPhoneNumber = petrolPumpPhoneNumber;
+
+      var uuid = Uuid();
+      String uniqueID = uuid.v1();
+
+      // try {
+      //   databaseReference.child("masters").child("petrolMaster").update({
+      //     '$uniqueID',
+      //   });
+      //   showToast("Added successfully");
+      // } catch (e) {
+      //   showToast("Failed. Check your Internet");
+      // }
+
+      try {
+        await databaseReference
+            .child("masters")
+            .child("petrolMaster")
+            .child(uniqueID)
+            .update({
+          'petrolPumpName': petrolPumpName,
+          'petrolPumpAddress': petrolPumpAddress,
+          'petrolPumpAddress': petrolPumpAddress,
+          'petrolPumpDistrict': petrolPumpDistrict,
+          'petrolPumpTown': petrolPumpTown,
+          'petrolPumpPinCode': petrolPumpPinCode,
+          'petrolPumpPhoneNumber': petrolPumpPhoneNumber,
+        });
+        showToast("Added successfully");
+        Navigator.of(context).pop();
+      } catch (e) {
+        showToast("Failed. Check your Internet");
+      }
     }
-    // }
   }
 
   @override

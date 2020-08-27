@@ -19,8 +19,8 @@ class _PetrolMasterState extends State<PetrolMaster> {
   }
 
   getPetrolPumpDetails() async {
-    databaseReference.child("projects").once().then((DataSnapshot snapshot) {
-      Map petrolPumpLocations = snapshot.value["petrolLocations"];
+    databaseReference.child("masters").once().then((DataSnapshot snapshot) {
+      Map petrolPumpLocations = snapshot.value["petrolMaster"];
       setState(() {
         petrolPumpData = petrolPumpLocations;
       });
@@ -28,17 +28,22 @@ class _PetrolMasterState extends State<PetrolMaster> {
     });
   }
 
-  Widget petrolMaster(index) {
+  Widget petrolMaster(int index) {
     return Container(
       padding: EdgeInsets.only(top: 10),
       child: Column(
         children: [
           ListTile(
             contentPadding: EdgeInsets.all(10),
-            title: Text('test'),
-            subtitle: Text("This is nothing"),
+            title: Text(allPetrolPump[index]["petrolPumpName"].toString()),
+            subtitle:
+                Text(allPetrolPump[index]["petrolPumpAddress"].toString()),
             onTap: () {
               debugPrint('This is to test ListTile');
+                  return  showDialog(
+                  context: context,
+                  builder: (_) => AddPetrolLocation(),
+                );
             },
           ),
         ],
@@ -52,40 +57,38 @@ class _PetrolMasterState extends State<PetrolMaster> {
       appBar: AppBar(
         title: Text('Petrol Locations'),
       ),
-      // body: StreamBuilder(
-      //   stream: databaseReference
-      //       .child("projects")
-      //       .child("petrolLocations")
-      //       .onValue,
-      //   builder: (context, snap) {
-      //     if (snap.hasData &&
-      //         !snap.hasError &&
-      //         snap.data.snapshot.value != null) {
-      //       Map data = snap.data.snaphot.value;
-      //       data.forEach(
-      //           (index, data) => allPetrolPump.add({"key": index, ...data}));
-      //       debugPrint(allPetrolPump.toString());
+      body: StreamBuilder(
+          stream:
+              databaseReference.child("masters").child("petrolMaster").onValue,
+          builder: (context, snap) {
+            if (snap.hasData &&
+                !snap.hasError &&
+                snap.data.snapshot.value != null) {
+              Map data = snap.data.snapshot.value;
+              allPetrolPump = [];
+              data.forEach(
+                (index, data) => allPetrolPump.add({"key": index, ...data}),
+              );
 
-      //       // return new Column(
-      //       //   children: [
-      //       //     new Expanded(
-      //       //         child: new ListView.builder(
-      //       //             itemCount: allPetrolPump.length,
-      //       //             itemBuilder: (context, index) {
-      //       //               return petrolMaster(index);
-      //       //             })),
-      //       //   ],
-      //       // );
-      //       return petrolMaster(2);
-      //     }
-      //   },
-      // )
-      body: Container(
-          child: Column(
-        children: [
-          petrolMaster("est"),
-        ],
-      )),
+              return new Column(
+                children: <Widget>[
+                  new Expanded(
+                    child: new ListView.builder(
+                      itemCount: allPetrolPump.length,
+                      itemBuilder: (context, index) {
+                        return petrolMaster(index);
+                      },
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              return Center(
+                  child: CircularProgressIndicator(
+                valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+              ));
+            }
+          }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
