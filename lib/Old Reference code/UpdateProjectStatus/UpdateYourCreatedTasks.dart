@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:project_timeline/UpdateProjectStatus/UpdateTask.dart';
+
+import 'UpdateTask.dart';
 
 class UpdateYourCreatedTasks extends StatefulWidget {
   final String projectID;

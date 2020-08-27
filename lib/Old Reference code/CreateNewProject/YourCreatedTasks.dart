@@ -4,9 +4,10 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/CommonWidgets.dart';
-import 'package:project_timeline/CreateNewProject/CreateNewTask.dart';
-import 'package:project_timeline/CreateNewProject/EditTask.dart';
-import 'package:project_timeline/CreateNewProject/YourCreatedProjects.dart';
+
+import 'CreateNewTask.dart';
+import 'EditTask.dart';
+
 
 class YourCreatedTasks extends StatefulWidget {
 
