@@ -1,6 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:project_timeline/CommonWidgets.dart';
 import 'package:project_timeline/manager/master/petrolMaster/AddPetrolLocation.dart';
+import 'package:project_timeline/manager/master/petrolMaster/EditPetrolPump.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolPumpDetails.dart';
 
 class PetrolMaster extends StatefulWidget {
@@ -29,30 +31,148 @@ class _PetrolMasterState extends State<PetrolMaster> {
     });
   }
 
-  Widget petrolMaster(int index, data) {
+  deletePetrolPump(keyNode) async {
+    try {
+      await databaseReference
+          .child("masters")
+          .child("petrolMaster")
+          .child(keyNode)
+          .remove();
+      showToast("Deleted Successfully");
+    } catch (e) {
+      debugPrint("This is the error " + e.toString());
+      showToast("Failed. check your internet!");
+    }
+  }
+
+  Widget petrolMaster(int index, allPetrolPumpData) {
     return Container(
-      padding: EdgeInsets.only(top: 10),
-      child: Column(
-        children: [
-          ListTile(
-            contentPadding: EdgeInsets.all(10),
-            title: Text(allPetrolPump[index]["petrolPumpName"].toString()),
-            subtitle:
-                Text(allPetrolPump[index]["petrolPumpAddress"].toString()),
-            onTap: () {
-              debugPrint("test" + data.toString());
-              return showDialog(
-                context: context,
-                builder: (_) => PetrolPumpDetails(
-                  data: data[index],
-                  indexes: index,
-                ),
-              );
-            },
-          ),
-        ],
-      ),
-    );
+        child: Card(
+            elevation: 4,
+            margin: EdgeInsets.only(left: 15, right: 15, top: 7, bottom: 7),
+            semanticContainer: true,
+            color: Colors.amberAccent.shade50,
+            child: Container(
+                child: Column(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Container(
+                      width: MediaQuery.of(context).size.width / 1.4,
+                      padding: EdgeInsets.all(5),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Name " +
+                                allPetrolPump[index]["petrolPumpName"]
+                                    .toString(),
+                            overflow: TextOverflow.clip,
+                            maxLines: 1,
+                            softWrap: false,
+                            style: TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Address" +
+                                ": " +
+                                allPetrolPump[index]["petrolPumpAddress"]
+                                    .toString(),
+                            overflow: TextOverflow.clip,
+                            maxLines: 2,
+                            softWrap: false,
+                            style: TextStyle(fontSize: 14),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            "Phone No." +
+                                ": " +
+                                allPetrolPump[index]["petrolPumpPhoneNumber"],
+                            overflow: TextOverflow.clip,
+                            maxLines: 2,
+                            softWrap: false,
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                        margin: EdgeInsets.only(top: 5),
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(
+                              width: 10,
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.edit),
+                              color: Colors.grey,
+                              onPressed: () {
+                                // debugPrint(allPetrolPumpData[index]["key"].toString());
+                                showDialog(
+                                  context: context,
+                                  builder: (_) => EditPetrolPump(
+                                    data: allPetrolPumpData[index],
+                                  ),
+                                );
+                              },
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.arrow_forward),
+                              color: Colors.grey,
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (_) => PetrolPumpDetails(
+                                    data: allPetrolPumpData[index],
+                                  ),
+                                );
+                              },
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.delete),
+                              color: Colors.grey,
+                              onPressed: () {
+                                deletePetrolPump(
+                                  allPetrolPumpData[index]["key"],
+                                );
+                              },
+                            ),
+                          ],
+                        ))
+                  ],
+                )
+              ],
+            ))));
+    // return Container(
+    //   padding: EdgeInsets.only(top: 10),
+    //   child: Column(
+    //     children: [
+    //       ListTile(
+    //         contentPadding: EdgeInsets.all(10),
+    //         title: Text(allPetrolPump[index]["petrolPumpName"].toString()),
+    //         subtitle:
+    //             Text(allPetrolPump[index]["petrolPumpAddress"].toString()),
+    //         onTap: () {
+    //           debugPrint("test" + data.toString());
+    //           return showDialog(
+    //             context: context,
+    //             builder: (_) => PetrolPumpDetails(
+    //               data: data[index],
+    //               indexes: index,
+    //             ),
+    //           );
+    //         },
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 
   @override

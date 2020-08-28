@@ -30,6 +30,7 @@ class _EditPetrolPumpState extends State<EditPetrolPump> {
 
   @override
   void initState() {
+    debugPrint(" this is in edit page " + widget.data.toString());
     setState(() {
       petrolPumpNameController.text = widget.data["petrolPumpName"].toString();
       petrolPumpAddressController.text =
