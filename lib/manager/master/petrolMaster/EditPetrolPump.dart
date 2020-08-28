@@ -48,7 +48,7 @@ class _EditPetrolPumpState extends State<EditPetrolPump> {
     if (_formKey.currentState.validate()) {
       setState(() {
         petrolPumpName = petrolPumpNameController.text;
-        petrolPumpAddress = petrolPumpNameController.text;
+        petrolPumpAddress = petrolPumpAddressController.text;
         petrolPumpPhoneNumber = petrolPumpPhoneNumberController.text;
         petrolPumpDistrict = petrolPumpDistrictController.text;
         petrolPumpTown = petrolPumpTownController.text;
