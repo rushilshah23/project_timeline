@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/manager/master/petrolMaster/AddPetrolLocation.dart';
+import 'package:project_timeline/manager/master/petrolMaster/petrolPumpDetails.dart';
 
 class PetrolMaster extends StatefulWidget {
   @override
@@ -28,7 +29,7 @@ class _PetrolMasterState extends State<PetrolMaster> {
     });
   }
 
-  Widget petrolMaster(int index) {
+  Widget petrolMaster(int index, data) {
     return Container(
       padding: EdgeInsets.only(top: 10),
       child: Column(
@@ -39,11 +40,14 @@ class _PetrolMasterState extends State<PetrolMaster> {
             subtitle:
                 Text(allPetrolPump[index]["petrolPumpAddress"].toString()),
             onTap: () {
-              debugPrint('This is to test ListTile');
-                  return  showDialog(
-                  context: context,
-                  builder: (_) => AddPetrolLocation(),
-                );
+              debugPrint("test" + data.toString());
+              return showDialog(
+                context: context,
+                builder: (_) => PetrolPumpDetails(
+                  data: data[index],
+                  indexes: index,
+                ),
+              );
             },
           ),
         ],
@@ -76,7 +80,7 @@ class _PetrolMasterState extends State<PetrolMaster> {
                     child: new ListView.builder(
                       itemCount: allPetrolPump.length,
                       itemBuilder: (context, index) {
-                        return petrolMaster(index);
+                        return petrolMaster(index, allPetrolPump);
                       },
                     ),
                   ),
