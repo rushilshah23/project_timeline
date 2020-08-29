@@ -128,6 +128,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.0.2"
+  groovin_widgets:
+    dependency: "direct main"
+    description:
+      name: groovin_widgets
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.6.0"
   http:
     dependency: transitive
     description:

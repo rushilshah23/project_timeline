@@ -33,6 +33,7 @@ dependencies:
   fluttertoast: ^7.0.2
   intl: ^0.16.1
   percent_indicator: ^2.1.5
+  groovin_widgets: ^1.6.0
 
 
 dev_dependencies:

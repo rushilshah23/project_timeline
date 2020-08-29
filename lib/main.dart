@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:project_timeline/manager/createNewProject.dart';
+
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
+
+import 'manager/master/machineMaster/machineMaster.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -47,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => PetrolMaster()),
+                  MaterialPageRoute(builder: (context) => CreateNewProject()),
                 );
               },
             ),
@@ -59,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => PetrolMaster()),
+                  MaterialPageRoute(builder: (context) => MachineMaster()),
                 );
               },
             ),
