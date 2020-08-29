@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:project_timeline/manager/createNewProject.dart';
 
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
+import 'package:project_timeline/selectWorker.dart';
+import 'package:project_timeline/workerForm.dart';
 
 import 'manager/master/machineMaster/machineMaster.dart';
 
@@ -89,6 +91,30 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => PetrolMaster()),
+                );
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            RaisedButton(
+              child: Text("Search Worker"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SearchWorker()),
+                );
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            RaisedButton(
+              child: Text("Worker Form"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => WorkerForm()),
                 );
               },
             ),
