@@ -1,17 +1,17 @@
 import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:flutter/material.dart';
 
-String machineType = 'Select Machine';
-List<String> machineTypeSelected=List.generate(74, (i) => 'Select Machine');
+String machineType = 'One';
+List<String> machineTypeSelected=List.generate(74, (i) => 'One');
 List<TextEditingController> _machineQuantity = List.generate(74, (i) => TextEditingController());
 
-class CreateNewProject extends StatefulWidget {
+class Test extends StatefulWidget {
 
   @override
-  _CreateNewProjectState createState() => _CreateNewProjectState();
+  _TestState createState() => _TestState();
 }
 
-class _CreateNewProjectState extends State<CreateNewProject> {
+class _TestState extends State<Test> {
 
   String pname = '';
   var pnameControl = new TextEditingController();
@@ -80,19 +80,10 @@ class _CreateNewProjectState extends State<CreateNewProject> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Create New Project"),
+        title: Text("test"),
       ),
       body: ListView(
         children: [
-
-          SizedBox(height: 20,),
-
-          Center(child:
-          Text(
-            'Create New Project',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-          ),),
-
           Container(
             padding: EdgeInsets.symmetric(vertical: 20,horizontal: 25),
             child: Column(
@@ -361,29 +352,14 @@ class _CreateNewProjectState extends State<CreateNewProject> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-
-                                  ListTile(
-                                    onTap: (){
-                                      supervisor='Rajesh Kumar';
-                                    },
-                                    title: Text('Rajesh Kumar'),
+                                  FlatButton(
+                                    child: Text('ABC'),
+                                    onPressed: () {supervisor='ABC';},
                                   ),
-
-                                  ListTile(
-                                    onTap: (){
-                                      supervisor='Rahul Jain';
-                                    },
-                                    title: Text('Rahul Jain'),
+                                  FlatButton(
+                                    child: Text('XYZ'),
+                                    onPressed: () {supervisor='XYZ';},
                                   ),
-
-                                  ListTile(
-                                    onTap: (){
-                                      supervisor='Shakti Lokhande';
-                                    },
-                                    title: Text('Shakti Lokhande'),
-                                  ),
-
-
                                 ],
                               ),
                             ),
@@ -430,29 +406,14 @@ class _CreateNewProjectState extends State<CreateNewProject> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-
-                                  ListTile(
-                                    onTap: (){
-                                      pump='HP Petrol Pump';
-                                    },
-                                    title: Text('RHP Petrol Pump'),
+                                  FlatButton(
+                                    child: Text('Chembur'),
+                                    onPressed: () {pump='Chembur';},
                                   ),
-
-                                  ListTile(
-                                    onTap: (){
-                                      pump='Hement Karkare Cng Station';
-                                    },
-                                    title: Text('Hement Karkare Cng Station'),
+                                  FlatButton(
+                                    child: Text('Govandi'),
+                                    onPressed: () {pump='Govandi';},
                                   ),
-
-                                  ListTile(
-                                    onTap: (){
-                                      pump='Bharat Petroleum';
-                                    },
-                                    title: Text('Bharat Petroleum'),
-                                  ),
-
-
                                 ],
                               ),
                             ),
@@ -504,7 +465,7 @@ class DynamicWidget extends StatefulWidget {
 }
 
 class _DynamicWidgetState extends State<DynamicWidget> {
-  String dropdownValue = 'Select Machine';
+  String dropdownValue = 'One';
 
   @override
   Widget build(BuildContext context) {
@@ -515,13 +476,13 @@ class _DynamicWidgetState extends State<DynamicWidget> {
             Flexible(
               child: DropdownButton<String>(
                 value: machineTypeSelected[widget.index],
-                //icon: Icon(Icons.arrow_downward),
+                icon: Icon(Icons.arrow_downward),
                 iconSize: 24,
                 elevation: 16,
-                //style: TextStyle(color: Colors.deepPurple),
+                style: TextStyle(color: Colors.deepPurple),
                 underline: Container(
                   height: 2,
-                  color: Colors.grey,
+                  color: Colors.deepPurpleAccent,
                 ),
                 onChanged: (String newValue) {
                   setState(() {
@@ -530,7 +491,7 @@ class _DynamicWidgetState extends State<DynamicWidget> {
 
                   });
                 },
-                items: <String>['Select Machine','Crawler Excavators', 'Dragline Excavators', 'Suction Excavators', 'Skid Steer Excavators']
+                items: <String>['One', 'Two', 'Free', 'Four']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -539,8 +500,7 @@ class _DynamicWidgetState extends State<DynamicWidget> {
                 }).toList(),
               ),
             ),
-            Container(
-              width: MediaQuery.of(context).size.width/4,
+            Flexible(
               child:TextFormField(
                 controller: _machineQuantity[widget.index],
                 keyboardType: TextInputType.number,

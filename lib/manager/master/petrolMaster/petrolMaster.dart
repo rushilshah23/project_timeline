@@ -47,6 +47,7 @@ class _PetrolMasterState extends State<PetrolMaster> {
 
   Widget petrolMaster(int index, allPetrolPumpData) {
     return Container(
+
         child: Card(
             elevation: 4,
             margin: EdgeInsets.only(left: 15, right: 15, top: 7, bottom: 7),
@@ -55,12 +56,15 @@ class _PetrolMasterState extends State<PetrolMaster> {
             child: Container(
                 child: Column(
               children: <Widget>[
+
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Container(
                       width: MediaQuery.of(context).size.width / 1.4,
-                      padding: EdgeInsets.all(5),
+                      padding: EdgeInsets.only(top: 30,bottom: 30,left: 10,right: 10),
+                      //padding: EdgeInsets.all(5),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -135,15 +139,15 @@ class _PetrolMasterState extends State<PetrolMaster> {
                                 );
                               },
                             ),
-                            IconButton(
-                              icon: Icon(Icons.delete),
-                              color: Colors.grey,
-                              onPressed: () {
-                                deletePetrolPump(
-                                  allPetrolPumpData[index]["key"],
-                                );
-                              },
-                            ),
+//                            IconButton(
+//                              icon: Icon(Icons.delete),
+//                              color: Colors.grey,
+//                              onPressed: () {
+//                                deletePetrolPump(
+//                                  allPetrolPumpData[index]["key"],
+//                                );
+//                              },
+//                            ),
                           ],
                         ))
                   ],
@@ -196,6 +200,17 @@ class _PetrolMasterState extends State<PetrolMaster> {
 
               return new Column(
                 children: <Widget>[
+                  SizedBox(height: 10,),
+                  Center(
+                    child: Text('Our Diesel Stations',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        )),
+                  ),
+
+                  SizedBox(height: 20,),
+
                   new Expanded(
                     child: new ListView.builder(
                       itemCount: allPetrolPump.length,

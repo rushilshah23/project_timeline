@@ -1,11 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class WorkerForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Form"),
+        title: Text("Update work"),
       ),
       body: WorkerFormPage(),
     );
@@ -20,13 +22,23 @@ class WorkerFormPage extends StatefulWidget {
 class _WorkerFormPageState extends State<WorkerFormPage> {
   List<String> machines = ['A', 'B', 'C', 'D'];
   String selectedMachine;
-  String hoursWorked, depth, length, upperWidth, lowerWidth;
+  String hoursWorked, depth, length, upperWidth, lowerWidth,todaysDate;
   final _formKey = GlobalKey<FormState>();
   TextEditingController hoursWorkedController = TextEditingController();
   TextEditingController depthController = TextEditingController();
   TextEditingController lengthController = TextEditingController();
   TextEditingController upperWidthController = TextEditingController();
   TextEditingController lowerWidthController = TextEditingController();
+  final DateTime now = DateTime.now();
+  final DateFormat formatter = DateFormat('MM-dd-yyyy');
+
+  @override
+  void initState() {
+    super.initState();
+    todaysDate = formatter.format(now);
+  }
+
+
 
   void submitForm() {
     if (_formKey.currentState.validate()) {
@@ -49,11 +61,19 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
         child: Form(
           key: _formKey,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Worker Form',
+                'Update Work',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'For :'+' $todaysDate',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               SizedBox(
                 height: 20,
@@ -75,7 +95,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                 },
               ),
               SizedBox(
-                height: 10,
+                height: 20,
               ),
               TextFormField(
                 controller: hoursWorkedController,
@@ -94,87 +114,119 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                 ),
               ),
               SizedBox(
-                height: 10,
+                height: 20,
               ),
-              TextFormField(
-                controller: depthController,
-                keyboardType: TextInputType.number,
-                validator: (String value) {
-                  if (value.length == 0) {
-                    return "Please Enter Depth";
-                  } else {
-                    return null;
-                  }
-                },
-                decoration: InputDecoration(
-                  labelText: "Depth",
-                  border: OutlineInputBorder(),
-                  hintText: "Enter Depth",
-                ),
+
+
+              Container(
+                  padding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 1,
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(5.0) //         <--- border radius here
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Text('PROJECT GOALS',style: TextStyle(fontSize: 15,fontStyle: FontStyle.italic)),
+                      SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          new Flexible(
+                            child: TextFormField(
+                              controller: lengthController,
+                              keyboardType: TextInputType.number,
+                              validator: (String value) {
+                                if (value.length == 0) {
+                                  return "Please enter Length";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              decoration: InputDecoration(
+                                labelText: "Length ",
+                                border: OutlineInputBorder(),
+                                hintText: "Enter LengthController",
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 20.0,),
+                          new Flexible(
+                            child:  TextFormField(
+                              controller: depthController,
+                              keyboardType: TextInputType.number,
+                              validator: (String value) {
+                                if (value.length == 0) {
+                                  return "Please Enter Depth";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              decoration: InputDecoration(
+                                labelText: "Depth",
+                                border: OutlineInputBorder(),
+                                hintText: "Enter Depth",
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          new Flexible(
+                            child: TextFormField(
+                              controller: upperWidthController,
+                              keyboardType: TextInputType.number,
+                              validator: (String value) {
+                                if (value.length == 0) {
+                                  return "Please Enter Upper Width";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              decoration: InputDecoration(
+                                labelText: "Upper Width",
+                                border: OutlineInputBorder(),
+                                hintText: "Enter Upper Width",
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 20.0,),
+                          new Flexible(
+                            child: TextFormField(
+                              controller: lowerWidthController,
+                              keyboardType: TextInputType.number,
+                              validator: (String value) {
+                                if (value.length == 0) {
+                                  return "Please Enter Lower Width";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              decoration: InputDecoration(
+                                labelText: "Lower Width",
+                                border: OutlineInputBorder(),
+                                hintText: "Enter Lower Width",
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 5),
+                    ],
+                  )
               ),
-              SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                controller: lengthController,
-                keyboardType: TextInputType.number,
-                validator: (String value) {
-                  if (value.length == 0) {
-                    return "Please LengthController";
-                  } else {
-                    return null;
-                  }
-                },
-                decoration: InputDecoration(
-                  labelText: "LengthController",
-                  border: OutlineInputBorder(),
-                  hintText: "Enter LengthController",
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                controller: upperWidthController,
-                keyboardType: TextInputType.number,
-                validator: (String value) {
-                  if (value.length == 0) {
-                    return "Please Enter Upper Width";
-                  } else {
-                    return null;
-                  }
-                },
-                decoration: InputDecoration(
-                  labelText: "Upper Width",
-                  border: OutlineInputBorder(),
-                  hintText: "Enter Upper Width",
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                controller: lowerWidthController,
-                keyboardType: TextInputType.number,
-                validator: (String value) {
-                  if (value.length == 0) {
-                    return "Please Enter Lower Width";
-                  } else {
-                    return null;
-                  }
-                },
-                decoration: InputDecoration(
-                  labelText: "Lower Width",
-                  border: OutlineInputBorder(),
-                  hintText: "Enter Lower Width",
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
+
+              SizedBox(height: 30),
               Container(
                 width: double.infinity,
-                height: 60,
+                height: 50,
                 child: RaisedButton(
                   onPressed: submitForm,
                   child: Text("Submit"),

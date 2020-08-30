@@ -7,10 +7,46 @@ class SearchWorker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("xyz"),
+        title: Text("Add Workers"),
       ),
-      body: SearchWorkerPage(),
-    );
+      body:Container(
+        padding: EdgeInsets.symmetric(
+            vertical: 20, horizontal: 20),
+      child:ListView(
+        children: [
+
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+           children: [
+             SizedBox(height: 10),
+
+             Center(
+               child: Text('Add Workers',
+                   style: TextStyle(
+                     fontWeight: FontWeight.bold,
+                     fontSize: 18,
+                   )),
+             ),
+             SizedBox(height: 10),
+
+             SearchWorkerPage(),
+             SizedBox(height: 10),
+
+             RaisedButton(
+               child: Text(
+                 'Add',
+                 style: TextStyle(color: Colors.white),
+               ),
+               onPressed: () {
+               },
+               color: Colors.blue,
+             ),
+           ],
+          ),
+
+        ],
+      ),
+    ));
   }
 }
 
@@ -49,7 +85,8 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
   @override
   Widget build(BuildContext context) {
     if (items.length > 0)
-      return Center(
+      return
+        Center(
         child: SearchableDropdown.multiple(
           items: items,
           selectedItems: selectedItems,

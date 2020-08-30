@@ -569,7 +569,7 @@ class _AmountOfExavationState extends State<AmountOfExavation> {
                       debugPrint(widget.index.toString());
                     });
                   },
-                  items: <String>['None', 'Type A', 'Type B', 'Type C']
+                  items: <String>['None', 'Type A', 'Type B', 'Type C','Sandy soil','Loam Soil','Silt Soil']
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,

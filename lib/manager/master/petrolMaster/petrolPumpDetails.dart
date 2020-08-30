@@ -62,14 +62,23 @@ class _PetrolPumpDetailsState extends State<PetrolPumpDetails> {
         child: Material(
       child: Container(
         width: MediaQuery.of(context).size.width / 1.3,
-        height: MediaQuery.of(context).size.height / 1.2,
-        padding: EdgeInsets.fromLTRB(10, 40, 10, 10),
+        height: MediaQuery.of(context).size.height / 1.7,
+        padding: EdgeInsets.fromLTRB(20, 40, 20, 10),
         child: Form(
           key: _formKey,
           child: ListView(
             children: <Widget>[
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+
+                  Center(
+                    child: Text('Details:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        )),
+                  ),
                   Text("Name"),
                   Text(widget.data["petrolPumpName"].toString()),
                   SizedBox(
@@ -100,25 +109,25 @@ class _PetrolPumpDetailsState extends State<PetrolPumpDetails> {
                   SizedBox(
                     height: 20,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      RaisedButton(
-                        onPressed: () {
-                          debugPrint('Edit');
-                          editPetrolPump(widget.data);
-                        },
-                        child: Text("Edit"),
-                      ),
-                      RaisedButton(
-                        onPressed: () {
-                          debugPrint("delete");
-                          deletePetrolPump(widget.data["key"]);
-                        },
-                        child: Text("Delete"),
-                      ),
-                    ],
-                  )
+//                  Row(
+//                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                    children: <Widget>[
+//                      RaisedButton(
+//                        onPressed: () {
+//                          debugPrint('Edit');
+//                          editPetrolPump(widget.data);
+//                        },
+//                        child: Text("Edit"),
+//                      ),
+//                      RaisedButton(
+//                        onPressed: () {
+//                          debugPrint("delete");
+//                          deletePetrolPump(widget.data["key"]);
+//                        },
+//                        child: Text("Delete"),
+//                      ),
+//                    ],
+//                  )
                 ],
               ),
             ],

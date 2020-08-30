@@ -70,12 +70,13 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
             .child("masters")
             .child("petrolMaster")
             .child(uniqueID)
-            .update({
+            .set({
           'petrolPumpName': petrolPumpName,
           'petrolPumpAddress': petrolPumpAddress,
           'petrolPumpAddress': petrolPumpAddress,
           'petrolPumpDistrict': petrolPumpDistrict,
           'petrolPumpTown': petrolPumpTown,
+          'petrolPumpID':uniqueID,
           'petrolPumpPinCode': petrolPumpPinCode,
           'petrolPumpPhoneNumber': petrolPumpPhoneNumber,
         });
@@ -92,20 +93,22 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
     return Center(
         child: Material(
             child: Container(
-      height: MediaQuery.of(context).size.height / 1.3,
+      height: MediaQuery.of(context).size.height / 1.5,
       width: MediaQuery.of(context).size.width / 1.2,
       // Center is a layout widget. It takes a single child and positions it
       // in the middle of the parent.
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.only(top: 20,right: 20,left: 20),
+
+
       child: Form(
         key: _formKey,
         child: ListView(
           children: <Widget>[
             Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+
               children: <Widget>[
                 Text(
-                  "Add a new Task",
+                  "Add Petrol Pump",
                   style: TextStyle(fontSize: 20),
                 ),
                 SizedBox(
@@ -150,83 +153,110 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
                 SizedBox(
                   height: 20,
                 ),
-                Text("OR"),
+
+                Row(
+                  children: [
+                    Flexible(
+                      child:  TextFormField(
+                        minLines: 1,
+                        validator: (String content) {
+                          if (content.length == 0) {
+                            return "Please Enter Petrol Pump District";
+                          } else {
+                            return null;
+                          }
+                        },
+                        controller: petrolPumpDistrictController,
+                        decoration: InputDecoration(
+                          labelText: "District",
+                          border: OutlineInputBorder(),
+                          hintText: "Enter Petrol Pump District",
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: 10,
+                    ),
+
+                    Flexible(
+                      child:  TextFormField(
+                        minLines: 1,
+                        validator: (String content) {
+                          if (content.length == 0) {
+                            return "Town";
+                          } else {
+                            return null;
+                          }
+                        },
+                        controller: petrolPumpTownController,
+                        decoration: InputDecoration(
+                          labelText: "Town",
+                          border: OutlineInputBorder(),
+                          hintText: "Enter Petrol Pump Town",
+                        ),
+                      ),
+                    ),
+
+
+                  ],
+                ),
+
+
+
                 SizedBox(
                   height: 20,
                 ),
-                TextFormField(
-                  minLines: 1,
-                  validator: (String content) {
-                    if (content.length == 0) {
-                      return "Please Enter Petrol Pump District";
-                    } else {
-                      return null;
-                    }
-                  },
-                  controller: petrolPumpDistrictController,
-                  decoration: InputDecoration(
-                    labelText: "District",
-                    border: OutlineInputBorder(),
-                    hintText: "Enter Petrol Pump District",
-                  ),
+
+                Row(
+                  children: [
+                    Flexible(
+                      child:     TextFormField(
+                        minLines: 1,
+                        validator: (String content) {
+                          if (content.length == 0) {
+                            return "Please Enter Pin Code";
+                          } else {
+                            return null;
+                          }
+                        },
+                        controller: petrolPumpPinCodeController,
+                        decoration: InputDecoration(
+                          labelText: "Pin Code",
+                          border: OutlineInputBorder(),
+                          hintText: "Enter Petrol Pump Pin Code",
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Flexible(
+                      child:    TextFormField(
+                        minLines: 1,
+                        validator: (String content) {
+                          if (content.length == 0) {
+                            return "Please Enter Petrol Pump Phone Number";
+                          } else {
+                            return null;
+                          }
+                        },
+                        controller: petrolPumpPhoneNumberController,
+                        decoration: InputDecoration(
+                          labelText: "Contact",
+                          border: OutlineInputBorder(),
+                          hintText: "Enter Contact",
+                        ),
+                      ),
+                    ),
+
+
+                  ],
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  minLines: 1,
-                  validator: (String content) {
-                    if (content.length == 0) {
-                      return "Town";
-                    } else {
-                      return null;
-                    }
-                  },
-                  controller: petrolPumpTownController,
-                  decoration: InputDecoration(
-                    labelText: "Town",
-                    border: OutlineInputBorder(),
-                    hintText: "Enter Petrol Pump Town",
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  minLines: 1,
-                  validator: (String content) {
-                    if (content.length == 0) {
-                      return "Please Enter Pin Code";
-                    } else {
-                      return null;
-                    }
-                  },
-                  controller: petrolPumpPinCodeController,
-                  decoration: InputDecoration(
-                    labelText: "Pin Code",
-                    border: OutlineInputBorder(),
-                    hintText: "Enter Petrol Pump Pin Code",
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  minLines: 1,
-                  validator: (String content) {
-                    if (content.length == 0) {
-                      return "Please Enter Petrol Pump Phone Number";
-                    } else {
-                      return null;
-                    }
-                  },
-                  controller: petrolPumpPhoneNumberController,
-                  decoration: InputDecoration(
-                    labelText: "Petrol Pump Phone No.",
-                    border: OutlineInputBorder(),
-                    hintText: "Enter Petrol Pump Phone No.",
-                  ),
-                ),
+
+
+
                 SizedBox(
                   height: 20,
                 ),
