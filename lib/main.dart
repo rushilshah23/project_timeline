@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/manager/createNewProject.dart';
-
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
 import 'package:project_timeline/addWorkers.dart';
 import 'package:project_timeline/workerForm.dart';
-
 import 'manager/master/machineMaster/machineMaster.dart';
-
 
 void main() {
   runApp(MyApp());

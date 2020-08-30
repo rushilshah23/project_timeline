@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:project_timeline/CommonWidgets.dart';
 
 class WorkerForm extends StatelessWidget {
   @override
@@ -22,7 +24,15 @@ class WorkerFormPage extends StatefulWidget {
 class _WorkerFormPageState extends State<WorkerFormPage> {
   List<String> machines = ['A', 'B', 'C', 'D'];
   String selectedMachine;
-  String hoursWorked, depth, length, upperWidth, lowerWidth,todaysDate;
+  var machineUsed,
+      hoursWorked,
+      depth,
+      length,
+      upperWidth,
+      lowerWidth,
+      todaysDate,
+      volume;
+  final databaseReference = FirebaseDatabase.instance.reference();
   final _formKey = GlobalKey<FormState>();
   TextEditingController hoursWorkedController = TextEditingController();
   TextEditingController depthController = TextEditingController();
@@ -31,6 +41,8 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
   TextEditingController lowerWidthController = TextEditingController();
   final DateTime now = DateTime.now();
   final DateFormat formatter = DateFormat('MM-dd-yyyy');
+  var projectID = 'project1';
+  var workerID = 'worker1';
 
   @override
   void initState() {
@@ -38,18 +50,35 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
     todaysDate = formatter.format(now);
   }
 
-
-
-  void submitForm() {
+  void submitForm() async {
     if (_formKey.currentState.validate()) {
       setState(() {
+        machineUsed = selectedMachine;
         hoursWorked = hoursWorkedController.text;
-        depth = depthController.text;
-        length = lengthController.text;
-        upperWidth = upperWidthController.text;
-        lowerWidth = lowerWidthController.text;
+        depth = double.parse(depthController.text);
+        length = double.parse(lengthController.text);
+        upperWidth = double.parse(upperWidthController.text);
+        lowerWidth = double.parse(lowerWidthController.text);
       });
-      print("Submitted");
+      volume = length * depth * (upperWidth + lowerWidth) / 2;
+      try {
+        await databaseReference
+            .child("projects")
+            .child(projectID)
+            .child("progress")
+            .child(todaysDate)
+            .child(workerID)
+            .update({
+          "MachineUsed": machineUsed,
+          "hoursWorked": hoursWorked,
+          "volumeExcavated": volume,
+          "status": "pending",
+        });
+        showToast("Added successfully");
+        Navigator.of(context).pop();
+      } catch (e) {
+        showToast("Failed. Check your Internet");
+      }
     }
   }
 
@@ -72,7 +101,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                 height: 20,
               ),
               Text(
-                'For :'+' $todaysDate',
+                'For :' + ' $todaysDate',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               SizedBox(
@@ -116,10 +145,8 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
               SizedBox(
                 height: 20,
               ),
-
-
               Container(
-                  padding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   decoration: BoxDecoration(
                     border: Border.all(
                       width: 1,
@@ -127,11 +154,13 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                     ),
                     borderRadius: BorderRadius.all(
                         Radius.circular(5.0) //         <--- border radius here
-                    ),
+                        ),
                   ),
                   child: Column(
                     children: [
-                      Text('PROJECT GOALS',style: TextStyle(fontSize: 15,fontStyle: FontStyle.italic)),
+                      Text('PROJECT GOALS',
+                          style: TextStyle(
+                              fontSize: 15, fontStyle: FontStyle.italic)),
                       SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -154,9 +183,11 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 20.0,),
+                          SizedBox(
+                            width: 20.0,
+                          ),
                           new Flexible(
-                            child:  TextFormField(
+                            child: TextFormField(
                               controller: depthController,
                               keyboardType: TextInputType.number,
                               validator: (String value) {
@@ -197,7 +228,9 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 20.0,),
+                          SizedBox(
+                            width: 20.0,
+                          ),
                           new Flexible(
                             child: TextFormField(
                               controller: lowerWidthController,
@@ -220,9 +253,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                       ),
                       SizedBox(height: 5),
                     ],
-                  )
-              ),
-
+                  )),
               SizedBox(height: 30),
               Container(
                 width: double.infinity,
