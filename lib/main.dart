@@ -4,6 +4,7 @@ import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
 import 'package:project_timeline/addWorkers.dart';
 import 'package:project_timeline/workerForm.dart';
 import 'manager/master/machineMaster/machineMaster.dart';
+import 'package:project_timeline/supervisor/SupervIsorTaskModule.dart';
 
 void main() {
   runApp(MyApp());
@@ -75,7 +76,8 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => PetrolMaster()),
+                  MaterialPageRoute(
+                      builder: (context) => SupervisorTaskModule()),
                 );
               },
             ),
