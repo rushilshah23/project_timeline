@@ -40,7 +40,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
   TextEditingController upperWidthController = TextEditingController();
   TextEditingController lowerWidthController = TextEditingController();
   final DateTime now = DateTime.now();
-  final DateFormat formatter = DateFormat('MM-dd-yyyy');
+  final DateFormat formatter = DateFormat('dd-MM-yyyy');
   var projectID = 'project1';
   var workerID = 'worker1';
 

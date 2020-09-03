@@ -69,55 +69,10 @@ class _AllTasksSupervisorState extends State<AllTasksSupervisor> {
       child: StreamBuilder(
         stream: databaseReference.child("projects").child("project1").onValue,
         builder: (context, snap) {
-          if (snap.hasData &&
-              !snap.hasError &&
-              snap.data.snapshot.value != null) {
-            Map data = snap.data.snapshot.value;
 
-            allDatesTasks = [];
-            // // data.forEach(
-            // //   (index, data) => allDatesTasks.add({"key": index, ...data}),
-            // // );
-            List data2 = data.values.toList();
-            debugPrint("data in stream builder" + data2.toString());
-            keyList = data.keys.toList();
-            debugPrint("data in keys " + keyList.toString());
 
-            // debugPrint(allDatesTasks.toString());
-            // allDatesTasks = data.values.toList();
-            // debugPrint("testign asjdlajsldjalqsjfaj aslkjf" +
-            //     allDatesTasks.toString());
-            // for (int i = 0; i < allDatesTasks.length; i++) {
-            //   debugPrint(allDatesTasks[i].toString() + "\n");
-            // }
+          
 
-            // allDatesTasks2 = allDatesTasks.toList();
-            for (int i = 0; i < keyList.length; i++) {
-              debugPrint(data[keyList[i]].toString());
-            }
-            for (int i = 0; i < keyList.length; i++) {
-              List temp = data[keyList[i]].toList();
-
-              return Column(
-                children: <Widget>[
-                  Text("All tasks"),
-                  new Expanded(
-                    child: ListView.builder(
-                      itemCount: data2.length,
-                      itemBuilder: (context, index) {
-                        return allTaskList(index, data2);
-                      },
-                    ),
-                  ),
-                ],
-              );
-            }
-          } else {
-            return Center(
-                child: CircularProgressIndicator(
-              valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
-            ));
-          }
         },
       ),
     );

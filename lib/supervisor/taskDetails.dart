@@ -11,7 +11,7 @@ class _TaskDetailsState extends State<TaskDetails> {
     return Center(
       child: Material(
         child: Container(
-          width: MediaQuery.of(context).width / 2,
+          width: MediaQuery.of(context).size.width / 2,
         ),
       ),
     );

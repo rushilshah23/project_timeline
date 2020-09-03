@@ -1,463 +1,449 @@
-import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:flutter/material.dart';
+
+
 
 String machineType = 'One';
 List<String> machineTypeSelected=List.generate(74, (i) => 'One');
 List<TextEditingController> _machineQuantity = List.generate(74, (i) => TextEditingController());
 
-class Test extends StatefulWidget {
 
+class Test extends StatefulWidget {
   @override
   _TestState createState() => _TestState();
 }
 
 class _TestState extends State<Test> {
+  var selectedType;
+  final GlobalKey<FormState> _formKeyValue = new GlobalKey<FormState>();
 
-  String pname = '';
-  var pnameControl = new TextEditingController();
-  String saddr = '';
-  var saddrControl = new TextEditingController();
-  String ssoil = '';
-  var ssoilControl = new TextEditingController();
-  var value;
-  bool isExpanded = false;
-  String dropdownValue = 'Select';
-  String pump = 'Select';
-  String supervisor = 'Select';
+  //Project Name
+  String projectName = '';
+  var projectNameControl = new TextEditingController();
+
+  //Site Address
+  String siteAddress = '';
+  var siteAddressControl = new TextEditingController();
+
+  //Soil Type
+  var soilType;
+  List<String> _soilType = <String>[
+    'Soft',
+    'Rough',
+    'Rocky',
+  ];
+
+  //Length
+  String length = '';
+  var lenControl = new TextEditingController();
+
+  //Depth
+  String depth = '';
+  var depControl = new TextEditingController();
+
+  //Upper Width
+  String upwidth = '';
+  var upwidthControl = new TextEditingController();
+
+  //Upper Width
+  String lowidth = '';
+  var lowidthControl = new TextEditingController();
+
+  //supervisor
+  var supervisor;
+  List<String> _supervisor = <String>[
+    'A',
+    'B',
+    'C',
+  ];
+
+  //petrolPump
+  var petrolPump;
+  List<String> _petrolPump = <String>[
+    'Soft',
+    'Rough',
+    'Rocky',
+  ];
+
+  //Dynamic Fields
   List<DynamicWidget> listDyn = [];
-
-
   addDynamic(){
     listDyn.add(new DynamicWidget());
     setState(() {
-
     });
   }
 
 
-
-
-
   @override
-
-  Widget _buildAboutText() {
-    return new RichText(
-      text: new TextSpan(
-        text: 'Duration:\n\nMachinery:\n\nCost of Fuel:\n\nVolume to be excavated:\n\n\n\n',
-        style: const TextStyle(color: Colors.black87),
-        children: <TextSpan>[
-          const TextSpan(text: 'Do you want to create project?'),
-        ],
-      ),
-    );
-  }
-
-
-  Widget _buildAboutDialog(BuildContext context) {
+  Widget _buildAboutDialog(BuildContext context, String l, String d, String uw, String lw) {
+    double len = double.parse(l);
+    double dep = double.parse(d);
+    double uwi = double.parse(uw);
+    double lwi = double.parse(lw);
+    double calc = 0.5 * len * dep * (uwi + lwi);
     return new AlertDialog(
-      title: const Text('Project Timeline'),
-      content: new Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _buildAboutText(),
-        ],
-      ),
-      actions: <Widget>[
-        new FlatButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          textColor: Theme.of(context).primaryColor,
-          child: const Text('Create Project'),
+        title: const Text('Project Timeline'),
+        content: RichText(
+          text: new TextSpan(
+            text: 'Duration:\n\nMachinery:\n\nCost of Fuel:\n\nVolume to be excavated: $calc\n\n\n\n',
+            style: const TextStyle(color: Colors.black87),
+            children: <TextSpan>[
+              const TextSpan(text: 'Do you want to create project?'),
+            ],
+          ),
         ),
-      ],
-    );
+        actions: <Widget>[
+          new FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            textColor: Theme.of(context).primaryColor,
+            child: const Text('Create Project'),
+          ),
+        ]);
   }
+
 
 
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("test"),
-      ),
-      body: ListView(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 20,horizontal: 25),
-            child: Column(
-              children: <Widget>[
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: "Project Name",
-                    fillColor: Colors.white,
-                    focusedBorder:OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-                      borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
-                    ),
+        appBar: AppBar(
+          title: Container(
+            child: Text("Create Project",
+                style: TextStyle(
+                  color: Colors.white,
+                )),
+          ),
+        ),
+        body: Form(
+          key: _formKeyValue,
+          //autovalidate: true,
+          child: new ListView(
+            padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 20),
+            children: <Widget>[
+
+              Center(child:
+              Text(
+                'Create New Project',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              ),),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: "Project Name",
+                  fillColor: Colors.white,
+                  focusedBorder:OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.blue, width: 2.0),
+                    borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
                   ),
-                  controller: pnameControl,
-                  validator: (val) => val.isEmpty ? 'Enter project name' : null,
-                  onChanged: (val){
-                    setState(() => pname = val);
-                  },
                 ),
-                SizedBox(height: 10),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: "Site Address",
-                    fillColor: Colors.white,
-                    focusedBorder:OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-                      borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
-                    ),
+                controller: projectNameControl,
+                validator: (val) => val.isEmpty ? 'Enter project name' : null,
+                onChanged: (val){
+                  setState(() => projectName = val);
+                },
+              ),
+              SizedBox(height: 20),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: "Site Address",
+                  fillColor: Colors.white,
+                  focusedBorder:OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.blue, width: 2.0),
+                    borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
                   ),
-                  controller: saddrControl,
-                  validator: (val) => val.isEmpty ? 'Enter site address' : null,
-                  onChanged: (val){
-                    setState(() => saddr = val);
-                  },
                 ),
-                SizedBox(height: 10),
-                Material(
-                  elevation: 2.0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                  child: GroovinExpansionTile(
-                    defaultTrailingIconColor: Colors.indigoAccent,
-                    title: Text(
-                      'Select Site Soil Type',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    subtitle: Text(dropdownValue),
-                    onExpansionChanged: (value) {
+                controller: siteAddressControl,
+                validator: (val) => val.isEmpty ? 'Enter site address' : null,
+                onChanged: (val){
+                  setState(() => siteAddress = val);
+                },
+              ),
+              SizedBox(height: 20),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: DropdownButton(
+                    items: _soilType
+                        .map((value) => DropdownMenuItem(
+                      child: Text(
+                        value,
+                        style: TextStyle(color: Colors.deepPurple[900]),
+                      ),
+                      value: value,
+                    ))
+                        .toList(),
+                    onChanged: (selectedAccountType) {
+                      print('$selectedAccountType');
                       setState(() {
-                        isExpanded = value;
+                        soilType = selectedAccountType;
                       });
                     },
-                    inkwellRadius: !isExpanded
-                        ? BorderRadius.all(Radius.circular(8.0))
-                        : BorderRadius.only(
-                      topRight: Radius.circular(8.0),
-                      topLeft: Radius.circular(8.0),
+                    value: soilType,
+                    isExpanded: true,
+                    hint: Text(
+                      'Select Soil Type',
+                      style: TextStyle(color: Colors.black54,fontSize: 17),
                     ),
-                    children: <Widget>[
-                      ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(5.0),
-                          bottomRight: Radius.circular(5.0),
-                        ),
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                              padding:
-                              const EdgeInsets.only(left: 4.0, right: 4.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-
-
-                                  ListTile(
-                                    onTap: (){
-                                      dropdownValue='Soft';
-                                    },
-                                    title: Text('Soft'),
-                                  ),
-
-                                  ListTile(
-                                    onTap: (){
-                                      dropdownValue='Rough';
-                                    },
-                                    title: Text('Rough'),
-                                  ),
-
-                                  ListTile(
-                                    onTap: (){},
-                                    title: Text('Hard'),
-                                  ),
-
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
                   ),
                 ),
-                SizedBox(height: 20),
-                Container(
+              ),
+              SizedBox(height: 20),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 1,
+                    color: Colors.grey,
+                  ),
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(5.0) //         <--- border radius here
+                  ),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('SELECT MACHINE TYPE',style: TextStyle(fontSize: 15,fontStyle: FontStyle.italic)),
+                        IconButton(
+                          icon: Icon(Icons.add,color: Colors.indigo),
+                          onPressed: addDynamic,
+                        ),
+                      ],
+                    ),
+
+                    Flexible(
+                      fit: FlexFit.loose,
+                      child: new ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        itemCount: listDyn.length,
+                        itemBuilder: (context,index) {
+                          return DynamicWidget(index: index);
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(height: 20),
+              Container(
                   padding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
                   decoration: BoxDecoration(
                     border: Border.all(
                       width: 1,
+                      color: Colors.grey,
                     ),
                     borderRadius: BorderRadius.all(
                         Radius.circular(5.0) //         <--- border radius here
                     ),
                   ),
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
-
+                   // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Text('PROJECT GOALS',style: TextStyle(fontSize: 15,fontStyle: FontStyle.italic)),
+                      SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('SELECT MACHINE TYPE',style: TextStyle(fontSize: 15,fontStyle: FontStyle.italic)),
-                          IconButton(
-                            icon: Icon(Icons.add,color: Colors.indigo),
-                            onPressed: addDynamic,
+                        children: <Widget>[
+                          new Flexible(
+                            child: new TextFormField(
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(10),
+                                labelText: "Length",
+                                fillColor: Colors.white,
+                                focusedBorder:OutlineInputBorder(
+                                  borderSide: const BorderSide(color: Colors.blue, width: 2.0),
+                                  borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
+                                ),
+                              ),
+                              controller: lenControl,
+                              validator: (val) => val.isEmpty ? 'Enter project name' : null,
+                              onChanged: (val){
+                                setState(() => length = val);
+                              },
+                            ),
+                          ),
+                          SizedBox(width: 20.0,),
+                          new Flexible(
+                            child: new TextFormField(
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(10),
+                                labelText: "Depth",
+                                fillColor: Colors.white,
+                                focusedBorder:OutlineInputBorder(
+                                  borderSide: const BorderSide(color: Colors.blue, width: 2.0),
+                                  borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
+                                ),
+                              ),
+                              controller: depControl,
+                              validator: (val) => val.isEmpty ? 'Enter project name' : null,
+                              onChanged: (val){
+                                setState(() => depth = val);
+                              },
+                            ),
                           ),
                         ],
                       ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          new Flexible(
+                            child: new TextFormField(
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(10),
+                                labelText: "Upper Width",
+                                fillColor: Colors.white,
+                                focusedBorder:OutlineInputBorder(
+                                  borderSide: const BorderSide(color: Colors.blue, width: 2.0),
+                                  borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
+                                ),
+                              ),
+                              controller: upwidthControl,
+                              validator: (val) => val.isEmpty ? 'Enter project name' : null,
+                              onChanged: (val){
+                                setState(() => upwidth = val);
+                              },
+                            ),
+                          ),
+                          SizedBox(width: 20.0,),
+                          new Flexible(
+                            child: new TextFormField(
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(10),
+                                labelText: "Lower Width",
 
-                      Flexible(
-                        fit: FlexFit.loose,
-                        child: new ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          itemCount: listDyn.length,
-                          itemBuilder: (context, index) {
-                            return DynamicWidget(index:index);
-                          },
-                        ),
-                      )
+                                fillColor: Colors.white,
+                                focusedBorder:OutlineInputBorder(
+                                  borderSide: const BorderSide(color: Colors.blue, width: 2.0),
+                                  borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
+                                ),
+                              ),
+                              controller: lowidthControl,
+                              validator: (val) => val.isEmpty ? 'Enter project name' : null,
+                              onChanged: (val){
+                                setState(() => lowidth = val);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 5),
                     ],
-                  ),
+                  )
+              ),
+              SizedBox(height: 20.0),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(5),
                 ),
-                SizedBox(height: 20),
-                Container(
-                    padding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 1,
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: DropdownButton(
+                    items: _supervisor
+                        .map((value) => DropdownMenuItem(
+                      child: Text(
+                        value,
+                        style: TextStyle(color: Colors.deepPurple[900]),
                       ),
-                      borderRadius: BorderRadius.all(
-                          Radius.circular(5.0) //         <--- border radius here
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Text('PROJECT GOALS',style: TextStyle(fontSize: 15,fontStyle: FontStyle.italic)),
-                        SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            new Flexible(
-                              child: new TextFormField(
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.all(10),
-                                    labelText: "Length",
-                                    fillColor: Colors.white,
-                                    focusedBorder:OutlineInputBorder(
-                                      borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-                                      borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
-                                    ),
-                                  )
-                              ),
-                            ),
-                            SizedBox(width: 20.0,),
-                            new Flexible(
-                              child: new TextFormField(
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.all(10),
-                                    labelText: "Depth",
-                                    fillColor: Colors.white,
-                                    focusedBorder:OutlineInputBorder(
-                                      borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-                                      borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
-                                    ),
-                                  )
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            new Flexible(
-                              child: new TextFormField(
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.all(10),
-                                    labelText: "Upper Width",
-                                    fillColor: Colors.white,
-                                    focusedBorder:OutlineInputBorder(
-                                      borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-                                      borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
-                                    ),
-                                  )
-                              ),
-                            ),
-                            SizedBox(width: 20.0,),
-                            new Flexible(
-                              child: new TextFormField(
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.all(10),
-                                    labelText: "Lower Width",
-                                    fillColor: Colors.white,
-                                    focusedBorder:OutlineInputBorder(
-                                      borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-                                      borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
-                                    ),
-                                  )
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 5),
-                      ],
-                    )
-                ),
-                SizedBox(height: 10),
-                Material(
-                  elevation: 2.0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                  child: GroovinExpansionTile(
-                    defaultTrailingIconColor: Colors.indigoAccent,
-                    title: Text(
+                      value: value,
+                    ))
+                        .toList(),
+                    onChanged: (selectedAccountType) {
+                      print('$selectedAccountType');
+                      setState(() {
+                        supervisor = selectedAccountType;
+                      });
+                    },
+                    value: supervisor,
+                    isExpanded: true,
+                    hint: Text(
                       'Select Supervisor',
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: Colors.black54,fontSize: 17),
                     ),
-                    subtitle: Text(supervisor),
-                    onExpansionChanged: (value) {
-                      setState(() {
-                        isExpanded = value;
-                      });
-                    },
-                    inkwellRadius: !isExpanded
-                        ? BorderRadius.all(Radius.circular(8.0))
-                        : BorderRadius.only(
-                      topRight: Radius.circular(8.0),
-                      topLeft: Radius.circular(8.0),
-                    ),
-                    children: <Widget>[
-                      ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(5.0),
-                          bottomRight: Radius.circular(5.0),
-                        ),
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                              padding:
-                              const EdgeInsets.only(left: 4.0, right: 4.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  FlatButton(
-                                    child: Text('ABC'),
-                                    onPressed: () {supervisor='ABC';},
-                                  ),
-                                  FlatButton(
-                                    child: Text('XYZ'),
-                                    onPressed: () {supervisor='XYZ';},
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
                   ),
                 ),
-                SizedBox(height: 10),
-                Material(
-                  elevation: 2.0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                  child: GroovinExpansionTile(
-                    defaultTrailingIconColor: Colors.indigoAccent,
-                    title: Text(
-                      'Nearby Petrol Pump',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    subtitle: Text(pump),
-                    onExpansionChanged: (value) {
+              ),
+              SizedBox(height: 20),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: DropdownButton(
+                    items: _petrolPump
+                        .map((value) => DropdownMenuItem(
+                      child: Text(
+                        value,
+                        style: TextStyle(color: Colors.deepPurple[900]),
+                      ),
+                      value: value,
+                    ))
+                        .toList(),
+                    onChanged: (selectedAccountType) {
+                      print('$selectedAccountType');
                       setState(() {
-                        isExpanded = value;
+                        petrolPump = selectedAccountType;
                       });
                     },
-                    inkwellRadius: !isExpanded
-                        ? BorderRadius.all(Radius.circular(8.0))
-                        : BorderRadius.only(
-                      topRight: Radius.circular(8.0),
-                      topLeft: Radius.circular(8.0),
+                    value: petrolPump,
+                    isExpanded: true,
+                    hint: Text(
+                      'NearBy Petrol Pump',
+                      style: TextStyle(color: Colors.black54,fontSize: 17),
                     ),
-                    children: <Widget>[
-                      ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(5.0),
-                          bottomRight: Radius.circular(5.0),
-                        ),
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                              padding:
-                              const EdgeInsets.only(left: 4.0, right: 4.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  FlatButton(
-                                    child: Text('Chembur'),
-                                    onPressed: () {pump='Chembur';},
-                                  ),
-                                  FlatButton(
-                                    child: Text('Govandi'),
-                                    onPressed: () {pump='Govandi';},
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
                   ),
                 ),
-                SizedBox(height: 10),
-                FlatButton(
-                  child: Text(
-                    'Estimate Project',
-                    style: TextStyle(
-                        color: Colors.white
-                    ),
+              ),
+              SizedBox(height: 40.0),
+              FlatButton(
+                child: Text(
+                  'Estimate Project',
+                  style: TextStyle(
+                      color: Colors.white
                   ),
-                  onPressed: () {
+                ),
+                onPressed: () {
 
-                    for (int i = 0; i < listDyn.length; i++) {
-                      debugPrint( _machineQuantity[i].text.toString());
-                      debugPrint( machineTypeSelected[i].toString());
+
+                  for (int i = 0; i < listDyn.length; i++) {
+                    debugPrint( _machineQuantity[i].text.toString());
+                    debugPrint( machineTypeSelected[i].toString());
+                  }
+
+                  if(_formKeyValue.currentState.validate())
+                    {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => _buildAboutDialog(context,length,depth,upwidth,lowidth),
+                      );
                     }
 
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) => _buildAboutDialog(context),
-                    );
-                  },
-                  color: Colors.indigo,
-                ),
-              ],
-            ),
+                },
+                color: Colors.purple[800],
+              ),
+            ],
           ),
-        ],
-      ),
-    );
+        ));
   }
 }
 
-
 class DynamicWidget extends StatefulWidget {
-
-
   final int index;
   DynamicWidget({Key key, this.index}) : super(key: key);
   @override
@@ -476,19 +462,17 @@ class _DynamicWidgetState extends State<DynamicWidget> {
             Flexible(
               child: DropdownButton<String>(
                 value: machineTypeSelected[widget.index],
-                icon: Icon(Icons.arrow_downward),
                 iconSize: 24,
                 elevation: 16,
-                style: TextStyle(color: Colors.deepPurple),
+                style: TextStyle(color: Colors.black),
                 underline: Container(
                   height: 2,
-                  color: Colors.deepPurpleAccent,
+                  color: Colors.grey,
                 ),
                 onChanged: (String newValue) {
                   setState(() {
                     machineTypeSelected[widget.index] = newValue;
                     debugPrint(widget.index.toString());
-
                   });
                 },
                 items: <String>['One', 'Two', 'Free', 'Four']

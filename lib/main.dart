@@ -6,6 +6,8 @@ import 'package:project_timeline/workerForm.dart';
 import 'manager/master/machineMaster/machineMaster.dart';
 import 'package:project_timeline/supervisor/SupervIsorTaskModule.dart';
 
+import 'manager/test.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -52,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CreateNewProject()),
+                  MaterialPageRoute(builder: (context) => Test()),
                 );
               },
             ),
