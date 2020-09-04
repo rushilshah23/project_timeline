@@ -39,7 +39,8 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
               value: result['name'],
             ),
           );
-          workersList.add(WorkerList(result['name'], result['mobile']));
+          workersList
+              .add(WorkerList(result['name'], result['mobile'], result['uid']));
         });
       });
     });
@@ -52,7 +53,7 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
             .child("projects")
             .child(projectID)
             .child("workers")
-            .child(workersList[i].name)
+            .child(workersList[i].uid)
             .update({
           "name": workersList[i].name,
           "mobile": workersList[i].mobile,
@@ -137,7 +138,8 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
 }
 
 class WorkerList {
-  WorkerList(this.name, this.mobile);
+  WorkerList(this.name, this.mobile, this.uid);
   var name;
   var mobile;
+  var uid;
 }
