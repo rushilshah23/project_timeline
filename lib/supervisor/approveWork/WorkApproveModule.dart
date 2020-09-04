@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project_timeline/supervisor/AllTasksSupervisor.dart';
-import 'package:project_timeline/supervisor/TodaysTaskSupervisor.dart';
+import 'TodaysWorks.dart';
+import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/supervisor/approveWork/AllWork.dart';
+
 
 class SupervisorTaskModule extends StatefulWidget {
   @override
@@ -17,8 +18,8 @@ class _SupervisorTaskModuleState extends State<SupervisorTaskModule> {
           appBar: AppBar(
             bottom: TabBar(
               tabs: [
-                Tab(child: Text('All Tasks')),
-                Tab(child: Text('Today\'s tasks')),
+                Tab(child: Text('All')),
+                Tab(child: Text('Today\'s ')),
               ],
             ),
             title: Text('Tabs Demo'),

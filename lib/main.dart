@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:project_timeline/manager/createNewProject.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
 import 'package:project_timeline/addWorkers.dart';
 import 'package:project_timeline/workerForm.dart';
 import 'manager/master/machineMaster/machineMaster.dart';
-import 'package:project_timeline/supervisor/SupervIsorTaskModule.dart';
+import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/supervisor/approveWork/WorkApproveModule.dart';
 
 import 'manager/test.dart';
 

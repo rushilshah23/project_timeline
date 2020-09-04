@@ -16,7 +16,7 @@ class _TodaysTaskSupervisorState extends State<TodaysTaskSupervisor> {
   var todaysDate;
 
   final DateTime now = DateTime.now();
-  final DateFormat formatter = DateFormat('MM-dd-yyyy');
+  final DateFormat formatter = DateFormat('dd-MM-yyyy');
 
   @override
   void initState() {
@@ -118,7 +118,12 @@ class _TodaysTaskSupervisorState extends State<TodaysTaskSupervisor> {
                 ),
               ],
             );
-          } else {
+          }
+          else if(snap.data.isEmpty) {
+            // got data from snapshot but it is empty
+            return Center(child:Text("no data"));
+          }
+          else {
             return Center(
                 child: CircularProgressIndicator(
               valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
