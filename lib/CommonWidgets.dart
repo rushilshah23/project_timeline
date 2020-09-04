@@ -13,3 +13,16 @@ showToast(String msg)
       fontSize: 18.0
   );
 }
+
+Widget ThemeAppbar(String title)
+{
+  return new AppBar(
+    iconTheme: IconThemeData(
+      color: Colors.orange[800],
+    ),
+    title:  Text(title, style: TextStyle(
+      color: Colors.orange[800],
+    )),
+    backgroundColor: Colors.white,
+  );
+}

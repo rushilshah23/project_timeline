@@ -139,9 +139,7 @@ class _EditMachineDataState extends State<EditMachineData> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Edit Machine"),
-        ),
+        appBar: ThemeAppbar("Edit Machine Details"),
         body: Container(
             child: Form(
                 key: _formKey,

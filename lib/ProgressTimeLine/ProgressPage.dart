@@ -10,23 +10,27 @@ import 'ViewAllProjects/ViewAllProjects.dart';
 //   ));
 // }
 
-class ProgressPage extends StatelessWidget {
+class ProgressPage extends StatefulWidget {
+  @override
+  _ProgressPageState createState() => _ProgressPageState();
+}
+
+class _ProgressPageState extends State<ProgressPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          SizedBox(height: 20),
           Container(
-            height: 120,
+            height: 70,
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
+              margin: EdgeInsets.symmetric(vertical: 20),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'PROJECTS',
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    'Our Projects',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -34,7 +38,7 @@ class ProgressPage extends StatelessWidget {
           ),
           Expanded(
             flex: 1,
-            child: ViewAllProjects(),
+            child: AllProjects(),
           ),
         ],
       ),

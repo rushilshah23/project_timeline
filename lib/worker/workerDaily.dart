@@ -32,7 +32,7 @@ class _WorkerDailyState extends State<WorkerDaily> {
                   Map data = snap.data.snapshot.value;
                   List date = [];
                   data.forEach(
-                    (index, data) => date.add({"key": index, ...data}),
+                        (index, data) => date.add({"key": index, ...data}),
                   );
                   return ListView.builder(
                     itemCount: date.length,

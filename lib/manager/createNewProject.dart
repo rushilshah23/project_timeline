@@ -1,6 +1,8 @@
 import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:flutter/material.dart';
 
+import '../CommonWidgets.dart';
+
 String machineType = 'Select Machine';
 List<String> machineTypeSelected=List.generate(74, (i) => 'Select Machine');
 List<TextEditingController> _machineQuantity = List.generate(74, (i) => TextEditingController());
@@ -79,9 +81,7 @@ class _CreateNewProjectState extends State<CreateNewProject> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Create New Project"),
-      ),
+      appBar: ThemeAppbar("Add New Project"),
       body: ListView(
         children: [
 
@@ -89,7 +89,7 @@ class _CreateNewProjectState extends State<CreateNewProject> {
 
           Center(child:
           Text(
-            'Create New Project',
+            'Add New Project',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           ),),
 

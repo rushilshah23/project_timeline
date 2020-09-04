@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
-import 'package:project_timeline/addWorkers.dart';
-import 'package:project_timeline/workerDaily.dart';
-import 'package:project_timeline/workerForm.dart';
+import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/supervisor/addWorkers.dart';
+import 'package:project_timeline/supervisor/approveWork/WorkApproveModule.dart';
+import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/worker/workerDaily.dart';
+import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/worker/workerForm.dart';
+import 'login.dart';
 import 'manager/master/machineMaster/machineMaster.dart';
-import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/supervisor/approveWork/WorkApproveModule.dart';
+
 
 import 'manager/test.dart';
 
@@ -79,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => SupervisorTaskModule()),
+                      builder: (context) => ApproveWork()),
                 );
               },
             ),
@@ -92,6 +94,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => PetrolMaster()),
+                );
+              },
+            ),
+
+            RaisedButton(
+              child: Text("Login"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
                 );
               },
             ),

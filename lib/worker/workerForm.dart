@@ -9,9 +9,9 @@ class WorkerForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Update work"),
-      ),
+//      appBar: AppBar(
+//        title: Text("Update work"),
+//      ),
       body: WorkerFormPage(),
     );
   }
@@ -38,6 +38,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
   final DateFormat formatter = DateFormat('dd-MM-yyyy');
   var projectID = 'project1';
   var workerID = '8YiMHLBnBaNjmr3yPvk8NWvNPmm2';
+  var workerName = 'rajesh kumar';
 
   @override
   void initState() {
@@ -87,9 +88,10 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
             .child("progress")
             .child(todaysDate)
             .child(workerID)
-            .update({
+            .set({
           "MachineUsed": machineUsed,
           "hoursWorked": hoursWorked,
+          "workerName": workerName,
           "volumeExcavated": volume,
           "status": "pending",
         });
@@ -299,4 +301,12 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
         child: CircularProgressIndicator(),
       );
   }
+}
+
+
+class MachineDetails {
+  MachineDetails(this.machineName, this.machineID, this.modelName);
+  var machineName;
+  var machineID;
+  var modelName;
 }

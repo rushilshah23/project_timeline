@@ -182,9 +182,9 @@ class _PetrolMasterState extends State<PetrolMaster> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Petrol Locations'),
-      ),
+//      appBar: AppBar(
+//        title: Text('Petrol Locations'),
+//      ),
       body: StreamBuilder(
           stream:
               databaseReference.child("masters").child("petrolMaster").onValue,

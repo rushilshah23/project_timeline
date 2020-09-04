@@ -3,7 +3,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../CommonWidgets.dart';
@@ -91,9 +90,7 @@ class _AddNewMachineState extends State<AddNewMachine> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Add Machine"),
-        ),
+        appBar: ThemeAppbar("Add New Machine"),
         body: Container(
             child: Form(
                 key: _formKey,
