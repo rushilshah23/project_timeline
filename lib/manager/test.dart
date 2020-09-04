@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 String machineType = 'One';
-List<String> machineTypeSelected=List.generate(74, (i) => 'One');
-List<TextEditingController> _machineQuantity = List.generate(74, (i) => TextEditingController());
-
+List<String> machineTypeSelected = List.generate(74, (i) => 'One');
+List<TextEditingController> _machineQuantity =
+    List.generate(74, (i) => TextEditingController());
 
 class Test extends StatefulWidget {
   @override
@@ -15,6 +14,8 @@ class Test extends StatefulWidget {
 class _TestState extends State<Test> {
   var selectedType;
   final GlobalKey<FormState> _formKeyValue = new GlobalKey<FormState>();
+  final CollectionReference workers =
+      Firestore.instance.collection("supervisor");
 
   //Project Name
   String projectName = '';
@@ -50,11 +51,8 @@ class _TestState extends State<Test> {
 
   //supervisor
   var supervisor;
-  List<String> _supervisor = <String>[
-    'A',
-    'B',
-    'C',
-  ];
+  List<String> _supervisor = [];
+  List<SupervisorList> supervisorList = [];
 
   //petrolPump
   var petrolPump;
@@ -66,15 +64,34 @@ class _TestState extends State<Test> {
 
   //Dynamic Fields
   List<DynamicWidget> listDyn = [];
-  addDynamic(){
+  addDynamic() {
     listDyn.add(new DynamicWidget());
-    setState(() {
+    setState(() {});
+  }
+
+  Future<void> getData() async {
+    await workers.getDocuments().then((querySnapshot) {
+      querySnapshot.documents.forEach((result) {
+        setState(() {
+          _supervisor.add(
+            result['name'],
+          );
+          supervisorList.add(
+              SupervisorList(result['name'], result['mobile'], result['uid']));
+        });
+      });
     });
   }
 
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
 
   @override
-  Widget _buildAboutDialog(BuildContext context, String l, String d, String uw, String lw) {
+  Widget _buildAboutDialog(
+      BuildContext context, String l, String d, String uw, String lw) {
     double len = double.parse(l);
     double dep = double.parse(d);
     double uwi = double.parse(uw);
@@ -84,7 +101,8 @@ class _TestState extends State<Test> {
         title: const Text('Project Timeline'),
         content: RichText(
           text: new TextSpan(
-            text: 'Duration:\n\nMachinery:\n\nCost of Fuel:\n\nVolume to be excavated: $calc\n\n\n\n',
+            text:
+                'Duration:\n\nMachinery:\n\nCost of Fuel:\n\nVolume to be excavated: $calc\n\n\n\n',
             style: const TextStyle(color: Colors.black87),
             children: <TextSpan>[
               const TextSpan(text: 'Do you want to create project?'),
@@ -102,9 +120,6 @@ class _TestState extends State<Test> {
         ]);
   }
 
-
-
-
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -119,26 +134,31 @@ class _TestState extends State<Test> {
           key: _formKeyValue,
           //autovalidate: true,
           child: new ListView(
-            padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
             children: <Widget>[
-
-              Center(child:
-              Text(
-                'Create New Project',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-              ),),
+              Center(
+                child: Text(
+                  'Create New Project',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                ),
+              ),
               TextFormField(
                 decoration: InputDecoration(
                   labelText: "Project Name",
                   fillColor: Colors.white,
-                  focusedBorder:OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-                    borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: Colors.blue, width: 2.0),
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(10),
+                        topLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10)),
                   ),
                 ),
                 controller: projectNameControl,
                 validator: (val) => val.isEmpty ? 'Enter project name' : null,
-                onChanged: (val){
+                onChanged: (val) {
                   setState(() => projectName = val);
                 },
               ),
@@ -147,14 +167,19 @@ class _TestState extends State<Test> {
                 decoration: InputDecoration(
                   labelText: "Site Address",
                   fillColor: Colors.white,
-                  focusedBorder:OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-                    borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: Colors.blue, width: 2.0),
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(10),
+                        topLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10)),
                   ),
                 ),
                 controller: siteAddressControl,
                 validator: (val) => val.isEmpty ? 'Enter site address' : null,
-                onChanged: (val){
+                onChanged: (val) {
                   setState(() => siteAddress = val);
                 },
               ),
@@ -169,12 +194,12 @@ class _TestState extends State<Test> {
                   child: DropdownButton(
                     items: _soilType
                         .map((value) => DropdownMenuItem(
-                      child: Text(
-                        value,
-                        style: TextStyle(color: Colors.deepPurple[900]),
-                      ),
-                      value: value,
-                    ))
+                              child: Text(
+                                value,
+                                style: TextStyle(color: Colors.deepPurple[900]),
+                              ),
+                              value: value,
+                            ))
                         .toList(),
                     onChanged: (selectedAccountType) {
                       print('$selectedAccountType');
@@ -186,14 +211,14 @@ class _TestState extends State<Test> {
                     isExpanded: true,
                     hint: Text(
                       'Select Soil Type',
-                      style: TextStyle(color: Colors.black54,fontSize: 17),
+                      style: TextStyle(color: Colors.black54, fontSize: 17),
                     ),
                   ),
                 ),
               ),
               SizedBox(height: 20),
               Container(
-                padding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 decoration: BoxDecoration(
                   border: Border.all(
                     width: 1,
@@ -201,23 +226,23 @@ class _TestState extends State<Test> {
                   ),
                   borderRadius: BorderRadius.all(
                       Radius.circular(5.0) //         <--- border radius here
-                  ),
+                      ),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('SELECT MACHINE TYPE',style: TextStyle(fontSize: 15,fontStyle: FontStyle.italic)),
+                        Text('SELECT MACHINE TYPE',
+                            style: TextStyle(
+                                fontSize: 15, fontStyle: FontStyle.italic)),
                         IconButton(
-                          icon: Icon(Icons.add,color: Colors.indigo),
+                          icon: Icon(Icons.add, color: Colors.indigo),
                           onPressed: addDynamic,
                         ),
                       ],
                     ),
-
                     Flexible(
                       fit: FlexFit.loose,
                       child: new ListView.builder(
@@ -225,7 +250,7 @@ class _TestState extends State<Test> {
                         physics: NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         itemCount: listDyn.length,
-                        itemBuilder: (context,index) {
+                        itemBuilder: (context, index) {
                           return DynamicWidget(index: index);
                         },
                       ),
@@ -235,7 +260,7 @@ class _TestState extends State<Test> {
               ),
               SizedBox(height: 20),
               Container(
-                  padding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   decoration: BoxDecoration(
                     border: Border.all(
                       width: 1,
@@ -243,12 +268,14 @@ class _TestState extends State<Test> {
                     ),
                     borderRadius: BorderRadius.all(
                         Radius.circular(5.0) //         <--- border radius here
-                    ),
+                        ),
                   ),
                   child: Column(
-                   // crossAxisAlignment: CrossAxisAlignment.start,
+                    // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('PROJECT GOALS',style: TextStyle(fontSize: 15,fontStyle: FontStyle.italic)),
+                      Text('PROJECT GOALS',
+                          style: TextStyle(
+                              fontSize: 15, fontStyle: FontStyle.italic)),
                       SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -260,19 +287,27 @@ class _TestState extends State<Test> {
                                 contentPadding: EdgeInsets.all(10),
                                 labelText: "Length",
                                 fillColor: Colors.white,
-                                focusedBorder:OutlineInputBorder(
-                                  borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-                                  borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: Colors.blue, width: 2.0),
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(10),
+                                      topLeft: Radius.circular(10),
+                                      bottomRight: Radius.circular(10),
+                                      bottomLeft: Radius.circular(10)),
                                 ),
                               ),
                               controller: lenControl,
-                              validator: (val) => val.isEmpty ? 'Enter project name' : null,
-                              onChanged: (val){
+                              validator: (val) =>
+                                  val.isEmpty ? 'Enter project name' : null,
+                              onChanged: (val) {
                                 setState(() => length = val);
                               },
                             ),
                           ),
-                          SizedBox(width: 20.0,),
+                          SizedBox(
+                            width: 20.0,
+                          ),
                           new Flexible(
                             child: new TextFormField(
                               keyboardType: TextInputType.number,
@@ -280,14 +315,20 @@ class _TestState extends State<Test> {
                                 contentPadding: EdgeInsets.all(10),
                                 labelText: "Depth",
                                 fillColor: Colors.white,
-                                focusedBorder:OutlineInputBorder(
-                                  borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-                                  borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: Colors.blue, width: 2.0),
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(10),
+                                      topLeft: Radius.circular(10),
+                                      bottomRight: Radius.circular(10),
+                                      bottomLeft: Radius.circular(10)),
                                 ),
                               ),
                               controller: depControl,
-                              validator: (val) => val.isEmpty ? 'Enter project name' : null,
-                              onChanged: (val){
+                              validator: (val) =>
+                                  val.isEmpty ? 'Enter project name' : null,
+                              onChanged: (val) {
                                 setState(() => depth = val);
                               },
                             ),
@@ -305,35 +346,48 @@ class _TestState extends State<Test> {
                                 contentPadding: EdgeInsets.all(10),
                                 labelText: "Upper Width",
                                 fillColor: Colors.white,
-                                focusedBorder:OutlineInputBorder(
-                                  borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-                                  borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: Colors.blue, width: 2.0),
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(10),
+                                      topLeft: Radius.circular(10),
+                                      bottomRight: Radius.circular(10),
+                                      bottomLeft: Radius.circular(10)),
                                 ),
                               ),
                               controller: upwidthControl,
-                              validator: (val) => val.isEmpty ? 'Enter project name' : null,
-                              onChanged: (val){
+                              validator: (val) =>
+                                  val.isEmpty ? 'Enter project name' : null,
+                              onChanged: (val) {
                                 setState(() => upwidth = val);
                               },
                             ),
                           ),
-                          SizedBox(width: 20.0,),
+                          SizedBox(
+                            width: 20.0,
+                          ),
                           new Flexible(
                             child: new TextFormField(
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.all(10),
                                 labelText: "Lower Width",
-
                                 fillColor: Colors.white,
-                                focusedBorder:OutlineInputBorder(
-                                  borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-                                  borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: Colors.blue, width: 2.0),
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(10),
+                                      topLeft: Radius.circular(10),
+                                      bottomRight: Radius.circular(10),
+                                      bottomLeft: Radius.circular(10)),
                                 ),
                               ),
                               controller: lowidthControl,
-                              validator: (val) => val.isEmpty ? 'Enter project name' : null,
-                              onChanged: (val){
+                              validator: (val) =>
+                                  val.isEmpty ? 'Enter project name' : null,
+                              onChanged: (val) {
                                 setState(() => lowidth = val);
                               },
                             ),
@@ -342,8 +396,7 @@ class _TestState extends State<Test> {
                       ),
                       SizedBox(height: 5),
                     ],
-                  )
-              ),
+                  )),
               SizedBox(height: 20.0),
               Container(
                 decoration: BoxDecoration(
@@ -355,12 +408,12 @@ class _TestState extends State<Test> {
                   child: DropdownButton(
                     items: _supervisor
                         .map((value) => DropdownMenuItem(
-                      child: Text(
-                        value,
-                        style: TextStyle(color: Colors.deepPurple[900]),
-                      ),
-                      value: value,
-                    ))
+                              child: Text(
+                                value,
+                                style: TextStyle(color: Colors.deepPurple[900]),
+                              ),
+                              value: value,
+                            ))
                         .toList(),
                     onChanged: (selectedAccountType) {
                       print('$selectedAccountType');
@@ -372,7 +425,7 @@ class _TestState extends State<Test> {
                     isExpanded: true,
                     hint: Text(
                       'Select Supervisor',
-                      style: TextStyle(color: Colors.black54,fontSize: 17),
+                      style: TextStyle(color: Colors.black54, fontSize: 17),
                     ),
                   ),
                 ),
@@ -388,12 +441,12 @@ class _TestState extends State<Test> {
                   child: DropdownButton(
                     items: _petrolPump
                         .map((value) => DropdownMenuItem(
-                      child: Text(
-                        value,
-                        style: TextStyle(color: Colors.deepPurple[900]),
-                      ),
-                      value: value,
-                    ))
+                              child: Text(
+                                value,
+                                style: TextStyle(color: Colors.deepPurple[900]),
+                              ),
+                              value: value,
+                            ))
                         .toList(),
                     onChanged: (selectedAccountType) {
                       print('$selectedAccountType');
@@ -405,7 +458,7 @@ class _TestState extends State<Test> {
                     isExpanded: true,
                     hint: Text(
                       'NearBy Petrol Pump',
-                      style: TextStyle(color: Colors.black54,fontSize: 17),
+                      style: TextStyle(color: Colors.black54, fontSize: 17),
                     ),
                   ),
                 ),
@@ -414,26 +467,21 @@ class _TestState extends State<Test> {
               FlatButton(
                 child: Text(
                   'Estimate Project',
-                  style: TextStyle(
-                      color: Colors.white
-                  ),
+                  style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () {
-
-
                   for (int i = 0; i < listDyn.length; i++) {
-                    debugPrint( _machineQuantity[i].text.toString());
-                    debugPrint( machineTypeSelected[i].toString());
+                    debugPrint(_machineQuantity[i].text.toString());
+                    debugPrint(machineTypeSelected[i].toString());
                   }
 
-                  if(_formKeyValue.currentState.validate())
-                    {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) => _buildAboutDialog(context,length,depth,upwidth,lowidth),
-                      );
-                    }
-
+                  if (_formKeyValue.currentState.validate()) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => _buildAboutDialog(
+                          context, length, depth, upwidth, lowidth),
+                    );
+                  }
                 },
                 color: Colors.purple[800],
               ),
@@ -457,49 +505,59 @@ class _DynamicWidgetState extends State<DynamicWidget> {
   Widget build(BuildContext context) {
     return Container(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(
-              child: DropdownButton<String>(
-                value: machineTypeSelected[widget.index],
-                iconSize: 24,
-                elevation: 16,
-                style: TextStyle(color: Colors.black),
-                underline: Container(
-                  height: 2,
-                  color: Colors.grey,
-                ),
-                onChanged: (String newValue) {
-                  setState(() {
-                    machineTypeSelected[widget.index] = newValue;
-                    debugPrint(widget.index.toString());
-                  });
-                },
-                items: <String>['One', 'Two', 'Free', 'Four']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(
+          child: DropdownButton<String>(
+            value: machineTypeSelected[widget.index],
+            iconSize: 24,
+            elevation: 16,
+            style: TextStyle(color: Colors.black),
+            underline: Container(
+              height: 2,
+              color: Colors.grey,
+            ),
+            onChanged: (String newValue) {
+              setState(() {
+                machineTypeSelected[widget.index] = newValue;
+                debugPrint(widget.index.toString());
+              });
+            },
+            items: <String>['One', 'Two', 'Free', 'Four']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
+        ),
+        Flexible(
+          child: TextFormField(
+            controller: _machineQuantity[widget.index],
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              labelText: "Quantity",
+              fillColor: Colors.white,
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.blue, width: 2.0),
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(10),
+                    topLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10)),
               ),
             ),
-            Flexible(
-              child:TextFormField(
-                controller: _machineQuantity[widget.index],
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: "Quantity",
-                  fillColor: Colors.white,
-                  focusedBorder:OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-                    borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        )
-    );
+          ),
+        ),
+      ],
+    ));
   }
+}
+
+class SupervisorList {
+  SupervisorList(this.name, this.mobile, this.uid);
+  var name;
+  var mobile;
+  var uid;
 }

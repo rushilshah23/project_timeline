@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
 import 'package:project_timeline/addWorkers.dart';
+import 'package:project_timeline/workerDaily.dart';
 import 'package:project_timeline/workerForm.dart';
 import 'manager/master/machineMaster/machineMaster.dart';
 import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/supervisor/approveWork/WorkApproveModule.dart';
@@ -115,6 +116,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => WorkerForm()),
+                );
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            RaisedButton(
+              child: Text("Worker Daily Updates"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => WorkerDaily()),
                 );
               },
             ),
