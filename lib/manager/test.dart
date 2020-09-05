@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 
+import '../CommonWidgets.dart';
+import '../CommonWidgets.dart';
+
 String machineType = 'One';
 List<String> machineTypeSelected = List.generate(74, (i) => 'One');
 List<TextEditingController> _machineQuantity =
@@ -193,7 +196,7 @@ class _TestState extends State<Test> {
               Center(
                 child: Text(
                   'Create New Project',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                  style: titlestyles(24, Colors.orange[700]),
                 ),
               ),
               TextFormField(
@@ -519,9 +522,22 @@ class _TestState extends State<Test> {
 //              ),
               SizedBox(height: 40.0),
               FlatButton(
-                child: Text(
-                  'Estimate Project',
-                  style: TextStyle(color: Colors.white),
+                child: Container(
+                  height: 50,
+                  width: 400,
+                  decoration: BoxDecoration(
+                    gradient: gradients()
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 15,left: 120),
+                    child: Text(
+                      'Estimate Project',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
+                  ),
                 ),
                 onPressed: () {
                   if (_formKeyValue.currentState.validate()) {
@@ -532,7 +548,7 @@ class _TestState extends State<Test> {
                     );
                   }
                 },
-                color: Colors.purple[800],
+
               ),
             ],
           ),

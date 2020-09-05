@@ -5,6 +5,8 @@ import 'package:project_timeline/ProgressTimeline/theme.dart';
 
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
+import '../../CommonWidgets.dart';
+
 
 class AllProjects extends StatefulWidget {
   @override
@@ -29,7 +31,17 @@ class _AllProjectsState extends State<AllProjects> {
           child: Container(
 
             decoration: BoxDecoration(
-                boxShadow: customShadow,
+                boxShadow:[
+                  BoxShadow(
+                    color: Colors.orange[100],
+                    blurRadius: 25.0, // soften the shadow
+                    spreadRadius: 5.0, //extend the shadow
+                    offset: Offset(
+                      15.0, // Move to right 10  horizontally
+                      15.0, // Move to bottom 10 Vertically
+                    ),
+                  )
+                ],
                 shape: BoxShape.circle,
                 color: Colors.white38),
           ),
@@ -40,7 +52,17 @@ class _AllProjectsState extends State<AllProjects> {
           bottom: -80,
           child: Container(
             decoration: BoxDecoration(
-                boxShadow: customShadow,
+                boxShadow:[
+                  BoxShadow(
+                    color: Colors.orange[100],
+                    blurRadius: 25.0, // soften the shadow
+                    spreadRadius: 5.0, //extend the shadow
+                    offset: Offset(
+                      15.0, // Move to right 10  horizontally
+                      15.0, // Move to bottom 10 Vertically
+                    ),
+                  )
+                ],
                 shape: BoxShape.circle,
                 color: Colors.white38),
           ),
@@ -55,6 +77,7 @@ class _AllProjectsState extends State<AllProjects> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CircularPercentIndicator(
+                      backgroundColor: Colors.grey[200],
                       radius: 120.0,
                       lineWidth: 13.0,
                       animation: true,
@@ -77,7 +100,7 @@ class _AllProjectsState extends State<AllProjects> {
                             fontWeight: FontWeight.bold, fontSize: 20.0),
                       ),
                       circularStrokeCap: CircularStrokeCap.round,
-                      progressColor: Colors.blue[700],
+                      progressColor: Colors.deepOrange[400],
                     ),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
@@ -86,12 +109,12 @@ class _AllProjectsState extends State<AllProjects> {
                         width: 70,
                         decoration: BoxDecoration(
                           color: primaryColor,
-                          boxShadow: customShadow,
+                          gradient: gradients(),
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: IconButton(
                           color: Colors.deepPurple,
-                          icon: Icon(Icons.navigate_next),
+                          icon: Icon(Icons.navigate_next,color: Colors.white,),
                           onPressed: () {
 //                            Navigator.push(
 //                              context,
@@ -198,7 +221,6 @@ class _AllProjectsState extends State<AllProjects> {
                         color: Colors.white,
                         // color: primaryColor,
                         boxShadow: customShadow,
-                        borderRadius: BorderRadius.circular(20),
                       ),
                       child: Column(
                         children: [
@@ -207,7 +229,7 @@ class _AllProjectsState extends State<AllProjects> {
                               itemCount: allProjects.length,
                               itemBuilder: (context, index) {
                                 return Container(
-
+                                    height: 280,
                                     margin: EdgeInsets.all(10),
                                     child:displayProject(index));
                               },
@@ -222,7 +244,7 @@ class _AllProjectsState extends State<AllProjects> {
           } else {
             return Center(
                 child: CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.orange),
                 ));
           }
         });

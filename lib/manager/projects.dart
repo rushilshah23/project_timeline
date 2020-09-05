@@ -5,6 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/manager/test.dart';
 
+import '../CommonWidgets.dart';
+import 'test.dart';
+
 
 
 class CreatedProjects extends StatefulWidget {
@@ -181,15 +184,7 @@ class _CreatedProjectsState extends State<CreatedProjects> {
                   ));
             }
           }),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Test()),
-          );
-        },
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton: floats(context, Test()),
     );
   }
 }

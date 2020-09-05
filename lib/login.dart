@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'CommonWidgets.dart';
+import 'CommonWidgets.dart';
+import 'CommonWidgets.dart';
 import 'manager/ManagerHomePage.dart';
 import 'supervisor/SupervisorHomePage.dart';
 import 'worker/WorkerHomePage.dart';
@@ -75,11 +77,7 @@ class LoginPageState extends State<LoginPage> {
                   width: MediaQuery.of(context).size.width,
                   height: 250,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [Color(0xFFf45d27), Color(0xFFf5851f)],
-                    ),
+                    gradient: gradients(),
                     borderRadius:
                         BorderRadius.only(bottomLeft: Radius.circular(100)),
                   ),
@@ -112,7 +110,7 @@ class LoginPageState extends State<LoginPage> {
                         width: MediaQuery.of(context).size.width / 1.2,
                         //height: 50,
                         padding: EdgeInsets.only(
-                            top: 4, left: 16, right: 16, bottom: 4),
+                            top: 4, left: 16, right: 16, bottom: 7),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(20)),
                             color: Colors.white,
@@ -164,7 +162,7 @@ class LoginPageState extends State<LoginPage> {
                         height: 50,
                       ),
 
-                      RaisedButton(
+                      FlatButton(
                         onPressed: () {
                           if(formKey.currentState.validate())
                           {
@@ -172,14 +170,11 @@ class LoginPageState extends State<LoginPage> {
                           }
                         },
                         textColor: Colors.white,
-                        color: Colors.orange,
                         child: Container(
                           width: 300,
                           padding:EdgeInsets.all(20),
                           decoration: new BoxDecoration(
-                              gradient: new LinearGradient(
-                                colors: [Color(0xFFf45d27), Color(0xFFf5851f)],
-                              )
+                              gradient: gradients()
                           ),
                           child: Text(
                             "Login",
