@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
-import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/supervisor/addWorkers.dart';
+import 'package:project_timeline/supervisor/addWorkers.dart';
 import 'package:project_timeline/supervisor/approveWork/WorkApproveModule.dart';
-import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/worker/workerDaily.dart';
-import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/worker/workerForm.dart';
+import 'package:project_timeline/worker/workerDaily.dart';
+import 'package:project_timeline/worker/workerForm.dart';
 import 'login.dart';
 import 'manager/master/machineMaster/machineMaster.dart';
-
-
 import 'manager/test.dart';
 
 void main() {
@@ -80,8 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => ApproveWork()),
+                  MaterialPageRoute(builder: (context) => ApproveWork()),
                 );
               },
             ),
@@ -97,7 +94,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-
             RaisedButton(
               child: Text("Login"),
               onPressed: () {
