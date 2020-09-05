@@ -1,19 +1,19 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_timeline/ProgressTimeline/theme.dart';
 
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
-import '../../ViewAllProjects/ViewAllTasks.dart';
-import '../theme.dart';
+import '../../CommonWidgets.dart';
 
 
-class ViewAllProjects extends StatefulWidget {
+class AllProjects extends StatefulWidget {
   @override
-  _ViewAllProjectsState createState() => _ViewAllProjectsState();
+  _AllProjectsState createState() => _AllProjectsState();
 }
 
-class _ViewAllProjectsState extends State<ViewAllProjects> {
+class _AllProjectsState extends State<AllProjects> {
   final databaseReference = FirebaseDatabase.instance.reference();
   List allProjects = List();
 
@@ -29,8 +29,19 @@ class _ViewAllProjectsState extends State<ViewAllProjects> {
           top: 150,
           bottom: -190,
           child: Container(
+
             decoration: BoxDecoration(
-                boxShadow: customShadow,
+                boxShadow:[
+                  BoxShadow(
+                    color: Colors.orange[100],
+                    blurRadius: 25.0, // soften the shadow
+                    spreadRadius: 5.0, //extend the shadow
+                    offset: Offset(
+                      15.0, // Move to right 10  horizontally
+                      15.0, // Move to bottom 10 Vertically
+                    ),
+                  )
+                ],
                 shape: BoxShape.circle,
                 color: Colors.white38),
           ),
@@ -41,7 +52,17 @@ class _ViewAllProjectsState extends State<ViewAllProjects> {
           bottom: -80,
           child: Container(
             decoration: BoxDecoration(
-                boxShadow: customShadow,
+                boxShadow:[
+                  BoxShadow(
+                    color: Colors.orange[100],
+                    blurRadius: 25.0, // soften the shadow
+                    spreadRadius: 5.0, //extend the shadow
+                    offset: Offset(
+                      15.0, // Move to right 10  horizontally
+                      15.0, // Move to bottom 10 Vertically
+                    ),
+                  )
+                ],
                 shape: BoxShape.circle,
                 color: Colors.white38),
           ),
@@ -56,19 +77,30 @@ class _ViewAllProjectsState extends State<ViewAllProjects> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CircularPercentIndicator(
+                      backgroundColor: Colors.grey[200],
                       radius: 120.0,
                       lineWidth: 13.0,
                       animation: true,
+//                      percent: double.parse(
+//                              allProjects[index]["progress"].toString()) /
+//                          100,
+
                       percent: double.parse(
-                              allProjects[index]["progress"].toString()) /
+                          "70") /
                           100,
+//                      center: new Text(
+//                        allProjects[index]["progress"].toString() + "%",
+//                        style: new TextStyle(
+//                            fontWeight: FontWeight.bold, fontSize: 20.0),
+//                      ),
+
                       center: new Text(
-                        allProjects[index]["progress"].toString() + "%",
+                        "70" + "%",
                         style: new TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20.0),
                       ),
                       circularStrokeCap: CircularStrokeCap.round,
-                      progressColor: Colors.deepPurple,
+                      progressColor: Colors.deepOrange[400],
                     ),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
@@ -77,21 +109,21 @@ class _ViewAllProjectsState extends State<ViewAllProjects> {
                         width: 70,
                         decoration: BoxDecoration(
                           color: primaryColor,
-                          boxShadow: customShadow,
+                          gradient: gradients(),
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: IconButton(
                           color: Colors.deepPurple,
-                          icon: Icon(Icons.navigate_next),
+                          icon: Icon(Icons.navigate_next,color: Colors.white,),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ViewAllTasks(
-                                        projectID: allProjects[index]
-                                            ["projectID"],
-                                      )),
-                            );
+//                            Navigator.push(
+//                              context,
+//                              MaterialPageRoute(
+//                                  builder: (context) => AllTasks(
+//                                    projectID: allProjects[index]
+//                                    ["projectID"],
+//                                  )),
+//                            );
                           },
                         ),
                       ),
@@ -111,35 +143,35 @@ class _ViewAllProjectsState extends State<ViewAllProjects> {
                       Text(
                         'Project Name:',
                         style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       Text(
                         allProjects[index]["projectName"],
                         style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         height: 20,
                       ),
-                      Text(
-                        'Project Supervisor: ' +
-                            allProjects[index]["supervisorName"],
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
+//                      Text(
+//                        'Project Supervisor: ' +
+//                            allProjects[index]["supervisorName"],
+//                        style: TextStyle(
+//                            fontSize: 16, fontWeight: FontWeight.bold),
+//                      ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        'Site Address: ',
+                        'Site Address: ' + allProjects[index]["siteAddress"],
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                            fontSize: 14, fontWeight: FontWeight.bold),
                       ),
-                      Text(
-                        allProjects[index]["siteAddress"],
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
+//                      Text(
+//                        allProjects[index]["siteAddress"],
+//                        style: TextStyle(
+//                            fontSize: 14, fontWeight: FontWeight.bold),
+//                      ),
                       SizedBox(
                         height: 10,
                       ),
@@ -164,7 +196,7 @@ class _ViewAllProjectsState extends State<ViewAllProjects> {
 
   @override
   Widget build(BuildContext context) {
-    List numbers = [1, 2, 3];
+
     return new StreamBuilder(
         stream: databaseReference.child("projects").onValue,
         builder: (context, snap) {
@@ -174,21 +206,21 @@ class _ViewAllProjectsState extends State<ViewAllProjects> {
             Map data = snap.data.snapshot.value;
             allProjects = [];
             data.forEach(
-              (index, data) => allProjects.add({"key": index, ...data}),
+                  (index, data) => allProjects.add({"key": index, ...data}),
             );
 
             return new Column(
               children: [
                 Expanded(
-                    flex: 2,
+
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.only(
-                          top: 15, bottom: 230, right: 10, left: 20),
+//                      margin: EdgeInsets.only(
+//                          top: 15, bottom: 230, right: 10, left: 20),
                       decoration: BoxDecoration(
-                        color: primaryColor,
+                        color: Colors.white,
+                        // color: primaryColor,
                         boxShadow: customShadow,
-                        borderRadius: BorderRadius.circular(20),
                       ),
                       child: Column(
                         children: [
@@ -196,37 +228,14 @@ class _ViewAllProjectsState extends State<ViewAllProjects> {
                             child: new ListView.builder(
                               itemCount: allProjects.length,
                               itemBuilder: (context, index) {
-                                return displayProject(index);
+                                return Container(
+                                    height: 280,
+                                    margin: EdgeInsets.all(10),
+                                    child:displayProject(index));
                               },
                             ),
                           ),
-                          /*
-                              Expanded(
-                                flex: 1,
-                                child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: numbers.length,
-                                  itemBuilder: (context,i){
-                                    return Container(
-                                      width: 250,
-                                      margin: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-                                      decoration: BoxDecoration(
-                                        color: primaryColor,
-                                        boxShadow: customShadow,
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          Align(
-                                            child: Text(numbers[i].toString()),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                              */
+
                         ],
                       ),
                     )),
@@ -235,8 +244,8 @@ class _ViewAllProjectsState extends State<ViewAllProjects> {
           } else {
             return Center(
                 child: CircularProgressIndicator(
-              valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
-            ));
+                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.orange),
+                ));
           }
         });
   }

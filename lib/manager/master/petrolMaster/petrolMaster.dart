@@ -5,6 +5,11 @@ import 'package:project_timeline/manager/master/petrolMaster/AddPetrolLocation.d
 import 'package:project_timeline/manager/master/petrolMaster/EditPetrolPump.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolPumpDetails.dart';
 
+import '../../../CommonWidgets.dart';
+import '../../../CommonWidgets.dart';
+import '../../../CommonWidgets.dart';
+import '../../../CommonWidgets.dart';
+
 class PetrolMaster extends StatefulWidget {
   @override
   _PetrolMasterState createState() => _PetrolMasterState();
@@ -182,9 +187,9 @@ class _PetrolMasterState extends State<PetrolMaster> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Petrol Locations'),
-      ),
+//      appBar: AppBar(
+//        title: Text('Petrol Locations'),
+//      ),
       body: StreamBuilder(
           stream:
               databaseReference.child("masters").child("petrolMaster").onValue,
@@ -203,10 +208,8 @@ class _PetrolMasterState extends State<PetrolMaster> {
                   SizedBox(height: 10,),
                   Center(
                     child: Text('Our Diesel Stations',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        )),
+                        style: titlestyles(18,Colors.orangeAccent)
+                    ),
                   ),
 
                   SizedBox(height: 20,),
@@ -228,15 +231,18 @@ class _PetrolMasterState extends State<PetrolMaster> {
               ));
             }
           }),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: floats(context,AddPetrolLocation()),
+      /*FloatingActionButton(
+        backgroundColor: Colors.orange,
         onPressed: () {
           showDialog(
             context: context,
             builder: (_) => AddPetrolLocation(),
           );
         },
-        child: Icon(Icons.add),
-      ),
+        child: Container(
+            child: Icon(Icons.add)),
+      ),*/
     );
   }
 }

@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:project_timeline/CommonWidgets.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../CommonWidgets.dart';
+import '../../../CommonWidgets.dart';
+import '../../../CommonWidgets.dart';
+import '../../../CommonWidgets.dart';
+
 class AddPetrolLocation extends StatefulWidget {
   @override
   _AddPetrolLocationState createState() => _AddPetrolLocationState();
@@ -109,7 +114,7 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
               children: <Widget>[
                 Text(
                   "Add Petrol Pump",
-                  style: TextStyle(fontSize: 20),
+                  style: titlestyles(20, Colors.orange[800]),
                 ),
                 SizedBox(
                   height: 20,
@@ -258,14 +263,61 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
 
 
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
-                RaisedButton(
-                  child: Text("Add Petrol Pump"),
-                  onPressed: () {
-                    addPetrolPump();
-                  },
+                Row(
+                  children: [
+                    Flexible(
+                      child: FlatButton(
+                        child: Container(
+                            height: 45,
+                            width: 120,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                            gradient: gradients()
+                          ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 9,left: 13),
+                              child: Text(
+                                  "Add Petrol Pump",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold
+                                ),
+                              ),
+                            )
+                        ),
+                        onPressed: () {
+                          addPetrolPump();
+                        },
+                      ),
+                    ),
+                    Flexible(
+                    child :FlatButton(
+                      child: Container(
+                        height: 45,
+                        width: 120,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                            gradient: gradients() //Gradient
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 9,left: 13),
+                          child: Text(
+                            'Our Projects',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {},
+                    ),
+                    ),
+                  ],
                 ),
+
               ],
             ),
           ],

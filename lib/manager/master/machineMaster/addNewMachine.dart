@@ -3,9 +3,10 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../CommonWidgets.dart';
+import '../../../CommonWidgets.dart';
 import '../../../CommonWidgets.dart';
 
 String machineType = 'One';
@@ -91,9 +92,7 @@ class _AddNewMachineState extends State<AddNewMachine> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Add Machine"),
-        ),
+        appBar: ThemeAppbar("Add New Machine"),
         body: Container(
             child: Form(
                 key: _formKey,
@@ -109,10 +108,8 @@ class _AddNewMachineState extends State<AddNewMachine> {
                             children: [
                               Center(
                                 child: Text('Add a new machine',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    )),
+                                    style: titlestyles(18, Colors.orange)
+                                ),
                               ),
 
                               SizedBox(height: 15),
@@ -429,7 +426,7 @@ class _AddNewMachineState extends State<AddNewMachine> {
                                             )),
                                         IconButton(
                                           icon: Icon(Icons.add,
-                                              color: Colors.indigo),
+                                              color: Colors.deepOrange),
                                           onPressed: addDynamic,
                                         ),
                                       ],
@@ -503,10 +500,20 @@ class _AddNewMachineState extends State<AddNewMachine> {
                               SizedBox(height: 10),
 
                               Center(
-                                child: RaisedButton(
-                                  child: Text(
-                                    'Add Machine',
-                                    style: TextStyle(color: Colors.white),
+                                child: FlatButton(
+                                  child: Container(
+                                    height: 50,
+                                    width: 400,
+                                    decoration: BoxDecoration(
+                                      gradient: gradients()
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 130,top: 15),
+                                      child: Text(
+                                        'Add Machine',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
                                   ),
                                   onPressed: () {
                                     if (_formKey.currentState.validate()) {
@@ -514,7 +521,6 @@ class _AddNewMachineState extends State<AddNewMachine> {
                                       addMachine();
                                     }
                                   },
-                                  color: Colors.indigo,
                                 ),
                               )
                             ],

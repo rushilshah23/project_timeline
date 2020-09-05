@@ -4,13 +4,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:project_timeline/CommonWidgets.dart';
 
+import '../CommonWidgets.dart';
+import '../CommonWidgets.dart';
+
 class SearchWorker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+        /*appBar: AppBar(
           title: Text("Add Workers"),
-        ),
+        ),*/
         body: SearchWorkerPage());
   }
 }
@@ -36,12 +39,31 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
           items.add(
             DropdownMenuItem(
               child: Text(result['name']),
-              value: result['name'],
+              value: result['uid'],
             ),
           );
-          workersList.add(WorkerList(result['name'], result['mobile']));
+          workersList
+              .add(WorkerList(result['name'], result['mobile'], result['uid']));
         });
       });
+    });
+    await databaseReference
+        .child("projects")
+        .child(projectID)
+        .child("workers")
+        .once()
+        .then((snapshot) {
+      if (snapshot != null) {
+        snapshot.value.forEach((workerSelected, i) {
+          workersList.forEach((worker) {
+            if (workerSelected == worker.uid) {
+              setState(() {
+                selectedItems.add(workersList.indexOf(worker));
+              });
+            }
+          });
+        });
+      }
     });
   }
 
@@ -52,7 +74,7 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
             .child("projects")
             .child(projectID)
             .child("workers")
-            .child(workersList[i].name)
+            .child(workersList[i].uid)
             .update({
           "name": workersList[i].name,
           "mobile": workersList[i].mobile,
@@ -84,10 +106,8 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
                 SizedBox(height: 10),
                 Center(
                   child: Text('Add Workers',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      )),
+                      style: titlestyles(18, Colors.orange)
+                  ),
                 ),
                 SizedBox(height: 10),
                 Center(
@@ -114,15 +134,22 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
                   ),
                 ),
                 SizedBox(height: 10),
-                RaisedButton(
-                  child: Text(
-                    'Add',
-                    style: TextStyle(color: Colors.white),
+                FlatButton(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      gradient: gradients()
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Add',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
                   ),
                   onPressed: () {
                     submitForm();
                   },
-                  color: Colors.blue,
                 ),
               ],
             ),
@@ -137,7 +164,8 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
 }
 
 class WorkerList {
-  WorkerList(this.name, this.mobile);
+  WorkerList(this.name, this.mobile, this.uid);
   var name;
   var mobile;
+  var uid;
 }

@@ -3,14 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:project_timeline/CommonWidgets.dart';
+import 'package:searchable_dropdown/searchable_dropdown.dart';
+
+import '../CommonWidgets.dart';
+import '../CommonWidgets.dart';
 
 class WorkerForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Update work"),
-      ),
+//      appBar: AppBar(
+//        title: Text("Update work"),
+//      ),
       body: WorkerFormPage(),
     );
   }
@@ -22,16 +26,17 @@ class WorkerFormPage extends StatefulWidget {
 }
 
 class _WorkerFormPageState extends State<WorkerFormPage> {
-  List<String> machines = ['A', 'B', 'C', 'D'];
-  String selectedMachine;
-  var machineUsed,
-      hoursWorked,
+  List<DropdownMenuItem> machines = [];
+  List<int> selectedMachine = [];
+  List<String> machineUsed = [];
+  var hoursWorked,
       depth,
       length,
       upperWidth,
       lowerWidth,
       todaysDate,
-      volume;
+      volume,
+      comment;
   final databaseReference = FirebaseDatabase.instance.reference();
   final _formKey = GlobalKey<FormState>();
   TextEditingController hoursWorkedController = TextEditingController();
@@ -39,26 +44,53 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
   TextEditingController lengthController = TextEditingController();
   TextEditingController upperWidthController = TextEditingController();
   TextEditingController lowerWidthController = TextEditingController();
+  TextEditingController commentController = TextEditingController();
   final DateTime now = DateTime.now();
-  final DateFormat formatter = DateFormat('MM-dd-yyyy');
+  final DateFormat formatter = DateFormat('dd-MM-yyyy');
   var projectID = 'project1';
-  var workerID = 'worker1';
+  var workerID = 'Lm4oPWmWAkTELRXPc4nPv5i7pB92';
+  var workerName = 'rajesh kumar';
 
   @override
   void initState() {
+    loadMachines();
     super.initState();
     todaysDate = formatter.format(now);
+  }
+
+  void loadMachines() async {
+    await databaseReference
+        .child("masters")
+        .child("machineMaster")
+        .once()
+        .then((snapshot) {
+      snapshot.value.forEach((key, values) {
+        setState(() {
+          machines.add(
+            DropdownMenuItem(
+              child: Text(values["machineName"].toString()),
+              value: values["machineID"].toString(),
+            ),
+          );
+        });
+        print(machines);
+      });
+    });
   }
 
   void submitForm() async {
     if (_formKey.currentState.validate()) {
       setState(() {
-        machineUsed = selectedMachine;
+        selectedMachine.forEach((i) {
+          machineUsed.add(machines[i].value);
+        });
+        print(machineUsed);
         hoursWorked = hoursWorkedController.text;
         depth = double.parse(depthController.text);
         length = double.parse(lengthController.text);
         upperWidth = double.parse(upperWidthController.text);
         lowerWidth = double.parse(lowerWidthController.text);
+        comment = commentController.text;
       });
       volume = length * depth * (upperWidth + lowerWidth) / 2;
       try {
@@ -68,11 +100,17 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
             .child("progress")
             .child(todaysDate)
             .child(workerID)
-            .update({
+            .set({
           "MachineUsed": machineUsed,
           "hoursWorked": hoursWorked,
+          "workerName": workerName,
+          "depth": depth,
+          "length": length,
+          "upperWidth": upperWidth,
+          "lowerWidth": lowerWidth,
           "volumeExcavated": volume,
           "status": "pending",
+          "comment": comment,
         });
         showToast("Added successfully");
         Navigator.of(context).pop();
@@ -84,68 +122,68 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        padding: EdgeInsets.all(20),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                'Update Work',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'For :' + ' $todaysDate',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              DropdownButton(
-                value: selectedMachine,
-                hint: Text("Select Machine Used"),
-                isExpanded: true,
-                items: machines.map((String value) {
-                  return new DropdownMenuItem<String>(
-                    value: value,
-                    child: new Text(value),
-                  );
-                }).toList(),
-                onChanged: (val) {
-                  setState(() {
-                    selectedMachine = val;
-                  });
-                },
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                controller: hoursWorkedController,
-                keyboardType: TextInputType.number,
-                validator: (String value) {
-                  if (value.length == 0) {
-                    return "Please Enter Hours Worked";
-                  } else {
-                    return null;
-                  }
-                },
-                decoration: InputDecoration(
-                  labelText: "Hours Worked",
-                  border: OutlineInputBorder(),
-                  hintText: "Enter Hours Worked",
+    if (machines.length > 0)
+      return SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(20),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'For :' + ' $todaysDate',
+                  style: titlestyles(18, Colors.orange),
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
+                SizedBox(
+                  height: 10,
+                ),
+                SearchableDropdown.multiple(
+                  items: machines,
+                  selectedItems: selectedMachine,
+                  hint: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text("Select any"),
+                  ),
+                  searchHint: "Select any",
+                  onChanged: (value) {
+                    setState(() {
+                      selectedMachine = value;
+                    });
+                    print(value);
+                    print(selectedMachine);
+                  },
+                  closeButton: (selectedMachine) {
+                    return (selectedMachine.isNotEmpty
+                        ? "Save ${selectedMachine.length == 1 ? '"' + machines[selectedMachine.first].value.toString() + '"' : '(' + selectedMachine.length.toString() + ')'}"
+                        : "Save without selection");
+                  },
+                  isExpanded: true,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  controller: hoursWorkedController,
+                  keyboardType: TextInputType.number,
+                  validator: (String value) {
+                    if (value.length == 0) {
+                      return "Please Enter Hours Worked";
+                    } else {
+                      return null;
+                    }
+                  },
+                  decoration: InputDecoration(
+                    labelText: "Hours Worked",
+                    border: OutlineInputBorder(),
+                    hintText: "Enter Hours Worked",
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   decoration: BoxDecoration(
                     border: Border.all(
@@ -184,7 +222,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                             ),
                           ),
                           SizedBox(
-                            width: 20.0,
+                            width: 10.0,
                           ),
                           new Flexible(
                             child: TextFormField(
@@ -251,22 +289,62 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 5),
+                      SizedBox(height: 20),
                     ],
-                  )),
-              SizedBox(height: 30),
-              Container(
-                width: double.infinity,
-                height: 50,
-                child: RaisedButton(
-                  onPressed: submitForm,
-                  child: Text("Submit"),
+                  ),
                 ),
-              )
-            ],
+                SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  controller: commentController,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 5,
+                  validator: (String value) {
+                    if (value.length == 0) {
+                      value = "No comment";
+                      return null;
+                    } else {
+                      return null;
+                    }
+                  },
+                  decoration: InputDecoration(
+                    labelText: "(Optional) Comment",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(height: 30),
+                Container(
+                  width: double.infinity,
+                  height: 50,
+                  child: FlatButton(
+                    onPressed: submitForm,
+                    child: Container(
+                      height: 50,
+                        width: double.infinity,
+                      decoration: BoxDecoration(
+                        gradient: gradients(),
+                        borderRadius: BorderRadius.circular(10)
+                      ), 
+                      child: Center(child: Text("Submit",style: TextStyle(color: Colors.white),))
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    else
+      return Center(
+        child: CircularProgressIndicator(),
+      );
   }
+}
+
+class MachineDetails {
+  MachineDetails(this.machineName, this.machineID, this.modelName);
+  var machineName;
+  var machineID;
+  var modelName;
 }

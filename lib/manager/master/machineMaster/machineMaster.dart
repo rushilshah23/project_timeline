@@ -6,6 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:project_timeline/manager/master/machineMaster/EditMachineData.dart';
 import 'package:project_timeline/manager/master/machineMaster/addNewMachine.dart';
 
+import '../../../CommonWidgets.dart';
+import 'addNewMachine.dart';
+
+
 
 class MachineMaster extends StatefulWidget {
 
@@ -163,10 +167,12 @@ class _MachineMasterState extends State<MachineMaster> {
   Widget build(BuildContext context) {
     return new Scaffold(
 
-      appBar: AppBar(
+//      appBar: AppBar(
+//
+//        title: Text("Machine Master"),
+//      ),
 
-        title: Text("Machine Master"),
-      ),
+
 
       body: StreamBuilder(
           stream: databaseReference.child("masters").child("machineMaster").onValue,
@@ -211,15 +217,7 @@ class _MachineMasterState extends State<MachineMaster> {
               return Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),));
             }
           }),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddNewMachine()),
-          );
-        },
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton: floats(context, AddNewMachine()),
 
 
     );

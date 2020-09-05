@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:project_timeline/manager/createNewProject.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
-import 'package:project_timeline/addWorkers.dart';
-import 'package:project_timeline/workerForm.dart';
+import 'package:project_timeline/supervisor/approveWork/WorkApproveModule.dart';
+import 'login.dart';
 import 'manager/master/machineMaster/machineMaster.dart';
-import 'package:project_timeline/supervisor/SupervIsorTaskModule.dart';
+
+
+import 'manager/test.dart';
+import 'supervisor/addWorkers.dart';
+import 'supervisor/addWorkers.dart';
+import 'supervisor/addWorkers.dart';
+import 'supervisor/approveWork/WorkApproveModule.dart';
+import 'worker/workerDaily.dart';
+import 'worker/workerForm.dart';
 
 void main() {
   runApp(MyApp());
@@ -52,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CreateNewProject()),
+                  MaterialPageRoute(builder: (context) => Test()),
                 );
               },
             ),
@@ -77,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => SupervisorTaskModule()),
+                      builder: (context) => ApproveWork()),
                 );
               },
             ),
@@ -90,6 +97,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => PetrolMaster()),
+                );
+              },
+            ),
+
+            RaisedButton(
+              child: Text("Login"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
                 );
               },
             ),
@@ -114,6 +131,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => WorkerForm()),
+                );
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            RaisedButton(
+              child: Text("Worker Daily Updates"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => WorkerDaily()),
                 );
               },
             ),

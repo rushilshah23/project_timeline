@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:project_timeline/CommonWidgets.dart';
 import 'package:project_timeline/manager/master/petrolMaster/EditPetrolPump.dart';
 
+import '../../../CommonWidgets.dart';
+
 class PetrolPumpDetails extends StatefulWidget {
   Map data;
   int indexes;
@@ -74,10 +76,8 @@ class _PetrolPumpDetailsState extends State<PetrolPumpDetails> {
 
                   Center(
                     child: Text('Details:',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        )),
+                        style: titlestyles(18, Colors.deepOrange)
+                    ),
                   ),
                   Text("Name"),
                   Text(widget.data["petrolPumpName"].toString()),
