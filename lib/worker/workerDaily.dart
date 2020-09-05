@@ -32,9 +32,9 @@ class _WorkerDailyState extends State<WorkerDaily> {
         .child("progress");
 
     return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
         title: Text("Daily Update"),
-      ),
+      ),*/
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.all(10),

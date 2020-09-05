@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
-import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/supervisor/addWorkers.dart';
 import 'package:project_timeline/supervisor/approveWork/WorkApproveModule.dart';
-import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/worker/workerDaily.dart';
-import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/worker/workerForm.dart';
 import 'login.dart';
 import 'manager/master/machineMaster/machineMaster.dart';
 
 
 import 'manager/test.dart';
+import 'supervisor/addWorkers.dart';
+import 'supervisor/addWorkers.dart';
+import 'supervisor/addWorkers.dart';
+import 'supervisor/approveWork/WorkApproveModule.dart';
+import 'worker/workerDaily.dart';
+import 'worker/workerForm.dart';
 
 void main() {
   runApp(MyApp());

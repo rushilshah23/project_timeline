@@ -5,6 +5,9 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:project_timeline/CommonWidgets.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 
+import '../CommonWidgets.dart';
+import '../CommonWidgets.dart';
+
 class WorkerForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -131,7 +134,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
               children: [
                 Text(
                   'For :' + ' $todaysDate',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  style: titlestyles(18, Colors.orange),
                 ),
                 SizedBox(
                   height: 10,
@@ -314,9 +317,17 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                 Container(
                   width: double.infinity,
                   height: 50,
-                  child: RaisedButton(
+                  child: FlatButton(
                     onPressed: submitForm,
-                    child: Text("Submit"),
+                    child: Container(
+                      height: 50,
+                        width: double.infinity,
+                      decoration: BoxDecoration(
+                        gradient: gradients(),
+                        borderRadius: BorderRadius.circular(10)
+                      ), 
+                      child: Center(child: Text("Submit",style: TextStyle(color: Colors.white),))
+                    ),
                   ),
                 )
               ],

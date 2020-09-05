@@ -4,13 +4,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:project_timeline/CommonWidgets.dart';
 
+import '../CommonWidgets.dart';
+import '../CommonWidgets.dart';
+
 class SearchWorker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+        /*appBar: AppBar(
           title: Text("Add Workers"),
-        ),
+        ),*/
         body: SearchWorkerPage());
   }
 }
@@ -103,10 +106,8 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
                 SizedBox(height: 10),
                 Center(
                   child: Text('Add Workers',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      )),
+                      style: titlestyles(18, Colors.orange)
+                  ),
                 ),
                 SizedBox(height: 10),
                 Center(
@@ -133,15 +134,22 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
                   ),
                 ),
                 SizedBox(height: 10),
-                RaisedButton(
-                  child: Text(
-                    'Add',
-                    style: TextStyle(color: Colors.white),
+                FlatButton(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      gradient: gradients()
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Add',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
                   ),
                   onPressed: () {
                     submitForm();
                   },
-                  color: Colors.blue,
                 ),
               ],
             ),

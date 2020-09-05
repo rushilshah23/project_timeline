@@ -214,7 +214,7 @@ class _OurMachinesState extends State<OurMachines> {
               return Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),));
             }
           }),
-      floatingActionButton: FloatingActionButton(
+      /*floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
             context,
@@ -222,7 +222,7 @@ class _OurMachinesState extends State<OurMachines> {
           );
         },
         child: Icon(Icons.add),
-      ),
+      ),*/
 
 
     );

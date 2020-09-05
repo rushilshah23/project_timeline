@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:project_timeline/supervisor/approveWork/workDetails.dart';
 
+import '../../CommonWidgets.dart';
+
 
 
 
@@ -42,9 +44,9 @@ class _ApproveWorkState extends State<ApproveWork> {
   Widget build(BuildContext context) {
     return new Scaffold(
 
-      appBar: AppBar(
+      /*appBar: AppBar(
         title: Text("Approve Work Done"),
-      ),
+      ),*/
 
       body: StreamBuilder(
           stream: databaseReference.child("projects").child(projectID).child("progress").onValue,
@@ -98,7 +100,7 @@ class _ApproveWorkState extends State<ApproveWork> {
                     child: Text(
                       value,
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: titlestyles(18, Colors.orange),
                     ),
                   ),
                   itemBuilder: (c, element) {

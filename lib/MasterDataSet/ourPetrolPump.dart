@@ -5,6 +5,8 @@ import 'package:project_timeline/manager/master/petrolMaster/AddPetrolLocation.d
 import 'package:project_timeline/manager/master/petrolMaster/EditPetrolPump.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolPumpDetails.dart';
 
+import '../CommonWidgets.dart';
+
 class OurPetrolPumps extends StatefulWidget {
   @override
   _OurPetrolPumpsState createState() => _OurPetrolPumpsState();
@@ -203,10 +205,7 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
                   SizedBox(height: 10,),
                   Center(
                     child: Text('Our Diesel Stations',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        )),
+                        style: titlestyles(18, Colors.orange)),
                   ),
 
                   SizedBox(height: 20,),
@@ -228,7 +227,7 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
                   ));
             }
           }),
-      floatingActionButton: FloatingActionButton(
+      /*floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
             context: context,
@@ -236,7 +235,7 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
           );
         },
         child: Icon(Icons.add),
-      ),
+      ),*/
     );
   }
 }

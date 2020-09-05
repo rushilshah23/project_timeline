@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:project_timeline/CommonWidgets.dart';
 import 'package:project_timeline/manager/master/petrolMaster/EditPetrolPump.dart';
 
+import '../../CommonWidgets.dart';
+import '../../CommonWidgets.dart';
+import '../../CommonWidgets.dart';
+
 class WorkDetails extends StatefulWidget {
   Map data;
 
@@ -44,10 +48,8 @@ class _WorkDetailsState extends State<WorkDetails> {
 
                       Center(
                         child: Text('Details:',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            )),
+                            style: titlestyles(18, Colors.orange)
+                        ),
                       ),
 
                       SizedBox(
@@ -80,19 +82,38 @@ class _WorkDetailsState extends State<WorkDetails> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
 
-                          RaisedButton(
-                            child: Text("Approve"),
+                          Flexible(
+                            child: FlatButton(
+                              child: Container(
+                                height: 50,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                  gradient: gradients(),
+                                  borderRadius: BorderRadius.circular(5)
+                                ),
+                                  child: Center(child: Text("Approve",style: titlestyles(18, Colors.white),))
+                              ),
+                              onPressed: () {
+
+                              },
+                            ),
+                          ),
+                          Flexible(
+                          child: FlatButton(
+
+                            child: Container(
+                                height: 50,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                    gradient: gradients(),
+                                    borderRadius: BorderRadius.circular(5)
+                                ),
+                                child: Center(child: Text("Reject",style: titlestyles(18, Colors.white),))),
                             onPressed: () {
 
                             },
                           ),
-
-                          RaisedButton(
-                            child: Text("Reject"),
-                            onPressed: () {
-
-                            },
-                          ),
+                        ),
 
                         ],
                       ),
