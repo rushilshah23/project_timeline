@@ -36,13 +36,31 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
           items.add(
             DropdownMenuItem(
               child: Text(result['name']),
-              value: result['name'],
+              value: result['uid'],
             ),
           );
           workersList
               .add(WorkerList(result['name'], result['mobile'], result['uid']));
         });
       });
+    });
+    await databaseReference
+        .child("projects")
+        .child(projectID)
+        .child("workers")
+        .once()
+        .then((snapshot) {
+      if (snapshot != null) {
+        snapshot.value.forEach((workerSelected, i) {
+          workersList.forEach((worker) {
+            if (workerSelected == worker.uid) {
+              setState(() {
+                selectedItems.add(workersList.indexOf(worker));
+              });
+            }
+          });
+        });
+      }
     });
   }
 

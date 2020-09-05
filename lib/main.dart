@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
-import 'CommonWidgets.dart';
-import 'file:///E:/FLUTTER/Apps/aol/project_timeline/lib/supervisor/addWorkers.dart';
+import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/supervisor/addWorkers.dart';
 import 'package:project_timeline/supervisor/approveWork/WorkApproveModule.dart';
-import 'file:///E:/FLUTTER/Apps/aol/project_timeline/lib/worker/workerDaily.dart';
-import 'file:///E:/FLUTTER/Apps/aol/project_timeline/lib/worker/workerForm.dart';
+import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/worker/workerDaily.dart';
+import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/worker/workerForm.dart';
 import 'login.dart';
 import 'manager/master/machineMaster/machineMaster.dart';
 
 
-import 'manager/test.dart';
 import 'manager/test.dart';
 
 void main() {
@@ -46,45 +44,105 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        backgroundColor: Colors.deepOrange,
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: ListView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            RaisedButton(
+              child: Text("Add New Project"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Test()),
+                );
+              },
+            ),
             SizedBox(
               height: 20,
             ),
-            buttons(context, Test(), 'Add New Project'),
+            RaisedButton(
+              child: Text("Machine Master"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MachineMaster()),
+                );
+              },
+            ),
             SizedBox(
               height: 20,
             ),
-            buttons(context, MachineMaster(), 'Machine Master'),
+            RaisedButton(
+              child: Text("Supervisor Section"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ApproveWork()),
+                );
+              },
+            ),
             SizedBox(
               height: 20,
             ),
-            buttons(context, ApproveWork(), 'Supervisor Section'),
+            RaisedButton(
+              child: Text("Petrol Module"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PetrolMaster()),
+                );
+              },
+            ),
+
+            RaisedButton(
+              child: Text("Login"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+              },
+            ),
             SizedBox(
               height: 20,
             ),
-            buttons(context, PetrolMaster(), 'Petrol Module'),
+            RaisedButton(
+              child: Text("Search Worker"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SearchWorker()),
+                );
+              },
+            ),
             SizedBox(
               height: 20,
             ),
-            buttons(context, LoginPage(), 'Login'),
+            RaisedButton(
+              child: Text("Worker Form"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => WorkerForm()),
+                );
+              },
+            ),
             SizedBox(
               height: 20,
             ),
-            buttons(context, SearchWorker(), 'Search Worker'),
-            SizedBox(
-              height: 20,
+            RaisedButton(
+              child: Text("Worker Daily Updates"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => WorkerDaily()),
+                );
+              },
             ),
-            buttons(context, WorkerForm(), 'Worker Form'),
-            SizedBox(
-              height: 20,
-            ),
-            buttons(context, WorkerDaily(), 'Worker Daily Updates'),
             SizedBox(
               height: 20,
             ),

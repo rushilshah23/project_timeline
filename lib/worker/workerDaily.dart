@@ -7,7 +7,22 @@ class WorkerDaily extends StatefulWidget {
 }
 
 class _WorkerDailyState extends State<WorkerDaily> {
-  var workerID = "8YiMHLBnBaNjmr3yPvk8NWvNPmm2";
+  //var workerID = "Lm4oPWmWAkTELRXPc4nPv5i7pB92"; not working
+  Widget getIcon(status) {
+    switch (status) {
+      case "pending":
+        return Icon(Icons.error_outline);
+      case "accepted":
+        return Icon(Icons.done);
+      case "declined":
+        return Icon(Icons.clear);
+      case "updated":
+        return Icon(Icons.done_all);
+      case "received":
+        return Icon(Icons.check_circle);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final databaseReference = FirebaseDatabase.instance
@@ -32,7 +47,7 @@ class _WorkerDailyState extends State<WorkerDaily> {
                   Map data = snap.data.snapshot.value;
                   List date = [];
                   data.forEach(
-                        (index, data) => date.add({"key": index, ...data}),
+                    (index, data) => date.add({"key": index, ...data}),
                   );
                   return ListView.builder(
                     itemCount: date.length,
@@ -40,8 +55,9 @@ class _WorkerDailyState extends State<WorkerDaily> {
                       return Card(
                         elevation: 3,
                         child: ListTile(
+                          leading: getIcon(date[index]
+                              ["Lm4oPWmWAkTELRXPc4nPv5i7pB92"]["status"]),
                           title: Text(date[index]["key"]),
-                          subtitle: Text(date[index][workerID]["status"]),
                           onTap: () {
                             print(date[index]["key"]);
                           },
