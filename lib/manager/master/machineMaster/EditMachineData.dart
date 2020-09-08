@@ -572,7 +572,7 @@ class _EditMachineDataState extends State<EditMachineData> {
                                           addMachine();
                                         }
                                       },
-                                      color: Colors.blue,
+                                      color: Colors.orange,
                                     ),
 
                                   SizedBox(width: 10,),
@@ -581,7 +581,7 @@ class _EditMachineDataState extends State<EditMachineData> {
                                       'Delete Machine',
                                       style: TextStyle(color: Colors.white),
                                     ),
-                                    color: Colors.blue,
+                                    color: Colors.orange,
                                     onPressed: () {
                                       deleteMachine();
                                     },

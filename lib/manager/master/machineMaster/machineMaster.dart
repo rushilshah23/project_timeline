@@ -194,10 +194,7 @@ class _MachineMasterState extends State<MachineMaster> {
 
                     Center(
                       child: Text('Our Machines',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          )),
+                          style: titlestyles(18,Colors.orangeAccent)),
                     ),
 
                     SizedBox(height: 20,),

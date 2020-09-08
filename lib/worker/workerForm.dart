@@ -8,17 +8,6 @@ import 'package:searchable_dropdown/searchable_dropdown.dart';
 import '../CommonWidgets.dart';
 import '../CommonWidgets.dart';
 
-class WorkerForm extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-//      appBar: AppBar(
-//        title: Text("Update work"),
-//      ),
-      body: WorkerFormPage(),
-    );
-  }
-}
 
 class WorkerFormPage extends StatefulWidget {
   @override
@@ -68,7 +57,18 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
         setState(() {
           machines.add(
             DropdownMenuItem(
-              child: Text(values["machineName"].toString()),
+              child:  Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(values["machineName"]),
+                      Text(
+                        values['modelName'],
+                        style: TextStyle(color: Colors.grey,fontSize: 14),
+                      ),
+
+                    ],
+                  )),
               value: values["machineID"].toString(),
             ),
           );
@@ -123,7 +123,8 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
   @override
   Widget build(BuildContext context) {
     if (machines.length > 0)
-      return SingleChildScrollView(
+      return Scaffold(
+          body:SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(20),
           child: Form(
@@ -196,7 +197,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                   ),
                   child: Column(
                     children: [
-                      Text('PROJECT GOALS',
+                      Text('Digging Dimensions',
                           style: TextStyle(
                               fontSize: 15, fontStyle: FontStyle.italic)),
                       SizedBox(height: 20),
@@ -334,11 +335,11 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
             ),
           ),
         ),
-      );
+      ));
     else
-      return Center(
+      return Scaffold(body:Center(
         child: CircularProgressIndicator(),
-      );
+      ));
   }
 }
 

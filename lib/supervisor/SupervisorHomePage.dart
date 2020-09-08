@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:project_timeline/MasterDataSet/ourMachines.dart';
+import 'package:project_timeline/MasterDataSet/ourPetrolPump.dart';
+import 'package:project_timeline/ProgressTimeLine/ProgressPage.dart';
 
 import '../dashboard.dart';
+import 'AllocatedProjects.dart';
+import 'approveWork/WorkApproveModule.dart';
 
 
 
@@ -28,10 +33,25 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
       case 0:
         return new DashBoard();
 
+      case 1:
+        return new OurPetrolPumps();
+
+      case 2:
+        return new OurMachines();
+
+      case 3:
+        return new ProgressPage();
+
+      case 4:
+        return new YourAllocatedProjects();
+
+
+
       default:
         return new Text("Error");
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +117,7 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
                           Text("Our Petrol Pump")
                         ]),
                         onTap: () {
-                          _onSelectItem(0);
+                          _onSelectItem(1);
 
                           appbartitle = "Our Petrol Pumps";
                         }),
@@ -108,7 +128,7 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
                           Text("Our Machines")
                         ]),
                         onTap: () {
-                          _onSelectItem(0);
+                          _onSelectItem(2);
 
                           appbartitle = "Our Machines";
                         }),
@@ -122,7 +142,7 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
                       Text(" Our Projects")
                     ]),
                     onTap: () {
-                      _onSelectItem(0);
+                      _onSelectItem(3);
                       appbartitle = "Our Projects";
                     }),
 
@@ -133,7 +153,7 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
                       Text(" Your Allocated Projects")
                     ]),
                     onTap: () {
-                      _onSelectItem(0);
+                      _onSelectItem(4);
                       appbartitle = "Your Allocated Projects";
                     }),
               ],

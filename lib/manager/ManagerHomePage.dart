@@ -53,7 +53,7 @@ class ManagerHomePageState extends State<ManagerHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ThemeAppbar("DashBoard"),
+      appBar: ThemeAppbar(appbartitle),
 
       drawer: ClipRRect(
         borderRadius: BorderRadius.circular(20),

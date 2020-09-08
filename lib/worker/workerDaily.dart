@@ -58,6 +58,7 @@ class _WorkerDailyState extends State<WorkerDaily> {
                           leading: getIcon(date[index]
                               ["Lm4oPWmWAkTELRXPc4nPv5i7pB92"]["status"]),
                           title: Text(date[index]["key"]),
+                          subtitle: Text(date[index]["Lm4oPWmWAkTELRXPc4nPv5i7pB92"]["status"]),
                           onTap: () {
                             print(date[index]["key"]);
                           },

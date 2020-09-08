@@ -7,16 +7,7 @@ import 'package:project_timeline/CommonWidgets.dart';
 import '../CommonWidgets.dart';
 import '../CommonWidgets.dart';
 
-class SearchWorker extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        /*appBar: AppBar(
-          title: Text("Add Workers"),
-        ),*/
-        body: SearchWorkerPage());
-  }
-}
+
 
 class SearchWorkerPage extends StatefulWidget {
   @override
@@ -38,7 +29,18 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
         setState(() {
           items.add(
             DropdownMenuItem(
-              child: Text(result['name']),
+              child:  Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(result['name']),
+                      Text(
+                        result['mobile'].toString()+"  "+result['email'],
+                        style: TextStyle(color: Colors.grey,fontSize: 14),
+                      ),
+
+                    ],
+                  )),
               value: result['uid'],
             ),
           );
@@ -96,7 +98,9 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
   @override
   Widget build(BuildContext context) {
     if (items.length > 0)
-      return Container(
+      return Scaffold(
+          appBar:  ThemeAppbar("Add Workers"),
+          body:Container(
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: ListView(
           children: [
@@ -133,16 +137,17 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
                     isExpanded: true,
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 20),
                 FlatButton(
                   child: Container(
+                    height: 50,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       gradient: gradients()
                     ),
                     child: Center(
                       child: Text(
-                        'Add',
+                        'Save',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -155,11 +160,12 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
             ),
           ],
         ),
-      );
+      ));
     else
-      return Center(
+    return Scaffold(
+    body: Center(
         child: CircularProgressIndicator(),
-      );
+      ));
   }
 }
 

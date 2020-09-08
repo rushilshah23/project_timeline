@@ -263,9 +263,10 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
 
 
                 SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Flexible(
                       child: FlatButton(
@@ -276,45 +277,45 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
                               borderRadius: BorderRadius.all(Radius.circular(5.0)),
                             gradient: gradients()
                           ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 9,left: 13),
-                              child: Text(
-                                  "Add Petrol Pump",
+
+                              child: Center(child:Text(
+                                  "Add ",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold
                                 ),
-                              ),
-                            )
+                              )),
+
                         ),
                         onPressed: () {
                           addPetrolPump();
                         },
                       ),
                     ),
-                    Flexible(
-                    child :FlatButton(
-                      child: Container(
-                        height: 45,
-                        width: 120,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            gradient: gradients() //Gradient
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 9,left: 13),
-                          child: Text(
-                            'Our Projects',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        ),
-                      ),
-                      onPressed: () {},
-                    ),
-                    ),
+                    SizedBox(height: 20,),
+//                    Flexible(
+//                    child :FlatButton(
+//                      child: Container(
+//                        height: 45,
+//                        width: 120,
+//                        decoration: BoxDecoration(
+//                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+//                            gradient: gradients() //Gradient
+//                        ),
+//                        child: Padding(
+//                          padding: const EdgeInsets.only(top: 9,left: 13),
+//                          child: Text(
+//                            'Our Projects',
+//                            style: TextStyle(
+//                                color: Colors.white,
+//                                fontWeight: FontWeight.bold
+//                            ),
+//                          ),
+//                        ),
+//                      ),
+//                      onPressed: () {},
+//                    ),
+//                    ),
                   ],
                 ),
 

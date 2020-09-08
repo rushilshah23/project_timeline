@@ -93,7 +93,7 @@ class _TestState extends State<Test> {
                     Text(values["machineName"]),
                     Text(
                     values['modelName'],
-                    style: TextStyle(color: Colors.grey),
+                    style: TextStyle(color: Colors.grey,fontSize: 14),
                   ),
 
                 ],
@@ -199,6 +199,7 @@ class _TestState extends State<Test> {
                   style: titlestyles(24, Colors.orange[700]),
                 ),
               ),
+              SizedBox(height: 20,),
               TextFormField(
                 textInputAction: TextInputAction.newline,
                 keyboardType: TextInputType.multiline,
@@ -524,19 +525,19 @@ class _TestState extends State<Test> {
               FlatButton(
                 child: Container(
                   height: 50,
-                  width: 400,
+                  width: MediaQuery.of(context).size.width-40,
                   decoration: BoxDecoration(
                     gradient: gradients()
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 15,left: 120),
-                    child: Text(
+                    padding: const EdgeInsets.all(15),
+                    child: Center(child:Text(
                       'Estimate Project',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold
                       ),
-                    ),
+                    )),
                   ),
                 ),
                 onPressed: () {

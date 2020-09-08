@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:project_timeline/manager/master/machineMaster/EditMachineData.dart';
 import 'package:project_timeline/manager/master/machineMaster/addNewMachine.dart';
 
+import '../CommonWidgets.dart';
+
 
 
 class OurMachines extends StatefulWidget {
@@ -191,10 +193,7 @@ class _OurMachinesState extends State<OurMachines> {
 
                     Center(
                       child: Text('Our Machines',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          )),
+                          style: titlestyles(18, Colors.orange)),
                     ),
 
                     SizedBox(height: 20,),

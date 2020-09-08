@@ -8,6 +8,7 @@ import '../../CommonWidgets.dart';
 
 
 
+
 class ApproveWork extends StatefulWidget {
   @override
   _ApproveWorkState createState() => _ApproveWorkState();
@@ -44,9 +45,8 @@ class _ApproveWorkState extends State<ApproveWork> {
   Widget build(BuildContext context) {
     return new Scaffold(
 
-      /*appBar: AppBar(
-        title: Text("Approve Work Done"),
-      ),*/
+      appBar:  ThemeAppbar("Approve Work"),
+
 
       body: StreamBuilder(
           stream: databaseReference.child("projects").child(projectID).child("progress").onValue,
@@ -105,7 +105,7 @@ class _ApproveWorkState extends State<ApproveWork> {
                   ),
                   itemBuilder: (c, element) {
                     return Card(
-                      elevation: 8.0,
+                      elevation: 4.0,
                       margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
                       child: GestureDetector(
                         onTap: (){

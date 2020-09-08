@@ -58,20 +58,35 @@ class _WorkDetailsState extends State<WorkDetails> {
 
                       Text("Worker Name: " +widget.data["workerName"].toString() ),
                       SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       Text("Volume Excavated: "+widget.data["volumeExcavated"].toString()),
 
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text("Approval status: "+widget.data["status"].toString()),
 
                       SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       Text("Hours Worked: "+widget.data["hoursWorked"].toString()),
 
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text("Length: "+widget.data["length"].toString()+" "+"Depth: "+widget.data["depth"].toString()),
+
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text("Upper Width: "+widget.data["upperWidth"].toString()+" "+"Lower Width: "+widget.data["lowerWidth"].toString()),
+
+
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Text("Work difference: "),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text("Approval status: "+widget.data["status"].toString()),
 
 
                       SizedBox(
@@ -86,7 +101,7 @@ class _WorkDetailsState extends State<WorkDetails> {
                             child: FlatButton(
                               child: Container(
                                 height: 50,
-                                width: 150,
+//                                width: 150,
                                 decoration: BoxDecoration(
                                   gradient: gradients(),
                                   borderRadius: BorderRadius.circular(5)
@@ -103,7 +118,7 @@ class _WorkDetailsState extends State<WorkDetails> {
 
                             child: Container(
                                 height: 50,
-                                width: 150,
+                               // width: 150,
                                 decoration: BoxDecoration(
                                     gradient: gradients(),
                                     borderRadius: BorderRadius.circular(5)

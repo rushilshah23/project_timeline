@@ -118,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SearchWorker()),
+                  MaterialPageRoute(builder: (context) => SearchWorkerPage()),
                 );
               },
             ),
@@ -130,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => WorkerForm()),
+                  MaterialPageRoute(builder: (context) => WorkerFormPage()),
                 );
               },
             ),

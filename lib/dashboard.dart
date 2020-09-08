@@ -12,8 +12,8 @@ class DashBoard extends StatefulWidget {
 
 class _DashBoardState extends State<DashBoard> {
 
-  double percent = 35;
-  double percent1 = 60;
+  double percent = 10;
+  double percent1 = 10;
   double percent2 = 80;
   @override
   Widget build(BuildContext context) {

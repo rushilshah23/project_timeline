@@ -4,6 +4,7 @@ import 'package:project_timeline/MasterDataSet/ourMachines.dart';
 import 'package:project_timeline/MasterDataSet/ourPetrolPump.dart';
 import 'package:project_timeline/ProgressTimeLine/ProgressPage.dart';
 import 'package:project_timeline/worker/updateWork.dart';
+import 'package:project_timeline/worker/workerDaily.dart';
 import 'package:project_timeline/worker/workerForm.dart';
 
 import '../dashboard.dart';
