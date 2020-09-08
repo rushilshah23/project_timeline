@@ -115,6 +115,13 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
             .set({
           "MachineUsed": machineUsed,
           "hoursWorked": hoursWorked,
+          'intervals': {
+            for (int i = 0; i < timeIntervals; i++)
+              '$i': {
+                'startTime': startTime[i].toString(),
+                'endTime': endTime[i].toString(),
+              }
+          },
           "workerName": workerName,
           "depth": depth,
           "length": length,
