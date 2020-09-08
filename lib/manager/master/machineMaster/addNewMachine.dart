@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../CommonWidgets.dart';
-import '../../../CommonWidgets.dart';
-import '../../../CommonWidgets.dart';
 
 String machineType = 'One';
 List<String> soilTypeSelected = List.generate(74, (i) => 'None');
@@ -108,8 +106,7 @@ class _AddNewMachineState extends State<AddNewMachine> {
                             children: [
                               Center(
                                 child: Text('Add a new machine',
-                                    style: titlestyles(18, Colors.orange)
-                                ),
+                                    style: titlestyles(18, Colors.orange)),
                               ),
 
                               SizedBox(height: 15),
@@ -290,8 +287,9 @@ class _AddNewMachineState extends State<AddNewMachine> {
                                               bottomLeft: Radius.circular(10)),
                                         ),
                                       ),
-                                      validator: (val) =>
-                                          val.isEmpty ? 'Enter fuel used' : null,
+                                      validator: (val) => val.isEmpty
+                                          ? 'Enter fuel used'
+                                          : null,
                                       onChanged: (val) {
                                         setState(() => fuelConsumption = val);
                                       },
@@ -504,11 +502,11 @@ class _AddNewMachineState extends State<AddNewMachine> {
                                   child: Container(
                                     height: 50,
                                     width: 400,
-                                    decoration: BoxDecoration(
-                                      gradient: gradients()
-                                    ),
+                                    decoration:
+                                        BoxDecoration(gradient: gradients()),
                                     child: Padding(
-                                      padding: const EdgeInsets.only(left: 130,top: 15),
+                                      padding: const EdgeInsets.only(
+                                          left: 130, top: 15),
                                       child: Text(
                                         'Add Machine',
                                         style: TextStyle(color: Colors.white),
@@ -575,8 +573,15 @@ class _AmountOfExavationState extends State<AmountOfExavation> {
                       debugPrint(widget.index.toString());
                     });
                   },
-                  items: <String>['None', 'Type A', 'Type B', 'Type C','Sandy soil','Loam Soil','Silt Soil']
-                      .map<DropdownMenuItem<String>>((String value) {
+                  items: <String>[
+                    'None',
+                    'Type A',
+                    'Type B',
+                    'Type C',
+                    'Sandy soil',
+                    'Loam Soil',
+                    'Silt Soil'
+                  ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
