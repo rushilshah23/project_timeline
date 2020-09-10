@@ -55,7 +55,10 @@ class _MachineMasterState extends State<MachineMaster> {
 
 
             child: Container(
-              
+              decoration: BoxDecoration(
+                gradient: cards(),
+
+              ),
               padding: EdgeInsets.only(top: 20,bottom: 20,left: 10,right: 10),
                 child:Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -83,7 +86,11 @@ class _MachineMasterState extends State<MachineMaster> {
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
                                   softWrap: false,
-                                  style: TextStyle(fontSize: 14,),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic
+                                  ),
                                 ),
 
 
@@ -92,7 +99,10 @@ class _MachineMasterState extends State<MachineMaster> {
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
                                   softWrap: false,
-                                  style: TextStyle(fontSize: 14,),
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w700
+                                  ),
                                 ),
                                 SizedBox(height: 5,),
 
@@ -101,7 +111,7 @@ class _MachineMasterState extends State<MachineMaster> {
                                   overflow: TextOverflow.clip,
                                   maxLines: 2,
                                   softWrap: false,
-                                  style: TextStyle(fontSize: 14),
+                                  style: TextStyle(fontSize: 15),
 
                                 ),
 
@@ -110,7 +120,7 @@ class _MachineMasterState extends State<MachineMaster> {
                                   overflow: TextOverflow.clip,
                                   maxLines: 2,
                                   softWrap: false,
-                                  style: TextStyle(fontSize: 14),
+                                  style: TextStyle(fontSize: 15),
 
                                 ),
 
@@ -122,7 +132,7 @@ class _MachineMasterState extends State<MachineMaster> {
                                       overflow: TextOverflow.clip,
                                       maxLines: 2,
                                       softWrap: false,
-                                      style: TextStyle(fontSize: 14),
+                                      style: TextStyle(fontSize: 15),
 
                                     ),
 

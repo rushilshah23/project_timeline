@@ -99,13 +99,14 @@ class LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 20,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: new Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
+
                       Container(
                         width: MediaQuery.of(context).size.width / 1.2,
                         //height: 50,

@@ -59,6 +59,9 @@ class _PetrolMasterState extends State<PetrolMaster> {
             semanticContainer: true,
             color: Colors.amberAccent.shade50,
             child: Container(
+              decoration: BoxDecoration(
+                gradient: cards()
+              ),
                 child: Column(
               children: <Widget>[
 
@@ -81,7 +84,9 @@ class _PetrolMasterState extends State<PetrolMaster> {
                             maxLines: 1,
                             softWrap: false,
                             style: TextStyle(
-                              fontSize: 14,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FontStyle.italic
                             ),
                           ),
                           SizedBox(
@@ -89,13 +94,20 @@ class _PetrolMasterState extends State<PetrolMaster> {
                           ),
                           Text(
                             "Address" +
-                                ": " +
+                                ": "
+                                    .toString(),
+                            overflow: TextOverflow.clip,
+                            maxLines: 2,
+                            softWrap: false,
+                            style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),
+                          ),
+                          Text(
                                 allPetrolPump[index]["petrolPumpAddress"]
                                     .toString(),
                             overflow: TextOverflow.clip,
                             maxLines: 2,
                             softWrap: false,
-                            style: TextStyle(fontSize: 14),
+                            style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),
                           ),
                           SizedBox(
                             width: 10,
@@ -107,7 +119,7 @@ class _PetrolMasterState extends State<PetrolMaster> {
                             overflow: TextOverflow.clip,
                             maxLines: 2,
                             softWrap: false,
-                            style: TextStyle(fontSize: 14),
+                            style: TextStyle(fontSize: 15),
                           ),
                         ],
                       ),
