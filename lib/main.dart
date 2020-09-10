@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
-import 'package:project_timeline/supervisor/SupervisorRequest.dart/SupervisorRequestList.dart';
+import 'package:project_timeline/manager/SupervisorRequestList.dart';
 import 'package:project_timeline/supervisor/approveWork/WorkApproveModule.dart';
-import 'package:project_timeline/worker/WorkerRequestList/workerRequestList.dart';
+import 'package:project_timeline/supervisor/workerRequestList.dart';
 import 'login.dart';
 import 'manager/master/machineMaster/machineMaster.dart';
 
