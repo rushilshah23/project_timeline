@@ -5,9 +5,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:project_timeline/CommonWidgets.dart';
 
 import '../CommonWidgets.dart';
-import '../CommonWidgets.dart';
-
-
 
 class SearchWorkerPage extends StatefulWidget {
   @override
@@ -17,6 +14,7 @@ class SearchWorkerPage extends StatefulWidget {
 class _SearchWorkerPageState extends State<SearchWorkerPage> {
   String selectedValue;
   List<int> selectedItems = [];
+  List<String> prevSelected = [];
   final List<DropdownMenuItem> items = [];
   final List<WorkerList> workersList = [];
   final CollectionReference workers = Firestore.instance.collection("workers");
@@ -29,18 +27,17 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
         setState(() {
           items.add(
             DropdownMenuItem(
-              child:  Container(
+              child: Container(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(result['name']),
-                      Text(
-                        result['mobile'].toString()+"  "+result['email'],
-                        style: TextStyle(color: Colors.grey,fontSize: 14),
-                      ),
-
-                    ],
-                  )),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(result['name']),
+                  Text(
+                    result['mobile'].toString() + "  " + result['email'],
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                  ),
+                ],
+              )),
               value: result['uid'],
             ),
           );
@@ -60,6 +57,7 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
           workersList.forEach((worker) {
             if (workerSelected == worker.uid) {
               setState(() {
+                prevSelected.add(workerSelected);
                 selectedItems.add(workersList.indexOf(worker));
               });
             }
@@ -69,15 +67,29 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
     });
   }
 
-  void submitForm() {
+  void submitForm() async {
     try {
+      prevSelected.forEach((prevWorker) async {
+        await workers
+            .document(prevWorker)
+            .updateData({"assignedProject": "No project assigned"});
+      });
+      await databaseReference
+          .child("projects")
+          .child(projectID)
+          .child("workers")
+          .set({});
       selectedItems.forEach((i) async {
+        print(workersList[i].uid);
+        await workers
+            .document(workersList[i].uid)
+            .updateData({"assignedProject": projectID});
         await databaseReference
             .child("projects")
             .child(projectID)
             .child("workers")
             .child(workersList[i].uid)
-            .update({
+            .set({
           "name": workersList[i].name,
           "mobile": workersList[i].mobile,
         });
@@ -99,71 +111,69 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
   Widget build(BuildContext context) {
     if (items.length > 0)
       return Scaffold(
-          appBar:  ThemeAppbar("Add Workers"),
-          body:Container(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        child: ListView(
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          appBar: ThemeAppbar("Add Workers"),
+          body: Container(
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+            child: ListView(
               children: [
-                SizedBox(height: 10),
-                Center(
-                  child: Text('Add Workers',
-                      style: titlestyles(18, Colors.orange)
-                  ),
-                ),
-                SizedBox(height: 10),
-                Center(
-                  child: SearchableDropdown.multiple(
-                    items: items,
-                    selectedItems: selectedItems,
-                    hint: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Text("Select any"),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(height: 10),
+                    Center(
+                      child: Text('Add Workers',
+                          style: titlestyles(18, Colors.orange)),
                     ),
-                    searchHint: "Select any",
-                    onChanged: (value) {
-                      setState(() {
-                        selectedItems = value;
-                      });
-                      print(selectedItems);
-                    },
-                    closeButton: (selectedItems) {
-                      return (selectedItems.isNotEmpty
-                          ? "Save ${selectedItems.length == 1 ? '"' + items[selectedItems.first].value.toString() + '"' : '(' + selectedItems.length.toString() + ')'}"
-                          : "Save without selection");
-                    },
-                    isExpanded: true,
-                  ),
-                ),
-                SizedBox(height: 20),
-                FlatButton(
-                  child: Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: gradients()
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Save',
-                        style: TextStyle(color: Colors.white),
+                    SizedBox(height: 10),
+                    Center(
+                      child: SearchableDropdown.multiple(
+                        items: items,
+                        selectedItems: selectedItems,
+                        hint: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text("Select any"),
+                        ),
+                        searchHint: "Select any",
+                        onChanged: (value) {
+                          setState(() {
+                            selectedItems = value;
+                          });
+                          print(selectedItems);
+                        },
+                        closeButton: (selectedItems) {
+                          return (selectedItems.isNotEmpty
+                              ? "Save ${selectedItems.length == 1 ? '"' + items[selectedItems.first].value.toString() + '"' : '(' + selectedItems.length.toString() + ')'}"
+                              : "Save without selection");
+                        },
+                        isExpanded: true,
                       ),
                     ),
-                  ),
-                  onPressed: () {
-                    submitForm();
-                  },
+                    SizedBox(height: 20),
+                    FlatButton(
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: gradients()),
+                        child: Center(
+                          child: Text(
+                            'Save',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        submitForm();
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
-      ));
+          ));
     else
-    return Scaffold(
-    body: Center(
+      return Scaffold(
+          body: Center(
         child: CircularProgressIndicator(),
       ));
   }
