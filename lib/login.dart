@@ -130,27 +130,66 @@ class LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 1.2,
-                    //height: 50,
-                    padding:
-                        EdgeInsets.only(top: 4, left: 16, right: 16, bottom: 4),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(color: Colors.black26, blurRadius: 10),
-                        ]),
-                    child: TextFormField(
-                      controller: passController,
-                      validator: (val) => val.isEmpty ? 'Enter password' : null,
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.vpn_key,
-                          color: Colors.grey,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: new Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+
+                      Container(
+                        width: MediaQuery.of(context).size.width / 1.2,
+                        //height: 50,
+                        padding: EdgeInsets.only(
+                            top: 4, left: 16, right: 16, bottom: 7),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(color: Colors.black26, blurRadius: 10),
+                            ]),
+                        child: TextFormField(
+                          controller: userController,
+                          onChanged: (value) {
+                            _email = value;
+                          },
+                          validator: (val) => val.isEmpty ? 'Enter email' : null,
+                          decoration: InputDecoration(
+                            icon: Icon(
+                              Icons.email,
+                              color: Colors.grey,
+                            ),
+                            hintText: 'Email',
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width / 1.2,
+                        //height: 50,
+                        padding: EdgeInsets.only(
+                            top: 4, left: 16, right: 16, bottom: 4),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(color: Colors.black26, blurRadius: 10),
+                            ]),
+                        child: TextFormField(
+                          controller: passController,
+                          validator: (val) => val.isEmpty ? 'Enter password' : null,
+                          decoration: InputDecoration(
+                            icon: Icon(
+                              Icons.vpn_key,
+                              color: Colors.grey,
+                            ),
+                            hintText: 'Password',
+                          ),
                         ),
                         hintText: 'Password',
                       ),
