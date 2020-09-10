@@ -38,6 +38,7 @@ dependencies:
     groovin_widgets: ^1.6.0
     flutter_time_picker_spinner: ^1.0.6+1
     multi_image_picker: ^4.7.13
+    firebase_auth: ^0.16.1
 
 dev_dependencies:
     flutter_test:
