@@ -72,7 +72,7 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ThemeAppbar("Request Login"),
+      // appBar: ThemeAppbar("Request Login"),
       body: Container(
         child: Form(
           key: _formKey,
@@ -85,7 +85,7 @@ class _RegisterState extends State<Register> {
                   children: [
                     Center(
                       child: Text(
-                        'Add a new machine',
+                        'Register for Work Requests',
                         style: titlestyles(18, Colors.orange),
                       ),
                     ),
@@ -154,51 +154,73 @@ class _RegisterState extends State<Register> {
                         setState(() => phoneNo = val);
                       },
                     ),
-                    new Radio(
-                      value: "user",
-                      groupValue: _requestType,
-                      onChanged: (value) {
-                        setState(() {
-                          _requestType = value;
-                        });
-                        debugPrint(_requestType.toString());
-                      },
+                    Row(
+                      children: [
+                        Flexible(
+                          child: new Radio(
+                            value: "user",
+                            groupValue: _requestType,
+                            onChanged: (value) {
+                              setState(() {
+                                _requestType = value;
+                              });
+                              debugPrint(_requestType.toString());
+                            },
+                          ),
+                        ),
+                        Flexible(
+                          child: new Text(
+                            'User',
+                            style: new TextStyle(fontSize: 16.0),
+                          ),
+                        ),
+                      ],
                     ),
-                    new Text(
-                      'User',
-                      style: new TextStyle(fontSize: 16.0),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: new Radio(
+                            value: "supervisor",
+                            groupValue: _requestType,
+                            onChanged: (value) {
+                              setState(() {
+                                _requestType = value;
+                              });
+                              debugPrint(_requestType.toString());
+                            },
+                          ),
+                        ),
+                        new Text(
+                          'Supervisor',
+                          style: new TextStyle(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
                     ),
-                    new Radio(
-                      value: "supervisor",
-                      groupValue: _requestType,
-                      onChanged: (value) {
-                        setState(() {
-                          _requestType = value;
-                        });
-                        debugPrint(_requestType.toString());
-                      },
-                    ),
-                    new Text(
-                      'Supervisor',
-                      style: new TextStyle(
-                        fontSize: 16.0,
-                      ),
-                    ),
-                    new Radio(
-                      value: "worker",
-                      groupValue: _requestType,
-                      onChanged: (value) {
-                        setState(() {
-                          _requestType = value;
-                        });
-                        debugPrint(_requestType.toString());
-                      },
-                    ),
-                    new Text(
-                      'Worker',
-                      style: new TextStyle(
-                        fontSize: 16.0,
-                      ),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: new Radio(
+                            value: "worker",
+                            groupValue: _requestType,
+                            onChanged: (value) {
+                              setState(() {
+                                _requestType = value;
+                              });
+                              debugPrint(_requestType.toString());
+                            },
+                          ),
+                        ),
+                        Flexible(
+                          child: new Text(
+                            'Worker',
+                            style: new TextStyle(
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: 15),
                     TextFormField(

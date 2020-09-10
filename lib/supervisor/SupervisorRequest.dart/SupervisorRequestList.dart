@@ -15,7 +15,7 @@ class _SupervisorRequestListState extends State<SupervisorRequestList> {
     return Container(
         child: Card(
             elevation: 4,
-            margin: EdgeInsets.only(left: 15, right: 15, top: 7, bottom: 7),
+            margin: EdgeInsets.only(left: 5, right: 5, top: 7, bottom: 7),
             semanticContainer: true,
             color: Colors.amberAccent.shade50,
             child: Container(
@@ -86,39 +86,28 @@ class _SupervisorRequestListState extends State<SupervisorRequestList> {
                             )
                           ],
                         )),
-                    // Container(
-                    //     margin: EdgeInsets.only(top: 5),
-                    //     child: Column(
-                    //       children: <Widget>[
-                    //         SizedBox(
-                    //           width: 10,
-                    //         ),
-                    //         IconButton(
-                    //           icon: Icon(Icons.edit),
-                    //           color: Colors.grey,
-                    //           onPressed: () {},
-                    //         ),
-                    //         IconButton(
-                    //           icon: Icon(Icons.delete),
-                    //           color: Colors.grey,
-                    //           onPressed: () {},
-                    //         ),
-                    //         IconButton(
-                    //           icon: Icon(Icons.add_box),
-                    //           color: Colors.grey,
-                    //           onPressed: () {
-                    //             // Navigator.push(
-                    //             //   context,
-                    //             //   MaterialPageRoute(
-                    //             //       builder: (context) => YourCreatedTasks(
-                    //             //             projectID: myCreatedProjects[index]
-                    //             //                 ["projectID"],
-                    //             //           )),
-                    //             // );
-                    //           },
-                    //         ),
-                    //       ],
-                    //     ))
+                    Container(
+                        margin: EdgeInsets.only(top: 5),
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(
+                              width: 10,
+                            ),
+                            FlatButton(
+                              color: Color.fromRGBO(204, 255, 153, 1),
+                              child: Text("Accept"),
+                              onPressed: () {},
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            FlatButton(
+                              color: Color.fromRGBO(244, 137, 137, 1),
+                              child: Text("Decline"),
+                              onPressed: () {},
+                            ),
+                          ],
+                        ))
                   ],
                 )
               ],
@@ -128,7 +117,7 @@ class _SupervisorRequestListState extends State<SupervisorRequestList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ThemeAppbar("Supervisor Request List"),
+      // appBar: ThemeAppbar("Supervisor Request List"),
       body: StreamBuilder(
         stream: databaseReference.child("request").child("supervisor").onValue,
         builder: (context, snap) {
