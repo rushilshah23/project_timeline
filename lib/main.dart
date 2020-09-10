@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
+import 'package:project_timeline/supervisor/SupervisorRequest.dart/SupervisorRequestList.dart';
 import 'package:project_timeline/supervisor/approveWork/WorkApproveModule.dart';
+import 'package:project_timeline/worker/WorkerRequestList/workerRequestList.dart';
 import 'login.dart';
 import 'manager/master/machineMaster/machineMaster.dart';
-
 
 import 'manager/test.dart';
 import 'supervisor/addWorkers.dart';
@@ -83,8 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => ApproveWork()),
+                  MaterialPageRoute(builder: (context) => ApproveWork()),
                 );
               },
             ),
@@ -100,7 +100,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-
             RaisedButton(
               child: Text("Login"),
               onPressed: () {
@@ -119,6 +118,28 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => SearchWorkerPage()),
+                );
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            RaisedButton(
+              child: Text("Supervisor Rquest"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SupervisorRequestList()),
+                );
+              },
+            ),
+            RaisedButton(
+              child: Text("Worker Rquest"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => WorkerRequestList()),
                 );
               },
             ),
