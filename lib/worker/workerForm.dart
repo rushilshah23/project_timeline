@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:project_timeline/CommonWidgets.dart';
+import 'package:project_timeline/manager/master/machineMaster/addNewMachine.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
@@ -31,6 +32,7 @@ class WorkerFormPage extends StatefulWidget {
 
 class _WorkerFormPageState extends State<WorkerFormPage> {
   List<DropdownMenuItem> machines = [];
+  List<MachineDetails> machineDetails = [];
   String selectedMachine, machineUsed;
   var hoursWorked,
       depth,
@@ -39,7 +41,11 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
       lowerWidth,
       todaysDate,
       volume,
-      comment;
+      comment,
+      estimateVolume,
+      estimation,
+      soilType,
+      exacavatedPerHour;
   final databaseReference = FirebaseDatabase.instance.reference();
   final _formKey = GlobalKey<FormState>();
   TextEditingController depthController = TextEditingController();
@@ -57,13 +63,21 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
 
   @override
   void initState() {
-    loadMachines();
+    loadData();
     timeIntervals = 1;
     super.initState();
     todaysDate = formatter.format(now);
   }
 
-  void loadMachines() async {
+  void loadData() async {
+    await databaseReference
+        .child("projects")
+        .child(projectID)
+        .child("soilType")
+        .once()
+        .then((snapshot) {
+      soilType = snapshot.value;
+    });
     await databaseReference
         .child("masters")
         .child("machineMaster")
@@ -88,6 +102,8 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
               value: values["machineID"].toString(),
             ),
           );
+          machineDetails
+              .add(MachineDetails(values["machineID"], values["excavation"]));
         });
       });
     });
@@ -102,6 +118,19 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
           hoursWorked += endTime[i].difference(startTime[i]).inHours;
         }
         print(hoursWorked);
+        machineDetails.forEach((machine) {
+          if (machine.machineID == machineUsed) {
+            machine.excavation.forEach((exacavation) {
+              if (exacavation["soilType"] == soilType) {
+                exacavatedPerHour =
+                    double.parse(exacavation["amountOfExcavation"]);
+              }
+            });
+          }
+        });
+        estimateVolume = hoursWorked * exacavatedPerHour;
+        estimation = estimateVolume < volume ? "Pass" : "Fail";
+        print(estimation);
         depth = double.parse(depthController.text);
         length = double.parse(lengthController.text);
         upperWidth = double.parse(upperWidthController.text);
@@ -132,6 +161,8 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
           "upperWidth": upperWidth,
           "lowerWidth": lowerWidth,
           "volumeExcavated": volume,
+          "estimatedVolume": estimateVolume,
+          "result": estimation,
           "status": "pending",
           "comment": comment,
         });
@@ -159,19 +190,21 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
     List<Asset> resultList = List<Asset>();
 
     try {
-      resultList = await MultiImagePicker.pickImages(
-        maxImages: 5,
-        enableCamera: true,
-        selectedAssets: images,
-        cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
-        materialOptions: MaterialOptions(
-          actionBarColor: "#abcdef",
-          actionBarTitle: "Example App",
-          allViewTitle: "All Photos",
-          useDetailsView: false,
-          selectCircleStrokeColor: "#000000",
-        ),
-      );
+      setState(() async {
+        resultList = await MultiImagePicker.pickImages(
+          maxImages: 5,
+          enableCamera: true,
+          selectedAssets: images,
+          cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
+          materialOptions: MaterialOptions(
+            actionBarColor: "#abcdef",
+            actionBarTitle: "Example App",
+            allViewTitle: "All Photos",
+            useDetailsView: false,
+            selectCircleStrokeColor: "#000000",
+          ),
+        );
+      });
     } on Exception catch (e) {
       print(e.toString());
     }
@@ -496,10 +529,9 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
 }
 
 class MachineDetails {
-  MachineDetails(this.machineName, this.machineID, this.modelName);
-  var machineName;
+  MachineDetails(this.machineID, this.excavation);
   var machineID;
-  var modelName;
+  var excavation;
 }
 
 class WorkIntervals extends StatefulWidget {
