@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project_timeline/SupervisorFormCreation.dart';
+import 'package:project_timeline/WorkerCreationForm.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
 import 'package:project_timeline/manager/SupervisorRequestList.dart';
 import 'package:project_timeline/supervisor/approveWork/WorkApproveModule.dart';
@@ -121,9 +123,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-            SizedBox(
-              height: 20,
-            ),
             RaisedButton(
               child: Text("Supervisor Rquest"),
               onPressed: () {
@@ -143,8 +142,24 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-            SizedBox(
-              height: 20,
+            RaisedButton(
+              child: Text("Worker Form- Supervisor can create himself"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => WorkerCreationForm()),
+                );
+              },
+            ),
+            RaisedButton(
+              child: Text("Supervisor Form- Manager can create himself"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SupervisorFormCreation()),
+                );
+              },
             ),
             RaisedButton(
               child: Text("Worker Form"),
@@ -155,9 +170,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-            SizedBox(
-              height: 20,
-            ),
             RaisedButton(
               child: Text("Worker Daily Updates"),
               onPressed: () {
@@ -166,9 +178,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   MaterialPageRoute(builder: (context) => WorkerDaily()),
                 );
               },
-            ),
-            SizedBox(
-              height: 20,
             ),
           ],
         ),
