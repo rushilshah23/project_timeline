@@ -2,7 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/CommonWidgets.dart';
 import 'package:project_timeline/manager/master/petrolMaster/EditPetrolPump.dart';
-
+import 'package:photo_view/photo_view.dart';
 import '../../CommonWidgets.dart';
 import '../../CommonWidgets.dart';
 import '../../CommonWidgets.dart';
@@ -28,20 +28,44 @@ class _WorkDetailsState extends State<WorkDetails> {
   }
 
 
+  Widget buildGridView() {
+    return Container(
+        height: MediaQuery.of(context).size.height/4,
+        child:GridView.count(
+          crossAxisCount: 3,
+          children: List.generate(6, (index) {
+            return Container(
+                child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return PhotoView(
+                        imageProvider:NetworkImage("https://robohash.org/$index"),
+                    );
+                  }));
+            },
+                    child:Card(
+              child: Image.network("https://robohash.org/$index"),
+            ))); //
+          }),
+        ));
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Center(
         child: Material(
           child: Container(
             width: MediaQuery.of(context).size.width / 1.3,
-            height: MediaQuery.of(context).size.height / 1.7,
+            height: MediaQuery.of(context).size.height / 1.2,
             padding: EdgeInsets.fromLTRB(20, 40, 20, 10),
-            child: Form(
+            child: Container(
 
               child: ListView(
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+
 
                     children: <Widget>[
 
@@ -89,9 +113,13 @@ class _WorkDetailsState extends State<WorkDetails> {
                       Text("Approval status: "+widget.data["status"].toString()),
 
 
+                       buildGridView(),
+
                       SizedBox(
                         height: 50,
                       ),
+
+
 
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -100,7 +128,7 @@ class _WorkDetailsState extends State<WorkDetails> {
                           Flexible(
                             child: FlatButton(
                               child: Container(
-                                height: 50,
+                                height: 40,
 //                                width: 150,
                                 decoration: BoxDecoration(
                                   gradient: gradients(),
@@ -117,7 +145,7 @@ class _WorkDetailsState extends State<WorkDetails> {
                           child: FlatButton(
 
                             child: Container(
-                                height: 50,
+                                height:40,
                                // width: 150,
                                 decoration: BoxDecoration(
                                     gradient: gradients(),
@@ -134,9 +162,9 @@ class _WorkDetailsState extends State<WorkDetails> {
                       ),
 
 
+
                     ],
-                  ),
-                ],
+
               ),
             ),
           ),

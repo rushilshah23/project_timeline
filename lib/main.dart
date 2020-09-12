@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:project_timeline/SupervisorFormCreation.dart';
-import 'package:project_timeline/WorkerCreationForm.dart';
+import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/manager/CreateAcceptSupervisor/SupervisorFormCreation.dart';
 import 'package:project_timeline/imageTesting.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
-import 'package:project_timeline/manager/SupervisorRequestList.dart';
+import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/manager/CreateAcceptSupervisor/SupervisorRequestList.dart';
 import 'package:project_timeline/supervisor/approveWork/WorkApproveModule.dart';
-import 'package:project_timeline/supervisor/workerRequestList.dart';
+import 'package:project_timeline/supervisor/createAcceptWorker/WorkerCreationForm.dart';
+import 'package:project_timeline/supervisor/createAcceptWorker/workerRequestList.dart';
 import 'login.dart';
 import 'manager/master/machineMaster/machineMaster.dart';
 

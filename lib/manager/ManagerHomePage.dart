@@ -7,6 +7,7 @@ import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
 import 'package:project_timeline/manager/projects.dart';
 
 import '../dashboard.dart';
+import 'CreateAcceptSupervisor/createAcceptSupervisor.dart';
 
 
 
@@ -43,6 +44,9 @@ class ManagerHomePageState extends State<ManagerHomePage> {
 
       case 4:
         return new ProgressPage();
+
+      case 5:
+        return new CreateAcceptSupervisor();
 
 
       default:
@@ -142,6 +146,16 @@ class ManagerHomePageState extends State<ManagerHomePage> {
                     onTap: () {
                       _onSelectItem(4);
                       appbartitle = " Progress Updates";
+                    }),
+
+                ListTile(
+                    title: Row(children: <Widget>[
+                      Icon(Icons.people),
+                      Text(" Create/Accept Supervisors")
+                    ]),
+                    onTap: () {
+                      _onSelectItem(5);
+                      appbartitle = "Create/Accept Supervisors";
                     }),
               ],
             ),

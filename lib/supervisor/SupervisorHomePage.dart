@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:project_timeline/MasterDataSet/ourMachines.dart';
 import 'package:project_timeline/MasterDataSet/ourPetrolPump.dart';
 import 'package:project_timeline/ProgressTimeLine/ProgressPage.dart';
+import 'package:project_timeline/supervisor/createAcceptWorker/createAcceptWorker.dart';
 
 import '../dashboard.dart';
 import 'AllocatedProjects.dart';
@@ -44,6 +45,9 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
 
       case 4:
         return new YourAllocatedProjects();
+
+      case 5:
+        return new CreateAcceptWorker();
 
 
 
@@ -155,6 +159,16 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
                     onTap: () {
                       _onSelectItem(4);
                       appbartitle = "Your Allocated Projects";
+                    }),
+
+                ListTile(
+                    title: Row(children: <Widget>[
+                      Icon(Icons.people),
+                      Text(" Create/Accept Workers")
+                    ]),
+                    onTap: () {
+                      _onSelectItem(5);
+                      appbartitle = "Create/Accept Workers";
                     }),
               ],
             ),

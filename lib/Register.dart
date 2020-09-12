@@ -287,7 +287,7 @@ class _RegisterState extends State<Register> {
                         setState(() => password = val);
                       },
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 20),
                     Center(
                       child: FlatButton(
                         child: Container(
@@ -297,7 +297,7 @@ class _RegisterState extends State<Register> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 130, top: 15),
                             child: Text(
-                              'Add Machine',
+                              'Register',
                               style: TextStyle(color: Colors.white),
                             ),
                           ),

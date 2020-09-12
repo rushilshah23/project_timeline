@@ -249,10 +249,13 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
           key: _formKey,
         child: ListView(
           children: <Widget>[
+            Center(child:
             Text(
               'For :' + ' $todaysDate',
               style: titlestyles(18, Colors.orange),
             ),
+            ),
+
             SizedBox(
               height: 10,
             ),
@@ -492,9 +495,9 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
             SizedBox(
               height: 10,
             ),
-            Expanded(
-              child: buildGridView(),
-            ),
+
+            buildGridView(),
+
             SizedBox(
               height: 30,
             ),

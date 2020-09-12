@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:project_timeline/MasterDataSet/ourMachines.dart';
 import 'package:project_timeline/MasterDataSet/ourPetrolPump.dart';
 import 'package:project_timeline/ProgressTimeLine/ProgressPage.dart';
+import 'package:project_timeline/manager/CreateAcceptSupervisor/createAcceptSupervisor.dart';
 import 'package:project_timeline/worker/updateWork.dart';
 import 'package:project_timeline/worker/workerDaily.dart';
 import 'package:project_timeline/worker/workerForm.dart';
@@ -45,6 +46,8 @@ class WorkerHomePageState extends State<WorkerHomePage> {
 
       case 4:
         return new UpdateWork();
+
+
 
 
 
@@ -155,6 +158,16 @@ class WorkerHomePageState extends State<WorkerHomePage> {
                       _onSelectItem(4);
                       appbartitle = "Update Your Work";
                     }),
+
+//                ListTile(
+//                    title: Row(children: <Widget>[
+//                      Icon(Icons.people),
+//                      Text(" Create/Accept Supervisors")
+//                    ]),
+//                    onTap: () {
+//                      _onSelectItem(5);
+//                      appbartitle = "Create/Accept Supervisors";
+//                    }),
               ],
             ),
           ),
