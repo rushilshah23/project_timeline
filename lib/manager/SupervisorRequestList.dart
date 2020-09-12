@@ -1,4 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/CommonWidgets.dart';
 
@@ -9,7 +11,50 @@ class SupervisorRequestList extends StatefulWidget {
 
 class _SupervisorRequestListState extends State<SupervisorRequestList> {
   final databaseReference = FirebaseDatabase.instance.reference();
+  final CollectionReference workers =
+      Firestore.instance.collection("supervisor");
+  FirebaseAuth auth = FirebaseAuth.instance;
   List allWorkerRequest = List();
+
+  acceptRequest(worker) async {
+    try {
+      print(worker["key"]);
+      print(worker["email"]);
+      print(worker["password"]);
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: worker["email"], password: worker["password"])
+          .then((AuthResult result) async {
+        await workers.document(result.user.uid).setData({
+          "email": worker["email"],
+          "mobile": worker["phoneNo"],
+          "name": worker["name"],
+          "uid": result.user.uid
+        }).then((value) async {
+          await databaseReference
+              .child("request")
+              .child("supervisor")
+              .child(worker["key"])
+              .remove();
+        });
+      }).then((value) {
+        showToast("Added successfully");
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  declineRequest(worker) async {
+    await databaseReference
+        .child("request")
+        .child("supervisor")
+        .child(worker["key"])
+        .remove()
+        .then((value) {
+      showToast("Declined successfully");
+    });
+  }
 
   Widget displayWorkerRequest(int index, data) {
     return Container(
@@ -96,7 +141,11 @@ class _SupervisorRequestListState extends State<SupervisorRequestList> {
                             FlatButton(
                               color: Color.fromRGBO(204, 255, 153, 1),
                               child: Text("Accept"),
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  acceptRequest(allWorkerRequest[index]);
+                                });
+                              },
                             ),
                             SizedBox(
                               width: 10,
@@ -104,7 +153,11 @@ class _SupervisorRequestListState extends State<SupervisorRequestList> {
                             FlatButton(
                               color: Color.fromRGBO(244, 137, 137, 1),
                               child: Text("Decline"),
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  declineRequest(allWorkerRequest[index]);
+                                });
+                              },
                             ),
                           ],
                         ))
@@ -154,6 +207,12 @@ class _SupervisorRequestListState extends State<SupervisorRequestList> {
                   ),
                 ),
               ],
+            );
+          } else if (snap.hasData &&
+              !snap.hasError &&
+              snap.data.snapshot.value == null) {
+            return Center(
+              child: Text("No request found"),
             );
           } else {
             return Center(
