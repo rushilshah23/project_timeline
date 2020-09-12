@@ -1,4 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/CommonWidgets.dart';
 import 'package:random_string/random_string.dart';
@@ -11,6 +13,8 @@ class WorkerCreationForm extends StatefulWidget {
 
 class _WorkerCreationFormState extends State<WorkerCreationForm> {
   final databaseReference = FirebaseDatabase.instance.reference();
+  final CollectionReference workers = Firestore.instance.collection("workers");
+  FirebaseAuth auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -43,29 +47,30 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
       var uuid = Uuid();
       String uniqueID = uuid.v1();
       password = randomAlphaNumeric(6);
-      debugPrint("pass is " + password);
+      debugPrint("name " + name);
+      debugPrint("email " + email);
+      debugPrint("phoneNo " + phoneNo);
+      debugPrint("address " + address);
+      debugPrint("age " + age);
+      debugPrint("password " + password);
       try {
-        await databaseReference
-            .child("request")
-            .child("worker")
-            .child(uniqueID)
-            .set({
-          'name': name,
-          'email': email,
-          'phoneNo': phoneNo,
-          'address': address,
-          'age': age,
-          'password': password,
+        await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: email, password: password)
+            .then((AuthResult result) async {
+          await workers.document(result.user.uid).setData({
+            "assignedProject": "No project assigned",
+            "email": email,
+            "mobile": phoneNo,
+            "name": name,
+            "uid": result.user.uid,
+            "address": address,
+            "age": age,
+            "password": password,
+          }).then((value) async {
+            showToast("Added successfully");
+          });
         });
-        await showToast("Worker Details added ");
-        debugPrint("name " + name);
-        debugPrint("email " + email);
-        debugPrint("phoneNo " + phoneNo);
-        debugPrint("address " + address);
-        debugPrint("age " + age);
-        debugPrint("password " + password);
-
-        await setState(() {
+        setState(() {
           controllerAddress = null;
           controllerName = null;
           controllerEmail = null;
@@ -248,7 +253,9 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                         ),
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
-                            addUser();
+                            setState(() {
+                              addUser();
+                            });
                             // test();
                           }
                         },

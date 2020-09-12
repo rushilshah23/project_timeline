@@ -1,4 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/CommonWidgets.dart';
 import 'package:random_string/random_string.dart';
@@ -11,6 +13,9 @@ class SupervisorFormCreation extends StatefulWidget {
 
 class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
   final databaseReference = FirebaseDatabase.instance.reference();
+  final CollectionReference workers =
+      Firestore.instance.collection("supervisor");
+  FirebaseAuth auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -33,39 +38,36 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
   TextEditingController controllerAge;
   TextEditingController controllerPassword;
 
-  test() {
-    // debugPrint("randpassowrd is " + randPassword.toString());
-  }
-
   addUser() async {
     debugPrint(name);
     if (_formKey.currentState.validate()) {
       var uuid = Uuid();
       String uniqueID = uuid.v1();
       password = randomAlphaNumeric(6);
-      debugPrint("pass is " + password);
+      debugPrint("name " + name);
+      debugPrint("email " + email);
+      debugPrint("phoneNo " + phoneNo);
+      debugPrint("address " + address);
+      debugPrint("age " + age);
+      debugPrint("password " + password);
       try {
-        await databaseReference
-            .child("request")
-            .child("supervisor")
-            .child(uniqueID)
-            .set({
-          'name': name,
-          'email': email,
-          'phoneNo': phoneNo,
-          'address': address,
-          'age': age,
-          'password': password,
+        await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: email, password: password)
+            .then((AuthResult result) async {
+          await workers.document(result.user.uid).setData({
+            "email": email,
+            "mobile": phoneNo,
+            "name": name,
+            "uid": result.user.uid,
+            "address": address,
+            "age": age,
+            "password": password
+          }).then((value) async {
+            showToast("Added successfully");
+          });
         });
-        await showToast("Supervisor Details Added ");
-        debugPrint("name " + name);
-        debugPrint("email " + email);
-        debugPrint("phoneNo " + phoneNo);
-        debugPrint("address " + address);
-        debugPrint("age " + age);
-        debugPrint("password " + password);
 
-        await setState(() {
+        setState(() {
           controllerAddress = null;
           controllerName = null;
           controllerEmail = null;
@@ -73,7 +75,6 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
           controllerAge = null;
           controllerPassword = null;
         });
-
         // Navigator.pop(context);
       } catch (e) {
         showToast("Failed. Check your Internet !");
@@ -248,7 +249,9 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                         ),
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
-                            addUser();
+                            setState(() {
+                              addUser();
+                            });
                             // test();
                           }
                         },
