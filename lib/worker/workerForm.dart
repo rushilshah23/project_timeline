@@ -57,7 +57,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
   final DateFormat formatter = DateFormat('dd-MM-yyyy');
   var projectID = 'project1';
   var workerID = 'Lm4oPWmWAkTELRXPc4nPv5i7pB92';
-  var workerName = 'rajesh kumar';
+  var workerName = 'ramesh';
   List<Asset> images = List<Asset>();
   String _error = 'No Error Dectected';
 
@@ -69,21 +69,20 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
     todaysDate = formatter.format(now);
   }
 
-
   Widget buildGridView() {
     return Container(
-        height: MediaQuery.of(context).size.height/4,
-        child:GridView.count(
-      crossAxisCount: 3,
-      children: List.generate(images.length, (index) {
-        Asset asset = images[index];
-        return AssetThumb(
-          asset: asset,
-          width: 300,
-          height: 300,
-        );
-      }),
-    ));
+        height: MediaQuery.of(context).size.height / 4,
+        child: GridView.count(
+          crossAxisCount: 3,
+          children: List.generate(images.length, (index) {
+            Asset asset = images[index];
+            return AssetThumb(
+              asset: asset,
+              width: 300,
+              height: 300,
+            );
+          }),
+        ));
   }
 
   Future<void> loadAssets() async {
@@ -236,295 +235,292 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
     });
   }
 
-
   Widget build(BuildContext context) {
-
     if (machines.length > 0)
-    return Scaffold(
-      body: Container(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        padding: EdgeInsets.all(20),
-        child:Form(
-          key: _formKey,
-        child: ListView(
-          children: <Widget>[
-            Text(
-              'For :' + ' $todaysDate',
-              style: titlestyles(18, Colors.orange),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            SearchableDropdown.single(
-              items: machines,
-              value: selectedMachine,
-              hint: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Text("Select any"),
-              ),
-              searchHint: "Select any",
-              onChanged: (value) {
-                setState(() {
-                  selectedMachine = value;
-                });
-              },
-              doneButton: "Done",
-              displayItem: (item, selected) {
-                return (Row(children: [
-                  selected
-                      ? Icon(
-                    Icons.radio_button_checked,
-                    color: Colors.grey,
-                  )
-                      : Icon(
-                    Icons.radio_button_unchecked,
-                    color: Colors.grey,
+      return Scaffold(
+        body: Container(
+            // Center is a layout widget. It takes a single child and positions it
+            // in the middle of the parent.
+            padding: EdgeInsets.all(20),
+            child: Form(
+              key: _formKey,
+              child: ListView(
+                children: <Widget>[
+                  Text(
+                    'For :' + ' $todaysDate',
+                    style: titlestyles(18, Colors.orange),
                   ),
-                  SizedBox(width: 7),
-                  Expanded(
-                    child: item,
+                  SizedBox(
+                    height: 10,
                   ),
-                ]));
-              },
-              isExpanded: true,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 1,
-                  color: Colors.grey,
-                ),
-                borderRadius: BorderRadius.all(Radius.circular(
-                    5.0) //         <--- border radius here
-                ),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
+                  SearchableDropdown.single(
+                    items: machines,
+                    value: selectedMachine,
+                    hint: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text("Select any"),
+                    ),
+                    searchHint: "Select any",
+                    onChanged: (value) {
+                      setState(() {
+                        selectedMachine = value;
+                      });
+                    },
+                    doneButton: "Done",
+                    displayItem: (item, selected) {
+                      return (Row(children: [
+                        selected
+                            ? Icon(
+                                Icons.radio_button_checked,
+                                color: Colors.grey,
+                              )
+                            : Icon(
+                                Icons.radio_button_unchecked,
+                                color: Colors.grey,
+                              ),
+                        SizedBox(width: 7),
+                        Expanded(
+                          child: item,
+                        ),
+                      ]));
+                    },
+                    isExpanded: true,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1,
+                        color: Colors.grey,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(
+                              5.0) //         <--- border radius here
+                          ),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Hours Worked',
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                            IconButton(
+                              icon:
+                                  Icon(Icons.remove, color: Colors.deepOrange),
+                              onPressed: removeDynamic,
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.add, color: Colors.deepOrange),
+                              onPressed: addDynamic,
+                            ),
+                          ],
+                        ),
+                        Flexible(
+                          fit: FlexFit.loose,
+                          child: new ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            itemCount: timeIntervals,
+                            itemBuilder: (context, index) {
+                              return WorkIntervals(index: index);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1,
+                        color: Colors.grey,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(
+                              5.0) //         <--- border radius here
+                          ),
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Digging Dimensions',
+                          style: TextStyle(
+                              fontSize: 15, fontStyle: FontStyle.italic),
+                        ),
+                        SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            new Flexible(
+                              child: TextFormField(
+                                controller: lengthController,
+                                keyboardType: TextInputType.number,
+                                validator: (String value) {
+                                  if (value.length == 0) {
+                                    return "Please enter Length";
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                decoration: InputDecoration(
+                                  labelText: "Length ",
+                                  border: OutlineInputBorder(),
+                                  hintText: "Enter LengthController",
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            new Flexible(
+                              child: TextFormField(
+                                controller: depthController,
+                                keyboardType: TextInputType.number,
+                                validator: (String value) {
+                                  if (value.length == 0) {
+                                    return "Please Enter Depth";
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                decoration: InputDecoration(
+                                  labelText: "Depth",
+                                  border: OutlineInputBorder(),
+                                  hintText: "Enter Depth",
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            new Flexible(
+                              child: TextFormField(
+                                controller: upperWidthController,
+                                keyboardType: TextInputType.number,
+                                validator: (String value) {
+                                  if (value.length == 0) {
+                                    return "Please Enter Upper Width";
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                decoration: InputDecoration(
+                                  labelText: "Upper Width",
+                                  border: OutlineInputBorder(),
+                                  hintText: "Enter Upper Width",
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20.0,
+                            ),
+                            new Flexible(
+                              child: TextFormField(
+                                controller: lowerWidthController,
+                                keyboardType: TextInputType.number,
+                                validator: (String value) {
+                                  if (value.length == 0) {
+                                    return "Please Enter Lower Width";
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                decoration: InputDecoration(
+                                  labelText: "Lower Width",
+                                  border: OutlineInputBorder(),
+                                  hintText: "Enter Lower Width",
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 20),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller: commentController,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: 5,
+                    validator: (String value) {
+                      if (value.length == 0) {
+                        value = "No comment";
+                        return null;
+                      } else {
+                        return null;
+                      }
+                    },
+                    decoration: InputDecoration(
+                      labelText: "(Optional) Comment",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        'Hours Worked',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      IconButton(
-                        icon:
-                        Icon(Icons.remove, color: Colors.deepOrange),
-                        onPressed: removeDynamic,
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.add, color: Colors.deepOrange),
-                        onPressed: addDynamic,
-                      ),
+                      Text("Upload Photos"),
+                      RaisedButton(
+                        child: Text("Pick images"),
+                        onPressed: loadAssets,
+                      )
                     ],
                   ),
-                  Flexible(
-                    fit: FlexFit.loose,
-                    child: new ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      itemCount: timeIntervals,
-                      itemBuilder: (context, index) {
-                        return WorkIntervals(index: index);
-                      },
-                    ),
+                  SizedBox(
+                    height: 10,
                   ),
+                  Expanded(
+                    child: buildGridView(),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    height: 50,
+                    child: FlatButton(
+                      onPressed: submitForm,
+                      child: Container(
+                        height: 50,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          gradient: gradients(),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Submit",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 1,
-                  color: Colors.grey,
-                ),
-                borderRadius: BorderRadius.all(Radius.circular(
-                    5.0) //         <--- border radius here
-                ),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    'Digging Dimensions',
-                    style: TextStyle(
-                        fontSize: 15, fontStyle: FontStyle.italic),
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      new Flexible(
-                        child: TextFormField(
-                          controller: lengthController,
-                          keyboardType: TextInputType.number,
-                          validator: (String value) {
-                            if (value.length == 0) {
-                              return "Please enter Length";
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: InputDecoration(
-                            labelText: "Length ",
-                            border: OutlineInputBorder(),
-                            hintText: "Enter LengthController",
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      new Flexible(
-                        child: TextFormField(
-                          controller: depthController,
-                          keyboardType: TextInputType.number,
-                          validator: (String value) {
-                            if (value.length == 0) {
-                              return "Please Enter Depth";
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: InputDecoration(
-                            labelText: "Depth",
-                            border: OutlineInputBorder(),
-                            hintText: "Enter Depth",
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      new Flexible(
-                        child: TextFormField(
-                          controller: upperWidthController,
-                          keyboardType: TextInputType.number,
-                          validator: (String value) {
-                            if (value.length == 0) {
-                              return "Please Enter Upper Width";
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: InputDecoration(
-                            labelText: "Upper Width",
-                            border: OutlineInputBorder(),
-                            hintText: "Enter Upper Width",
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      new Flexible(
-                        child: TextFormField(
-                          controller: lowerWidthController,
-                          keyboardType: TextInputType.number,
-                          validator: (String value) {
-                            if (value.length == 0) {
-                              return "Please Enter Lower Width";
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: InputDecoration(
-                            labelText: "Lower Width",
-                            border: OutlineInputBorder(),
-                            hintText: "Enter Lower Width",
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-              controller: commentController,
-              keyboardType: TextInputType.multiline,
-              maxLines: 5,
-              validator: (String value) {
-                if (value.length == 0) {
-                  value = "No comment";
-                  return null;
-                } else {
-                  return null;
-                }
-              },
-              decoration: InputDecoration(
-                labelText: "(Optional) Comment",
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Upload Photos"),
-                RaisedButton(
-                  child: Text("Pick images"),
-                  onPressed: loadAssets,
-                )
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Expanded(
-              child: buildGridView(),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Container(
-              width: double.infinity,
-              height: 50,
-              child: FlatButton(
-                onPressed: submitForm,
-                child: Container(
-                  height: 50,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    gradient: gradients(),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Submit",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
-      )
-      ),
-    );
-    else{
+            )),
+      );
+    else {
       return Scaffold(
         body: Center(
           child: CircularProgressIndicator(),
@@ -831,7 +827,6 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
 //      );
 //  }
 
-
 }
 
 class MachineDetails {
@@ -849,20 +844,16 @@ class WorkIntervals extends StatefulWidget {
 }
 
 class _WorkIntervalsState extends State<WorkIntervals> {
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
-
-
-      margin: EdgeInsets.only(top: 10,bottom: 10),
+      margin: EdgeInsets.only(top: 10, bottom: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
-          widget.index!=0?Container(child:Center(child:Text("BREAK"))):Container(),
-
+          widget.index != 0
+              ? Container(child: Center(child: Text("BREAK")))
+              : Container(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -894,11 +885,9 @@ class _WorkIntervalsState extends State<WorkIntervals> {
                   ),
                 ],
               ),
-
               SizedBox(
-                width:5 ,
+                width: 5,
               ),
-
               Column(
                 children: [
                   Text(
@@ -930,9 +919,8 @@ class _WorkIntervalsState extends State<WorkIntervals> {
               SizedBox(
                 height: 10,
               )
-                ],
-              ),
-
+            ],
+          ),
         ],
       ),
     );
