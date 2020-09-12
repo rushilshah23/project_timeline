@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/SupervisorFormCreation.dart';
 import 'package:project_timeline/WorkerCreationForm.dart';
+import 'package:project_timeline/imageTesting.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
 import 'package:project_timeline/manager/SupervisorRequestList.dart';
 import 'package:project_timeline/supervisor/approveWork/WorkApproveModule.dart';
@@ -54,8 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: ListView(
           children: <Widget>[
             RaisedButton(
               child: Text("Add New Project"),
@@ -176,6 +176,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => WorkerDaily()),
+                );
+              },
+            ),
+
+            RaisedButton(
+              child: Text("Image test"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ImageTesting()),
                 );
               },
             ),
