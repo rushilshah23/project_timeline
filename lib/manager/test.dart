@@ -6,15 +6,24 @@ import 'package:searchable_dropdown/searchable_dropdown.dart';
 import '../CommonWidgets.dart';
 import '../CommonWidgets.dart';
 
-String machineType = 'One';
-List<String> machineTypeSelected = List.generate(74, (i) => 'One');
-List<TextEditingController> _machineQuantity =
-    List.generate(74, (i) => TextEditingController());
+
+List<String> machineTypeSelected = List.generate(74, (i) => 'None');
+List<TextEditingController> usagePerDay =
+List.generate(74, (i) => TextEditingController());
+int machinesCount=1;
+
+List<MachineDetails> machineDetailsList = [MachineDetails(machineID: 'None',machineName: 'None',modelName: 'None',amountOfExcavation: 'None')];
+List<DropdownMenuItem> machines = [];
+
+
+
 
 class Test extends StatefulWidget {
   @override
   _TestState createState() => _TestState();
 }
+
+
 
 class _TestState extends State<Test> {
   var selectedType;
@@ -41,9 +50,8 @@ class _TestState extends State<Test> {
   List<int> selectedSupervisors = [];
   List<DropdownMenuItem> supervisorDropdwnItems = [];
 
-  List<DropdownMenuItem> machines = [];
-  List<int> selectedMachine = [];
-  List<String> machineUsed = [];
+
+
 
   //Length
   String length = '';
@@ -65,7 +73,7 @@ class _TestState extends State<Test> {
   var supervisor;
 
   List<SupervisorList> supervisorList = [];
-  List<MachineDetails> machineDetailsList = [];
+
   //petrolPump
   var petrolPump;
   List<String> _petrolPump = <String>[
@@ -75,6 +83,20 @@ class _TestState extends State<Test> {
   ];
 
   final databaseReference = FirebaseDatabase.instance.reference();
+
+
+  removeDynamic() {
+    setState(() {
+      if (machinesCount > 0) machinesCount = machinesCount - 1;
+    });
+  }
+
+  addDynamic() {
+    machinesCount = machinesCount + 1;
+    setState(() {});
+  }
+
+
 
   void loadMachines() async {
     await databaseReference
@@ -102,10 +124,13 @@ class _TestState extends State<Test> {
             ),
           );
 
+//          ourMachines.add(values["machineName"]);
           machineDetailsList.add(MachineDetails(
-              values['machineName'], values['machineID'], values['modelName']));
+              machineName:values['machineName'],machineID: values['machineID'],modelName: values['modelName'],
+              amountOfExcavation: values['amountOfExcavation'],fuelConsumption: values["fuelConsumption"]));
         });
-        print(machines);
+//        debugPrint("in func"+ourMachines.toString());
+
       });
     });
   }
@@ -152,13 +177,49 @@ class _TestState extends State<Test> {
     double dep = double.parse(d);
     double uwi = double.parse(uw);
     double lwi = double.parse(lw);
-    double calc = 0.5 * len * dep * (uwi + lwi);
+
+    double volume = 0.5 * len * dep * (uwi + lwi)*0.8;
+    double ourExcavtn=0;
+    int days=0;
+
+
+
+    while(ourExcavtn!=volume)
+    {
+      for(int i=0 ;i<machinesCount;i++)
+      {
+
+        debugPrint("machines used id"+ machineTypeSelected[i]);
+        debugPrint("usage per day"+usagePerDay[i].text);
+
+        for(int j=0 ;j<machineDetailsList.length;j++)
+        {
+          if(machineTypeSelected[i]==machineDetailsList[j].machineID)
+          {
+            debugPrint("its amountOfExcavation"+machineDetailsList[j].amountOfExcavation.toString());
+            debugPrint("its fuelConsumption"+machineDetailsList[j].fuelConsumption.toString());
+            ourExcavtn=ourExcavtn + machineDetailsList[j].amountOfExcavation*double.parse(usagePerDay[i].text);
+            debugPrint("our excvation"+ourExcavtn.toString());
+            break;
+          }
+        }
+
+      }
+
+      days=days+1;
+      debugPrint("day="+days.toString());
+    }
+
+
+
+
+
     return new AlertDialog(
         title: const Text('Project Timeline'),
         content: RichText(
           text: new TextSpan(
             text:
-                'Duration:\n\nMachinery:\n\nCost of Fuel:\n\nVolume to be excavated: $calc\n\n\n\n',
+                'Duration:\n\nMachinery:\n\nCost of Fuel:\n\nVolume to be excavated: $volume\n\n\n\n',
             style: const TextStyle(color: Colors.black87),
             children: <TextSpan>[
               const TextSpan(text: 'Do you want to create project?'),
@@ -255,7 +316,9 @@ class _TestState extends State<Test> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
-                  child: DropdownButton(
+                  child: new DropdownButtonFormField(
+                    validator: (value) =>
+                    value == null ? 'Enter soil type' : null,
                     items: _soilType
                         .map((value) => DropdownMenuItem(
                               child: Text(
@@ -281,41 +344,70 @@ class _TestState extends State<Test> {
                 ),
               ),
               SizedBox(height: 20),
+
+
+
+
               Container(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                padding: EdgeInsets.symmetric(
+                    vertical: 10, horizontal: 10),
                 decoration: BoxDecoration(
                   border: Border.all(
                     width: 1,
                     color: Colors.grey,
                   ),
                   borderRadius: BorderRadius.all(
-                      Radius.circular(5.0) //         <--- border radius here
-                      ),
-                ),
-                child: SearchableDropdown.multiple(
-                  items: machines,
-                  selectedItems: selectedMachine,
-                  hint: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text("Select any"),
+                      Radius.circular(
+                          5.0) //         <--- border radius here
                   ),
-                  searchHint: "Select any",
-                  onChanged: (value) {
-                    setState(() {
-                      selectedMachine = value;
-                    });
-                    print(value);
-                    print(selectedMachine);
-                  },
-                  closeButton: (selectedMachine) {
-                    return (selectedMachine.isNotEmpty
-                        ? "Save ${selectedMachine.length == 1 ? '"' + machines[selectedMachine.first].value.toString() + '"' : '(' + selectedMachine.length.toString() + ')'}"
-                        : "Save without selection");
-                  },
-                  isExpanded: true,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment:
+                      MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Select Machines',
+                            style: TextStyle(
+                              fontSize: 16,
+                            )),
+
+                        IconButton(
+                          icon:
+                          Icon(Icons.remove, color: Colors.deepOrange),
+                          onPressed: removeDynamic,
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.add,
+                              color: Colors.deepOrange),
+                          onPressed: addDynamic,
+                        ),
+                      ],
+                    ),
+                    Flexible(
+                      fit: FlexFit.loose,
+                      child: new ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        itemCount: machinesCount,
+                        itemBuilder: (context, index) {
+                          return SelectMachines(
+                              index: index);
+                        },
+                      ),
+                    )
+                  ],
                 ),
               ),
+
+
+
+
+
               SizedBox(height: 20),
+
 
               Container(
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -541,7 +633,7 @@ class _TestState extends State<Test> {
                   ),
                 ),
                 onPressed: () {
-                  if (_formKeyValue.currentState.validate()) {
+                  if (_formKeyValue.currentState.validate() ) {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) => _buildAboutDialog(
@@ -565,8 +657,100 @@ class SupervisorList {
 }
 
 class MachineDetails {
-  MachineDetails(this.machineName, this.machineID, this.modelName);
+  MachineDetails({Key key, this.machineName, this.machineID, this.modelName,this.amountOfExcavation,this.fuelConsumption});
   var machineName;
   var machineID;
   var modelName;
+  var amountOfExcavation;
+  var fuelConsumption;
+}
+
+
+class SelectMachines extends StatefulWidget {
+  final int index;
+  SelectMachines({Key key, this.index}) : super(key: key);
+  @override
+  _SelectMachinesState createState() => _SelectMachinesState();
+}
+
+class _SelectMachinesState extends State<SelectMachines> {
+  String dropdownValue = 'One';
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+//                  Text(
+//                    'For Soil Type',
+//                    style: TextStyle(color: Colors.black, fontSize: 15),
+//                  ),
+//                  SizedBox(
+//                    width: 10,
+//                  ),
+                  Flexible(
+                    flex: 3,
+                    child: DropdownButton<String>(
+                      value: machineTypeSelected[widget.index],
+                      //icon: Icon(Icons.arrow_downward),
+
+                      //style: TextStyle(color: Colors.deepPurple),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.grey,
+                      ),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          machineTypeSelected[widget.index] = newValue;
+                          debugPrint(newValue.toString());
+                        });
+                      },
+                      items: machineDetailsList.map<DropdownMenuItem<String>>((var value) {
+                        return DropdownMenuItem<String>(
+                          value: value.machineID,
+                          child:Text(value.machineName),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: usagePerDay[widget.index],
+                      validator: (val) => val.isEmpty ? 'Enter Hours' : null,
+                      decoration: InputDecoration(
+                        labelText: "Usage/Day",
+                        hintText: "Hours",
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                          const BorderSide(color: Colors.blue, width: 2.0),
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10),
+                              topLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10),
+                              bottomLeft: Radius.circular(10)),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ));
+  }
 }
