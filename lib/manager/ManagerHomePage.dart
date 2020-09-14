@@ -4,12 +4,10 @@ import 'package:project_timeline/CommonWidgets.dart';
 import 'package:project_timeline/ProgressTimeLine/ProgressPage.dart';
 import 'package:project_timeline/manager/master/machineMaster/machineMaster.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
-import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/manager/createNewProject/projects.dart';
+import 'package:project_timeline/manager/createNewProject/projects.dart';
 
 import '../dashboard.dart';
 import 'CreateAcceptSupervisor/createAcceptSupervisor.dart';
-
-
 
 class ManagerHomePage extends StatefulWidget {
   @override
@@ -17,7 +15,6 @@ class ManagerHomePage extends StatefulWidget {
 }
 
 class ManagerHomePageState extends State<ManagerHomePage> {
-
   int _selectedDrawerIndex = 0;
   String appbartitle = "Dashboard";
 
@@ -27,7 +24,6 @@ class ManagerHomePageState extends State<ManagerHomePage> {
     print(index);
     // Navigator.pop(context);
   }
-
 
   _getDrawerItemWidget(int pos) {
     switch (pos) {
@@ -48,7 +44,6 @@ class ManagerHomePageState extends State<ManagerHomePage> {
       case 5:
         return new CreateAcceptSupervisor();
 
-
       default:
         return new Text("Error");
     }
@@ -65,16 +60,20 @@ class ManagerHomePageState extends State<ManagerHomePage> {
           context: context,
           removeTop: true,
           child: new Drawer(
-
             child: ListView(
               children: <Widget>[
                 UserAccountsDrawerHeader(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                        colors: [ Colors.orange[200],Colors.orange[400],Colors.orange[600],Colors.orange[800],Colors.deepOrange[600]],
+                        colors: [
+                          Colors.orange[200],
+                          Colors.orange[400],
+                          Colors.orange[600],
+                          Colors.orange[800],
+                          Colors.deepOrange[600]
+                        ],
                         begin: Alignment.centerRight,
-                        end: Alignment(-1.0,-2.0)
-                    ), //Gradient
+                        end: Alignment(-1.0, -2.0)), //Gradient
                   ),
                   accountName: Text("manager"),
                   accountEmail: Text("manager.aol@gmail.com"),
@@ -83,7 +82,7 @@ class ManagerHomePageState extends State<ManagerHomePage> {
                       print("image clicked");
                     },
                     child: CircleAvatar(
-                      backgroundColor:Colors.white,
+                      backgroundColor: Colors.white,
                       child: Text(
                         "M",
                         style: TextStyle(fontSize: 40.0),
@@ -101,8 +100,10 @@ class ManagerHomePageState extends State<ManagerHomePage> {
                       appbartitle = "Dashboard";
                     }),
                 ExpansionTile(
-                  title:
-                  Row(children: <Widget>[Icon(Icons.add_box), Text(" Masters")]),
+                  title: Row(children: <Widget>[
+                    Icon(Icons.add_box),
+                    Text(" Masters")
+                  ]),
                   children: <Widget>[
                     ListTile(
                         title: Row(children: <Widget>[
@@ -114,7 +115,6 @@ class ManagerHomePageState extends State<ManagerHomePage> {
 
                           appbartitle = "Petrol Pump Master";
                         }),
-
                     ListTile(
                         title: Row(children: <Widget>[
                           Icon(Icons.arrow_right),
@@ -125,8 +125,6 @@ class ManagerHomePageState extends State<ManagerHomePage> {
 
                           appbartitle = "Machine Master";
                         }),
-
-
                   ],
                 ),
                 ListTile(
@@ -147,7 +145,6 @@ class ManagerHomePageState extends State<ManagerHomePage> {
                       _onSelectItem(4);
                       appbartitle = " Progress Updates";
                     }),
-
                 ListTile(
                     title: Row(children: <Widget>[
                       Icon(Icons.people),

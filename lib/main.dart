@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/manager/CreateAcceptSupervisor/SupervisorFormCreation.dart';
+import 'package:project_timeline/manager/CreateAcceptSupervisor/SupervisorFormCreation.dart';
 import 'package:project_timeline/imageTesting.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
-import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/manager/CreateAcceptSupervisor/SupervisorRequestList.dart';
+import 'package:project_timeline/manager/CreateAcceptSupervisor/SupervisorRequestList.dart';
 import 'package:project_timeline/supervisor/approveWork/WorkApproveModule.dart';
 import 'package:project_timeline/supervisor/createAcceptWorker/WorkerCreationForm.dart';
 import 'package:project_timeline/supervisor/createAcceptWorker/workerRequestList.dart';
@@ -10,8 +10,6 @@ import 'login.dart';
 import 'manager/master/machineMaster/machineMaster.dart';
 
 import 'manager/createNewProject/test.dart';
-import 'supervisor/addWorkers.dart';
-import 'supervisor/addWorkers.dart';
 import 'supervisor/addWorkers.dart';
 import 'supervisor/approveWork/WorkApproveModule.dart';
 import 'worker/workerDaily.dart';
@@ -179,7 +177,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-
             RaisedButton(
               child: Text("Image test"),
               onPressed: () {
