@@ -9,9 +9,8 @@ import '../../CommonWidgets.dart';
 import 'estimationDetails.dart';
 
 
-List<String> machineTypeSelected = List.generate(24, (i) => 'None');
-List<TextEditingController> usagePerDay =
-List.generate(24, (i) => TextEditingController());
+List<String> machineTypeSelected = [];
+List<TextEditingController> usagePerDay = [];
 int machinesCount=1;
 
 List<MachineDetails> machineDetailsList = [MachineDetails(machineID: 'None',machineName: 'None',modelName: 'None',amountOfExcavation: 'None',rentPerHour: 'None')];
@@ -103,6 +102,8 @@ class _TestState extends State<Test> {
 
 
   void loadMachines() async {
+
+
     await databaseReference
         .child("masters")
         .child("machineMaster")
@@ -169,9 +170,14 @@ class _TestState extends State<Test> {
 
   @override
   void initState() {
+
+
+     machineTypeSelected = List.generate(24, (i) => 'None');
+    usagePerDay = List.generate(24, (i) => TextEditingController());
     getData();
     loadMachines();
     super.initState();
+
   }
 
 
