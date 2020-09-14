@@ -72,7 +72,7 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: ThemeAppbar("Request Login"),
+       appBar: ThemeAppbar("Request Login"),
       body: Container(
         child: Form(
           key: _formKey,

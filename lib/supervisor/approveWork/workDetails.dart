@@ -20,8 +20,14 @@ class _WorkDetailsState extends State<WorkDetails> {
 
   Map data;
   int indexes;
+
+  List images=[];
+
   @override
   void initState() {
+
+    debugPrint(widget.data["images"].toString());
+    images=widget.data["images"];
     setState(() {
 
     });
@@ -33,19 +39,19 @@ class _WorkDetailsState extends State<WorkDetails> {
         height: MediaQuery.of(context).size.height/4,
         child:GridView.count(
           crossAxisCount: 3,
-          children: List.generate(6, (index) {
+          children: List.generate(images.length, (index) {
             return Container(
                 child: GestureDetector(
                 onTap: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
                     return PhotoView(
-                        imageProvider:NetworkImage("https://robohash.org/$index"),
+                        imageProvider:NetworkImage(images[index]),
                     );
                   }));
             },
                     child:Card(
-              child: Image.network("https://robohash.org/$index"),
+              child: Image.network(images[index]),
             ))); //
           }),
         ));
@@ -111,8 +117,10 @@ class _WorkDetailsState extends State<WorkDetails> {
                         height: 15,
                       ),
                       Text("Approval status: "+widget.data["status"].toString()),
-
-
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Text("Images: "),
                        buildGridView(),
 
                       SizedBox(

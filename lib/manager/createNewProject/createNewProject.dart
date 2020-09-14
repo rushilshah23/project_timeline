@@ -1,7 +1,7 @@
 import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:flutter/material.dart';
 
-import '../CommonWidgets.dart';
+import '../../CommonWidgets.dart';
 
 String machineType = 'Select Machine';
 List<String> machineTypeSelected=List.generate(74, (i) => 'Select Machine');

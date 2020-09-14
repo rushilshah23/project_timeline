@@ -192,9 +192,25 @@ class _MachineMasterState extends State<MachineMaster> {
                 snap.data.snapshot.value != null) {
               Map data = snap.data.snapshot.value;
               allMachines = [];
+//
+//              debugPrint("this is map"+data.toString());
+
               data.forEach(
                     (index, data) => allMachines.add({"key": index, ...data}),
               );
+
+//              debugPrint("allMachine list"+allMachines.toString());
+//
+//              debugPrint("list without key"+data.values.toList().toString());
+//              debugPrint("list of keys"+data.keys.toList().toString());
+
+//
+//              for(int i=0;i<allMachines.length;i++)
+//                {
+//                  debugPrint("machine $i name"+allMachines[i]["machineName"]);
+//                  debugPrint("machine $i name"+allMachines[i]["machineID"]);
+//                }
+
 
 
               return

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 
-import '../CommonWidgets.dart';
-import '../CommonWidgets.dart';
+import '../../CommonWidgets.dart';
+import '../../CommonWidgets.dart';
 
 
 List<String> machineTypeSelected = List.generate(74, (i) => 'None');
@@ -170,71 +170,52 @@ class _TestState extends State<Test> {
     super.initState();
   }
 
-  @override
-  Widget _buildAboutDialog(
-      BuildContext context, String l, String d, String uw, String lw) {
-    double len = double.parse(l);
-    double dep = double.parse(d);
-    double uwi = double.parse(uw);
-    double lwi = double.parse(lw);
+
+   estimate() {
+    double len = double.parse(length);
+    double dep = double.parse(depth);
+    double uwi = double.parse(upwidth);
+    double lwi = double.parse(lowidth);
 
     double volume = 0.5 * len * dep * (uwi + lwi)*0.8;
     double ourExcavtn=0;
     int days=0;
 
+    debugPrint(volume.toString());
 
-
-    while(ourExcavtn!=volume)
-    {
-      for(int i=0 ;i<machinesCount;i++)
+    for(int i=0;i<machinesCount;i++)
       {
-
-        debugPrint("machines used id"+ machineTypeSelected[i]);
-        debugPrint("usage per day"+usagePerDay[i].text);
-
-        for(int j=0 ;j<machineDetailsList.length;j++)
-        {
-          if(machineTypeSelected[i]==machineDetailsList[j].machineID)
-          {
-            debugPrint("its amountOfExcavation"+machineDetailsList[j].amountOfExcavation.toString());
-            debugPrint("its fuelConsumption"+machineDetailsList[j].fuelConsumption.toString());
-            ourExcavtn=ourExcavtn + machineDetailsList[j].amountOfExcavation*double.parse(usagePerDay[i].text);
-            debugPrint("our excvation"+ourExcavtn.toString());
-            break;
-          }
-        }
-
+        debugPrint(machineTypeSelected.toString());
+        debugPrint(usagePerDay[i].text);
       }
 
-      days=days+1;
-      debugPrint("day="+days.toString());
-    }
 
+//    while(ourExcavtn!=volume)
+//    {
+//      for(int i=0 ;i<machinesCount;i++)
+//      {
+//
+//        debugPrint("machines used id"+ machineTypeSelected[i]);
+//        debugPrint("usage per day"+usagePerDay[i].text);
+//
+//        for(int j=0 ;j<machineDetailsList.length;j++)
+//        {
+//          if(machineTypeSelected[i]==machineDetailsList[j].machineID)
+//          {
+//            debugPrint("its amountOfExcavation"+machineDetailsList[j].amountOfExcavation.toString());
+//            debugPrint("its fuelConsumption"+machineDetailsList[j].fuelConsumption.toString());
+//            ourExcavtn=ourExcavtn + machineDetailsList[j].amountOfExcavation*double.parse(usagePerDay[i].text);
+//            debugPrint("our excvation"+ourExcavtn.toString());
+//            break;
+//          }
+//        }
+//
+//      }
+//
+//      days=days+1;
+//      debugPrint("day="+days.toString());
+//    }
 
-
-
-
-    return new AlertDialog(
-        title: const Text('Project Timeline'),
-        content: RichText(
-          text: new TextSpan(
-            text:
-                'Duration:\n\nMachinery:\n\nCost of Fuel:\n\nVolume to be excavated: $volume\n\n\n\n',
-            style: const TextStyle(color: Colors.black87),
-            children: <TextSpan>[
-              const TextSpan(text: 'Do you want to create project?'),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          new FlatButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            textColor: Theme.of(context).primaryColor,
-            child: const Text('Create Project'),
-          ),
-        ]);
   }
 
   Widget build(BuildContext context) {
@@ -634,11 +615,7 @@ class _TestState extends State<Test> {
                 ),
                 onPressed: () {
                   if (_formKeyValue.currentState.validate() ) {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) => _buildAboutDialog(
-                          context, length, depth, upwidth, lowidth),
-                    );
+                    estimate();
                   }
                 },
 
@@ -690,13 +667,7 @@ class _SelectMachinesState extends State<SelectMachines> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-//                  Text(
-//                    'For Soil Type',
-//                    style: TextStyle(color: Colors.black, fontSize: 15),
-//                  ),
-//                  SizedBox(
-//                    width: 10,
-//                  ),
+
                   Flexible(
                     flex: 3,
                     child: DropdownButton<String>(
@@ -708,7 +679,7 @@ class _SelectMachinesState extends State<SelectMachines> {
                         height: 2,
                         color: Colors.grey,
                       ),
-                      onChanged: (String newValue) {
+                      onChanged: (newValue) {
                         setState(() {
                           machineTypeSelected[widget.index] = newValue;
                           debugPrint(newValue.toString());

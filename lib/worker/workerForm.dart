@@ -1,7 +1,14 @@
+
+
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:project_timeline/CommonWidgets.dart';
 import 'package:project_timeline/manager/master/machineMaster/addNewMachine.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
@@ -56,10 +63,14 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
   final DateTime now = DateTime.now();
   final DateFormat formatter = DateFormat('dd-MM-yyyy');
   var projectID = 'project1';
-  var workerID = 'Lm4oPWmWAkTELRXPc4nPv5i7pB92';
+  var workerID = '8YiMHLBnBaNjmr3yPvk8NWvNPmm2';
   var workerName = 'rajesh kumar';
   List<Asset> images = List<Asset>();
   String _error = 'No Error Dectected';
+
+  List _uploadedFileURL=[];
+  ProgressDialog pr;
+  List<File> filesToBeUploaded = [];
 
   @override
   void initState() {
@@ -159,9 +170,44 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
     });
   }
 
+  Future uploadFile() async {
+
+    _uploadedFileURL.clear();
+    filesToBeUploaded.clear();
+    for(int i=0;i<images.length;i++)
+    {
+      var path = await FlutterAbsolutePath.getAbsolutePath(images[i].identifier);
+      filesToBeUploaded.add(File(path));
+      debugPrint(images[i].identifier.toString());
+    }
+//    debugPrint(filesToBeUploaded.toString());
+    for (int i=0;i< filesToBeUploaded.length;i++) {
+      StorageReference storageReference = FirebaseStorage.instance
+          .ref()
+          .child("projects/$projectID/$todaysDate/$workerID/"+images[i].name);
+      StorageUploadTask uploadTask = storageReference.putFile(filesToBeUploaded[i]);
+      await uploadTask.onComplete;
+//      print('File Uploaded');
+      await storageReference.getDownloadURL().then((fileURL) {
+        setState(() {
+          _uploadedFileURL.add(fileURL);
+        });
+      });
+    }
+
+    debugPrint(_uploadedFileURL.toString());
+    debugPrint("done-------------------------------------------");
+
+  }
+
   void submitForm() async {
     if (_formKey.currentState.validate()) {
+
+
+
+      await pr.show();
       setState(() {
+
         machineUsed = selectedMachine;
         hoursWorked = 0;
         for (int i = 0; i < timeIntervals; i++) {
@@ -176,53 +222,82 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                     double.parse(exacavation["amountOfExcavation"]);
               }
             });
+
           }
         });
-        estimateVolume = hoursWorked * exacavatedPerHour;
-        estimation = estimateVolume < volume ? "Pass" : "Fail";
-        print(estimation);
+
         depth = double.parse(depthController.text);
         length = double.parse(lengthController.text);
         upperWidth = double.parse(upperWidthController.text);
         lowerWidth = double.parse(lowerWidthController.text);
         comment = commentController.text;
+        volume = length * depth * (upperWidth + lowerWidth) / 2;
+        estimateVolume = hoursWorked * exacavatedPerHour;
+        estimation = estimateVolume < volume ? "Pass" : "Fail";
+        print(estimation);
+
       });
-      volume = length * depth * (upperWidth + lowerWidth) / 2;
-      try {
-        await databaseReference
-            .child("projects")
-            .child(projectID)
-            .child("progress")
-            .child(todaysDate)
-            .child(workerID)
-            .set({
-          "MachineUsed": machineUsed,
-          "hoursWorked": hoursWorked,
-          'intervals': {
-            for (int i = 0; i < timeIntervals; i++)
-              '$i': {
-                'startTime': startTime[i].toString(),
-                'endTime': endTime[i].toString(),
-              }
-          },
-          "workerName": workerName,
-          "depth": depth,
-          "length": length,
-          "upperWidth": upperWidth,
-          "lowerWidth": lowerWidth,
-          "volumeExcavated": volume,
-          "estimatedVolume": estimateVolume,
-          "result": estimation,
-          "status": "pending",
-          "comment": comment,
-        });
-        showToast("Added successfully");
-        Navigator.of(context).pop();
-      } catch (e) {
-        showToast("Failed. Check your Internet");
-      }
+
+      if(images.length>0)
+        {
+          await uploadFile();
+          addtoDB();
+        }
+      else if(images.length==0)
+          {
+            addtoDB();
+          }
     }
   }
+
+  addtoDB() async{
+    try {
+      await databaseReference
+          .child("projects")
+          .child(projectID)
+          .child("progress")
+          .child(todaysDate)
+          .child(workerID)
+          .set({
+        "MachineUsed": machineUsed,
+        "hoursWorked": hoursWorked,
+        'intervals': {
+          for (int i = 0; i < timeIntervals; i++)
+            '$i': {
+              'startTime': startTime[i].toString(),
+              'endTime': endTime[i].toString(),
+            }
+        },
+
+        'images': {
+          for (int i = 0; i < _uploadedFileURL.length; i++)
+            '$i': _uploadedFileURL[i].toString(),
+        },
+        "workerName": workerName,
+        "depth": depth,
+        "length": length,
+        "upperWidth": upperWidth,
+        "lowerWidth": lowerWidth,
+        "volumeExcavated": volume,
+        "estimatedVolume": estimateVolume,
+        "result": estimation,
+        "status": "Pending",
+        "comment": comment,
+      });
+
+      pr.hide().then((isHidden) {
+        showToast("Added successfully");
+      });
+
+
+    } catch (e) {
+      showToast("Failed. Check your Internet");
+    }
+
+  }
+
+
+
 
   addDynamic() {
     setState(() {
@@ -239,6 +314,8 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
 
   Widget build(BuildContext context) {
 
+    pr = pr = new ProgressDialog(context,
+        type: ProgressDialogType.Normal, isDismissible: true, showLogs: true);
     if (machines.length > 0)
     return Scaffold(
       body: Container(
@@ -535,304 +612,6 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
       );
     }
   }
-
-//  @override
-//  Widget build(BuildContext context) {
-//    if (machines.length > 0)
-//      return Scaffold(
-//        body: Container(
-//          child: Container(
-//            height: MediaQuery.of(context).size.height,
-//            padding: EdgeInsets.all(20),
-//            child: Form(
-//              key: _formKey,
-//              child: Column(
-//                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                crossAxisAlignment: CrossAxisAlignment.center,
-//                children: [
-//                  Text(
-//                    'For :' + ' $todaysDate',
-//                    style: titlestyles(18, Colors.orange),
-//                  ),
-//                  SizedBox(
-//                    height: 10,
-//                  ),
-//                  SearchableDropdown.single(
-//                    items: machines,
-//                    value: selectedMachine,
-//                    hint: Padding(
-//                      padding: const EdgeInsets.all(12.0),
-//                      child: Text("Select any"),
-//                    ),
-//                    searchHint: "Select any",
-//                    onChanged: (value) {
-//                      setState(() {
-//                        selectedMachine = value;
-//                      });
-//                    },
-//                    doneButton: "Done",
-//                    displayItem: (item, selected) {
-//                      return (Row(children: [
-//                        selected
-//                            ? Icon(
-//                                Icons.radio_button_checked,
-//                                color: Colors.grey,
-//                              )
-//                            : Icon(
-//                                Icons.radio_button_unchecked,
-//                                color: Colors.grey,
-//                              ),
-//                        SizedBox(width: 7),
-//                        Expanded(
-//                          child: item,
-//                        ),
-//                      ]));
-//                    },
-//                    isExpanded: true,
-//                  ),
-//                  SizedBox(
-//                    height: 10,
-//                  ),
-//                  Container(
-//                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-//                    decoration: BoxDecoration(
-//                      border: Border.all(
-//                        width: 1,
-//                        color: Colors.grey,
-//                      ),
-//                      borderRadius: BorderRadius.all(Radius.circular(
-//                              5.0) //         <--- border radius here
-//                          ),
-//                    ),
-//                    child: Column(
-//                      mainAxisSize: MainAxisSize.min,
-//                      children: [
-//                        Row(
-//                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                          children: [
-//                            Text(
-//                              'Hours Worked',
-//                              style: TextStyle(
-//                                fontSize: 16,
-//                              ),
-//                            ),
-//                            IconButton(
-//                              icon:
-//                                  Icon(Icons.remove, color: Colors.deepOrange),
-//                              onPressed: removeDynamic,
-//                            ),
-//                            IconButton(
-//                              icon: Icon(Icons.add, color: Colors.deepOrange),
-//                              onPressed: addDynamic,
-//                            ),
-//                          ],
-//                        ),
-//                        Flexible(
-//                          fit: FlexFit.loose,
-//                          child: new ListView.builder(
-//                            shrinkWrap: true,
-//                            physics: NeverScrollableScrollPhysics(),
-//                            scrollDirection: Axis.vertical,
-//                            itemCount: timeIntervals,
-//                            itemBuilder: (context, index) {
-//                              return WorkIntervals(index: index);
-//                            },
-//                          ),
-//                        ),
-//                      ],
-//                    ),
-//                  ),
-//                  SizedBox(
-//                    height: 10,
-//                  ),
-//                  Container(
-//                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-//                    decoration: BoxDecoration(
-//                      border: Border.all(
-//                        width: 1,
-//                        color: Colors.grey,
-//                      ),
-//                      borderRadius: BorderRadius.all(Radius.circular(
-//                              5.0) //         <--- border radius here
-//                          ),
-//                    ),
-//                    child: Column(
-//                      children: [
-//                        Text(
-//                          'Digging Dimensions',
-//                          style: TextStyle(
-//                              fontSize: 15, fontStyle: FontStyle.italic),
-//                        ),
-//                        SizedBox(height: 20),
-//                        Row(
-//                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                          children: <Widget>[
-//                            new Flexible(
-//                              child: TextFormField(
-//                                controller: lengthController,
-//                                keyboardType: TextInputType.number,
-//                                validator: (String value) {
-//                                  if (value.length == 0) {
-//                                    return "Please enter Length";
-//                                  } else {
-//                                    return null;
-//                                  }
-//                                },
-//                                decoration: InputDecoration(
-//                                  labelText: "Length ",
-//                                  border: OutlineInputBorder(),
-//                                  hintText: "Enter LengthController",
-//                                ),
-//                              ),
-//                            ),
-//                            SizedBox(
-//                              width: 10.0,
-//                            ),
-//                            new Flexible(
-//                              child: TextFormField(
-//                                controller: depthController,
-//                                keyboardType: TextInputType.number,
-//                                validator: (String value) {
-//                                  if (value.length == 0) {
-//                                    return "Please Enter Depth";
-//                                  } else {
-//                                    return null;
-//                                  }
-//                                },
-//                                decoration: InputDecoration(
-//                                  labelText: "Depth",
-//                                  border: OutlineInputBorder(),
-//                                  hintText: "Enter Depth",
-//                                ),
-//                              ),
-//                            ),
-//                          ],
-//                        ),
-//                        SizedBox(height: 10),
-//                        Row(
-//                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                          children: <Widget>[
-//                            new Flexible(
-//                              child: TextFormField(
-//                                controller: upperWidthController,
-//                                keyboardType: TextInputType.number,
-//                                validator: (String value) {
-//                                  if (value.length == 0) {
-//                                    return "Please Enter Upper Width";
-//                                  } else {
-//                                    return null;
-//                                  }
-//                                },
-//                                decoration: InputDecoration(
-//                                  labelText: "Upper Width",
-//                                  border: OutlineInputBorder(),
-//                                  hintText: "Enter Upper Width",
-//                                ),
-//                              ),
-//                            ),
-//                            SizedBox(
-//                              width: 20.0,
-//                            ),
-//                            new Flexible(
-//                              child: TextFormField(
-//                                controller: lowerWidthController,
-//                                keyboardType: TextInputType.number,
-//                                validator: (String value) {
-//                                  if (value.length == 0) {
-//                                    return "Please Enter Lower Width";
-//                                  } else {
-//                                    return null;
-//                                  }
-//                                },
-//                                decoration: InputDecoration(
-//                                  labelText: "Lower Width",
-//                                  border: OutlineInputBorder(),
-//                                  hintText: "Enter Lower Width",
-//                                ),
-//                              ),
-//                            ),
-//                          ],
-//                        ),
-//                        SizedBox(height: 20),
-//                      ],
-//                    ),
-//                  ),
-//                  SizedBox(
-//                    height: 10,
-//                  ),
-//                  TextFormField(
-//                    controller: commentController,
-//                    keyboardType: TextInputType.multiline,
-//                    maxLines: 5,
-//                    validator: (String value) {
-//                      if (value.length == 0) {
-//                        value = "No comment";
-//                        return null;
-//                      } else {
-//                        return null;
-//                      }
-//                    },
-//                    decoration: InputDecoration(
-//                      labelText: "(Optional) Comment",
-//                      border: OutlineInputBorder(),
-//                    ),
-//                  ),
-//                  SizedBox(
-//                    height: 10,
-//                  ),
-//                  Row(
-//                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                    children: [
-//                      Text("Upload Photos"),
-//                      RaisedButton(
-//                        child: Text("Pick images"),
-//                        onPressed: loadAssets,
-//                      )
-//                    ],
-//                  ),
-//                  SizedBox(
-//                    height: 10,
-//                  ),
-//                  Expanded(
-//                    child: buildGridView(),
-//                  ),
-//                  SizedBox(
-//                    height: 30,
-//                  ),
-//                  Container(
-//                    width: double.infinity,
-//                    height: 50,
-//                    child: FlatButton(
-//                      onPressed: submitForm,
-//                      child: Container(
-//                        height: 50,
-//                        width: double.infinity,
-//                        decoration: BoxDecoration(
-//                          gradient: gradients(),
-//                          borderRadius: BorderRadius.circular(10),
-//                        ),
-//                        child: Center(
-//                          child: Text(
-//                            "Submit",
-//                            style: TextStyle(color: Colors.white),
-//                          ),
-//                        ),
-//                      ),
-//                    ),
-//                  )
-//                ],
-//              ),
-//            ),
-//          ),
-//        ),
-//      );
-//    else
-//      return Scaffold(
-//        body: Center(
-//          child: CircularProgressIndicator(),
-//        ),
-//      );
-//  }
 
 
 }

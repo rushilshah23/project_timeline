@@ -126,7 +126,7 @@ class _DashBoardState extends State<DashBoard> {
                     ),
                     SizedBox(height: 10),
                     Text(
-                        '123',
+                        '10',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
@@ -148,7 +148,7 @@ class _DashBoardState extends State<DashBoard> {
                     ),
                     SizedBox(height: 10),
                     Text(
-                        '123',
+                        '150',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
@@ -157,28 +157,28 @@ class _DashBoardState extends State<DashBoard> {
                     ),
                   ],
                 ),
-                Container(height: 60, child: VerticalDivider(color: Colors.grey[400],width: 20,thickness: 2,)),
-                Column(
-                  children: [
-                    Text(
-                        'Donation',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey[600],
-                            fontSize: 18
-                        )
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                        '123',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey[600],
-                            fontSize: 12
-                        )
-                    ),
-                  ],
-                ),
+//                Container(height: 60, child: VerticalDivider(color: Colors.grey[400],width: 20,thickness: 2,)),
+//                Column(
+//                  children: [
+//                    Text(
+//                        'Donation',
+//                        style: TextStyle(
+//                            fontWeight: FontWeight.bold,
+//                            color: Colors.grey[600],
+//                            fontSize: 18
+//                        )
+//                    ),
+//                    SizedBox(height: 10),
+//                    Text(
+//                        '123',
+//                        style: TextStyle(
+//                            fontWeight: FontWeight.bold,
+//                            color: Colors.grey[600],
+//                            fontSize: 12
+//                        )
+//                    ),
+//                  ],
+//                ),
               ],
             ),
             SizedBox(height: 35),

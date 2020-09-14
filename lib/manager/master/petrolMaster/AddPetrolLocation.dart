@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:project_timeline/CommonWidgets.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../CommonWidgets.dart';
-import '../../../CommonWidgets.dart';
-import '../../../CommonWidgets.dart';
-import '../../../CommonWidgets.dart';
+
 
 class AddPetrolLocation extends StatefulWidget {
   @override

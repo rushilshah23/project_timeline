@@ -9,7 +9,7 @@ import 'package:project_timeline/supervisor/createAcceptWorker/workerRequestList
 import 'login.dart';
 import 'manager/master/machineMaster/machineMaster.dart';
 
-import 'manager/test.dart';
+import 'manager/createNewProject/test.dart';
 import 'supervisor/addWorkers.dart';
 import 'supervisor/addWorkers.dart';
 import 'supervisor/addWorkers.dart';
