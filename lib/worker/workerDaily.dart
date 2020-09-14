@@ -7,18 +7,18 @@ class WorkerDaily extends StatefulWidget {
 }
 
 class _WorkerDailyState extends State<WorkerDaily> {
-  //var workerID = "Lm4oPWmWAkTELRXPc4nPv5i7pB92"; not working
+  var workerID = "8YiMHLBnBaNjmr3yPvk8NWvNPmm2"; //not working
   Widget getIcon(status) {
     switch (status) {
-      case "pending":
+      case "Pending":
         return Icon(Icons.error_outline);
-      case "accepted":
+      case "Accepted":
         return Icon(Icons.done);
-      case "declined":
+      case "Declined":
         return Icon(Icons.clear);
-      case "updated":
+      case "Updated":
         return Icon(Icons.done_all);
-      case "received":
+      case "Received":
         return Icon(Icons.check_circle);
     }
   }
@@ -56,10 +56,9 @@ class _WorkerDailyState extends State<WorkerDaily> {
                         color: Colors.amber[100],
                         elevation: 3,
                         child: ListTile(
-                          leading: getIcon(date[index]
-                              ["Lm4oPWmWAkTELRXPc4nPv5i7pB92"]["status"]),
+                          leading: getIcon(date[index][workerID]["status"]),
                           title: Text(date[index]["key"]),
-                          subtitle: Text(date[index]["Lm4oPWmWAkTELRXPc4nPv5i7pB92"]["status"]),
+                          subtitle: Text(date[index][workerID]["status"]),
                           onTap: () {
                             print(date[index]["key"]);
                           },

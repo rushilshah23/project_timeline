@@ -3,11 +3,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/manager/createNewProject/test.dart';
+import 'package:project_timeline/manager/createNewProject/test.dart';
 import '../../CommonWidgets.dart';
-
-
-
 
 class CreatedProjects extends StatefulWidget {
   @override
@@ -35,94 +32,88 @@ class _CreatedProjectsState extends State<CreatedProjects> {
             color: Colors.amberAccent.shade50,
             child: Container(
                 child: Column(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Container(
-                            width: MediaQuery.of(context).size.width / 1.4,
-                            padding: EdgeInsets.all(5),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                    Container(
+                        width: MediaQuery.of(context).size.width / 1.4,
+                        padding: EdgeInsets.all(5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "Project: " +
+                                  ourCreatedProjects[index]["projectName"],
+                              overflow: TextOverflow.clip,
+                              maxLines: 1,
+                              softWrap: false,
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "Site Address: " +
+                                  ourCreatedProjects[index]["siteAddress"],
+                              overflow: TextOverflow.clip,
+                              maxLines: 2,
+                              softWrap: false,
+                              style: TextStyle(fontSize: 14),
+                            ),
+                            Text(
+                              "Supervisor Name" + ": " + "Shraddha.V.Pawar",
+                              overflow: TextOverflow.clip,
+                              maxLines: 2,
+                              softWrap: false,
+                              style: TextStyle(fontSize: 14),
+                            ),
+                            Row(
                               children: <Widget>[
                                 Text(
-                                  "Project: " +
-                                      ourCreatedProjects[index]["projectName"],
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 1,
-                                  softWrap: false,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "Site Address: " +
-                                      ourCreatedProjects[index]["siteAddress"],
+                                  "Progress" + ": " + "20%",
                                   overflow: TextOverflow.clip,
                                   maxLines: 2,
                                   softWrap: false,
                                   style: TextStyle(fontSize: 14),
                                 ),
-                                Text(
-                                  "Supervisor Name" +
-                                      ": " +
-                                      "Shraddha.V.Pawar",
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 2,
-                                  softWrap: false,
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Text(
-                                      "Progress" +
-                                          ": " +
-                                          "20%",
-                                      overflow: TextOverflow.clip,
-                                      maxLines: 2,
-                                      softWrap: false,
-                                      style: TextStyle(fontSize: 14),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      "Status" +
-                                          ": " +
-                                          "On Going",
-                                      overflow: TextOverflow.clip,
-                                      maxLines: 2,
-                                      softWrap: false,
-                                      style: TextStyle(fontSize: 14),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            )),
-                        Container(
-                            margin: EdgeInsets.only(top: 5),
-                            child: Column(
-                              children: <Widget>[
                                 SizedBox(
                                   width: 10,
                                 ),
-                                IconButton(
-                                  icon: Icon(Icons.edit),
-                                  color: Colors.grey,
-                                  onPressed: () {},
+                                Text(
+                                  "Status" + ": " + "On Going",
+                                  overflow: TextOverflow.clip,
+                                  maxLines: 2,
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 14),
                                 ),
-                                IconButton(
-                                  icon: Icon(Icons.delete),
-                                  color: Colors.grey,
-                                  onPressed: () {},
-                                ),
-                                IconButton(
-                                  icon: Icon(Icons.add_box),
-                                  color: Colors.grey,
-                                  onPressed: () {
+                              ],
+                            ),
+                          ],
+                        )),
+                    Container(
+                        margin: EdgeInsets.only(top: 5),
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(
+                              width: 10,
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.edit),
+                              color: Colors.grey,
+                              onPressed: () {},
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.delete),
+                              color: Colors.grey,
+                              onPressed: () {},
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.add_box),
+                              color: Colors.grey,
+                              onPressed: () {
 //                                    Navigator.push(
 //                                      context,
 //                                      MaterialPageRoute(
@@ -131,14 +122,14 @@ class _CreatedProjectsState extends State<CreatedProjects> {
 //                                            ["projectID"],
 //                                          )),
 //                                    );
-                                  },
-                                ),
-                              ],
-                            ))
-                      ],
-                    )
+                              },
+                            ),
+                          ],
+                        ))
                   ],
-                ))));
+                )
+              ],
+            ))));
   }
 
   @override
@@ -157,12 +148,11 @@ class _CreatedProjectsState extends State<CreatedProjects> {
               ourCreatedProjects.clear();
               allProjects = [];
               data.forEach(
-                    (index, data) => allProjects.add({"key": index, ...data}),
+                (index, data) => allProjects.add({"key": index, ...data}),
               );
 
               for (int i = 0; i < allProjects.length; i++) {
-
-                  ourCreatedProjects.add(allProjects[i]);
+                ourCreatedProjects.add(allProjects[i]);
               }
               return new Column(
                 children: <Widget>[
@@ -179,8 +169,8 @@ class _CreatedProjectsState extends State<CreatedProjects> {
             } else {
               return Center(
                   child: CircularProgressIndicator(
-                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
-                  ));
+                valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+              ));
             }
           }),
       floatingActionButton: floats(context, Test()),
