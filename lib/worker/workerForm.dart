@@ -50,7 +50,8 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
       estimateVolume,
       estimation,
       soilType,
-      exacavatedPerHour;
+      exacavatedPerHour,
+      workDifference;
   final databaseReference = FirebaseDatabase.instance.reference();
   final _formKey = GlobalKey<FormState>();
   TextEditingController depthController = TextEditingController();
@@ -224,6 +225,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
         comment = commentController.text;
         volume = length * depth * (upperWidth + lowerWidth) / 2;
         estimateVolume = hoursWorked * exacavatedPerHour;
+        workDifference = (volume - estimateVolume) / 100;
         estimation = estimateVolume < volume ? "Pass" : "Fail";
         print(estimation);
       });
@@ -266,6 +268,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
         "lowerWidth": lowerWidth,
         "volumeExcavated": volume,
         "estimatedVolume": estimateVolume,
+        "workDifference": workDifference,
         "result": estimation,
         "status": "Pending",
         "comment": comment,
