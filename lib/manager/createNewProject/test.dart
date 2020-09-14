@@ -289,7 +289,6 @@ class _TestState extends State<Test> {
 
 
     pr.hide().then((isHidden) {
-      showToast("Added successfully");
       EstimationDetails estimationDetails= EstimationDetails(totalFuel: totalfuel.ceil().toString(),totalRent:totalRent.ceil().toString(),noOfDays:  days.ceil().toString(),totalExcavation: volume.ceil().toString());
       showDialog(
         context: context,

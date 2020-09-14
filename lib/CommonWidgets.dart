@@ -40,7 +40,7 @@ gradients()
 cards()
 {
   return LinearGradient(
-      colors: [ Colors.amber[100],Colors.orange[100],Colors.amber[100]],
+      colors: [ Colors.white,Colors.white,Colors.white],
       begin: Alignment.centerRight,
       end: Alignment(-1.0,-2.0)
   );

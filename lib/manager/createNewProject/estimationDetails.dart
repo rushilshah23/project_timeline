@@ -41,6 +41,9 @@ class _EstimationDetailsPageState extends State<EstimationDetailsPage> {
                             style: titlestyles(18, Colors.deepOrange)
                         ),
                       ),
+                      SizedBox(
+                        height: 20,
+                      ),
                       Text("Total Volume: "+widget.data.totalExcavation +"m3"),
 
                       SizedBox(
@@ -66,6 +69,7 @@ class _EstimationDetailsPageState extends State<EstimationDetailsPage> {
                       RaisedButton(
                         onPressed: () {
                           debugPrint('Create Project');
+                          showToast("Project Created");
                         },
                         child: Text("Create Project"),
                       ),
