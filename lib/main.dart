@@ -3,6 +3,7 @@ import 'package:project_timeline/manager/CreateAcceptSupervisor/SupervisorFormCr
 import 'package:project_timeline/imageTesting.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
 import 'package:project_timeline/manager/CreateAcceptSupervisor/SupervisorRequestList.dart';
+import 'package:project_timeline/phoneAuth.dart';
 import 'package:project_timeline/supervisor/approveWork/WorkApproveModule.dart';
 import 'package:project_timeline/supervisor/createAcceptWorker/WorkerCreationForm.dart';
 import 'package:project_timeline/supervisor/createAcceptWorker/workerRequestList.dart';
@@ -107,6 +108,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+              },
+            ),
+            RaisedButton(
+              child: Text("Login with Phone"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PhoneAuth()),
                 );
               },
             ),

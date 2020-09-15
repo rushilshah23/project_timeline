@@ -1,9 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/Register.dart';
-
-import 'CommonWidgets.dart';
-import 'CommonWidgets.dart';
 import 'CommonWidgets.dart';
 import 'manager/ManagerHomePage.dart';
 import 'supervisor/SupervisorHomePage.dart';
