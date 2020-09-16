@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:project_timeline/CommonWidgets.dart';
 import 'package:project_timeline/ProgressTimeLine/ProgressPage.dart';
+import 'package:project_timeline/manager/createNewProject/projects.dart';
 import 'package:project_timeline/manager/master/machineMaster/machineMaster.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
-import 'file:///C:/Users/User/Desktop/flutter/project_timeline/lib/manager/createNewProject/projects.dart';
-
 import '../dashboard.dart';
 import 'CreateAcceptSupervisor/createAcceptSupervisor.dart';
 

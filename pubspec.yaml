@@ -44,6 +44,7 @@ dependencies:
     photo_view: ^0.10.2
     firebase_storage: ^3.0.3
     progress_dialog: ^1.2.4
+    flutter_sms: ^2.0.1+2
 
 dev_dependencies:
     flutter_test:
