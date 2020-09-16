@@ -1,12 +1,12 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_timeline/ProgressTimeLine/ViewAllProjects/ProjectDetails.dart';
 import 'package:project_timeline/ProgressTimeline/theme.dart';
 
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import '../../CommonWidgets.dart';
-
 
 class AllProjects extends StatefulWidget {
   @override
@@ -22,28 +22,24 @@ class _AllProjectsState extends State<AllProjects> {
     super.initState();
   }
 
-  Widget displayProject(int index) {
+  Widget displayProject(int index, allProjects) {
     return Stack(
       children: [
         Positioned.fill(
           top: 150,
           bottom: -190,
           child: Container(
-
-            decoration: BoxDecoration(
-                boxShadow:[
-                  BoxShadow(
-                    color: Colors.orange[100],
-                    blurRadius: 25.0, // soften the shadow
-                    spreadRadius: 5.0, //extend the shadow
-                    offset: Offset(
-                      15.0, // Move to right 10  horizontally
-                      15.0, // Move to bottom 10 Vertically
-                    ),
-                  )
-                ],
-                shape: BoxShape.circle,
-                color: Colors.white38),
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(
+                color: Colors.orange[100],
+                blurRadius: 25.0, // soften the shadow
+                spreadRadius: 5.0, //extend the shadow
+                offset: Offset(
+                  15.0, // Move to right 10  horizontally
+                  15.0, // Move to bottom 10 Vertically
+                ),
+              )
+            ], shape: BoxShape.circle, color: Colors.white38),
           ),
         ),
         Positioned.fill(
@@ -51,20 +47,17 @@ class _AllProjectsState extends State<AllProjects> {
           top: -2,
           bottom: -80,
           child: Container(
-            decoration: BoxDecoration(
-                boxShadow:[
-                  BoxShadow(
-                    color: Colors.orange[100],
-                    blurRadius: 25.0, // soften the shadow
-                    spreadRadius: 5.0, //extend the shadow
-                    offset: Offset(
-                      15.0, // Move to right 10  horizontally
-                      15.0, // Move to bottom 10 Vertically
-                    ),
-                  )
-                ],
-                shape: BoxShape.circle,
-                color: Colors.white38),
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(
+                color: Colors.orange[100],
+                blurRadius: 25.0, // soften the shadow
+                spreadRadius: 5.0, //extend the shadow
+                offset: Offset(
+                  15.0, // Move to right 10  horizontally
+                  15.0, // Move to bottom 10 Vertically
+                ),
+              )
+            ], shape: BoxShape.circle, color: Colors.white38),
           ),
         ),
         Stack(
@@ -85,9 +78,7 @@ class _AllProjectsState extends State<AllProjects> {
 //                              allProjects[index]["progress"].toString()) /
 //                          100,
 
-                      percent: double.parse(
-                          "70") /
-                          100,
+                      percent: double.parse("70") / 100,
 //                      center: new Text(
 //                        allProjects[index]["progress"].toString() + "%",
 //                        style: new TextStyle(
@@ -114,16 +105,18 @@ class _AllProjectsState extends State<AllProjects> {
                         ),
                         child: IconButton(
                           color: Colors.deepPurple,
-                          icon: Icon(Icons.navigate_next,color: Colors.white,),
+                          icon: Icon(
+                            Icons.navigate_next,
+                            color: Colors.white,
+                          ),
                           onPressed: () {
-//                            Navigator.push(
-//                              context,
-//                              MaterialPageRoute(
-//                                  builder: (context) => AllTasks(
-//                                    projectID: allProjects[index]
-//                                    ["projectID"],
-//                                  )),
-//                            );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProjectDetails(
+                                        projectDetails: allProjects[index],
+                                      )),
+                            );
                           },
                         ),
                       ),
@@ -196,7 +189,6 @@ class _AllProjectsState extends State<AllProjects> {
 
   @override
   Widget build(BuildContext context) {
-
     return new StreamBuilder(
         stream: databaseReference.child("projects").onValue,
         builder: (context, snap) {
@@ -206,46 +198,45 @@ class _AllProjectsState extends State<AllProjects> {
             Map data = snap.data.snapshot.value;
             allProjects = [];
             data.forEach(
-                  (index, data) => allProjects.add({"key": index, ...data}),
+              (index, data) => allProjects.add({"key": index, ...data}),
             );
 
             return new Column(
               children: [
                 Expanded(
-
                     child: Container(
-                      width: MediaQuery.of(context).size.width,
+                  width: MediaQuery.of(context).size.width,
 //                      margin: EdgeInsets.only(
 //                          top: 15, bottom: 230, right: 10, left: 20),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        // color: primaryColor,
-                        boxShadow: customShadow,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    // color: primaryColor,
+                    boxShadow: customShadow,
+                  ),
+                  child: Column(
+                    children: [
+                      // Text(allProjects.toString()),
+                      Expanded(
+                        child: new ListView.builder(
+                          itemCount: allProjects.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                                height: 280,
+                                margin: EdgeInsets.all(10),
+                                child: displayProject(index, allProjects));
+                          },
+                        ),
                       ),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: new ListView.builder(
-                              itemCount: allProjects.length,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                    height: 280,
-                                    margin: EdgeInsets.all(10),
-                                    child:displayProject(index));
-                              },
-                            ),
-                          ),
-
-                        ],
-                      ),
-                    )),
+                    ],
+                  ),
+                )),
               ],
             );
           } else {
             return Center(
                 child: CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.orange),
-                ));
+              valueColor: new AlwaysStoppedAnimation<Color>(Colors.orange),
+            ));
           }
         });
   }

@@ -1,18 +1,19 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 import '../../CommonWidgets.dart';
 import '../../CommonWidgets.dart';
+import 'estimationDetails.dart';
 
 
-List<String> machineTypeSelected = List.generate(74, (i) => 'None');
-List<TextEditingController> usagePerDay =
-List.generate(74, (i) => TextEditingController());
+List<String> machineTypeSelected = [];
+List<TextEditingController> usagePerDay = [];
 int machinesCount=1;
 
-List<MachineDetails> machineDetailsList = [MachineDetails(machineID: 'None',machineName: 'None',modelName: 'None',amountOfExcavation: 'None')];
+List<MachineDetails> machineDetailsList = [MachineDetails(machineID: 'None',machineName: 'None',modelName: 'None',amountOfExcavation: 'None',rentPerHour: 'None')];
 List<DropdownMenuItem> machines = [];
 
 
@@ -50,6 +51,8 @@ class _TestState extends State<Test> {
   List<int> selectedSupervisors = [];
   List<DropdownMenuItem> supervisorDropdwnItems = [];
 
+
+  ProgressDialog pr;
 
 
 
@@ -99,6 +102,8 @@ class _TestState extends State<Test> {
 
 
   void loadMachines() async {
+
+
     await databaseReference
         .child("masters")
         .child("machineMaster")
@@ -127,7 +132,7 @@ class _TestState extends State<Test> {
 //          ourMachines.add(values["machineName"]);
           machineDetailsList.add(MachineDetails(
               machineName:values['machineName'],machineID: values['machineID'],modelName: values['modelName'],
-              amountOfExcavation: values['amountOfExcavation'],fuelConsumption: values["fuelConsumption"]));
+              amountOfExcavation: values['amountOfExcavation'],fuelConsumption: values["fuelConsumption"],rentPerHour:values["machineRent"] ));
         });
 //        debugPrint("in func"+ourMachines.toString());
 
@@ -165,60 +170,139 @@ class _TestState extends State<Test> {
 
   @override
   void initState() {
+
+
+     machineTypeSelected = List.generate(24, (i) => 'None');
+    usagePerDay = List.generate(24, (i) => TextEditingController());
     getData();
     loadMachines();
     super.initState();
+
   }
 
 
-   estimate() {
+   estimate() async{
+
+
+    await pr.show();
     double len = double.parse(length);
     double dep = double.parse(depth);
     double uwi = double.parse(upwidth);
     double lwi = double.parse(lowidth);
 
     double volume = 0.5 * len * dep * (uwi + lwi)*0.8;
-    double ourExcavtn=0;
-    int days=0;
+
 
     debugPrint(volume.toString());
 
+    List selectedMachines=machineTypeSelected.sublist(0,machinesCount);
+    List perdayamountofExca=[];
+    List perdayFuelConsump=[];
+    List rentPerday=[];
+
+    List actualperdayamountofExca=[];
+    List actualperdayFuelConsump=[];
+    List actualrentPerday=[];
+
+    double ourExcavtn=0;
+    int days=0;
+    double totalfuel=0;
+    double totalRent=0;
+
     for(int i=0;i<machinesCount;i++)
+    {
+      debugPrint(selectedMachines[i].toString());
+      debugPrint(usagePerDay[i].text);
+
+      for(int j=0 ;j<machineDetailsList.length;j++)
       {
-        debugPrint(machineTypeSelected.toString());
-        debugPrint(usagePerDay[i].text);
+        if(selectedMachines[i]==machineDetailsList[j].machineID)
+        {
+
+          double excavation= double.parse(machineDetailsList[j].amountOfExcavation.toString())* double.parse(usagePerDay[i].text) ;
+          perdayamountofExca.add(excavation);
+
+          double fuelcon= double.parse(machineDetailsList[j].fuelConsumption.toString())* double.parse(usagePerDay[i].text) ;
+          perdayFuelConsump.add(fuelcon);
+
+          double rent= double.parse(machineDetailsList[j].rentPerHour.toString())* double.parse(usagePerDay[i].text) ;
+          rentPerday.add(rent);
+
+          //the calculation
+          break;
+        }
       }
+    }
+
+    debugPrint("perday-------"+perdayamountofExca.toString());
+    debugPrint("perday fuel-------"+perdayFuelConsump.toString());
+    debugPrint("perday rent-------"+rentPerday.toString());
+    int state=0;
+
+      while(ourExcavtn<volume && state==0)
+        {
+          for(int i=0;i<machinesCount;i++)
+          {
+            if(ourExcavtn+perdayamountofExca[i]<volume && ourExcavtn<volume)
+              {
+                ourExcavtn=ourExcavtn+perdayamountofExca[i];
+                actualperdayamountofExca.add([i,perdayamountofExca[i]]);
+
+                totalfuel=totalfuel+perdayFuelConsump[i];
+                actualperdayFuelConsump.add([i,perdayFuelConsump[i]]);
+
+                totalRent=totalRent+rentPerday[i];
+                actualrentPerday.add([i,rentPerday[i]]);
+              }
+            else if((ourExcavtn+perdayamountofExca[i]>volume) && ourExcavtn<volume)
+              {
+                double percent= 1 -((ourExcavtn/volume));
+                //perdayamountofExca[i]=volume-ourExcavtn;
+                ourExcavtn=ourExcavtn+perdayamountofExca[i]*percent;
+                actualperdayamountofExca.add([i,perdayamountofExca[i]*percent]);
+
+                //perdayFuelConsump[i]=perdayFuelConsump[i]*percent;
+                totalfuel=totalfuel+perdayFuelConsump[i]*percent;
+                actualperdayFuelConsump.add([i,perdayFuelConsump[i]*percent]);
+
+                //rentPerday[i]=rentPerday[i]*percent;
+                totalRent=totalRent+rentPerday[i]*percent;
+                actualrentPerday.add([i,rentPerday[i]*percent]);
+                state=1;
+                break;
+              }
+          }
+
+          days=days+1;
+          print("hello");
+        }
 
 
-//    while(ourExcavtn!=volume)
-//    {
-//      for(int i=0 ;i<machinesCount;i++)
-//      {
-//
-//        debugPrint("machines used id"+ machineTypeSelected[i]);
-//        debugPrint("usage per day"+usagePerDay[i].text);
-//
-//        for(int j=0 ;j<machineDetailsList.length;j++)
-//        {
-//          if(machineTypeSelected[i]==machineDetailsList[j].machineID)
-//          {
-//            debugPrint("its amountOfExcavation"+machineDetailsList[j].amountOfExcavation.toString());
-//            debugPrint("its fuelConsumption"+machineDetailsList[j].fuelConsumption.toString());
-//            ourExcavtn=ourExcavtn + machineDetailsList[j].amountOfExcavation*double.parse(usagePerDay[i].text);
-//            debugPrint("our excvation"+ourExcavtn.toString());
-//            break;
-//          }
-//        }
-//
-//      }
-//
-//      days=days+1;
-//      debugPrint("day="+days.toString());
-//    }
+    debugPrint("total exca-------"+ourExcavtn.toString());
+    debugPrint("total fuel-------"+totalfuel.toString());
+    debugPrint("total rent-------"+totalRent.toString());
+    debugPrint("total days-------"+days.toString());
+
+    debugPrint("Actual exca-------"+actualperdayamountofExca.toString());
+    debugPrint("fuel consum-------"+actualperdayFuelConsump.toString());
+    debugPrint("rent-------"+actualrentPerday.toString());
+
+
+    pr.hide().then((isHidden) {
+      EstimationDetails estimationDetails= EstimationDetails(totalFuel: totalfuel.ceil().toString(),totalRent:totalRent.ceil().toString(),noOfDays:  days.ceil().toString(),totalExcavation: volume.ceil().toString());
+      showDialog(
+        context: context,
+        builder: (_) => EstimationDetailsPage(data: estimationDetails,),
+      );
+    });
 
   }
 
   Widget build(BuildContext context) {
+
+    pr = pr = new ProgressDialog(context,
+        type: ProgressDialogType.Normal, isDismissible: true, showLogs: true);
+
     return Scaffold(
         appBar: new AppBar(
           iconTheme: IconThemeData(
@@ -634,12 +718,22 @@ class SupervisorList {
 }
 
 class MachineDetails {
-  MachineDetails({Key key, this.machineName, this.machineID, this.modelName,this.amountOfExcavation,this.fuelConsumption});
+  MachineDetails({Key key, this.machineName, this.machineID, this.modelName,this.amountOfExcavation,this.fuelConsumption,this.rentPerHour});
   var machineName;
   var machineID;
   var modelName;
   var amountOfExcavation;
   var fuelConsumption;
+  var rentPerHour;
+}
+
+
+class EstimationDetails {
+  EstimationDetails({Key key, this.noOfDays, this.totalRent, this.totalFuel,this.totalExcavation});
+  var noOfDays;
+  var totalRent;
+  var totalFuel;
+  var totalExcavation;
 }
 
 

@@ -246,7 +246,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 130, top: 15),
                             child: Text(
-                              'Add Machine',
+                              'Create Worker',
                               style: TextStyle(color: Colors.white),
                             ),
                           ),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -17,11 +16,9 @@ class ProgressPage extends StatefulWidget {
 }
 
 class _ProgressPageState extends State<ProgressPage> {
-
   double percent = 10;
   double percent1 = 10;
   double percent2 = 80;
-
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +26,7 @@ class _ProgressPageState extends State<ProgressPage> {
       body: Column(
         children: [
           Container(
-           // height: 70,
+            // height: 70,
             child: Container(
               margin: EdgeInsets.symmetric(vertical: 20),
               child: Row(
@@ -41,23 +38,21 @@ class _ProgressPageState extends State<ProgressPage> {
                         radius: 60.0,
                         lineWidth: 6.0,
                         animation: true,
-                        percent: double.parse(percent.toString())/100,
+                        percent: double.parse(percent.toString()) / 100,
                         center: new Text(
-                          percent.toString()+"%",
-                          style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
+                          percent.toString() + "%",
+                          style: new TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 15.0),
                         ),
                         circularStrokeCap: CircularStrokeCap.round,
                         progressColor: Colors.orange[800],
                       ),
                       SizedBox(height: 10),
-                      Text(
-                          'Completed',
+                      Text('Completed',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.grey[600],
-                              fontSize: 17
-                          )
-                      ),
+                              fontSize: 17)),
                     ],
                   ),
                   Column(
@@ -66,23 +61,21 @@ class _ProgressPageState extends State<ProgressPage> {
                         radius: 60.0,
                         lineWidth: 6.0,
                         animation: true,
-                        percent: double.parse(percent1.toString())/100,
+                        percent: double.parse(percent1.toString()) / 100,
                         center: new Text(
-                          percent1.toString()+"%",
-                          style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
+                          percent1.toString() + "%",
+                          style: new TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 15.0),
                         ),
                         circularStrokeCap: CircularStrokeCap.round,
                         progressColor: Colors.orange[600],
                       ),
                       SizedBox(height: 10),
-                      Text(
-                          'Ongoing',
+                      Text('Ongoing',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.grey[600],
-                              fontSize: 17
-                          )
-                      ),
+                              fontSize: 17)),
                     ],
                   ),
                   Column(
@@ -91,26 +84,23 @@ class _ProgressPageState extends State<ProgressPage> {
                         radius: 60.0,
                         lineWidth: 6.0,
                         animation: true,
-                        percent: double.parse(percent2.toString())/100,
+                        percent: double.parse(percent2.toString()) / 100,
                         center: new Text(
-                          percent2.toString()+"%",
-                          style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
+                          percent2.toString() + "%",
+                          style: new TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 15.0),
                         ),
                         circularStrokeCap: CircularStrokeCap.round,
                         progressColor: Colors.orange[300],
                       ),
                       SizedBox(height: 10),
-                      Text(
-                          'Not Started',
+                      Text('Not Started',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.grey[600],
-                              fontSize: 17
-                          )
-                      ),
+                              fontSize: 17)),
                     ],
                   ),
-
                 ],
               ),
             ),

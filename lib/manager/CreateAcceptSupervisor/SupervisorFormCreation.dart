@@ -242,7 +242,7 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 130, top: 15),
                             child: Text(
-                              'Add Machine',
+                              'Create Supervisor',
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
