@@ -12,33 +12,35 @@ import 'package:project_timeline/manager/master/machineMaster/addNewMachine.dart
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
-import '../CommonWidgets.dart';
+import 'CommonWidgets.dart';
 
 int timeIntervals;
 List<DateTime> startTime = List.generate(74, (i) => DateTime.now());
 List<DateTime> endTime = List.generate(74, (i) => DateTime.now());
 
-class WorkerForm extends StatelessWidget {
+class SpecialWorkerForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
 //      appBar: AppBar(
 //        title: Text("Update work"),
 //      ),
-      body: WorkerFormPage(),
+      body: SpecialWorkerFormPage(),
     );
   }
 }
 
-class WorkerFormPage extends StatefulWidget {
+class SpecialWorkerFormPage extends StatefulWidget {
   @override
-  _WorkerFormPageState createState() => _WorkerFormPageState();
+  _SpecialWorkerFormPageState createState() => _SpecialWorkerFormPageState();
 }
 
-class _WorkerFormPageState extends State<WorkerFormPage> {
+class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
   List<DropdownMenuItem> machines = [];
+  List<DropdownMenuItem> workers = [];
+  List<WorkerList> workersList = [];
   List<MachineDetails> machineDetails = [];
-  String selectedMachine, machineUsed;
+  var selectedMachine, selectedWorker, machineUsed;
   var hoursWorked,
       depth,
       length,
@@ -62,8 +64,8 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
   final DateTime now = DateTime.now();
   final DateFormat formatter = DateFormat('dd-MM-yyyy');
   var projectID = 'project1';
-  var workerID = '2kZgWwPWSEcAxiH7V3j6Q3bpLds1';
-  var workerName = 'Abdul Khan';
+  var workerID;
+  var workerName;
   List<Asset> images = List<Asset>();
   String _error = 'No Error Dectected';
 
@@ -73,7 +75,9 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
 
   @override
   void initState() {
-    loadData();
+    setState(() {
+      loadData();
+    });
     timeIntervals = 1;
     super.initState();
     todaysDate = formatter.format(now);
@@ -136,6 +140,37 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
         .once()
         .then((snapshot) {
       soilType = snapshot.value;
+    });
+    await databaseReference
+        .child("projects")
+        .child(projectID)
+        .child("workers")
+        .once()
+        .then((snapshot) {
+      print(snapshot.value);
+      snapshot.value.forEach((key, values) {
+        setState(() {
+          workers.add(
+            DropdownMenuItem(
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(values["name"].toString()),
+                    Text(
+                      values['mobile'].toString(),
+                      style: TextStyle(color: Colors.grey, fontSize: 14),
+                    ),
+                  ],
+                ),
+              ),
+              value: key.toString(),
+            ),
+          );
+          workersList.add(
+              WorkerList(values['name'], values['mobile'], key.toString()));
+        });
+      });
     });
     await databaseReference
         .child("masters")
@@ -201,6 +236,11 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
     if (_formKey.currentState.validate()) {
       await pr.show();
       setState(() {
+        workerID = selectedWorker;
+        workersList.forEach((worker) {
+          if (worker.uid == workerID) ;
+          workerName = worker.name;
+        });
         machineUsed = selectedMachine;
         hoursWorked = 0;
         for (int i = 0; i < timeIntervals; i++) {
@@ -217,7 +257,6 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
             });
           }
         });
-
         depth = double.parse(depthController.text);
         length = double.parse(lengthController.text);
         upperWidth = double.parse(upperWidthController.text);
@@ -228,10 +267,12 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
         workDifference = (volume - estimateVolume) / estimateVolume * 100;
         estimation = estimateVolume < volume ? "Pass" : "Fail";
         print(estimation);
+        print(workerName);
+        print(workerID);
       });
 
       if (images.length > 0) {
-        await uploadFile();
+        // await uploadFile();
         addtoDB();
       } else if (images.length == 0) {
         addtoDB();
@@ -241,38 +282,38 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
 
   addtoDB() async {
     try {
-      await databaseReference
-          .child("projects")
-          .child(projectID)
-          .child("progress")
-          .child("12-09-2020")
-          .child(workerID)
-          .set({
-        "MachineUsed": machineUsed,
-        "hoursWorked": hoursWorked,
-        'intervals': {
-          for (int i = 0; i < timeIntervals; i++)
-            '$i': {
-              'startTime': startTime[i].toString(),
-              'endTime': endTime[i].toString(),
-            }
-        },
-        'images': {
-          for (int i = 0; i < _uploadedFileURL.length; i++)
-            '$i': _uploadedFileURL[i].toString(),
-        },
-        "workerName": workerName,
-        "depth": depth,
-        "length": length,
-        "upperWidth": upperWidth,
-        "lowerWidth": lowerWidth,
-        "volumeExcavated": volume,
-        "estimatedVolume": estimateVolume,
-        "workDifference": workDifference,
-        "result": estimation,
-        "status": "Pending",
-        "comment": comment,
-      });
+      // await databaseReference
+      //     .child("projects")
+      //     .child(projectID)
+      //     .child("progress")
+      //     .child("12-09-2020")
+      //     .child(workerID)
+      //     .set({
+      //   "MachineUsed": machineUsed,
+      //   "hoursWorked": hoursWorked,
+      //   'intervals': {
+      //     for (int i = 0; i < timeIntervals; i++)
+      //       '$i': {
+      //         'startTime': startTime[i].toString(),
+      //         'endTime': endTime[i].toString(),
+      //       }
+      //   },
+      //   'images': {
+      //     for (int i = 0; i < _uploadedFileURL.length; i++)
+      //       '$i': _uploadedFileURL[i].toString(),
+      //   },
+      //   "workerName": workerName,
+      //   "depth": depth,
+      //   "length": length,
+      //   "upperWidth": upperWidth,
+      //   "lowerWidth": lowerWidth,
+      //   "volumeExcavated": volume,
+      //   "estimatedVolume": estimateVolume,
+      //   "workDifference": workDifference,
+      //   "result": estimation,
+      //   "status": "Pending",
+      //   "comment": comment,
+      // });
 
       pr.hide().then((isHidden) {
         showToast("Added successfully");
@@ -317,6 +358,42 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                     height: 10,
                   ),
                   SearchableDropdown.single(
+                    items: workers,
+                    value: selectedWorker,
+                    hint: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text("Select any"),
+                    ),
+                    searchHint: "Select any",
+                    onChanged: (value) {
+                      setState(() {
+                        selectedWorker = value;
+                      });
+                    },
+                    doneButton: "Done",
+                    displayItem: (item, selected) {
+                      return (Row(children: [
+                        selected
+                            ? Icon(
+                                Icons.radio_button_checked,
+                                color: Colors.grey,
+                              )
+                            : Icon(
+                                Icons.radio_button_unchecked,
+                                color: Colors.grey,
+                              ),
+                        SizedBox(width: 7),
+                        Expanded(
+                          child: item,
+                        ),
+                      ]));
+                    },
+                    isExpanded: true,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  SearchableDropdown.single(
                     items: machines,
                     value: selectedMachine,
                     hint: Padding(
@@ -328,6 +405,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                       setState(() {
                         selectedMachine = value;
                       });
+                      print(value);
                     },
                     doneButton: "Done",
                     displayItem: (item, selected) {
@@ -595,6 +673,13 @@ class MachineDetails {
   MachineDetails(this.machineID, this.excavation);
   var machineID;
   var excavation;
+}
+
+class WorkerList {
+  WorkerList(this.name, this.mobile, this.uid);
+  var name;
+  var mobile;
+  var uid;
 }
 
 class WorkIntervals extends StatefulWidget {

@@ -24,13 +24,15 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
 
   Future<bool> loginUser(String phone, BuildContext context) async {
     FirebaseAuth _auth = FirebaseAuth.instance;
-
     _auth.verifyPhoneNumber(
         phoneNumber: phone,
         timeout: Duration(seconds: 60),
         verificationCompleted: (AuthCredential credential) async {
-          Navigator.of(context).pop();
+          //Navigator.of(context).pop();
           print(credential);
+          print("`````````````````````````````````````````");
+          print("Verification Complete");
+          print("`````````````````````````````````````````");
           // AuthResult result = await _auth.signInWithCredential(credential);
 
           // FirebaseUser user = result.user;
@@ -44,6 +46,9 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
           //This callback would gets called when verification is done auto maticlly
         },
         verificationFailed: (AuthException exception) {
+          print("`````````````````````````````````````````");
+          print("Verification Failed");
+          print("`````````````````````````````````````````");
           print(exception.message);
         },
         codeSent: (String verificationId, [int forceResendingToken]) {
@@ -72,6 +77,9 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                             PhoneAuthProvider.getCredential(
                                 verificationId: verificationId, smsCode: code);
                         print(credential);
+                        print("`````````````````````````````````````````");
+                        print("Verification Complete");
+                        print("`````````````````````````````````````````");
                         // AuthResult result =
                         //     await _auth.signInWithCredential(credential);
 

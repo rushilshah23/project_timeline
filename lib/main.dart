@@ -15,6 +15,7 @@ import 'supervisor/addWorkers.dart';
 import 'supervisor/approveWork/WorkApproveModule.dart';
 import 'worker/workerDaily.dart';
 import 'worker/workerForm.dart';
+import 'workerSelectDailyForm.dart';
 
 void main() {
   runApp(MyApp());
@@ -176,6 +177,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => WorkerFormPage()),
+                );
+              },
+            ),
+            RaisedButton(
+              child: Text("Special Worker Form"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SpecialWorkerFormPage()),
                 );
               },
             ),
