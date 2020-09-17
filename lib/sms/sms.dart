@@ -1,6 +1,9 @@
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
+import 'package:project_timeline/CommonWidgets.dart';
 import 'package:project_timeline/sms/my_twilio.dart';
+
+
 
 Future<void> sms(String s,String msg) async {
   // See http://twil.io/secure for important security information
@@ -51,33 +54,31 @@ class _SmsState extends State<Sms> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('SMS'),
-          backgroundColor: Colors.blue[300],
-        ),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20,top: 20),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  labelText: "Enter receiver's Mobile No. XXXXXXXXXX",
-                  fillColor: Colors.white,
-                  focusedBorder:OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-                    borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
+        body: Padding(
+          padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20,top: 20),
+          child: ListView(
+
+            children: [
+              SizedBox(height: 40),
+              Center(child: Text('SMS',style: titlestyles(20, Colors.indigo),)),
+              SizedBox(height: 50),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: "Enter receiver's Mobile No. XXXXXXXXXX",
+                    fillColor: Colors.white,
+                    focusedBorder:OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.blue, width: 2.0),
+                      borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
+                    ),
                   ),
+                  controller: mobileNoControl,
+                  validator: (val) => val.isEmpty ? "Enter receiver's Mobile No." : null,
+                  onChanged: (val){
+                    setState(() => mobileNo = val);
+                  },
                 ),
-                controller: mobileNoControl,
-                validator: (val) => val.isEmpty ? "Enter receiver's Mobile No." : null,
-                onChanged: (val){
-                  setState(() => mobileNo = val);
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20,top: 20),
-              child: TextFormField(
+              SizedBox(height: 35),
+              TextFormField(
                 decoration: InputDecoration(
                   labelText: "Enter message to be sent",
                   fillColor: Colors.white,
@@ -92,14 +93,10 @@ class _SmsState extends State<Sms> {
                   setState(() => message = val);
                 },
               ),
-            ),
-            RaisedButton(
-              child: Text('Send SMS'),
-              onPressed: () {
-                sms(mobileNo,message);
-              },
-            ),
-          ],
+              SizedBox(height: 50),
+              buttons(context, sms(mobileNo,message), 'Send SMS')
+            ],
+          ),
         ),
       ),
     );

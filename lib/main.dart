@@ -57,15 +57,15 @@ class _MyHomePageState extends State<MyHomePage> {
         // in the middle of the parent.
         child: ListView(
           children: <Widget>[
-            // RaisedButton(
-            //   child: Text("SMS"),
-            //   onPressed: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => Sms()),
-            //     );
-            //   },
-            // ),
+             RaisedButton(
+               child: Text("SMS"),
+               onPressed: () {
+                 Navigator.push(
+                   context,
+                   MaterialPageRoute(builder: (context) => Sms()),
+                 );
+               },
+             ),
             RaisedButton(
               child: Text("Add New Project"),
               onPressed: () {
@@ -131,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             RaisedButton(
-              child: Text("Worker Rquest"),
+              child: Text("Worker Request"),
               onPressed: () {
                 Navigator.push(
                   context,
