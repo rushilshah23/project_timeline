@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:project_timeline/progressProject/projectProgress.dart';
 
 import 'ViewAllProjects/ViewAllProjects.dart';
 
