@@ -6,6 +6,7 @@ import 'package:project_timeline/manager/CreateAcceptSupervisor/SupervisorReques
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
 import 'package:project_timeline/progressProject/projectProgress.dart';
 import 'package:project_timeline/sms/sms.dart';
+import 'package:project_timeline/searchable_dropdown.dart';
 import 'package:project_timeline/supervisor/approveWork/WorkApproveModule.dart';
 import 'package:project_timeline/supervisor/createAcceptWorker/WorkerCreationForm.dart';
 import 'package:project_timeline/supervisor/createAcceptWorker/workerRequestList.dart';
@@ -57,15 +58,15 @@ class _MyHomePageState extends State<MyHomePage> {
         // in the middle of the parent.
         child: ListView(
           children: <Widget>[
-             RaisedButton(
-               child: Text("SMS"),
-               onPressed: () {
-                 Navigator.push(
-                   context,
-                   MaterialPageRoute(builder: (context) => Sms()),
-                 );
-               },
-             ),
+            RaisedButton(
+              child: Text("SMS"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Sms()),
+                );
+              },
+            ),
             RaisedButton(
               child: Text("Add New Project"),
               onPressed: () {
@@ -148,7 +149,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-
             RaisedButton(
               child: Text("Supervisor Form- Manager can create himself"),
               onPressed: () {
@@ -192,6 +192,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => ImageTesting()),
+                );
+              },
+            ),
+            RaisedButton(
+              child: Text("dropdown test"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => TestPage()),
                 );
               },
             ),

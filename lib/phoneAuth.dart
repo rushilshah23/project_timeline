@@ -82,9 +82,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                         print("`````````````````````````````````````````");
                         // AuthResult result =
                         //     await _auth.signInWithCredential(credential);
-
                         // FirebaseUser user = result.user;
-
                         // if (user != null) {
                         //   print(user);
                         // } else {
