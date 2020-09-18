@@ -31,7 +31,7 @@ Widget ThemeAppbar(String title)
 gradients()
 {
   return LinearGradient(
-        colors: [ Colors.orange[200],Colors.orange[400],Colors.orange[600],Colors.orange[800],Colors.deepOrange[600]],
+        colors: [ Colors.blue[100],Colors.blue[200],Colors.blue[300],Colors.blue[500],Colors.blue[600]],
         begin: Alignment.centerRight,
         end: Alignment(-1.0,-2.0)
     );
@@ -66,28 +66,26 @@ titlestyles(double size, Color colorss)
   return TextStyle(
     fontWeight: FontWeight.bold,
     fontSize: size,
-    color: colorss
+    color: colorss,
+    fontStyle: FontStyle.italic
   );
 }
 
 Widget buttons(context, files, String text){
   return FlatButton(
     child: Container(
-      height: 50,
-      width: 250,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        gradient: gradients()
-      ),
+        height: 50,
+        width: 250,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            gradient: gradients()
+        ),
         child: Center(
             child: Text(text,style: titlestyles(15, Colors.white))
         )
     ),
     onPressed: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => files),
-      );
+      files;
     },
   );
 }

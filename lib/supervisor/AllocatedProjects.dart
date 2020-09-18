@@ -3,10 +3,12 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_timeline/manager/createNewProject/test.dart';
 import '../CommonWidgets.dart';
 import 'addWorkers.dart';
 import 'approveWork/WorkApproveModule.dart';
+
+
+
 
 class YourAllocatedProjects extends StatefulWidget {
   @override
@@ -33,7 +35,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
             semanticContainer: true,
             color: Colors.amberAccent.shade50,
             child: Container(
-                padding: EdgeInsets.all(15),
+              padding: EdgeInsets.all(15),
                 child: Column(
                   children: <Widget>[
                     Row(
@@ -67,7 +69,9 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                                   style: TextStyle(fontSize: 14),
                                 ),
                                 Text(
-                                  "Supervisor Name" + ": " + "Shraddha.V.Pawar",
+                                  "Supervisor Name" +
+                                      ": " +
+                                      "Shraddha.V.Pawar",
                                   overflow: TextOverflow.clip,
                                   maxLines: 2,
                                   softWrap: false,
@@ -76,7 +80,9 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                                 Row(
                                   children: <Widget>[
                                     Text(
-                                      "Progress" + ": " + "20%",
+                                      "Progress" +
+                                          ": " +
+                                          "20%",
                                       overflow: TextOverflow.clip,
                                       maxLines: 2,
                                       softWrap: false,
@@ -86,7 +92,9 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                                       width: 10,
                                     ),
                                     Text(
-                                      "Status" + ": " + "On Going",
+                                      "Status" +
+                                          ": " +
+                                          "On Going",
                                       overflow: TextOverflow.clip,
                                       maxLines: 2,
                                       softWrap: false,
@@ -126,8 +134,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              SearchWorkerPage()),
+                                          builder: (context) => SearchWorkerPage()),
                                     );
                                   },
                                 ),
@@ -155,7 +162,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
               ourCreatedProjects.clear();
               allProjects = [];
               data.forEach(
-                (index, data) => allProjects.add({"key": index, ...data}),
+                    (index, data) => allProjects.add({"key": index, ...data}),
               );
 
               for (int i = 0; i < allProjects.length; i++) {
@@ -178,8 +185,8 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
             } else {
               return Center(
                   child: CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
-              ));
+                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+                  ));
             }
           }),
       //floatingActionButton: floats(context, Test()),

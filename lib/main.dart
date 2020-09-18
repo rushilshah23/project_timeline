@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:project_timeline/manager/CreateAcceptSupervisor/SupervisorFormCreation.dart';
+import 'package:project_timeline/ProgressTimeLine/ViewAllProjects/ViewAllProjects.dart';
 import 'package:project_timeline/imageTesting.dart';
-import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
+import 'package:project_timeline/manager/CreateAcceptSupervisor/SupervisorFormCreation.dart';
 import 'package:project_timeline/manager/CreateAcceptSupervisor/SupervisorRequestList.dart';
+import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
+import 'package:project_timeline/progressProject/projectProgress.dart';
+import 'package:project_timeline/sms/sms.dart';
 import 'package:project_timeline/supervisor/approveWork/WorkApproveModule.dart';
 import 'package:project_timeline/supervisor/createAcceptWorker/WorkerCreationForm.dart';
 import 'package:project_timeline/supervisor/createAcceptWorker/workerRequestList.dart';
 import 'login.dart';
 import 'manager/master/machineMaster/machineMaster.dart';
-
 import 'manager/createNewProject/test.dart';
 import 'supervisor/addWorkers.dart';
 import 'supervisor/approveWork/WorkApproveModule.dart';
@@ -25,7 +27,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -56,6 +57,15 @@ class _MyHomePageState extends State<MyHomePage> {
         // in the middle of the parent.
         child: ListView(
           children: <Widget>[
+             RaisedButton(
+               child: Text("SMS"),
+               onPressed: () {
+                 Navigator.push(
+                   context,
+                   MaterialPageRoute(builder: (context) => Sms()),
+                 );
+               },
+             ),
             RaisedButton(
               child: Text("Add New Project"),
               onPressed: () {
@@ -64,9 +74,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   MaterialPageRoute(builder: (context) => Test()),
                 );
               },
-            ),
-            SizedBox(
-              height: 20,
             ),
             RaisedButton(
               child: Text("Machine Master"),
@@ -77,9 +84,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-            SizedBox(
-              height: 20,
-            ),
             RaisedButton(
               child: Text("Supervisor Section"),
               onPressed: () {
@@ -88,9 +92,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   MaterialPageRoute(builder: (context) => ApproveWork()),
                 );
               },
-            ),
-            SizedBox(
-              height: 20,
             ),
             RaisedButton(
               child: Text("Petrol Module"),
@@ -109,9 +110,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   MaterialPageRoute(builder: (context) => LoginPage()),
                 );
               },
-            ),
-            SizedBox(
-              height: 20,
             ),
             RaisedButton(
               child: Text("Search Worker"),
@@ -133,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             RaisedButton(
-              child: Text("Worker Rquest"),
+              child: Text("Worker Request"),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -150,6 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
+
             RaisedButton(
               child: Text("Supervisor Form- Manager can create himself"),
               onPressed: () {
@@ -157,6 +156,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => SupervisorFormCreation()),
+                );
+              },
+            ),
+            RaisedButton(
+              child: Text("Project Progress"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProjectProgress()),
                 );
               },
             ),
