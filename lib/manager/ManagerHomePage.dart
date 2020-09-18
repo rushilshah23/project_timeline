@@ -154,6 +154,26 @@ class ManagerHomePageState extends State<ManagerHomePage> {
                       _onSelectItem(5);
                       appbartitle = "Create/Accept Supervisors";
                     }),
+
+                ListTile(
+                    title: Row(children: <Widget>[
+                      Icon(Icons.import_contacts),
+                      Text(" Report Generation")
+                    ]),
+                    onTap: () {
+                      _onSelectItem(5);
+                      appbartitle = "Create/Accept Supervisors";
+                    }),
+
+                ListTile(
+                    title: Row(children: <Widget>[
+                      Icon(Icons.description),
+                      Text(" Document Manager")
+                    ]),
+                    onTap: () {
+                      _onSelectItem(5);
+                      appbartitle = "Create/Accept Supervisors";
+                    }),
               ],
             ),
           ),
