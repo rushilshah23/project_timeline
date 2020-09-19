@@ -73,7 +73,9 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
 
   @override
   void initState() {
-    loadData();
+    setState(() {
+      loadData();
+    });
     timeIntervals = 1;
     super.initState();
     todaysDate = formatter.format(now);
@@ -158,7 +160,11 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                   ],
                 ),
               ),
-              value: values["machineID"].toString(),
+              value: values["machineID"].toString() +
+                  "," +
+                  values["machineName"].toString() +
+                  "," +
+                  values['modelName'].toString(),
             ),
           );
           machineDetails
@@ -201,7 +207,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
     if (_formKey.currentState.validate()) {
       await pr.show();
       setState(() {
-        machineUsed = selectedMachine;
+        machineUsed = selectedMachine.split(",")[0];
         hoursWorked = 0;
         for (int i = 0; i < timeIntervals; i++) {
           hoursWorked += endTime[i].difference(startTime[i]).inHours;
@@ -315,7 +321,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                   ),
                   SearchableDropdown.single(
                     items: machines,
-                    value: selectedMachine,
+                    value: null,
                     hint: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Text("Select any"),
