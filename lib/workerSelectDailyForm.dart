@@ -349,10 +349,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
               child: ListView(
                 children: <Widget>[
                   Center(
-                    child: Text(
-                      'For :' + ' $todaysDate',
-                      style: titlestyles(18, Colors.orange),
-                    ),
+                  child: titleStyles('For :' + todaysDate, 18),
                   ),
                   SizedBox(
                     height: 10,
@@ -637,23 +634,24 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                   Container(
                     width: double.infinity,
                     height: 50,
-                    child: FlatButton(
-                      onPressed: submitForm,
-                      child: Container(
-                        height: 50,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          gradient: gradients(),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Submit",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ),
+//                    child: FlatButton(
+//                      onPressed: submitForm,
+//                      child: Container(
+//                        height: 50,
+//                        width: double.infinity,
+//                        decoration: BoxDecoration(
+//                          gradient: gradients(),
+//                          borderRadius: BorderRadius.circular(10),
+//                        ),
+//                        child: Center(
+//                          child: Text(
+//                            "Submit",
+//                            style: TextStyle(color: Colors.white),
+//                          ),
+//                        ),
+//                      ),
+//                    ),
+                  child: buttons(context, submitForm, 'Submit', 20),
                   )
                 ],
               ),

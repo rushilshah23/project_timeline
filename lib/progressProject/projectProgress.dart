@@ -187,7 +187,7 @@ class _ProjectProgressState extends State<ProjectProgress> {
           } else {
             return Center(
                 child: CircularProgressIndicator(
-              valueColor: new AlwaysStoppedAnimation<Color>(Colors.orange),
+              valueColor: new AlwaysStoppedAnimation<Color>(Colors.indigo),
             ));
           }
         });

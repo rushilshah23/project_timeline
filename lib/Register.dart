@@ -410,10 +410,7 @@ class _RegisterState extends State<Register> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Center(
-                      child: Text(
-                        'Register for Work Requests',
-                        style: titlestyles(18, Colors.orange),
-                      ),
+                      child: titleStyles('Register for Work Requests', 18)
                     ),
                     SizedBox(height: 15),
                     Row(
@@ -500,18 +497,7 @@ class _RegisterState extends State<Register> {
                     ),
                     Center(
                       child: FlatButton(
-                        child: Container(
-                          height: 50,
-                          width: 400,
-                          decoration: BoxDecoration(gradient: gradients()),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 130, top: 15),
-                            child: Text(
-                              'Register',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
+                        child: buttonContainers(400, 20, 'Register', 18),
                         onPressed: () {
                           _signInMethod == "email"
                               ? addUserUsingEmail()

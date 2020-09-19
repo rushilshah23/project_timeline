@@ -294,11 +294,12 @@ class _UpdateTaskState extends State<UpdateTask> {
                   height: 30,
                 ),
                 RaisedButton(
-                    color: Colors.amber[300],
+                    color: Colors.indigo[300],
                     onPressed: () {
                       updateTask();
                     },
                     child: Text("Update Details")),
+
                 SizedBox(
                   height: 20,
                 ),

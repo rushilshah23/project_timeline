@@ -194,8 +194,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
                   height: 10,
                 ),
                 Center(
-                  child: Text('Worker Request List',
-                      style: titlestyles(18, Colors.orange)),
+                child: titleStyles('Worker Request List', 18),
                 ),
                 SizedBox(
                   height: 20,

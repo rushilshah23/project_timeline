@@ -57,7 +57,9 @@ class LoginPageState extends State<LoginPage> {
     }
   }
 
+
   @override
+
   Widget build(BuildContext context) {
     // TODO: implement build
     return new Scaffold(
@@ -156,7 +158,7 @@ class LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SizedBox(
-                    height: 50,
+                    height: 30,
                   ),
                   FlatButton(
                     onPressed: () {
@@ -164,19 +166,11 @@ class LoginPageState extends State<LoginPage> {
                         login();
                       }
                     },
-                    textColor: Colors.white,
-                    child: Container(
-                      width: 300,
-                      padding: EdgeInsets.all(20),
-                      decoration: new BoxDecoration(gradient: gradients()),
-                      child: Text(
-                        "Login",
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+
+                    child: buttonContainers(300, 20, 'Login', 18)
                   ),
                   SizedBox(
-                    height: 50,
+                    height: 30,
                   ),
                   FlatButton(
                     onPressed: () {
@@ -185,16 +179,8 @@ class LoginPageState extends State<LoginPage> {
                         MaterialPageRoute(builder: (context) => Register()),
                       );
                     },
-                    textColor: Colors.white,
-                    child: Container(
-                      width: 300,
-                      padding: EdgeInsets.all(20),
-                      decoration: new BoxDecoration(gradient: gradients()),
-                      child: Text(
-                        "Register",
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+
+                    child: buttonContainers(300, 20, 'Register', 18)
                   ),
                 ],
               ),
@@ -205,3 +191,4 @@ class LoginPageState extends State<LoginPage> {
     )));
   }
 }
+

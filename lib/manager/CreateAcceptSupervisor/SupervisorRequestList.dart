@@ -191,8 +191,7 @@ class _SupervisorRequestListState extends State<SupervisorRequestList> {
                   height: 10,
                 ),
                 Center(
-                  child: Text('Supervisor Request List',
-                      style: titlestyles(18, Colors.orange)),
+                child: titleStyles('Supervisor Request List', 18),
                 ),
                 SizedBox(
                   height: 20,

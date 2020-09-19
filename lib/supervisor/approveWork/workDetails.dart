@@ -77,9 +77,10 @@ class _WorkDetailsState extends State<WorkDetails> {
 
 
                       Center(
-                        child: Text('Details:',
-                            style: titlestyles(18, Colors.orange)
-                        ),
+//                        child: Text('Details:',
+//                            style: titlestyles(18, Colors.orange)
+//                        ),
+                      child: titleStyles('Details:', 18),
                       ),
 
                       SizedBox(
@@ -135,15 +136,16 @@ class _WorkDetailsState extends State<WorkDetails> {
 
                           Flexible(
                             child: FlatButton(
-                              child: Container(
-                                height: 40,
-//                                width: 150,
-                                decoration: BoxDecoration(
-                                  gradient: gradients(),
-                                  borderRadius: BorderRadius.circular(5)
-                                ),
-                                  child: Center(child: Text("Approve",style: titlestyles(18, Colors.white),))
-                              ),
+//                              child: Container(
+//                                height: 40,
+////                                width: 150,
+//                                decoration: BoxDecoration(
+//                                  gradient: gradients(),
+//                                  borderRadius: BorderRadius.circular(5)
+//                                ),
+//                                  child: Center(child: Text("Approve",style: titlestyles(18, Colors.white),))
+//                              ),
+                              child: buttonContainers(150, 20, 'Approve', 18),
                               onPressed: () {
 
                               },
@@ -152,14 +154,15 @@ class _WorkDetailsState extends State<WorkDetails> {
                           Flexible(
                           child: FlatButton(
 
-                            child: Container(
-                                height:40,
-                               // width: 150,
-                                decoration: BoxDecoration(
-                                    gradient: gradients(),
-                                    borderRadius: BorderRadius.circular(5)
-                                ),
-                                child: Center(child: Text("Reject",style: titlestyles(18, Colors.white),))),
+//                            child: Container(
+//                                height:40,
+//                               // width: 150,
+//                                decoration: BoxDecoration(
+//                                    gradient: gradients(),
+//                                    borderRadius: BorderRadius.circular(5)
+//                                ),
+//                                child: Center(child: Text("Reject",style: titlestyles(18, Colors.white),))),
+                            child: buttonContainers(150, 20, 'Reject', 18),
                             onPressed: () {
 
                             },

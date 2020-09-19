@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:project_timeline/CommonWidgets.dart';
 import 'package:project_timeline/MasterDataSet/ourMachines.dart';
 import 'package:project_timeline/MasterDataSet/ourPetrolPump.dart';
 import 'package:project_timeline/ProgressTimeLine/ProgressPage.dart';
@@ -62,10 +63,10 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
     return Scaffold(
       appBar: new AppBar(
         iconTheme: IconThemeData(
-          color: Colors.orange[800],
+          color: Colors.indigo[200],
         ),
         title:  Text(appbartitle, style: TextStyle(
-          color: Colors.orange[800],
+          color: Colors.indigo,
         )),
         backgroundColor: Colors.white,
       ),
@@ -81,11 +82,7 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
               children: <Widget>[
                 UserAccountsDrawerHeader(
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [ Colors.orange[200],Colors.orange[400],Colors.orange[600],Colors.orange[800],Colors.deepOrange[600]],
-                        begin: Alignment.centerRight,
-                        end: Alignment(-1.0,-2.0)
-                    ), //Gradient
+                    gradient: gradients()
                   ),
                   accountName: Text("supervisor"),
                   accountEmail: Text("supervisor@gmail.com"),

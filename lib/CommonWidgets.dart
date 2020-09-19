@@ -61,31 +61,46 @@ Widget floats(context, files)
   );
 }
 
-titlestyles(double size, Color colorss)
+titleStyles(String text, double size)
 {
-  return TextStyle(
-    fontWeight: FontWeight.bold,
-    fontSize: size,
-    color: colorss,
-    fontStyle: FontStyle.italic
+  return Text(
+    text,
+    style: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: size,
+        color: Colors.blue[900],
+        fontStyle: FontStyle.italic,
+    )
   );
 }
 
-Widget buttons(context, files, String text){
+Widget buttons(context, files, String text, double size){
   return FlatButton(
-    child: Container(
-        height: 50,
-        width: 250,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            gradient: gradients()
-        ),
-        child: Center(
-            child: Text(text,style: titlestyles(15, Colors.white))
-        )
+    child: buttonContainers(250, 20, text, size),
+      onPressed: () {
+        // ignore: unnecessary_statements
+        files;
+      },
+  );
+}
+
+Widget buttonContainers(double width,double padding,String text,double size){
+  return Container(
+    width: width,
+    padding: EdgeInsets.all(padding),
+    decoration: new BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        gradient: gradients()
     ),
-    onPressed: () {
-      files;
-    },
+    child: Text(
+      text,
+      style: TextStyle(
+        fontWeight: FontWeight.w500,
+        fontStyle: FontStyle.italic,
+        fontSize: size,
+          color: Colors.white
+      ),
+      textAlign: TextAlign.center,
+    ),
   );
 }

@@ -109,10 +109,7 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
             Column(
 
               children: <Widget>[
-                Text(
-                  "Add Petrol Pump",
-                  style: titlestyles(20, Colors.orange[800]),
-                ),
+                titleStyles('Add Petrol Pump', 20),
                 SizedBox(
                   height: 20,
                 ),

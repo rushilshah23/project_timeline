@@ -572,21 +572,22 @@ class _EditMachineDataState extends State<EditMachineData> {
                                           addMachine();
                                         }
                                       },
-                                      color: Colors.orange,
+                                      color: Colors.blue,
                                     ),
 
                                   SizedBox(width: 10,),
-                                  RaisedButton(
-                                    child: Text(
-                                      'Delete Machine',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    color: Colors.orange,
-                                    onPressed: () {
-                                      deleteMachine();
-                                    },
-
-                                  ),
+//                                  RaisedButton(
+//                                    child: Text(
+//                                      'Delete Machine',
+//                                      style: TextStyle(color: Colors.white),
+//                                    ),
+//                                    color: Colors.orange,
+//                                    onPressed: () {
+//                                      deleteMachine();
+//                                    },
+//
+//                                  ),
+                                buttons(context, deleteMachine, 'Delete Machine', 18)
                                 ],
                               ),
 
