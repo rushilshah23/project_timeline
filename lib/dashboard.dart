@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:project_timeline/CommonWidgets.dart';
 
 
 
@@ -44,11 +45,12 @@ class _DashBoardState extends State<DashBoard> {
           .size
           .width,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-            colors: [ Colors.orange[200],Colors.orange[400],Colors.orange[600],Colors.orange[800],Colors.deepOrange[600]],
-            begin: Alignment.centerRight,
-            end: Alignment(-1.0,-2.0)
-        ), //Gradient
+//        gradient: LinearGradient(
+//            colors: [ Colors.orange[200],Colors.orange[400],Colors.orange[600],Colors.orange[800],Colors.deepOrange[600]],
+//            begin: Alignment.centerRight,
+//            end: Alignment(-1.0,-2.0)
+//        ),// Gradient
+      gradient: gradients()
       ),
       child: Padding(
         padding: const EdgeInsets.only(top: 16.0,left: 30),
@@ -63,7 +65,7 @@ class _DashBoardState extends State<DashBoard> {
                         flex: 1,
                         child:Icon(
                           Icons.person_pin,
-                          color: Colors.white70,
+                          color: Colors.white,
                           size: 50,
                         )
                     ),
@@ -78,7 +80,7 @@ class _DashBoardState extends State<DashBoard> {
                               'Welcome',
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w400,
+                                  fontWeight: FontWeight.w500,
                                   fontSize: 28.0
                               ),
                             ),
@@ -86,7 +88,7 @@ class _DashBoardState extends State<DashBoard> {
                               'Username',
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w400,
+                                  fontWeight: FontWeight.w500,
                                   fontSize: 20.0
                               ),
                             ),
@@ -206,7 +208,7 @@ class _DashBoardState extends State<DashBoard> {
                         style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
                       ),
                       circularStrokeCap: CircularStrokeCap.round,
-                      progressColor: Colors.orange[800],
+                      progressColor: Colors.blue[800],
                     ),
                     SizedBox(height: 10),
                     Text(
@@ -231,7 +233,7 @@ class _DashBoardState extends State<DashBoard> {
                         style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
                       ),
                       circularStrokeCap: CircularStrokeCap.round,
-                      progressColor: Colors.orange[600],
+                      progressColor: Colors.blue[600],
                     ),
                     SizedBox(height: 10),
                     Text(
@@ -256,7 +258,7 @@ class _DashBoardState extends State<DashBoard> {
                         style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
                       ),
                       circularStrokeCap: CircularStrokeCap.round,
-                      progressColor: Colors.orange[300],
+                      progressColor: Colors.blue[300],
                     ),
                     SizedBox(height: 10),
                     Text(
@@ -272,31 +274,32 @@ class _DashBoardState extends State<DashBoard> {
 
               ],
             ),
-            SizedBox(height: 100),
+            SizedBox(height: 70),
             Center(
               child: FlatButton(
-                child: Container(
-                  height: 50,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    gradient: LinearGradient(
-                        colors: [ Colors.orange[200],Colors.orange[400],Colors.orange[600],Colors.orange[800],Colors.deepOrange[600]],
-                        begin: Alignment.centerRight,
-                        end: Alignment(-1.0,-2.0)
-                    ), //Gradient
-                  ),
-                  child: Center(
-
-                    child: Text(
-                        'Our Projects',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold
-                      ),
-                    ),
-                  ),
-                ),
+//                child: Container(
+//                  height: 50,
+//                  width: double.infinity,
+//                  decoration: BoxDecoration(
+//                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+//                    gradient: LinearGradient(
+//                        colors: [ Colors.orange[200],Colors.orange[400],Colors.orange[600],Colors.orange[800],Colors.deepOrange[600]],
+//                        begin: Alignment.centerRight,
+//                        end: Alignment(-1.0,-2.0)
+//                    ), //Gradient
+//                  ),
+//                  child: Center(
+//
+//                    child: Text(
+//                        'Our Projects',
+//                      style: TextStyle(
+//                        color: Colors.white,
+//                        fontWeight: FontWeight.bold
+//                      ),
+//                    ),
+//                  ),
+//                ),
+              child: buttonContainers(double.infinity, 20, 'Our Projects', 18),
                 onPressed: () {},
               ),
             )

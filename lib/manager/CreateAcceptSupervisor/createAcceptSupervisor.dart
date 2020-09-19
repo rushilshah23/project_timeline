@@ -71,7 +71,7 @@ class _CreateAcceptSupervisorState extends State<CreateAcceptSupervisor> with Si
 
   TabBar _getTabBar() {
     return TabBar(
-      labelColor: Colors.orange,
+      labelColor: Colors.blue,
       tabs: <Widget>[
         Tab(text: "Create",),
         Tab(text: "Accept"),

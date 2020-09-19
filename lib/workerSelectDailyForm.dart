@@ -158,13 +158,17 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                   children: [
                     Text(values["name"].toString()),
                     Text(
-                      values['mobile'].toString(),
+                      values["mobile"].toString(),
                       style: TextStyle(color: Colors.grey, fontSize: 14),
                     ),
                   ],
                 ),
               ),
-              value: key.toString(),
+              value: key.toString() +
+                  "," +
+                  values["name"].toString() +
+                  "," +
+                  values["mobile"].toString(),
             ),
           );
           workersList.add(
@@ -193,7 +197,11 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                   ],
                 ),
               ),
-              value: values["machineID"].toString(),
+              value: values["machineID"].toString() +
+                  "," +
+                  values["machineName"].toString() +
+                  "," +
+                  values['modelName'].toString(),
             ),
           );
           machineDetails
@@ -234,14 +242,14 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
 
   void submitForm() async {
     if (_formKey.currentState.validate()) {
+      print(selectedWorker);
       await pr.show();
       setState(() {
-        workerID = selectedWorker;
+        workerID = selectedWorker.split(",")[0];
         workersList.forEach((worker) {
-          if (worker.uid == workerID) ;
-          workerName = worker.name;
+          if (worker.uid == workerID) workerName = worker.name;
         });
-        machineUsed = selectedMachine;
+        machineUsed = selectedMachine.split(",")[0];
         hoursWorked = 0;
         for (int i = 0; i < timeIntervals; i++) {
           hoursWorked += endTime[i].difference(startTime[i]).inHours;
@@ -266,7 +274,11 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
         estimateVolume = hoursWorked * exacavatedPerHour;
         workDifference = (volume - estimateVolume) / estimateVolume * 100;
         estimation = estimateVolume < volume ? "Pass" : "Fail";
-        print(estimation);
+        print(hoursWorked);
+        print(exacavatedPerHour);
+        print(estimateVolume);
+        print(volume);
+        print(workDifference);
         print(workerName);
         print(workerID);
       });
@@ -349,44 +361,21 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
               child: ListView(
                 children: <Widget>[
                   Center(
-                    child: Text(
-                      'For :' + ' $todaysDate',
-                      style: titlestyles(18, Colors.orange),
-                    ),
+                  child: titleStyles('For :' + todaysDate, 18),
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   SearchableDropdown.single(
                     items: workers,
-                    value: selectedWorker,
-                    hint: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Text("Select any"),
-                    ),
-                    searchHint: "Select any",
+                    value: null,
+                    hint: "Select one",
+                    searchHint: "Select one",
                     onChanged: (value) {
                       setState(() {
                         selectedWorker = value;
+                        print(selectedWorker);
                       });
-                    },
-                    doneButton: "Done",
-                    displayItem: (item, selected) {
-                      return (Row(children: [
-                        selected
-                            ? Icon(
-                                Icons.radio_button_checked,
-                                color: Colors.grey,
-                              )
-                            : Icon(
-                                Icons.radio_button_unchecked,
-                                color: Colors.grey,
-                              ),
-                        SizedBox(width: 7),
-                        Expanded(
-                          child: item,
-                        ),
-                      ]));
                     },
                     isExpanded: true,
                   ),
@@ -395,35 +384,14 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                   ),
                   SearchableDropdown.single(
                     items: machines,
-                    value: selectedMachine,
-                    hint: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Text("Select any"),
-                    ),
-                    searchHint: "Select any",
+                    value: null,
+                    hint: "Select one",
+                    searchHint: "Select one",
                     onChanged: (value) {
                       setState(() {
                         selectedMachine = value;
+                        print(selectedMachine);
                       });
-                      print(value);
-                    },
-                    doneButton: "Done",
-                    displayItem: (item, selected) {
-                      return (Row(children: [
-                        selected
-                            ? Icon(
-                                Icons.radio_button_checked,
-                                color: Colors.grey,
-                              )
-                            : Icon(
-                                Icons.radio_button_unchecked,
-                                color: Colors.grey,
-                              ),
-                        SizedBox(width: 7),
-                        Expanded(
-                          child: item,
-                        ),
-                      ]));
                     },
                     isExpanded: true,
                   ),
@@ -637,23 +605,24 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                   Container(
                     width: double.infinity,
                     height: 50,
-                    child: FlatButton(
-                      onPressed: submitForm,
-                      child: Container(
-                        height: 50,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          gradient: gradients(),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Submit",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ),
+//                    child: FlatButton(
+//                      onPressed: submitForm,
+//                      child: Container(
+//                        height: 50,
+//                        width: double.infinity,
+//                        decoration: BoxDecoration(
+//                          gradient: gradients(),
+//                          borderRadius: BorderRadius.circular(10),
+//                        ),
+//                        child: Center(
+//                          child: Text(
+//                            "Submit",
+//                            style: TextStyle(color: Colors.white),
+//                          ),
+//                        ),
+//                      ),
+//                    ),
+                  child: buttons(context, submitForm, 'Submit', 20),
                   )
                 ],
               ),

@@ -28,8 +28,7 @@ class _OurMachinesDetailsDisplayState extends State<OurMachinesDetailsDisplay> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Center(
-                    child: Text('Details:',
-                        style: titlestyles(18, Colors.deepOrange)),
+                  child: titleStyles('Details:', 18),
                   ),
                   SizedBox(
                     height: 10,

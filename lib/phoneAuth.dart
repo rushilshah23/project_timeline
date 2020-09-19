@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:project_timeline/CommonWidgets.dart';
 
 class PhoneAuth extends StatelessWidget {
   @override
@@ -82,9 +83,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                         print("`````````````````````````````````````````");
                         // AuthResult result =
                         //     await _auth.signInWithCredential(credential);
-
                         // FirebaseUser user = result.user;
-
                         // if (user != null) {
                         //   print(user);
                         // } else {
@@ -139,15 +138,12 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
               Container(
                 width: double.infinity,
                 child: FlatButton(
-                  child: Text("LOGIN"),
-                  textColor: Colors.white,
-                  padding: EdgeInsets.all(16),
+                  child: buttonContainers(200, 20, 'LOGIN', 20),
                   onPressed: () {
                     final phone = _phoneController.text.trim();
 
                     loginUser(phone, context);
                   },
-                  color: Colors.blue,
                 ),
               )
             ],

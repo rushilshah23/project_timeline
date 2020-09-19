@@ -105,8 +105,7 @@ class _AddNewMachineState extends State<AddNewMachine> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Center(
-                                child: Text('Add a new machine',
-                                    style: titlestyles(18, Colors.orange)),
+                              child: titleStyles('Add a new machine', 18),
                               ),
 
                               SizedBox(height: 15),
@@ -424,7 +423,7 @@ class _AddNewMachineState extends State<AddNewMachine> {
                                             )),
                                         IconButton(
                                           icon: Icon(Icons.add,
-                                              color: Colors.deepOrange),
+                                              color: Colors.indigo[900]),
                                           onPressed: addDynamic,
                                         ),
                                       ],

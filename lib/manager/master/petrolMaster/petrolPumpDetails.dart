@@ -75,9 +75,7 @@ class _PetrolPumpDetailsState extends State<PetrolPumpDetails> {
                 children: <Widget>[
 
                   Center(
-                    child: Text('Details:',
-                        style: titlestyles(18, Colors.deepOrange)
-                    ),
+                  child: titleStyles('Details:', 18),
                   ),
                   Text("Name"),
                   Text(widget.data["petrolPumpName"].toString()),

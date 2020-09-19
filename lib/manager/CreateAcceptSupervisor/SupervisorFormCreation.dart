@@ -97,10 +97,7 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Center(
-                      child: Text(
-                        'Make Supervisor form',
-                        style: titlestyles(18, Colors.orange),
-                      ),
+                    child: titleStyles('Make Supervisor form', 18),
                     ),
                     SizedBox(height: 15),
                     TextFormField(
@@ -235,18 +232,19 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                     SizedBox(height: 10),
                     Center(
                       child: FlatButton(
-                        child: Container(
-                          height: 50,
-                          width: 400,
-                          decoration: BoxDecoration(gradient: gradients()),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 130, top: 15),
-                            child: Text(
-                              'Create Supervisor',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
+//                        child: Container(
+//                          height: 50,
+//                          width: 400,
+//                          decoration: BoxDecoration(gradient: gradients()),
+//                          child: Padding(
+//                            padding: const EdgeInsets.only(left: 130, top: 15),
+//                            child: Text(
+//                              'Create Supervisor',
+//                              style: TextStyle(color: Colors.white),
+//                            ),
+//                          ),
+//                        ),
+                      child: buttonContainers(400, 20, 'Create Supervisor', 18),
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
                             setState(() {

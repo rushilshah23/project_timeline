@@ -97,11 +97,7 @@ class _ApproveWorkState extends State<ApproveWork> {
                   useStickyGroupSeparators: true,
                   groupSeparatorBuilder: (String value) => Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      value,
-                      textAlign: TextAlign.center,
-                      style: titlestyles(18, Colors.orange),
-                    ),
+                    child: titleStyles(value, 18)
                   ),
                   itemBuilder: (c, element) {
                     return Card(

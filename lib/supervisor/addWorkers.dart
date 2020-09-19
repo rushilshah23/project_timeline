@@ -121,8 +121,7 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
                   children: [
                     SizedBox(height: 10),
                     Center(
-                      child: Text('Add Workers',
-                          style: titlestyles(18, Colors.orange)),
+                    child: titleStyles('Add Workers', 18),
                     ),
                     SizedBox(height: 10),
                     Center(
@@ -149,23 +148,24 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    FlatButton(
-                      child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: gradients()),
-                        child: Center(
-                          child: Text(
-                            'Save',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      onPressed: () {
-                        submitForm();
-                      },
-                    ),
+//                    FlatButton(
+//                      child: Container(
+//                        height: 50,
+//                        decoration: BoxDecoration(
+//                            borderRadius: BorderRadius.circular(10),
+//                            gradient: gradients()),
+//                        child: Center(
+//                          child: Text(
+//                            'Save',
+//                            style: TextStyle(color: Colors.white),
+//                          ),
+//                        ),
+//                      ),
+//                      onPressed: () {
+//                        submitForm();
+//                      },
+//                    ),
+                  buttons(context, submitForm, 'Save', 18)
                   ],
                 ),
               ],

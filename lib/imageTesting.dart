@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:project_timeline/CommonWidgets.dart';
 
 void main() => runApp(new ImageTesting());
 
@@ -76,10 +77,7 @@ class _ImageTestingState extends State<ImageTesting> {
         body: Column(
           children: <Widget>[
             Center(child: Text('Error: $_error')),
-            RaisedButton(
-              child: Text("Pick images"),
-              onPressed: loadAssets,
-            ),
+            buttons(context, loadAssets, 'Pick Images', 18),
             Expanded(
               child: buildGridView(),
             )

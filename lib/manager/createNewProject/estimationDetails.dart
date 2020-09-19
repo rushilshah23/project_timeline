@@ -37,9 +37,7 @@ class _EstimationDetailsPageState extends State<EstimationDetailsPage> {
                     children: <Widget>[
 
                       Center(
-                        child: Text('Details:',
-                            style: titlestyles(18, Colors.deepOrange)
-                        ),
+                      child: titleStyles('Details:', 18),
                       ),
                       SizedBox(
                         height: 20,

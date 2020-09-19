@@ -101,10 +101,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Center(
-                      child: Text(
-                        'Make worker form',
-                        style: titlestyles(18, Colors.orange),
-                      ),
+                    child: titleStyles('Make worker form', 18),
                     ),
                     SizedBox(height: 15),
                     TextFormField(
@@ -239,18 +236,19 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                     SizedBox(height: 10),
                     Center(
                       child: FlatButton(
-                        child: Container(
-                          height: 50,
-                          width: 400,
-                          decoration: BoxDecoration(gradient: gradients()),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 130, top: 15),
-                            child: Text(
-                              'Create Worker',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
+//                        child: Container(
+//                          height: 50,
+//                          width: 400,
+//                          decoration: BoxDecoration(gradient: gradients()),
+//                          child: Padding(
+//                            padding: const EdgeInsets.only(left: 130, top: 15),
+//                            child: Text(
+//                              'Create Worker',
+//                              style: TextStyle(color: Colors.white),
+//                            ),
+//                          ),
+//                        ),
+                      child: buttonContainers(400, 20, 'Create Worker', 18),
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
                             setState(() {

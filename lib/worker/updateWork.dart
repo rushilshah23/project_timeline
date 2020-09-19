@@ -68,7 +68,7 @@ class _UpdateWorkState extends State<UpdateWork> with SingleTickerProviderStateM
 
   TabBar _getTabBar() {
     return TabBar(
-      labelColor: Colors.orange,
+      labelColor: Colors.blue,
       tabs: <Widget>[
         Tab(text: "Update",),
         Tab(text: "Approvals"),

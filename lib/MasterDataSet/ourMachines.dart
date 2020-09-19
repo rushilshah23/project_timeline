@@ -163,8 +163,9 @@ class _OurMachinesState extends State<OurMachines> {
                     height: 10,
                   ),
                   Center(
-                    child: Text('Our Machines',
-                        style: titlestyles(18, Colors.orange)),
+//                    child: Text('Our Machines',
+//                        style: titlestyles(18, Colors.orange)),
+                  child: titleStyles('Our Machines', 18),
                   ),
                   SizedBox(
                     height: 20,

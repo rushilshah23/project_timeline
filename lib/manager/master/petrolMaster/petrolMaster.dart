@@ -219,9 +219,7 @@ class _PetrolMasterState extends State<PetrolMaster> {
                 children: <Widget>[
                   SizedBox(height: 10,),
                   Center(
-                    child: Text('Our Diesel Stations',
-                        style: titlestyles(18,Colors.orangeAccent)
-                    ),
+                  child: titleStyles('Our Diesel Stations', 18),
                   ),
 
                   SizedBox(height: 20,),

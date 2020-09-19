@@ -53,7 +53,7 @@ class _WorkerDailyState extends State<WorkerDaily> {
                     itemCount: date.length,
                     itemBuilder: (context, index) {
                       return Card(
-                        color: Colors.amber[100],
+                        color: Colors.indigo[200],
                         elevation: 3,
                         child: ListTile(
                           leading: getIcon(date[index][workerID]["status"]),

@@ -17,29 +17,69 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
 
   acceptRequest(worker) async {
     try {
-      print(worker["key"]);
-      print(worker["email"]);
-      print(worker["password"]);
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: worker["email"], password: worker["password"])
-          .then((AuthResult result) async {
-        await workers.document(result.user.uid).setData({
-          "assignedProject": "No project assigned",
+      if (worker["signInMethod"] != null) {
+        await workers.document(worker["phoneNo"]).setData({
           "email": worker["email"],
           "mobile": worker["phoneNo"],
           "name": worker["name"],
-          "uid": result.user.uid
+          "status": "accepted",
         }).then((value) async {
           await databaseReference
               .child("request")
               .child("worker")
               .child(worker["key"])
               .remove();
+        }).then((value) {
+          showToast("Added successfully");
         });
-      }).then((value) {
-        showToast("Added successfully");
-      });
+      } else {
+        print(worker["key"]);
+        print(worker["email"]);
+        print(worker["password"]);
+        await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+                email: worker["email"], password: worker["password"])
+            .then((AuthResult result) async {
+          await workers.document(result.user.uid).setData({
+            "email": worker["email"],
+            "mobile": worker["phoneNo"],
+            "name": worker["name"],
+            "uid": result.user.uid
+          }).then((value) async {
+            await databaseReference
+                .child("request")
+                .child("worker")
+                .child(worker["key"])
+                .remove();
+          });
+        }).then((value) {
+          showToast("Added successfully");
+        });
+      }
+
+      // print(worker["key"]);
+      // print(worker["email"]);
+      // print(worker["password"]);
+      // await FirebaseAuth.instance
+      //     .createUserWithEmailAndPassword(
+      //         email: worker["email"], password: worker["password"])
+      //     .then((AuthResult result) async {
+      //   await workers.document(result.user.uid).setData({
+      //     "assignedProject": "No project assigned",
+      //     "email": worker["email"],
+      //     "mobile": worker["phoneNo"],
+      //     "name": worker["name"],
+      //     "uid": result.user.uid
+      //   }).then((value) async {
+      //     await databaseReference
+      //         .child("request")
+      //         .child("worker")
+      //         .child(worker["key"])
+      //         .remove();
+      //   });
+      // }).then((value) {
+      //   showToast("Added successfully");
+      // });
     } catch (e) {
       print(e.toString());
     }
@@ -90,13 +130,22 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
                           SizedBox(
                             height: 5,
                           ),
-                          Text(
-                            "Email :" + allWorkerRequest[index]["email"],
-                            overflow: TextOverflow.clip,
-                            maxLines: 2,
-                            softWrap: false,
-                            style: TextStyle(fontSize: 14),
-                          ),
+                          if (allWorkerRequest[index]["email"] != null)
+                            Text(
+                              "Email :" + allWorkerRequest[index]["email"],
+                              overflow: TextOverflow.clip,
+                              maxLines: 2,
+                              softWrap: false,
+                              style: TextStyle(fontSize: 14),
+                            ),
+                          if (allWorkerRequest[index]["signInMethod"] != null)
+                            Text(
+                              "Sign In method : OTP",
+                              overflow: TextOverflow.clip,
+                              maxLines: 2,
+                              softWrap: false,
+                              style: TextStyle(fontSize: 14),
+                            ),
                           Text(
                             "Address: " + allWorkerRequest[index]["address"],
                             overflow: TextOverflow.clip,
@@ -194,8 +243,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
                   height: 10,
                 ),
                 Center(
-                  child: Text('Worker Request List',
-                      style: titlestyles(18, Colors.orange)),
+                child: titleStyles('Worker Request List', 18),
                 ),
                 SizedBox(
                   height: 20,

@@ -73,7 +73,9 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
 
   @override
   void initState() {
-    loadData();
+    setState(() {
+      loadData();
+    });
     timeIntervals = 1;
     super.initState();
     todaysDate = formatter.format(now);
@@ -158,7 +160,11 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                   ],
                 ),
               ),
-              value: values["machineID"].toString(),
+              value: values["machineID"].toString() +
+                  "," +
+                  values["machineName"].toString() +
+                  "," +
+                  values['modelName'].toString(),
             ),
           );
           machineDetails
@@ -201,7 +207,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
     if (_formKey.currentState.validate()) {
       await pr.show();
       setState(() {
-        machineUsed = selectedMachine;
+        machineUsed = selectedMachine.split(",")[0];
         hoursWorked = 0;
         for (int i = 0; i < timeIntervals; i++) {
           hoursWorked += endTime[i].difference(startTime[i]).inHours;
@@ -308,17 +314,14 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
               child: ListView(
                 children: <Widget>[
                   Center(
-                    child: Text(
-                      'For :' + ' $todaysDate',
-                      style: titlestyles(18, Colors.orange),
-                    ),
+                  child: titleStyles('For :' + todaysDate, 18),
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   SearchableDropdown.single(
                     items: machines,
-                    value: selectedMachine,
+                    value: null,
                     hint: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Text("Select any"),
@@ -559,23 +562,24 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                   Container(
                     width: double.infinity,
                     height: 50,
-                    child: FlatButton(
-                      onPressed: submitForm,
-                      child: Container(
-                        height: 50,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          gradient: gradients(),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Submit",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ),
+//                    child: FlatButton(
+//                      onPressed: submitForm,
+//                      child: Container(
+//                        height: 50,
+//                        width: double.infinity,
+//                        decoration: BoxDecoration(
+//                          gradient: gradients(),
+//                          borderRadius: BorderRadius.circular(10),
+//                        ),
+//                        child: Center(
+//                          child: Text(
+//                            "Submit",
+//                            style: TextStyle(color: Colors.white),
+//                          ),
+//                        ),
+//                      ),
+//                    ),
+                  child: buttons(context, submitForm, 'Submit', 18),
                   )
                 ],
               ),

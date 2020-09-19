@@ -670,10 +670,10 @@ class _TestState extends State<Test> {
     return Scaffold(
         appBar: new AppBar(
           iconTheme: IconThemeData(
-            color: Colors.orange[800],
+            color: Colors.indigo[200],
           ),
           title:  Text("Add New Project", style: TextStyle(
-            color: Colors.orange[800],
+            color: Colors.indigo,
           )),
           backgroundColor: Colors.white,
         ),
@@ -684,10 +684,7 @@ class _TestState extends State<Test> {
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
             children: <Widget>[
               Center(
-                child: Text(
-                  'Create New Project',
-                  style: titlestyles(24, Colors.orange[700]),
-                ),
+              child: titleStyles('Create New Project', 24),
               ),
               SizedBox(height: 20,),
               TextFormField(
@@ -804,12 +801,12 @@ class _TestState extends State<Test> {
 
                         IconButton(
                           icon:
-                          Icon(Icons.remove, color: Colors.deepOrange),
+                          Icon(Icons.remove, color: Colors.indigo[900]),
                           onPressed: removeDynamic,
                         ),
                         IconButton(
                           icon: Icon(Icons.add,
-                              color: Colors.deepOrange),
+                              color: Colors.indigo[900]),
                           onPressed: addDynamic,
                         ),
                       ],

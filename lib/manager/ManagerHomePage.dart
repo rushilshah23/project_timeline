@@ -69,11 +69,12 @@ class ManagerHomePageState extends State<ManagerHomePage> {
               children: <Widget>[
                 UserAccountsDrawerHeader(
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [ Colors.orange[200],Colors.orange[400],Colors.orange[600],Colors.orange[800],Colors.deepOrange[600]],
-                        begin: Alignment.centerRight,
-                        end: Alignment(-1.0,-2.0)
-                    ), //Gradient
+//                    gradient: LinearGradient(
+//                        colors: [ Colors.orange[200],Colors.orange[400],Colors.orange[600],Colors.orange[800],Colors.deepOrange[600]],
+//                        begin: Alignment.centerRight,
+//                        end: Alignment(-1.0,-2.0)
+//                    ), //Gradient
+                  gradient: gradients()
                   ),
                   accountName: Text("manager"),
                   accountEmail: Text("manager.aol@gmail.com"),

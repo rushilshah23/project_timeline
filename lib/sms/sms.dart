@@ -60,7 +60,7 @@ class _SmsState extends State<Sms> {
 
             children: [
               SizedBox(height: 40),
-              Center(child: Text('SMS',style: titlestyles(20, Colors.indigo),)),
+              Center(child: titleStyles('SMS', 20)),
               SizedBox(height: 50),
                 TextFormField(
                   decoration: InputDecoration(
@@ -94,7 +94,7 @@ class _SmsState extends State<Sms> {
                 },
               ),
               SizedBox(height: 50),
-              buttons(context, sms(mobileNo,message), 'Send SMS')
+              buttons(context, sms(mobileNo,message), 'Send SMS', 18)
             ],
           ),
         ),
