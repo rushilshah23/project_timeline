@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../CommonWidgets.dart';
 import '../../CommonWidgets.dart';
@@ -11,10 +12,11 @@ import 'estimationDetails.dart';
 
 List<String> machineTypeSelected = [];
 List<TextEditingController> usagePerDay = [];
+List<GlobalKey<FormState>> machinesFormKeys = [];
 int machinesCount=1;
 
-List<MachineDetails> machineDetailsList = [MachineDetails(machineID: 'None',machineName: 'None',modelName: 'None',amountOfExcavation: 'None',rentPerHour: 'None')];
-List<DropdownMenuItem> machines = [];
+
+List<MachineDetails> machineDetailsList = [];
 
 
 
@@ -27,8 +29,9 @@ class Test extends StatefulWidget {
 
 
 class _TestState extends State<Test> {
-  var selectedType;
+
   final GlobalKey<FormState> _formKeyValue = new GlobalKey<FormState>();
+  final GlobalKey<FormState> workDoneAlready = new GlobalKey<FormState>();
   final CollectionReference supervisors =
       Firestore.instance.collection("supervisor");
 
@@ -50,11 +53,18 @@ class _TestState extends State<Test> {
 
   List<int> selectedSupervisors = [];
   List<DropdownMenuItem> supervisorDropdwnItems = [];
-
+  bool _termsChecked = false;
 
   ProgressDialog pr;
 
-
+  double totalfuel=0;
+  double totalRent=0;
+  int days=0;
+  double volume;
+  String status;
+  double excavationDone=0;
+  double ourExcavtn=0;
+  double progressPercent=0;
 
   //Length
   String length = '';
@@ -72,20 +82,32 @@ class _TestState extends State<Test> {
   String lowidth = '';
   var lowidthControl = new TextEditingController();
 
+
+  //Length
+  String completedlength = '0';
+  var completedlenControl = new TextEditingController();
+
+  //Depth
+  String completeddepth = '0';
+  var completeddepControl = new TextEditingController();
+
+  //Upper Width
+  String completedupwidth = '0';
+  var completedupwidthControl = new TextEditingController();
+
+  //Upper Width
+  String completedlowidth = '0';
+  var completedlowidthControl = new TextEditingController();
+
   //supervisor
   var supervisor;
 
   List<SupervisorList> supervisorList = [];
 
-  //petrolPump
-  var petrolPump;
-  List<String> _petrolPump = <String>[
-    'Soft',
-    'Rough',
-    'Rocky',
-  ];
 
   final databaseReference = FirebaseDatabase.instance.reference();
+
+
 
 
   removeDynamic() {
@@ -103,7 +125,8 @@ class _TestState extends State<Test> {
 
   void loadMachines() async {
 
-
+    machineDetailsList.clear();
+   // machineDetailsList.add(MachineDetails(machineID: 'None',machineName: 'None',modelName: 'None',amountOfExcavation: 'None',rentPerHour: 'None'));
     await databaseReference
         .child("masters")
         .child("machineMaster")
@@ -111,24 +134,6 @@ class _TestState extends State<Test> {
         .then((snapshot) {
       snapshot.value.forEach((key, values) {
         setState(() {
-          machines.add(
-            DropdownMenuItem(
-              child: Container(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                    Text(values["machineName"]),
-                    Text(
-                    values['modelName'],
-                    style: TextStyle(color: Colors.grey,fontSize: 14),
-                  ),
-
-                ],
-              )),
-              value: values["machineName"],
-            ),
-          );
-
 //          ourMachines.add(values["machineName"]);
           machineDetailsList.add(MachineDetails(
               machineName:values['machineName'],machineID: values['machineID'],modelName: values['modelName'],
@@ -138,6 +143,73 @@ class _TestState extends State<Test> {
 
       });
     });
+  }
+
+
+
+  sendToDb() {
+
+    final CollectionReference supervisor = Firestore.instance.collection("supervisor");
+
+      var uuid = Uuid();
+      String uniqueID = uuid.v1();
+
+//      final DateTime now = DateTime.now();
+//      final DateFormat formatter = DateFormat('yyyy-MM-dd hh:mm');
+//      final String requestTime = formatter.format(now);
+
+      try {
+        databaseReference
+            .child("projects")
+            .child(uniqueID)
+            .set({
+          'projectName': projectName,
+          'siteAddress': siteAddress,
+          'soilType': soilType,
+          'projectID':uniqueID,
+          'volumeToBeExcavated': volume.toString() ,
+          'volumeExcavated': excavationDone.toString(),
+          'totalMachineRent': totalRent.toString(),
+          'totalFuelConsumption': totalfuel.toString(),
+          'projectDuration': days.toString(),
+          'projectStatus': status,
+          'progressPercent': progressPercent.floor().toString(),
+          'dimensions':
+            {
+              'length':length.toString(),
+              'depth':depth.toString(),
+              'upperWidth':upwidth.toString(),
+              'lowerWidth':lowidth.toString(),
+            },
+          'machinesSelected': {
+            for (int i = 0; i < machinesCount; i++)
+              '$i':{
+              'machineID':machineTypeSelected[i].toString(),
+                'usagePerDay':usagePerDay[i].text.toString(),
+              },
+          },
+
+        });
+
+        selectedSupervisors.forEach((i) async {
+          debugPrint(supervisorList[i].uid);
+          await supervisor.document(supervisorList[i].uid)
+              .updateData({"assignedProject": uniqueID});
+          await databaseReference
+              .child("projects")
+              .child(uniqueID)
+              .child("supervisors")
+              .child(supervisorList[i].uid)
+              .set({
+            "name": supervisorList[i].name,
+            "mobile": supervisorList[i].mobile,
+          });
+        });
+        showToast("Project added Successfully");
+      } catch (e) {
+        showToast("Failed. check your internet!");
+      }
+
   }
 
   Future<void> getData() async {
@@ -162,7 +234,7 @@ class _TestState extends State<Test> {
           );
 
           supervisorList.add(
-              SupervisorList(result['name'], result['mobile'], result['uid']));
+              SupervisorList(name:result['name'], mobile:result['mobile'], uid:result['uid']));
         });
       });
     });
@@ -172,8 +244,10 @@ class _TestState extends State<Test> {
   void initState() {
 
 
-     machineTypeSelected = List.generate(24, (i) => 'None');
-    usagePerDay = List.generate(24, (i) => TextEditingController());
+    machinesCount=1;
+     machineTypeSelected = List.generate(24, (i) => null);
+    usagePerDay = List.generate(24, (i) => TextEditingController(text: '10'));
+    machinesFormKeys= List.generate(24, (i) =>GlobalKey<FormState>());
     getData();
     loadMachines();
     super.initState();
@@ -181,122 +255,412 @@ class _TestState extends State<Test> {
   }
 
 
-   estimate() async{
 
 
-    await pr.show();
-    double len = double.parse(length);
-    double dep = double.parse(depth);
-    double uwi = double.parse(upwidth);
-    double lwi = double.parse(lowidth);
-
-    double volume = 0.5 * len * dep * (uwi + lwi)*0.8;
 
 
+  Widget workedStarted()
+  {
+    return Form(
+      key: workDoneAlready,
+       child: Container(
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 1,
+            color: Colors.grey,
+          ),
+          borderRadius: BorderRadius.all(
+              Radius.circular(5.0) //         <--- border radius here
+          ),
+        ),
+        child: Column(
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Completed Work',
+                style: TextStyle(
+                    fontSize: 15, fontStyle: FontStyle.italic)),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                new Flexible(
+                  child: new TextFormField(
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(10),
+                      labelText: "Length",
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Colors.blue, width: 2.0),
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            topLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10)),
+                      ),
+                    ),
+                    controller: completedlenControl,
+                    validator: (val) =>
+                    val.isEmpty ? 'Enter length' : null,
+                    onChanged: (val) {
+                      setState(() => completedlength = val);
+                    },
+                  ),
+                ),
+                SizedBox(
+                  width: 20.0,
+                ),
+                new Flexible(
+                  child: new TextFormField(
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(10),
+                      labelText: "Depth",
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Colors.blue, width: 2.0),
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            topLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10)),
+                      ),
+                    ),
+                    controller: completeddepControl,
+                    validator: (val) =>
+                    val.isEmpty ? 'Invalid' : null,
+                    onChanged: (val) {
+                      setState(() => completeddepth = val);
+                    },
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                new Flexible(
+                  child: new TextFormField(
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(10),
+                      labelText: "Upper Width",
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Colors.blue, width: 2.0),
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            topLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10)),
+                      ),
+                    ),
+                    controller: completedupwidthControl,
+                    validator: (val) =>
+                    val.isEmpty ? 'Invalid' : null,
+                    onChanged: (val) {
+                      setState(() => completedupwidth = val);
+                    },
+                  ),
+                ),
+                SizedBox(
+                  width: 20.0,
+                ),
+                new Flexible(
+                  child: new TextFormField(
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(10),
+                      labelText: "Lower Width",
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Colors.blue, width: 2.0),
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            topLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10)),
+                      ),
+                    ),
+                    controller: completedlowidthControl,
+                    validator: (val) =>
+                    val.isEmpty ? 'Invalid' : null,
+                    onChanged: (val) {
+                      setState(() => completedlowidth = val);
+                    },
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 5),
+          ],
+        ))
+    );
+  }
+
+  estimate2() async
+  {
+
+
+     volume = 0.5 * double.parse(length) *double.parse(depth) * (double.parse(upwidth) + double.parse(lowidth))*0.8;
+
+      if(_termsChecked==true)
+        {
+          double cvolume = 0.5 * double.parse(completedlength) * double.parse(completeddepth) * (double.parse(completedupwidth) + double.parse(completedlowidth))*0.8;
+          ourExcavtn=cvolume;
+        }
+      else ourExcavtn=0;
+
+      setState(() {
+        excavationDone=ourExcavtn;
+
+        progressPercent=(excavationDone/volume)*100;
+      });
+
+
+
+
+      if(ourExcavtn==0.0)
+        {
+          setState(() {
+            status='Not Started';
+          });
+        }
+      else if(ourExcavtn>0.0)
+        {
+          setState(() {
+            status='Ongoing';
+          });
+        }
+      else if(ourExcavtn==volume)
+      {
+        setState(() {
+          status='Completed';
+        });
+      }
+
+    debugPrint("our excavation"+ourExcavtn.toString());
     debugPrint(volume.toString());
 
-    List selectedMachines=machineTypeSelected.sublist(0,machinesCount);
-    List perdayamountofExca=[];
-    List perdayFuelConsump=[];
-    List rentPerday=[];
+    List perhramountofExca=[];
+    List perhrFuelConsump=[];
+    List renthrday=[];
+
+
+   
+    double sumfuel=0;
+    double sumRent=0;
+    double sumExcavtn=0;
+    double sumUsagePrDay=0;
+
+
+
+    double beyondMeansumExcavtn=0;
+    double beyondMeanExcasumRent=0;
+    double beyondMeansumfuel=0;
 
     List actualperdayamountofExca=[];
     List actualperdayFuelConsump=[];
     List actualrentPerday=[];
 
-    double ourExcavtn=0;
-    int days=0;
-    double totalfuel=0;
-    double totalRent=0;
+
+
+
 
     for(int i=0;i<machinesCount;i++)
     {
-      debugPrint(selectedMachines[i].toString());
+      debugPrint(machineTypeSelected[i].toString());
       debugPrint(usagePerDay[i].text);
 
       for(int j=0 ;j<machineDetailsList.length;j++)
       {
-        if(selectedMachines[i]==machineDetailsList[j].machineID)
+        if(machineTypeSelected[i]==machineDetailsList[j].machineID)
         {
+          sumExcavtn= sumExcavtn+ double.parse(machineDetailsList[j].amountOfExcavation.toString());
+          sumUsagePrDay=sumUsagePrDay +double.parse(usagePerDay[i].text) ;
+          sumfuel= sumfuel+double.parse(machineDetailsList[j].fuelConsumption.toString());
+          sumRent= sumRent+double.parse(machineDetailsList[j].rentPerHour.toString());
 
-          double excavation= double.parse(machineDetailsList[j].amountOfExcavation.toString())* double.parse(usagePerDay[i].text) ;
-          perdayamountofExca.add(excavation);
-
-          double fuelcon= double.parse(machineDetailsList[j].fuelConsumption.toString())* double.parse(usagePerDay[i].text) ;
-          perdayFuelConsump.add(fuelcon);
-
-          double rent= double.parse(machineDetailsList[j].rentPerHour.toString())* double.parse(usagePerDay[i].text) ;
-          rentPerday.add(rent);
-
-          //the calculation
-          break;
+          perhramountofExca.add(double.parse(machineDetailsList[j].amountOfExcavation.toString()));
+          perhrFuelConsump.add(double.parse(machineDetailsList[j].fuelConsumption.toString()));
+          renthrday.add(double.parse(machineDetailsList[j].rentPerHour.toString()));
         }
       }
     }
 
-    debugPrint("perday-------"+perdayamountofExca.toString());
-    debugPrint("perday fuel-------"+perdayFuelConsump.toString());
-    debugPrint("perday rent-------"+rentPerday.toString());
-    int state=0;
+    //excavation of machines whose usage time is greater than mean hours
 
-      while(ourExcavtn<volume && state==0)
+    for(int i=0;i<machinesCount;i++)
+    {
+      debugPrint(machineTypeSelected[i].toString());
+      debugPrint(usagePerDay[i].text);
+      if((sumUsagePrDay/machinesCount)<perhramountofExca[i])
         {
-          for(int i=0;i<machinesCount;i++)
+          beyondMeansumExcavtn=beyondMeansumExcavtn+perhramountofExca[i];
+          beyondMeanExcasumRent=beyondMeanExcasumRent+renthrday[i];
+          beyondMeansumfuel=beyondMeansumfuel+perhrFuelConsump[i];
+
+        }
+    }
+
+    debugPrint("sum "+sumExcavtn.toString());
+    debugPrint((sumUsagePrDay/machinesCount).toString());
+    debugPrint(beyondMeansumExcavtn.toString());
+
+
+    for(int i=1;ourExcavtn<volume;i++)
+      {
+
+        if(ourExcavtn+sumExcavtn>volume && ourExcavtn<volume)
           {
-            if(ourExcavtn+perdayamountofExca[i]<volume && ourExcavtn<volume)
-              {
-                ourExcavtn=ourExcavtn+perdayamountofExca[i];
-                actualperdayamountofExca.add([i,perdayamountofExca[i]]);
 
-                totalfuel=totalfuel+perdayFuelConsump[i];
-                actualperdayFuelConsump.add([i,perdayFuelConsump[i]]);
+            double temp=volume-ourExcavtn;
+            double percent= ((temp/sumExcavtn));
 
-                totalRent=totalRent+rentPerday[i];
-                actualrentPerday.add([i,rentPerday[i]]);
-              }
-            else if((ourExcavtn+perdayamountofExca[i]>volume) && ourExcavtn<volume)
-              {
-                double percent= 1 -((ourExcavtn/volume));
-                //perdayamountofExca[i]=volume-ourExcavtn;
-                ourExcavtn=ourExcavtn+perdayamountofExca[i]*percent;
-                actualperdayamountofExca.add([i,perdayamountofExca[i]*percent]);
+            ourExcavtn=ourExcavtn+temp;
+            debugPrint("came here--------------");
+            totalfuel=sumfuel*percent+totalfuel ;
+            totalRent=sumRent+totalRent;
 
-                //perdayFuelConsump[i]=perdayFuelConsump[i]*percent;
-                totalfuel=totalfuel+perdayFuelConsump[i]*percent;
-                actualperdayFuelConsump.add([i,perdayFuelConsump[i]*percent]);
+            actualperdayamountofExca.add(temp);
+            actualperdayFuelConsump.add(sumfuel*percent);
+            actualrentPerday.add(sumRent);
 
-                //rentPerday[i]=rentPerday[i]*percent;
-                totalRent=totalRent+rentPerday[i]*percent;
-                actualrentPerday.add([i,rentPerday[i]*percent]);
-                state=1;
-                break;
-              }
+            debugPrint("here the exca--"+(sumExcavtn*percent).toString());
+            break;
+          }
+        else  if(ourExcavtn+sumExcavtn<volume && ourExcavtn<volume)
+          {
+            ourExcavtn=ourExcavtn+sumExcavtn;
+            if(beyondMeansumExcavtn+ourExcavtn>volume && ourExcavtn<volume)
+            {
+
+              debugPrint("ourExcavtn"+ourExcavtn.toString());
+              double temp=volume-ourExcavtn;
+              double percent= ((temp/sumExcavtn));
+              ourExcavtn=ourExcavtn+temp;
+
+              totalfuel=sumfuel+beyondMeansumfuel*percent +totalfuel ;
+              totalRent=sumRent+beyondMeanExcasumRent +totalRent;
+
+              debugPrint("temp"+temp.toString());
+
+              actualperdayamountofExca.add(temp+sumExcavtn);
+              actualperdayFuelConsump.add(sumfuel+beyondMeansumfuel*percent);
+              actualrentPerday.add(sumRent+beyondMeanExcasumRent);
+              break;
+            }
+            else
+            {
+              ourExcavtn=ourExcavtn+beyondMeansumExcavtn;
+
+              totalfuel=sumfuel+beyondMeansumfuel +totalfuel;
+              totalRent=sumRent+beyondMeanExcasumRent+ totalRent;
+
+              actualperdayamountofExca.add(beyondMeansumExcavtn+sumExcavtn);
+              actualperdayFuelConsump.add(sumfuel+beyondMeansumfuel);
+              actualrentPerday.add(sumRent+beyondMeanExcasumRent);
+            }
+
+
           }
 
-          days=days+1;
-          print("hello");
-        }
+        days=i;
+      }
+
+    debugPrint("--------------------------------------"+ourExcavtn.toString());
+    debugPrint(days.toString());
+    debugPrint(actualperdayamountofExca.toString());
+    debugPrint(actualperdayFuelConsump.toString());
+    debugPrint(actualrentPerday.toString());
+    debugPrint(totalRent.toString());
+    debugPrint(totalfuel.toString());
 
 
-    debugPrint("total exca-------"+ourExcavtn.toString());
-    debugPrint("total fuel-------"+totalfuel.toString());
-    debugPrint("total rent-------"+totalRent.toString());
-    debugPrint("total days-------"+days.toString());
-
-    debugPrint("Actual exca-------"+actualperdayamountofExca.toString());
-    debugPrint("fuel consum-------"+actualperdayFuelConsump.toString());
-    debugPrint("rent-------"+actualrentPerday.toString());
-
-
-    pr.hide().then((isHidden) {
-      EstimationDetails estimationDetails= EstimationDetails(totalFuel: totalfuel.ceil().toString(),totalRent:totalRent.ceil().toString(),noOfDays:  days.ceil().toString(),totalExcavation: volume.ceil().toString());
-      showDialog(
-        context: context,
-        builder: (_) => EstimationDetailsPage(data: estimationDetails,),
-      );
-    });
+  
 
   }
+
+  showAlertDialog(BuildContext context) async {
+
+    await estimate2();
+    // set up the buttons
+
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("AlertDialog"),
+      content:Builder(
+      builder: (context) {
+    // Get available height and width of the build area of this widget. Make a choice depending on the size.
+        var height = MediaQuery.of(context).size.height;
+        var width = MediaQuery.of(context).size.width;
+         return Container(
+           height: height/1.8,
+        child:Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+
+
+            SizedBox(
+              height: 10,
+            ),
+            Text("Total Volume: "+ourExcavtn.ceil().toString() +"m3"),
+
+            SizedBox(
+              height: 10,
+            ),
+            Text("No of Days: "+days.toString()),
+            SizedBox(
+              height: 10,
+            ),
+            Text("Total Rent of Machines Used: "+totalRent.ceil().toString()+" Rs"),
+            SizedBox(
+              height: 10,
+            ),
+            Text("Total Fuel requires: "+totalfuel.ceil().toString()+ " litre"),
+
+            SizedBox(
+              height: 30,
+            ),
+              Center(child: Text("Do you want to create this project?"),),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                RaisedButton(
+                  onPressed: () {
+                    debugPrint('Create Project');
+                    showToast("Project Created");
+                    sendToDb();
+                  },
+                  child: Text("Create Project"),
+                ),
+
+              ],
+            )
+
+          ],
+        )
+         );}),
+
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+
 
   Widget build(BuildContext context) {
 
@@ -477,6 +841,7 @@ class _TestState extends State<Test> {
               Container(
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   decoration: BoxDecoration(
+
                     border: Border.all(
                       width: 1,
                       color: Colors.grey,
@@ -646,38 +1011,40 @@ class _TestState extends State<Test> {
                 ),
               ),
               SizedBox(height: 20),
-//              Container(
-//                decoration: BoxDecoration(
-//                  border: Border.all(color: Colors.grey),
-//                  borderRadius: BorderRadius.circular(5),
-//                ),
-//                child: Padding(
-//                  padding: const EdgeInsets.all(4.0),
-//                  child: DropdownButton(
-//                    items: _petrolPump
-//                        .map((value) => DropdownMenuItem(
-//                              child: Text(
-//                                value,
-//                                style: TextStyle(color: Colors.deepPurple[900]),
-//                              ),
-//                              value: value,
-//                            ))
-//                        .toList(),
-//                    onChanged: (selectedAccountType) {
-//                      print('$selectedAccountType');
-//                      setState(() {
-//                        petrolPump = selectedAccountType;
-//                      });
-//                    },
-//                    value: petrolPump,
-//                    isExpanded: true,
-//                    hint: Text(
-//                      'NearBy Petrol Pump',
-//                      style: TextStyle(color: Colors.black54, fontSize: 17),
-//                    ),
-//                  ),
-//                ),
-//              ),
+
+
+
+              Padding(
+                padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    //borderRadius: BorderRadius.circular(30.0),
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(5.0) //         <--- border radius here
+                    ),
+                    border: Border.all(
+                      width: 1.0,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  child: CheckboxListTile(
+                    value: _termsChecked,
+                    onChanged: (value) {
+                      setState(() {
+                        _termsChecked = value;
+                      });
+                    },
+                    subtitle: _termsChecked
+                        ? workedStarted()
+                        : null,
+                    title: new Text(
+                      'Worked Started?',
+                    ),
+                    controlAffinity: ListTileControlAffinity.leading,
+                  ),
+                ),
+              ),
+
               SizedBox(height: 40.0),
               FlatButton(
                 child: Container(
@@ -698,8 +1065,28 @@ class _TestState extends State<Test> {
                   ),
                 ),
                 onPressed: () {
+                  bool isFormValid=false;
                   if (_formKeyValue.currentState.validate() ) {
-                    estimate();
+
+                    if(_termsChecked==true)
+                      {
+                        workDoneAlready.currentState.validate();
+                      }
+
+                    for(int i=0;i<machinesCount;i++)
+                      {
+                        if(machinesFormKeys[i].currentState.validate())
+                          isFormValid=true;
+                        else
+                          {
+                            isFormValid=false;
+                            break;
+                          }
+                      }
+
+                    if(isFormValid)
+                      showAlertDialog(context);
+                    else showToast("Incomplete form");
                   }
                 },
 
@@ -711,7 +1098,7 @@ class _TestState extends State<Test> {
 }
 
 class SupervisorList {
-  SupervisorList(this.name, this.mobile, this.uid);
+  SupervisorList({Key key,this.name, this.mobile, this.uid});
   var name;
   var mobile;
   var uid;
@@ -737,6 +1124,7 @@ class EstimationDetails {
 }
 
 
+
 class SelectMachines extends StatefulWidget {
   final int index;
   SelectMachines({Key key, this.index}) : super(key: key);
@@ -746,7 +1134,7 @@ class SelectMachines extends StatefulWidget {
 
 class _SelectMachinesState extends State<SelectMachines> {
   String dropdownValue = 'One';
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
 
 
 
@@ -754,7 +1142,7 @@ class _SelectMachinesState extends State<SelectMachines> {
   Widget build(BuildContext context) {
     return Container(
         child: Form(
-          key: _formKey,
+          key: machinesFormKeys[widget.index],
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -764,15 +1152,15 @@ class _SelectMachinesState extends State<SelectMachines> {
 
                   Flexible(
                     flex: 3,
-                    child: DropdownButton<String>(
+                    child: DropdownButtonFormField<String>(
                       value: machineTypeSelected[widget.index],
                       //icon: Icon(Icons.arrow_downward),
-
-                      //style: TextStyle(color: Colors.deepPurple),
-                      underline: Container(
-                        height: 2,
-                        color: Colors.grey,
+                      hint: Text(
+                        'Select Machine',
+                        style: TextStyle(color: Colors.black54, fontSize: 17),
                       ),
+                      //style: TextStyle(color: Colors.deepPurple),
+                      validator: (val) => val==null ? 'Select machine' : null,
                       onChanged: (newValue) {
                         setState(() {
                           machineTypeSelected[widget.index] = newValue;

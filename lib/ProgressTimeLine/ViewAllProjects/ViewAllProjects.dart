@@ -169,7 +169,7 @@ class _AllProjectsState extends State<AllProjects> {
                         height: 10,
                       ),
                       Text(
-                        'Project Status: ' + allProjects[index]["status"],
+                        'Project Status: ' + allProjects[index]["projectStatus"],
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),

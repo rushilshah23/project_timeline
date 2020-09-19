@@ -19,8 +19,8 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
   final databaseReference = FirebaseDatabase.instance.reference();
   List ourCreatedProjects = List();
   List allProjects = List();
+  String projectID="b570da70-fa93-11ea-9561-89a3a74b28bb";
 
-  String uid = "cHvmoDkm5fQC34NalR0GFa9ZMMJ2";
 
   @override
   void initState() {
@@ -166,9 +166,9 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
               );
 
               for (int i = 0; i < allProjects.length; i++) {
-                if (allProjects[i]["supervisorUID"] == uid) {
+
                   ourCreatedProjects.add(allProjects[i]);
-                }
+
               }
               return new Column(
                 children: <Widget>[
