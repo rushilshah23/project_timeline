@@ -61,8 +61,8 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
   final DateTime now = DateTime.now();
   final DateFormat formatter = DateFormat('dd-MM-yyyy');
   var projectID =  "b570da70-fa93-11ea-9561-89a3a74b28bb";
-  var workerID = '2kZgWwPWSEcAxiH7V3j6Q3bpLds1';
-  var workerName = 'Abdul Khan';
+  var workerID = '8YiMHLBnBaNjmr3yPvk8NWvNPmm2';
+  var workerName = 'rajesh kumar';
   List<Asset> images = List<Asset>();
   String _error = 'No Error Dectected';
 
@@ -302,7 +302,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
 
   Widget build(BuildContext context) {
     pr = pr = new ProgressDialog(context,
-        type: ProgressDialogType.Normal, isDismissible: true, showLogs: true);
+        type: ProgressDialogType.Normal, isDismissible: false, showLogs: true);
     if (machines.length > 0)
       return Scaffold(
         body: Container(

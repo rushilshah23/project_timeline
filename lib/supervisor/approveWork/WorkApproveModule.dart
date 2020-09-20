@@ -18,7 +18,7 @@ class ApproveWork extends StatefulWidget {
 class _ApproveWorkState extends State<ApproveWork> {
 
   final databaseReference = FirebaseDatabase.instance.reference();
-  List allMachines=List() ;
+  List allDataList=List() ;
   List work=List() ;
 
   String uid="8YiMHLBnBaNjmr3yPvk8NWvNPmm2";
@@ -56,9 +56,9 @@ class _ApproveWorkState extends State<ApproveWork> {
                 snap.data.snapshot.value != null) {
               Map data = snap.data.snapshot.value;
               //debugPrint(data.toString());
-              allMachines = [];
+              allDataList = [];
               data.forEach(
-                    (index, data) => allMachines.add({"date": index, ...data}),
+                    (index, data) => allDataList.add({"date": index, ...data}),
               );
 
              //debugPrint(allMachines.toString());
