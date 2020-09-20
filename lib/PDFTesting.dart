@@ -24,6 +24,12 @@ class _PDFTestingState extends State<PDFTesting> {
             level: 0,
             child: pw.Text('Just getting how to create it'),
           ),
+          pw.ListView.builder(
+          itemCount: 8,
+              itemBuilder: (context, index) {
+                return pw.Text("hello");
+              },
+          ),
           pw.Paragraph(
               text:
                   ' klajsdlfkjak dflkajslkdfj;ka lkja;lksjfl;k ;lsjdf k;lasjdlj k;las flkjas;ldf k;lasjdflkajs;lkdf ;laksjf;lkajs flkjaskldfj;klasjflkjaslk lk;asjflkasjdfjkhkjashlkjfhasljdfh kl hlkjhaskdjfhklasfjh kjhaslkjdfh lkjashdf jashk fjhaskdjf aslkhf jkla haskjl ha kla  ask hkjh kjhaslkjf haslkhdfjkshkjsh'),
