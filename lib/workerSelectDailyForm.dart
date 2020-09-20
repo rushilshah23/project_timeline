@@ -605,24 +605,10 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                   Container(
                     width: double.infinity,
                     height: 50,
-//                    child: FlatButton(
-//                      onPressed: submitForm,
-//                      child: Container(
-//                        height: 50,
-//                        width: double.infinity,
-//                        decoration: BoxDecoration(
-//                          gradient: gradients(),
-//                          borderRadius: BorderRadius.circular(10),
-//                        ),
-//                        child: Center(
-//                          child: Text(
-//                            "Submit",
-//                            style: TextStyle(color: Colors.white),
-//                          ),
-//                        ),
-//                      ),
-//                    ),
-                  child: buttons(context, submitForm, 'Submit', 20),
+                    child: FlatButton(
+                      onPressed: () => submitForm(),
+                      child: buttonContainers(double.infinity, 20, 'Submit', 18),
+                    ),
                   )
                 ],
               ),

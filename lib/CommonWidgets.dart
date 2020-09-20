@@ -19,10 +19,10 @@ Widget ThemeAppbar(String title)
 {
   return new AppBar(
     iconTheme: IconThemeData(
-      color: Colors.orange[800],
+      color: Colors.indigo[300],
     ),
     title:  Text(title, style: TextStyle(
-      color: Colors.orange[800],
+      color: Colors.blue[700],
     )),
     backgroundColor: Colors.white,
   );
@@ -31,7 +31,7 @@ Widget ThemeAppbar(String title)
 gradients()
 {
   return LinearGradient(
-        colors: [ Colors.blue[100],Colors.blue[200],Colors.blue[300],Colors.blue[500],Colors.blue[600]],
+        colors: [ Color(0xff09b0ea),Color(0xff0db9eb),Color(0xff0fbdea),Color(0xff16cbea),Color(0xff1cd7ea)],
         begin: Alignment.centerRight,
         end: Alignment(-1.0,-2.0)
     );
@@ -49,7 +49,7 @@ cards()
 Widget floats(context, files)
 {
   return FloatingActionButton(
-    backgroundColor: Colors.orange,
+    backgroundColor: Colors.blue[900],
     onPressed: () {
       showDialog(
         context: context,
@@ -74,15 +74,6 @@ titleStyles(String text, double size)
   );
 }
 
-Widget buttons(context, files, String text, double size){
-  return FlatButton(
-    child: buttonContainers(250, 20, text, size),
-      onPressed: () {
-        // ignore: unnecessary_statements
-        files;
-      },
-  );
-}
 
 Widget buttonContainers(double width,double padding,String text,double size){
   return Container(

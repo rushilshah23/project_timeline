@@ -77,7 +77,10 @@ class _ImageTestingState extends State<ImageTesting> {
         body: Column(
           children: <Widget>[
             Center(child: Text('Error: $_error')),
-            buttons(context, loadAssets, 'Pick Images', 18),
+            FlatButton(
+              child: buttonContainers(150, 20, 'Pick Images', 18),
+              onPressed: () => loadAssets(),
+            ),
             Expanded(
               child: buildGridView(),
             )

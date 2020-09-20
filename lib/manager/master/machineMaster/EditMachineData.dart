@@ -561,33 +561,38 @@ class _EditMachineDataState extends State<EditMachineData> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  RaisedButton(
-                                      child: Text(
-                                        'Save Changes',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                      onPressed: () {
-                                        if (_formKey.currentState.validate()) {
-                                          debugPrint("true");
-                                          addMachine();
-                                        }
-                                      },
-                                      color: Colors.blue,
-                                    ),
-
-                                  SizedBox(width: 10,),
 //                                  RaisedButton(
-//                                    child: Text(
-//                                      'Delete Machine',
-//                                      style: TextStyle(color: Colors.white),
+//                                      child: Text(
+//                                        'Save Changes',
+//                                        style: TextStyle(color: Colors.white),
+//                                      ),
+//                                      onPressed: () {
+//                                        if (_formKey.currentState.validate()) {
+//                                          debugPrint("true");
+//                                          addMachine();
+//                                        }
+//                                      },
+//                                      color: Colors.blue,
 //                                    ),
-//                                    color: Colors.orange,
-//                                    onPressed: () {
-//                                      deleteMachine();
-//                                    },
-//
-//                                  ),
-                                buttons(context, deleteMachine, 'Delete Machine', 18)
+                                  FlatButton(
+                                    child: buttonContainers(50, 10, 'Save Changes', 15),
+                                    onPressed: () {
+                                      if (_formKey.currentState.validate()) {
+                                        debugPrint("true");
+                                        addMachine();
+                                      }
+                                    },
+
+                                  ),
+                                  SizedBox(width: 10,),
+                                  FlatButton(
+                                    child: buttonContainers(50, 10, 'Delete Machine', 15),
+                                    onPressed: () {
+                                      deleteMachine();
+                                    },
+
+                                  ),
+
                                 ],
                               ),
 

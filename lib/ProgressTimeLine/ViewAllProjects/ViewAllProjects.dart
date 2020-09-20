@@ -2,11 +2,9 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/ProgressTimeLine/ViewAllProjects/ProjectDetails.dart';
-import 'package:project_timeline/ProgressTimeline/theme.dart';
 
 import 'package:percent_indicator/circular_percent_indicator.dart';
-
-import '../../CommonWidgets.dart';
+import '../theme.dart';
 
 class AllProjects extends StatefulWidget {
   @override
@@ -29,17 +27,11 @@ class _AllProjectsState extends State<AllProjects> {
           top: 150,
           bottom: -190,
           child: Container(
-            decoration: BoxDecoration(boxShadow: [
-              BoxShadow(
-                color: Colors.orange[100],
-                blurRadius: 25.0, // soften the shadow
-                spreadRadius: 5.0, //extend the shadow
-                offset: Offset(
-                  15.0, // Move to right 10  horizontally
-                  15.0, // Move to bottom 10 Vertically
-                ),
-              )
-            ], shape: BoxShape.circle, color: Colors.white38),
+            decoration: BoxDecoration(
+                boxShadow: customShadow,
+                shape:BoxShape.circle,
+                color:Colors.white38
+            ),
           ),
         ),
         Positioned.fill(
@@ -47,17 +39,11 @@ class _AllProjectsState extends State<AllProjects> {
           top: -2,
           bottom: -80,
           child: Container(
-            decoration: BoxDecoration(boxShadow: [
-              BoxShadow(
-                color: Colors.orange[100],
-                blurRadius: 25.0, // soften the shadow
-                spreadRadius: 5.0, //extend the shadow
-                offset: Offset(
-                  15.0, // Move to right 10  horizontally
-                  15.0, // Move to bottom 10 Vertically
-                ),
-              )
-            ], shape: BoxShape.circle, color: Colors.white38),
+            decoration: BoxDecoration(
+                boxShadow: customShadow,
+                shape: BoxShape.circle,
+                color: Colors.white38
+            ),
           ),
         ),
         Stack(
@@ -72,7 +58,7 @@ class _AllProjectsState extends State<AllProjects> {
                     CircularPercentIndicator(
                       backgroundColor: Colors.grey[200],
                       radius: 120.0,
-                      lineWidth: 13.0,
+                      lineWidth: 10.0,
                       animation: true,
 //                      percent: double.parse(
 //                              allProjects[index]["progress"].toString()) /
@@ -91,7 +77,7 @@ class _AllProjectsState extends State<AllProjects> {
                             fontWeight: FontWeight.bold, fontSize: 20.0),
                       ),
                       circularStrokeCap: CircularStrokeCap.round,
-                      progressColor: Colors.deepOrange[400],
+                      progressColor: Colors.indigo[400],
                     ),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
@@ -99,8 +85,7 @@ class _AllProjectsState extends State<AllProjects> {
                         height: 50,
                         width: 70,
                         decoration: BoxDecoration(
-                          color: primaryColor,
-                          gradient: gradients(),
+                          color: Colors.indigo[300],
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: IconButton(
@@ -108,6 +93,7 @@ class _AllProjectsState extends State<AllProjects> {
                           icon: Icon(
                             Icons.navigate_next,
                             color: Colors.white,
+                            size: 30,
                           ),
                           onPressed: () {
                             Navigator.push(
@@ -128,7 +114,7 @@ class _AllProjectsState extends State<AllProjects> {
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: const EdgeInsets.only(top: 80, left: 5),
+                padding: const EdgeInsets.only(top: 60, left: 5),
                 child: Container(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,10 +141,15 @@ class _AllProjectsState extends State<AllProjects> {
                       SizedBox(
                         height: 10,
                       ),
-                      Text(
-                        'Site Address: ' + allProjects[index]["siteAddress"],
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.bold),
+                      Container(
+                        width: 150,
+                        child: Text(
+                          'Site Address: ' + allProjects[index]["siteAddress"],
+                          overflow: TextOverflow.visible,
+                          softWrap: true,
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold),
+                        ),
                       ),
 //                      Text(
 //                        allProjects[index]["siteAddress"],
@@ -205,14 +196,13 @@ class _AllProjectsState extends State<AllProjects> {
               children: [
                 Expanded(
                     child: Container(
-                  width: MediaQuery.of(context).size.width,
-//                      margin: EdgeInsets.only(
-//                          top: 15, bottom: 230, right: 10, left: 20),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    // color: primaryColor,
-                    boxShadow: customShadow,
-                  ),
+                          width: MediaQuery.of(context).size.width,
+    //                      margin: EdgeInsets.only(
+    //                          top: 15, bottom: 230, right: 10, left: 20),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            // color: primaryColor,
+                      ),
                   child: Column(
                     children: [
                       // Text(allProjects.toString()),
