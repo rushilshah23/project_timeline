@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:project_timeline/ProgressTimeLine/theme.dart';
 
 class ProjectDetails extends StatefulWidget {
@@ -15,22 +16,79 @@ class ProjectDetails extends StatefulWidget {
 
 class _ProjectDetailsState extends State<ProjectDetails> {
 
-  List supervisors=[];
-  List workers=[];
+  List supervisors=List();
+  List workers=List();
+  List images=List();
   int w,s;
   @override
   void initState() {
     super.initState();
-    Map supervisorsMap= widget.projectDetails["supervisors"];
-    supervisors= supervisorsMap.values.toList();
-    debugPrint(supervisors.toString());
 
 
-    Map workersMap= widget.projectDetails["workers"];
-    workers= workersMap.values.toList();
-    debugPrint(workers.toString());
+      images = widget.projectDetails["approvedImages"];
+      ////debugPrint(images.toString());
+
+      if(images==null)
+        {
+          setState(() {
+            images=[];
+            images.length=0;
+          });
+        }
+
+    try {
+      Map supervisorsMap = widget.projectDetails["supervisors"];
+      supervisors = supervisorsMap.values.toList();
+      //debugPrint(supervisors.toString());
+    }
+    catch(e)
+    {
+      setState(() {
+        supervisors.length=0;
+      });
+
+    }
+    try {
+      Map workersMap = widget.projectDetails["workers"];
+      workers = workersMap.values.toList();
+      //////debugPrint(workers.toString());
+    }
+    catch(e)
+    {
+      setState(() {
+        workers.length=0;
+      });
+    }
 
   }
+
+
+  Widget buildGridView() {
+      return Container(
+          height: MediaQuery
+              .of(context)
+              .size
+              .height / 4,
+          child: GridView.count(
+            crossAxisCount: 3,
+            children: List.generate(images.length, (index) {
+              return Container(
+                  child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return PhotoView(
+                            imageProvider: NetworkImage(images[index]),
+                          );
+                        }));
+                      },
+                      child: Card(
+                        child: Image.network(images[index]),
+                      ))); //
+            }),
+          ));
+  }
+
 
 
   @override
@@ -189,22 +247,65 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                     )
                   ],
                 ),
-                SizedBox(height: 40),
+
+                Text(
+                    'Site Address',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Colors.indigo[300],
+                      fontStyle: FontStyle.italic,
+                    )
+                ),
                 Container(
+                  width: 160,
+                  child: Text(
+                    widget.projectDetails["siteAddress"].toString(),
+                    overflow: TextOverflow.visible,
+                    softWrap: true,
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black),
+                  ),
+                ),
+                SizedBox(height: 10),
+                // Text(
+                //     'Soil Type',
+                //     style: TextStyle(
+                //       fontWeight: FontWeight.bold,
+                //       fontSize: 18,
+                //       color: Colors.indigo[300],
+                //       fontStyle: FontStyle.italic,
+                //     )
+                // ),
+                // Text(
+                //   widget.projectDetails["soilType"].toString(),
+                //   style: TextStyle(
+                //       fontSize: 15,
+                //       fontWeight: FontWeight.w500,
+                //       color: Colors.black
+                //   ),
+                // ),
+                SizedBox(height: 20),
+                Container(
+
                   decoration: BoxDecoration(
                     color: Colors.white70,
                     borderRadius: BorderRadius.circular(5),
                     boxShadow: customShadow
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height/3.5,
                     child: Row(
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+
+                            //SizedBox(height: 10),
                             Text(
-                                'Site Address',
+                                'Our Supervisors',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
@@ -213,47 +314,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                 )
                             ),
                             Container(
-                              width: 160,
-                              child: Text(
-                                widget.projectDetails["siteAddress"].toString(),
-                                overflow: TextOverflow.visible,
-                                softWrap: true,
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black),
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Text(
-                                'Soil Type',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                  color: Colors.indigo[300],
-                                  fontStyle: FontStyle.italic,
-                                )
-                            ),
-                            Text(
-                                widget.projectDetails["soilType"].toString(),
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Text(
-                                'Supervisors Selected',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                  color: Colors.indigo[300],
-                                  fontStyle: FontStyle.italic,
-                                )
-                            ),
-                            Container(
-                              height: MediaQuery.of(context).size.height/6,
+                              height: MediaQuery.of(context).size.height/4,
                               width: 150,
                               child:   new ListView.builder(
                                 itemCount: supervisors.length,
@@ -278,7 +339,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                                'Workers Selected',
+                                'Our Workers',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
@@ -287,7 +348,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                 )
                             ),
                             Container(
-                              height: MediaQuery.of(context).size.height/3,
+                              height: MediaQuery.of(context).size.height/4,
                               width: 150,
                               child:   new ListView.builder(
                                 itemCount: workers.length,
@@ -320,6 +381,9 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                       fontStyle: FontStyle.italic,
                     )
                 ),
+
+                buildGridView(),
+
               ],
             ),
 
