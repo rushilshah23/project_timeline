@@ -148,24 +148,12 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
                       ),
                     ),
                     SizedBox(height: 20),
-//                    FlatButton(
-//                      child: Container(
-//                        height: 50,
-//                        decoration: BoxDecoration(
-//                            borderRadius: BorderRadius.circular(10),
-//                            gradient: gradients()),
-//                        child: Center(
-//                          child: Text(
-//                            'Save',
-//                            style: TextStyle(color: Colors.white),
-//                          ),
-//                        ),
-//                      ),
-//                      onPressed: () {
-//                        submitForm();
-//                      },
-//                    ),
-                  buttons(context, submitForm, 'Save', 18)
+                    FlatButton(
+                      child: buttonContainers(150, 20, 'Save', 18),
+                      onPressed: () {
+                        submitForm();
+                      },
+                    ),
                   ],
                 ),
               ],

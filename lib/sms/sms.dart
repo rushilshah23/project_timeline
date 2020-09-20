@@ -31,11 +31,6 @@ Future<void> sms(String s,String msg) async {
   print(message);
 }
 
-void main()
-{
-  runApp(Sms());
-}
-
 
 class Sms extends StatefulWidget {
   @override
@@ -94,7 +89,12 @@ class _SmsState extends State<Sms> {
                 },
               ),
               SizedBox(height: 50),
-              buttons(context, sms(mobileNo,message), 'Send SMS', 18)
+              FlatButton(
+                child: buttonContainers(double.infinity, 15, 'Send SMS', 18),
+                onPressed: () {
+                  sms(mobileNo,message);
+                },
+              )
             ],
           ),
         ),

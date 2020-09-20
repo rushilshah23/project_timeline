@@ -172,16 +172,35 @@ class LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: 30,
                   ),
-                  FlatButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Register()),
-                      );
-                    },
-
-                    child: buttonContainers(300, 20, 'Register', 18)
-                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                          "Don't have an account?",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500
+                        ),
+                      ),
+                      FlatButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Register()),
+                          );
+                        },
+                        child: Text(
+                            'Register',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic,
+                              color: Colors.blue[900]
+                            ),
+                        ),
+                      )
+                    ],
+                  )
                 ],
               ),
             ),

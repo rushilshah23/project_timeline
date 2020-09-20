@@ -2,7 +2,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/ProgressTimeLine/ViewAllProjects/ProjectDetails.dart';
-import 'package:project_timeline/ProgressTimeline/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -162,7 +161,7 @@ class _ProjectProgressState extends State<ProjectProgress> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       // color: primaryColor,
-                      boxShadow: customShadow,
+
                     ),
                     child: Column(
                       children: [

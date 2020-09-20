@@ -266,49 +266,25 @@ class _EditPetrolPumpState extends State<EditPetrolPump> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
 
-//                    FlatButton(
-//                      child: Container(
-//                        height: 50,
-//                        width: 100,
-//                        decoration: BoxDecoration(
-//                          gradient: gradients(),
-//                          borderRadius: BorderRadius.circular(10)
-//                        ),
-//                          child: Padding(
-//                            padding: const EdgeInsets.only(left: 30,top: 15),
-//                            child: Text("Save",style: TextStyle(color: Colors.white),),
-//                          )
-//                      ),
-//                      onPressed: () {
-//                        updatePetrolPump();
-//                        // debugPrint(widget.data["key"].toString());
-//                      },
-//                    ),
-                  buttons(context, updatePetrolPump, 'Save', 18),
-
                     FlatButton(
-//                      child: Container(
-//                        height: 50,
-//                        width: 100,
-//                        decoration: BoxDecoration(
-//                          gradient: gradients(),
-//                            borderRadius: BorderRadius.circular(10)
-//                        ),
-//                          child: Padding(
-//                            padding: const EdgeInsets.only(left: 30,top: 15),
-//                            child: Text("Delete",style: TextStyle(color: Colors.white),),
-//                          )
-//                      ),
-                    child: buttonContainers(100, 20, 'Delete', 18),
+                      child: buttonContainers(100, 10, 'Save', 15),
                       onPressed: () {
                         updatePetrolPump();
                         // debugPrint(widget.data["key"].toString());
-
-                        deletePetrolPump(
-                          widget.data["petrolPumpID"],
-                        );
                       },
                     ),
+
+                    FlatButton(
+                      child: buttonContainers(100, 20, 'Delete', 18),
+                        onPressed: () {
+                          updatePetrolPump();
+                          // debugPrint(widget.data["key"].toString());
+
+                          deletePetrolPump(
+                            widget.data["petrolPumpID"],
+                          );
+                        },
+                      ),
 
                   ],
                 ),

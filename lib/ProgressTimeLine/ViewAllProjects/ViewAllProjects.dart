@@ -2,7 +2,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/ProgressTimeLine/ViewAllProjects/ProjectDetails.dart';
-import 'package:project_timeline/ProgressTimeline/theme.dart';
 
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -99,7 +98,7 @@ class _AllProjectsState extends State<AllProjects> {
                         height: 50,
                         width: 70,
                         decoration: BoxDecoration(
-                          color: primaryColor,
+                          color: Colors.indigo[100],
                           gradient: gradients(),
                           borderRadius: BorderRadius.circular(15),
                         ),
@@ -205,14 +204,13 @@ class _AllProjectsState extends State<AllProjects> {
               children: [
                 Expanded(
                     child: Container(
-                  width: MediaQuery.of(context).size.width,
-//                      margin: EdgeInsets.only(
-//                          top: 15, bottom: 230, right: 10, left: 20),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    // color: primaryColor,
-                    boxShadow: customShadow,
-                  ),
+                          width: MediaQuery.of(context).size.width,
+    //                      margin: EdgeInsets.only(
+    //                          top: 15, bottom: 230, right: 10, left: 20),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            // color: primaryColor,
+                      ),
                   child: Column(
                     children: [
                       // Text(allProjects.toString()),
