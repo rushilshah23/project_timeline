@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_timeline/PDFTesting.dart';
 import 'package:project_timeline/ProgressTimeLine/ViewAllProjects/ViewAllProjects.dart';
 import 'package:project_timeline/imageTesting.dart';
 import 'package:project_timeline/manager/CreateAcceptSupervisor/SupervisorFormCreation.dart';
@@ -64,6 +65,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => Sms()),
+                );
+              },
+            ),
+            RaisedButton(
+              child: Text("PDF testing"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PDFTesting()),
                 );
               },
             ),
