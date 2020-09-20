@@ -111,7 +111,7 @@ class _ApproveWorkState extends State<ApproveWork> {
                         onTap: (){
                           showDialog(
                             context: context,
-                            builder: (_) => WorkDetails(data: element,),
+                            builder: (_) => WorkDetails(data: element,projectID: projectID,),
                           );
                         },
                         child:Container(

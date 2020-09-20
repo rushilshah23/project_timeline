@@ -8,7 +8,6 @@ import 'package:intl/intl.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:project_timeline/CommonWidgets.dart';
-import 'package:project_timeline/manager/master/machineMaster/addNewMachine.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
@@ -256,6 +255,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
           .set({
         "MachineUsed": machineUsed,
         "hoursWorked": hoursWorked,
+        "workerID": workerID,
         'intervals': {
           for (int i = 0; i < timeIntervals; i++)
             '$i': {

@@ -1,16 +1,14 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/CommonWidgets.dart';
-import 'package:project_timeline/manager/master/petrolMaster/EditPetrolPump.dart';
 import 'package:photo_view/photo_view.dart';
-import '../../CommonWidgets.dart';
-import '../../CommonWidgets.dart';
 import '../../CommonWidgets.dart';
 
 class WorkDetails extends StatefulWidget {
   Map data;
+  String projectID;
 
-  WorkDetails({Key key, this.data,}) : super(key: key);
+  WorkDetails({Key key, this.data,this.projectID}) : super(key: key);
 
   @override
   _WorkDetailsState createState() => _WorkDetailsState();
@@ -20,17 +18,43 @@ class _WorkDetailsState extends State<WorkDetails> {
 
   Map data;
   int indexes;
-
   List images=[];
+  final databaseReference = FirebaseDatabase.instance.reference();
 
   @override
   void initState() {
 
+    debugPrint(widget.data["date"].toString());
     debugPrint(widget.data["images"].toString());
     images=widget.data["images"];
     setState(() {
 
     });
+  }
+
+
+  repondToWork(String status) async
+  {
+    await databaseReference
+        .child("projects")
+        .child(widget.projectID)
+        .child("progress").child(widget.data["date"]).child(widget.data["workerUID"])
+        .update({
+          'status':status,
+        });
+
+    if(status=="Accepted")
+      {
+        await databaseReference
+            .child("projects")
+            .child(widget.projectID)
+            .update({
+          'approvedImages':widget.data["images"],
+        });
+      }
+
+    showToast("$status successfully");
+
   }
 
 
@@ -147,7 +171,7 @@ class _WorkDetailsState extends State<WorkDetails> {
 //                              ),
                               child: buttonContainers(150, 20, 'Approve', 18),
                               onPressed: () {
-
+                                repondToWork("Accepted");
                               },
                             ),
                           ),
@@ -164,7 +188,7 @@ class _WorkDetailsState extends State<WorkDetails> {
 //                                child: Center(child: Text("Reject",style: titlestyles(18, Colors.white),))),
                             child: buttonContainers(150, 20, 'Reject', 18),
                             onPressed: () {
-
+                              repondToWork("Declined");
                             },
                           ),
                         ),
