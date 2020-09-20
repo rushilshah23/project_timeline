@@ -22,7 +22,7 @@ class _ApproveWorkState extends State<ApproveWork> {
   List work=List() ;
 
   String uid="8YiMHLBnBaNjmr3yPvk8NWvNPmm2";
-  String projectID= "project1";
+  String projectID="b570da70-fa93-11ea-9561-89a3a74b28bb";
 
   List days=List();
   List finalDisplayList =List();
@@ -33,11 +33,11 @@ class _ApproveWorkState extends State<ApproveWork> {
 
   Widget getIcon(status) {
     switch (status) {
-      case "pending":
+      case "Pending":
         return Icon(Icons.error_outline);
-      case "accepted":
+      case "Accepted":
         return Icon(Icons.done);
-      case "declined":
+      case "Declined":
         return Icon(Icons.clear);
     }
   }
@@ -95,9 +95,13 @@ class _ApproveWorkState extends State<ApproveWork> {
                   elements: finalDisplayList,
                   order: GroupedListOrder.DESC,
                   useStickyGroupSeparators: true,
-                  groupSeparatorBuilder: (String value) => Padding(
+                  groupSeparatorBuilder: (String value) => Container(
                     padding: const EdgeInsets.all(8.0),
-                    child: titleStyles(value, 18)
+                    child: Text(
+                    value,
+                    textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 18,color: Colors.indigo,fontWeight: FontWeight.bold),
+                  ),
                   ),
                   itemBuilder: (c, element) {
                     return Card(

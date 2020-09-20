@@ -61,7 +61,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
   TextEditingController commentController = TextEditingController();
   final DateTime now = DateTime.now();
   final DateFormat formatter = DateFormat('dd-MM-yyyy');
-  var projectID = 'project1';
+  var projectID =  "b570da70-fa93-11ea-9561-89a3a74b28bb";
   var workerID = '2kZgWwPWSEcAxiH7V3j6Q3bpLds1';
   var workerName = 'Abdul Khan';
   List<Asset> images = List<Asset>();
@@ -246,7 +246,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
   }
 
   addtoDB() async {
-    try {
+    // try {
       await databaseReference
           .child("projects")
           .child(projectID)
@@ -283,9 +283,9 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
       pr.hide().then((isHidden) {
         showToast("Added successfully");
       });
-    } catch (e) {
-      showToast("Failed. Check your Internet");
-    }
+    // } catch (e) {
+    //   showToast("Failed. Check your Internet");
+    // }
   }
 
   addDynamic() {
@@ -562,10 +562,24 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                   Container(
                     width: double.infinity,
                     height: 50,
-                    child: FlatButton(
-                      onPressed: submitForm,
-                      child: buttonContainers(double.infinity, 20, 'Submit', 18),
-                    ),
+                   child: FlatButton(
+                     onPressed: submitForm,
+                     child: Container(
+                       height: 50,
+                       width: double.infinity,
+                       decoration: BoxDecoration(
+                         gradient: gradients(),
+                         borderRadius: BorderRadius.circular(10),
+                       ),
+                       child: Center(
+                         child: Text(
+                           "Submit",
+                           style: TextStyle(color: Colors.white),
+                         ),
+                       ),
+                     ),
+                   ),
+                  //child: buttons(context, submitForm, 'Submit', 18),
                   )
                 ],
               ),

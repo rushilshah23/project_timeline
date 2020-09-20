@@ -8,7 +8,28 @@ class ProjectDetails extends StatefulWidget {
   _ProjectDetailsState createState() => _ProjectDetailsState();
 }
 
+
+
 class _ProjectDetailsState extends State<ProjectDetails> {
+
+  List supervisors=[];
+  List workers=[];
+
+  @override
+  void initState() {
+    super.initState();
+    Map supervisorsMap= widget.projectDetails["supervisors"];
+    supervisors= supervisorsMap.values.toList();
+    debugPrint(supervisors.toString());
+
+
+    Map workersMap= widget.projectDetails["workers"];
+    workers= workersMap.values.toList();
+    debugPrint(workers.toString());
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +64,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                 ),
                 Text(
                   widget.projectDetails["siteAddress"].toString(),
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -60,27 +81,12 @@ class _ProjectDetailsState extends State<ProjectDetails> {
 
             Text(
               widget.projectDetails["progressPercent"].toString(),
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 10,
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //   crossAxisAlignment: CrossAxisAlignment.end,
-            //   children: [
-            //     Column(
-            //       mainAxisAlignment: MainAxisAlignment.start,
-            //       children: [],
-            //     ),
-            //     SizedBox(
-            //       height: 8,
-            //     ),
-            //     Column(
-            //       children: [],
-            //     ),
-            //   ],
-            // ),
+
             Text(
               'Soil Type: ',
               style: TextStyle(
@@ -91,41 +97,11 @@ class _ProjectDetailsState extends State<ProjectDetails> {
 
             Text(
               widget.projectDetails["soilType"].toString(),
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 10,
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //   children: [
-            //     Column(
-            //       children: [],
-            //     ),
-            //     SizedBox(
-            //       height: 15,
-            //     ),
-            //     Column(
-            //       children: [],
-            //     ),
-            //   ],
-            // ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //   // crossAxisAlignment: CrossAxisAlignment.start,
-            //   children: [
-            //     Column(
-            //       mainAxisAlignment: MainAxisAlignment.start,
-            //       children: [],
-            //     ),
-            //     SizedBox(
-            //       height: 10,
-            //     ),
-            //     Column(
-            //       children: [],
-            //     ),
-            //   ],
-            // ),
 
             Text(
               'Status: ',
@@ -136,26 +112,58 @@ class _ProjectDetailsState extends State<ProjectDetails> {
             ),
 
             Text(
-              widget.projectDetails["status"].toString(),
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+              widget.projectDetails["projectStatus"].toString(),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 10,
             ),
             Text(
-              'Supervisor Name: ',
+              'Duration: ',
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Colors.grey[600]),
             ),
             Text(
-              widget.projectDetails["supervisorName"].toString(),
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+              widget.projectDetails["projectDuration"].toString()+" days",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 10,
             ),
+
+            Text(
+              'Project Goals: ',
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[600]),
+            ),
+            Text(
+              widget.projectDetails["volumeToBeExcavated"].toString()+" m3",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+
+
+            Text(
+              'volume Excavated: ',
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[600]),
+            ),
+            Text(
+              widget.projectDetails["volumeExcavated"].toString()+" m3",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+
             Text(
               'Progress Percent: ',
               style: TextStyle(
@@ -165,7 +173,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
             ),
             Text(
               widget.projectDetails["progressPercent"].toString(),
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 10,
@@ -179,8 +187,64 @@ class _ProjectDetailsState extends State<ProjectDetails> {
             ),
             Text(
               widget.projectDetails["soilType"].toString(),
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
+
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              'Supervisors Selected: ',
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[600]),
+            ),
+
+
+           Container(
+             height: MediaQuery.of(context).size.height/5,
+             child:   new ListView.builder(
+               itemCount: supervisors.length,
+               itemBuilder: (context, index) {
+                 return Text("$index:  "+supervisors[index]["name"].toString(),
+                     style: TextStyle(
+                     fontSize: 16,
+                     fontWeight: FontWeight.bold,
+                     )
+                 );
+               },
+             ),
+           ),
+
+
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              'Supervisors Selected: ',
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[600]),
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height/5,
+              child:   new ListView.builder(
+                itemCount: workers.length,
+                itemBuilder: (context, index) {
+                  return Text("$index:  "+workers[index]["name"].toString(),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      )
+                  );
+                },
+              ),
+            )
+
+
+
           ],
         ),
       ),
