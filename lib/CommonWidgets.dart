@@ -19,10 +19,10 @@ Widget ThemeAppbar(String title)
 {
   return new AppBar(
     iconTheme: IconThemeData(
-      color: Colors.orange[800],
+      color: Colors.indigo[300],
     ),
     title:  Text(title, style: TextStyle(
-      color: Colors.orange[800],
+      color: Colors.blue[700],
     )),
     backgroundColor: Colors.white,
   );
