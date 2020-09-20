@@ -31,7 +31,7 @@ class _AllProjectsState extends State<AllProjects> {
           child: Container(
             decoration: BoxDecoration(boxShadow: [
               BoxShadow(
-                color: Colors.blue[100],
+                color: Colors.orange[100],
                 blurRadius: 25.0, // soften the shadow
                 spreadRadius: 5.0, //extend the shadow
                 offset: Offset(
@@ -49,7 +49,7 @@ class _AllProjectsState extends State<AllProjects> {
           child: Container(
             decoration: BoxDecoration(boxShadow: [
               BoxShadow(
-                color: Colors.blue[100],
+                color: Colors.orange[100],
                 blurRadius: 25.0, // soften the shadow
                 spreadRadius: 5.0, //extend the shadow
                 offset: Offset(
@@ -91,7 +91,7 @@ class _AllProjectsState extends State<AllProjects> {
                             fontWeight: FontWeight.bold, fontSize: 20.0),
                       ),
                       circularStrokeCap: CircularStrokeCap.round,
-                      progressColor: Colors.indigo[400],
+                      progressColor: Colors.deepOrange[400],
                     ),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
@@ -235,7 +235,7 @@ class _AllProjectsState extends State<AllProjects> {
           } else {
             return Center(
                 child: CircularProgressIndicator(
-              valueColor: new AlwaysStoppedAnimation<Color>(Colors.indigo),
+              valueColor: new AlwaysStoppedAnimation<Color>(Colors.orange),
             ));
           }
         });

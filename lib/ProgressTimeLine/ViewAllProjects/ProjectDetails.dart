@@ -22,6 +22,11 @@ class _ProjectDetailsState extends State<ProjectDetails> {
     supervisors= supervisorsMap.values.toList();
     debugPrint(supervisors.toString());
 
+
+    Map workersMap= widget.projectDetails["workers"];
+    workers= workersMap.values.toList();
+    debugPrint(workers.toString());
+
   }
 
 
@@ -114,19 +119,51 @@ class _ProjectDetailsState extends State<ProjectDetails> {
               height: 10,
             ),
             Text(
-              'Supervisor Name: ',
+              'Duration: ',
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Colors.grey[600]),
             ),
             Text(
-              widget.projectDetails["supervisorName"].toString(),
+              widget.projectDetails["projectDuration"].toString()+" days",
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 10,
             ),
+
+            Text(
+              'Project Goals: ',
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[600]),
+            ),
+            Text(
+              widget.projectDetails["volumeToBeExcavated"].toString()+" m3",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+
+
+            Text(
+              'volume Excavated: ',
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[600]),
+            ),
+            Text(
+              widget.projectDetails["volumeExcavated"].toString()+" m3",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+
             Text(
               'Progress Percent: ',
               style: TextStyle(
@@ -166,7 +203,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
 
 
            Container(
-             height: MediaQuery.of(context).size.height/4,
+             height: MediaQuery.of(context).size.height/5,
              child:   new ListView.builder(
                itemCount: supervisors.length,
                itemBuilder: (context, index) {
@@ -178,7 +215,34 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                  );
                },
              ),
-           )
+           ),
+
+
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              'Supervisors Selected: ',
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[600]),
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height/5,
+              child:   new ListView.builder(
+                itemCount: workers.length,
+                itemBuilder: (context, index) {
+                  return Text("$index:  "+workers[index]["name"].toString(),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      )
+                  );
+                },
+              ),
+            )
+
 
 
           ],

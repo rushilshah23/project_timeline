@@ -19,7 +19,7 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
   final List<WorkerList> workersList = [];
   final CollectionReference workers = Firestore.instance.collection("workers");
   final databaseReference = FirebaseDatabase.instance.reference();
-  var projectID = "project1";
+  var projectID = "b570da70-fa93-11ea-9561-89a3a74b28bb";
 
   Future<void> getData() async {
     await workers.getDocuments().then((querySnapshot) {
@@ -33,7 +33,7 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
                 children: [
                   Text(result['name']),
                   Text(
-                    result['mobile'].toString() + "  " + result['email'],
+                    result['mobile'].toString() + "  " + result['email'].toString(),
                     style: TextStyle(color: Colors.grey, fontSize: 14),
                   ),
                 ],
@@ -148,24 +148,24 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
                       ),
                     ),
                     SizedBox(height: 20),
-//                    FlatButton(
-//                      child: Container(
-//                        height: 50,
-//                        decoration: BoxDecoration(
-//                            borderRadius: BorderRadius.circular(10),
-//                            gradient: gradients()),
-//                        child: Center(
-//                          child: Text(
-//                            'Save',
-//                            style: TextStyle(color: Colors.white),
-//                          ),
-//                        ),
-//                      ),
-//                      onPressed: () {
-//                        submitForm();
-//                      },
-//                    ),
-                  buttons(context, submitForm, 'Save', 18)
+                   FlatButton(
+                     child: Container(
+                       height: 50,
+                       decoration: BoxDecoration(
+                           borderRadius: BorderRadius.circular(10),
+                           gradient: gradients()),
+                       child: Center(
+                         child: Text(
+                           'Save',
+                           style: TextStyle(color: Colors.white),
+                         ),
+                       ),
+                     ),
+                     onPressed: () {
+                       submitForm();
+                     },
+                   ),
+                 // buttons(context, submitForm, 'Save', 18)
                   ],
                 ),
               ],

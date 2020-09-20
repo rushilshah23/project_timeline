@@ -5,6 +5,7 @@ import 'package:project_timeline/MasterDataSet/ourMachines.dart';
 import 'package:project_timeline/MasterDataSet/ourPetrolPump.dart';
 import 'package:project_timeline/ProgressTimeLine/ProgressPage.dart';
 import 'package:project_timeline/supervisor/createAcceptWorker/createAcceptWorker.dart';
+import 'package:project_timeline/supervisor/testAllocProjects.dart';
 
 import '../dashboard.dart';
 import 'AllocatedProjects.dart';
@@ -45,7 +46,7 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
         return new ProgressPage();
 
       case 4:
-        return new YourAllocatedProjects();
+        return new TestAllocProjects();
 
       case 5:
         return new CreateAcceptWorker();
