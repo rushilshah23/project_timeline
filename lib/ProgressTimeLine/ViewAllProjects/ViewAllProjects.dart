@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_timeline/CommonWidgets.dart';
 import 'package:project_timeline/ProgressTimeLine/ViewAllProjects/ProjectDetails.dart';
 
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -190,19 +191,23 @@ class _AllProjectsState extends State<AllProjects> {
           );
         },
         child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white70,
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(25),bottomRight: Radius.circular(25)),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircularPercentIndicator(
                 backgroundColor: Colors.grey[200],
-                radius: 120.0,
+                radius: 100.0,
                 lineWidth: 10.0,
                 animation: true,
 //                      percent: double.parse(
 //                              allProjects[index]["progress"].toString()) /
 //                          100,
 
-                percent: double.parse("70") / 100,
+                percent: double.parse(allProjects[index]["progressPercent"].toString()) / 100,
 //                      center: new Text(
 //                        allProjects[index]["progress"].toString() + "%",
 //                        style: new TextStyle(
@@ -210,18 +215,15 @@ class _AllProjectsState extends State<AllProjects> {
 //                      ),
 
                 center: new Text(
-                  "70" + "%",
+                  allProjects[index]["progressPercent"].toString() + "%",
                   style: new TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 20.0),
                 ),
                 circularStrokeCap: CircularStrokeCap.round,
-                progressColor: Colors.indigo[400],
+                progressColor: Colors.blue[700],
               ),
-                    Text(
-                        allProjects[index]["projectName"],
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
+                    SizedBox(height: 10,),
+                      titleStyles(allProjects[index]["projectName"], 20),
                       SizedBox(
                 height: 5,
               ),
@@ -289,6 +291,9 @@ class _AllProjectsState extends State<AllProjects> {
                             return Card(
                                 elevation: 5,
                                 color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(25),bottomRight: Radius.circular(25)),
+                                ),
                                 margin: EdgeInsets.all(10),
                                 child: GridTile(child: displayProject(index)));
                           },
