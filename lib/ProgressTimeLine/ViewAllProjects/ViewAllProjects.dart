@@ -189,64 +189,79 @@ class _AllProjectsState extends State<AllProjects> {
                     )),
           );
         },
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white70,
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(25),bottomRight: Radius.circular(25)),
+        child: Container(
+          decoration: BoxDecoration(
+//            image: DecorationImage(
+//              fit: BoxFit.fitWidth,
+//              image: NetworkImage('https://png.pngtree.com/thumb_back/fw800/back_our/20190628/ourmid/pngtree-pure-original-spring-mountain-spring-water-green-leaf-background-image_268889.jpg'),
+//              colorFilter: ColorFilter.mode(Colors.white.withOpacity(0.6), BlendMode.dstATop),
+//            ),
+//            image: DecorationImage(
+//              fit: BoxFit.fitHeight,
+//              image: NetworkImage('https://png.pngtree.com/thumb_back/fw800/back_our/20190619/ourmid/pngtree-green-lotus-leaf-summer-cosmetics-psd-layered-master-map-background-material-image_136755.jpg'),
+//              colorFilter: ColorFilter.mode(Colors.white.withOpacity(0.6), BlendMode.dstATop),
+//            ),
+            image: DecorationImage(
+              fit: BoxFit.fitHeight,
+              image: NetworkImage('https://png.pngtree.com/thumb_back/fw800/back_our/20190619/ourmid/pngtree-blue-splash-water-flower-cosmetic-psd-layered-master-map-background-material-image_136618.jpg'),
+              colorFilter: ColorFilter.mode(Colors.white.withOpacity(0.6), BlendMode.dstATop),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CircularPercentIndicator(
-                  backgroundColor: Colors.grey[200],
-                  radius: 100.0,
-                  lineWidth: 10.0,
-                  animation: true,
+//            image: DecorationImage(
+//              fit: BoxFit.cover,
+//              image: NetworkImage('https://png.pngtree.com/thumb_back/fh260/back_our/20190620/ourmid/pngtree-green-blue-sky-leaf-gradient-h5-background-material-image_148612.jpg'),
+//              colorFilter: ColorFilter.mode(Colors.white.withOpacity(0.6), BlendMode.dstATop),
+//            ),
+            color: Colors.white70,
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(25),bottomRight: Radius.circular(25)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 10),
+              CircularPercentIndicator(
+                backgroundColor: Colors.grey[200],
+                radius: 80.0,
+                lineWidth: 7.5,
+                animation: true,
 //                      percent: double.parse(
 //                              allProjects[index]["progress"].toString()) /
 //                          100,
 
-                  percent: double.parse(allProjects[index]["progressPercent"].toString()) / 100,
+                percent: double.parse(allProjects[index]["progressPercent"].toString()) / 100,
 //                      center: new Text(
 //                        allProjects[index]["progress"].toString() + "%",
 //                        style: new TextStyle(
 //                            fontWeight: FontWeight.bold, fontSize: 20.0),
 //                      ),
 
-                  center: new Text(
-                    allProjects[index]["progressPercent"].toString() + "%",
-                    style: new TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 20.0),
-                  ),
-                  circularStrokeCap: CircularStrokeCap.round,
-                  progressColor: Colors.blue[700],
+                center: new Text(
+                  allProjects[index]["progressPercent"].toString() + "%",
+                  style: new TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 18.0),
                 ),
-                      SizedBox(height: 10,),
-                        titleStyles(allProjects[index]["projectName"], 20),
-                        SizedBox(
-                  height: 5,
-                ),
+                circularStrokeCap: CircularStrokeCap.round,
+                progressColor: Colors.blue[900],
+              ),
+                    SizedBox(height: 10,),
+                      titleStyles(allProjects[index]["projectName"], 20),
+                      SizedBox(
+                height: 5,
+              ),
 
-                Text(
-                  allProjects[index]["projectStatus"],
-                  style: TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-
-                SizedBox(
-                  height: 5,
-                ),
+              Text(
+                allProjects[index]["projectStatus"],
+                style: TextStyle(
+                    fontSize: 16, fontWeight: FontWeight.bold),
+              ),
 
 
-                Text(
-                  allProjects[index]["siteAddress"],
-                  style: TextStyle(
-                      fontSize: 12, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
+
+//                Text(
+//                  allProjects[index]["siteAddress"],
+//                  style: TextStyle(
+//                      fontSize: 12, fontWeight: FontWeight.bold),
+//                ),
+            ],
           ),
         ));
   }
@@ -293,6 +308,8 @@ class _AllProjectsState extends State<AllProjects> {
                             return Padding(
                               padding: const EdgeInsets.only(left: 5,right: 5),
                               child: Card(
+                                  semanticContainer: true,
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
                                   elevation: 5,
                                   color: Colors.white,
                                   shape: RoundedRectangleBorder(
