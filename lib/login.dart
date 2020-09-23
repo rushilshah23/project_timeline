@@ -17,14 +17,7 @@ class LoginPageState extends State<LoginPage> {
   String _requestType = null ?? "user";
   String _signInMethod = null ?? "email";
   String _email, _password;
-  var credential, flag = 0;
-
-  List<String> _users = [
-    'manager.aol@gmail.com',
-    'supervisor@gmail.com',
-    'worker1@gmail.com',
-  ];
-  int b = 1234;
+  var credential, flag = 0, firstTimeLogin = 0;
 
   final formKey = new GlobalKey<FormState>();
   //final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
@@ -34,9 +27,11 @@ class LoginPageState extends State<LoginPage> {
 
   FirebaseAuth _auth = FirebaseAuth.instance;
   final CollectionReference workers = Firestore.instance.collection("workers");
-  final CollectionReference user = Firestore.instance.collection("user");
+  final CollectionReference users = Firestore.instance.collection("user");
   final CollectionReference supervisor =
       Firestore.instance.collection("supervisor");
+  final CollectionReference newPhoneUser =
+      Firestore.instance.collection("newPhoneUser");
 
   signOut() async {
     await _auth.signOut().then((value) {
@@ -108,7 +103,7 @@ class LoginPageState extends State<LoginPage> {
       switch (_requestType) {
         case "user":
           print("user");
-          await user.getDocuments().then((value) {
+          await users.getDocuments().then((value) {
             value.documents.forEach((element) async {
               if (element.data["email"] == _email) {
                 flag = 1;
@@ -211,40 +206,55 @@ class LoginPageState extends State<LoginPage> {
     try {
       switch (_requestType) {
         case "user":
-          await user.getDocuments().then((value) {
+          await newPhoneUser.getDocuments().then((value) {
             value.documents.forEach((element) async {
-              if (element.documentID == _email) {
-                flag = 1;
-                if (element.data["status"] == "accepted") {
-                  AuthResult result =
-                      await _auth.signInWithCredential(credential);
-                  FirebaseUser user = result.user;
-                  if (user.uid != null) {
-                    print("```````````````````````````");
-                    print("account creation successful");
-                    print(user.uid);
-                    print(element.data["mobile"]);
-                    print(element.data["name"]);
-                    print(element.data["assignedProject"]);
-                    showToast("Login Successful");
-                    print("```````````````````````````");
-                    workers.document(element.documentID).updateData(
-                        {"status": "created", "uid": user.uid}).then((value) {
+              if (element.documentID == _email &&
+                  element.data["userType"] == "user") {
+                firstTimeLogin = 1;
+                AuthResult result =
+                    await _auth.signInWithCredential(credential);
+                FirebaseUser user = result.user;
+                if (user.uid != null) {
+                  print("```````````````````````````");
+                  print("account creation successful");
+                  print(user.uid);
+                  print(element.data["mobile"]);
+                  print(element.data["name"]);
+                  print(element.data["assignedProject"]);
+                  showToast("Login Successful");
+                  print("```````````````````````````");
+                  users.document(user.uid).setData({
+                    "assignedProject": "No project assigned",
+                    "mobile": element["mobile"],
+                    "name": element["name"],
+                    "age": element["age"],
+                    "address": element["address"],
+                    "uid": user.uid,
+                    'signInMethod': "otp"
+                  }).then((value) async {
+                    await newPhoneUser.document(_email).delete().then((value) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => ManagerHomePage()),
                       );
                     });
-                  }
-                } else if (element.data["status"] == "created") {
+                  });
+                }
+              }
+            });
+          });
+          if (firstTimeLogin != 1) {
+            await users.getDocuments().then((value) {
+              value.documents.forEach((element) async {
+                if (element.data["mobile"] == _email) {
+                  flag = 1;
                   AuthResult result =
                       await _auth.signInWithCredential(credential);
                   FirebaseUser user = result.user;
                   if (user.uid != null) {
                     print("```````````````````````````");
-                    print("login successful");
-                    print(user.uid);
+                    print(element.data["uid"]);
                     print(element.data["mobile"]);
                     print(element.data["name"]);
                     print(element.data["assignedProject"]);
@@ -257,49 +267,65 @@ class LoginPageState extends State<LoginPage> {
                     );
                   }
                 }
-              }
+              });
             });
-          });
-          if (flag == 0) {
-            showToast("Account is not Accepted");
+            if (flag == 0) {
+              showToast("Please register first");
+            }
+          } else {
+            await newPhoneUser.document(_email).delete();
           }
           break;
         case "supervisor":
-          await supervisor.getDocuments().then((value) {
+          await newPhoneUser.getDocuments().then((value) {
             value.documents.forEach((element) async {
-              if (element.documentID == _email) {
-                flag = 1;
-                if (element.data["status"] == "accepted") {
-                  AuthResult result =
-                      await _auth.signInWithCredential(credential);
-                  FirebaseUser user = result.user;
-                  if (user.uid != null) {
-                    print("```````````````````````````");
-                    print("account creation successful");
-                    print(user.uid);
-                    print(element.data["mobile"]);
-                    print(element.data["name"]);
-                    print(element.data["assignedProject"]);
-                    showToast("Login Successful");
-                    print("```````````````````````````");
-                    workers.document(element.documentID).updateData(
-                        {"status": "created", "uid": user.uid}).then((value) {
+              if (element.documentID == _email &&
+                  element.data["userType"] == "supervisor") {
+                firstTimeLogin = 1;
+                AuthResult result =
+                    await _auth.signInWithCredential(credential);
+                FirebaseUser user = result.user;
+                if (user.uid != null) {
+                  print("```````````````````````````");
+                  print("account creation successful");
+                  print(user.uid);
+                  print(element.data["mobile"]);
+                  print(element.data["name"]);
+                  print(element.data["assignedProject"]);
+                  showToast("Login Successful");
+                  print("```````````````````````````");
+                  supervisor.document(user.uid).setData({
+                    "assignedProject": "No project assigned",
+                    "mobile": element["mobile"],
+                    "name": element["name"],
+                    "age": element["age"],
+                    "address": element["address"],
+                    "uid": user.uid,
+                    'signInMethod': "otp"
+                  }).then((value) async {
+                    await newPhoneUser.document(_email).delete().then((value) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => SupervisorHomePage()),
+                            builder: (context) => ManagerHomePage()),
                       );
                     });
-                  }
-                } else if (element.data["status"] == "created") {
+                  });
+                }
+              }
+            });
+          });
+          if (firstTimeLogin != 1) {
+            await supervisor.getDocuments().then((value) {
+              value.documents.forEach((element) async {
+                if (element.data["mobile"] == _email) {
+                  flag = 1;
                   AuthResult result =
                       await _auth.signInWithCredential(credential);
                   FirebaseUser user = result.user;
                   if (user.uid != null) {
                     print("```````````````````````````");
-                    print("login successful");
-                    print(user.uid);
-                    print(element.data["email"]);
+                    print(element.data["uid"]);
                     print(element.data["mobile"]);
                     print(element.data["name"]);
                     print(element.data["assignedProject"]);
@@ -312,48 +338,65 @@ class LoginPageState extends State<LoginPage> {
                     );
                   }
                 }
-              }
+              });
             });
-          });
-          if (flag == 0) {
-            showToast("Account is not Accepted");
+            if (flag == 0) {
+              showToast("Please register first");
+            }
+          } else {
+            await newPhoneUser.document(_email).delete();
           }
           break;
         case "worker":
-          await workers.getDocuments().then((value) {
+          await newPhoneUser.getDocuments().then((value) {
             value.documents.forEach((element) async {
-              if (element.documentID == _email) {
-                flag = 1;
-                if (element.data["status"] == "accepted") {
-                  AuthResult result =
-                      await _auth.signInWithCredential(credential);
-                  FirebaseUser user = result.user;
-                  if (user.uid != null) {
-                    print("```````````````````````````");
-                    print("account creation successful");
-                    print(user.uid);
-                    print(element.data["mobile"]);
-                    print(element.data["name"]);
-                    print(element.data["assignedProject"]);
-                    showToast("Login Successful");
-                    print("```````````````````````````");
-                    await workers.document(element.documentID).updateData(
-                        {"status": "created", "uid": user.uid}).then((value) {
+              if (element.documentID == _email &&
+                  element.data["userType"] == "worker") {
+                firstTimeLogin = 1;
+                AuthResult result =
+                    await _auth.signInWithCredential(credential);
+                FirebaseUser user = result.user;
+                if (user.uid != null) {
+                  print("```````````````````````````");
+                  print("account creation successful");
+                  print(user.uid);
+                  print(element.data["mobile"]);
+                  print(element.data["name"]);
+                  print(element.data["assignedProject"]);
+                  showToast("Login Successful");
+                  print("```````````````````````````");
+                  workers.document(user.uid).setData({
+                    "assignedProject": "No project assigned",
+                    "mobile": element["mobile"],
+                    "name": element["name"],
+                    "age": element["age"],
+                    "address": element["address"],
+                    "uid": user.uid,
+                    'signInMethod': "otp"
+                  }).then((value) async {
+                    await newPhoneUser.document(_email).delete().then((value) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => WorkerHomePage()),
+                            builder: (context) => ManagerHomePage()),
                       );
                     });
-                  }
-                } else if (element.data["status"] == "created") {
+                  });
+                }
+              }
+            });
+          });
+          if (firstTimeLogin != 1) {
+            await workers.getDocuments().then((value) {
+              value.documents.forEach((element) async {
+                if (element.data["mobile"] == _email) {
+                  flag = 1;
                   AuthResult result =
                       await _auth.signInWithCredential(credential);
                   FirebaseUser user = result.user;
                   if (user.uid != null) {
                     print("```````````````````````````");
-                    print("login successful");
-                    print(user.uid);
+                    print(element.data["uid"]);
                     print(element.data["mobile"]);
                     print(element.data["name"]);
                     print(element.data["assignedProject"]);
@@ -365,12 +408,15 @@ class LoginPageState extends State<LoginPage> {
                     );
                   }
                 }
-              }
+              });
             });
-          });
-          if (flag == 0) {
-            showToast("Account is not Accepted");
+            if (flag == 0) {
+              showToast("Please register first");
+            }
+          } else {
+            await newPhoneUser.document(_email).delete();
           }
+
           break;
       }
     } catch (e) {
@@ -526,45 +572,54 @@ class LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  Column(
                     children: [
-                      Text("User Type:"),
-                      Radio(
-                        value: "user",
-                        groupValue: _requestType,
-                        onChanged: (value) {
-                          setState(() {
-                            _requestType = value;
-                          });
-                        },
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("User Type:"),
+                        ],
                       ),
-                      Text(
-                        'User',
-                      ),
-                      Radio(
-                        value: "supervisor",
-                        groupValue: _requestType,
-                        onChanged: (value) {
-                          setState(() {
-                            _requestType = value;
-                          });
-                        },
-                      ),
-                      Text(
-                        'Supervisor',
-                      ),
-                      Radio(
-                        value: "worker",
-                        groupValue: _requestType,
-                        onChanged: (value) {
-                          setState(() {
-                            _requestType = value;
-                          });
-                        },
-                      ),
-                      Text(
-                        'Worker',
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Radio(
+                            value: "user",
+                            groupValue: _requestType,
+                            onChanged: (value) {
+                              setState(() {
+                                _requestType = value;
+                              });
+                            },
+                          ),
+                          Text(
+                            'User',
+                          ),
+                          Radio(
+                            value: "supervisor",
+                            groupValue: _requestType,
+                            onChanged: (value) {
+                              setState(() {
+                                _requestType = value;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Supervisor',
+                          ),
+                          Radio(
+                            value: "worker",
+                            groupValue: _requestType,
+                            onChanged: (value) {
+                              setState(() {
+                                _requestType = value;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Worker',
+                          ),
+                        ],
                       ),
                     ],
                   ),
