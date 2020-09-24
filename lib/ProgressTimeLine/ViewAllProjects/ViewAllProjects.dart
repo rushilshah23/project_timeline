@@ -79,6 +79,7 @@ class _AllProjectsState extends State<AllProjects> {
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
+                      trailing: Icon(Icons.arrow_forward_ios),
                     )
                 )
             ),
