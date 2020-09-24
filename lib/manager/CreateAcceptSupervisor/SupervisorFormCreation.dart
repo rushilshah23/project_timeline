@@ -15,8 +15,6 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
   final databaseReference = FirebaseDatabase.instance.reference();
   final CollectionReference workers =
       Firestore.instance.collection("supervisor");
-  final CollectionReference newPhoneUser =
-      Firestore.instance.collection("newPhoneUser");
   FirebaseAuth auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
 
@@ -25,7 +23,7 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
     super.initState();
   }
 
-  String _signInMethod = null ?? "email";
+  String _requestType = null ?? "supervisor";
   String name;
   String email;
   String phoneNo;
@@ -40,7 +38,7 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
   TextEditingController controllerAge;
   TextEditingController controllerPassword;
 
-  addUserUsingEmail() async {
+  addUser() async {
     debugPrint(name);
     if (_formKey.currentState.validate()) {
       var uuid = Uuid();
@@ -84,61 +82,6 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
     }
   }
 
-  addUserUsingPhone() async {
-    if (_formKey.currentState.validate()) {
-      try {
-        await newPhoneUser.document(phoneNo).setData({
-          "userType": "supervisor",
-          "mobile": phoneNo,
-          "name": name,
-          "address": address,
-          "age": age,
-        }).then((value) async {
-          showToast("Added successfully");
-        });
-        setState(() {
-          controllerAddress = null;
-          controllerName = null;
-          controllerEmail = null;
-          controllerPhoneNo = null;
-          controllerAge = null;
-          controllerPassword = null;
-        });
-      } catch (e) {
-        showToast("Failed. Check your Internet !");
-      }
-    }
-  }
-
-  List<Widget> emailForm() {
-    return [
-      TextFormField(
-        decoration: InputDecoration(
-          labelText: "Email",
-          fillColor: Colors.white,
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(10),
-                topLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10),
-                bottomLeft: Radius.circular(10)),
-          ),
-        ),
-        controller: controllerEmail,
-        validator: (val) => val.isEmpty ? 'Enter Email' : null,
-        onChanged: (val) {
-          setState(() => email = val);
-        },
-      ),
-      SizedBox(height: 15),
-    ];
-  }
-
-  List<Widget> mobileForm() {
-    return [];
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -154,47 +97,9 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Center(
-                      child: titleStyles('Make Supervisor form', 18),
+                    child: titleStyles('Make Supervisor form', 18),
                     ),
                     SizedBox(height: 15),
-                    Row(
-                      children: [
-                        Text("Sign In Method"),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Row(
-                          children: [
-                            Radio(
-                                value: "email",
-                                groupValue: _signInMethod,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _signInMethod = value;
-                                  });
-                                }),
-                            Text("Email ID")
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Radio(
-                                value: "OTP",
-                                groupValue: _signInMethod,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _signInMethod = value;
-                                  });
-                                }),
-                            Text("OTP")
-                          ],
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children:
-                          _signInMethod == "email" ? emailForm() : mobileForm(),
-                    ),
                     TextFormField(
                       decoration: InputDecoration(
                         labelText: "Name",
@@ -214,6 +119,27 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                           val.isEmpty ? 'Enter your Name' : null,
                       onChanged: (val) {
                         setState(() => name = val);
+                      },
+                    ),
+                    SizedBox(height: 15),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: "Email",
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.blue, width: 2.0),
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10),
+                              topLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10),
+                              bottomLeft: Radius.circular(10)),
+                        ),
+                      ),
+                      controller: controllerEmail,
+                      validator: (val) => val.isEmpty ? 'Enter Email' : null,
+                      onChanged: (val) {
+                        setState(() => email = val);
                       },
                     ),
                     SizedBox(height: 15),
@@ -318,14 +244,11 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
 //                            ),
 //                          ),
 //                        ),
-                        child:
-                            buttonContainers(400, 20, 'Create Supervisor', 18),
+                      child: buttonContainers(400, 20, 'Create Supervisor', 18),
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
                             setState(() {
-                              _signInMethod == "email"
-                                  ? addUserUsingEmail()
-                                  : addUserUsingPhone();
+                              addUser();
                             });
                             // test();
                           }

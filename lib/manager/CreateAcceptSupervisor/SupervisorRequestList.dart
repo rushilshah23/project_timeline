@@ -13,22 +13,17 @@ class _SupervisorRequestListState extends State<SupervisorRequestList> {
   final databaseReference = FirebaseDatabase.instance.reference();
   final CollectionReference workers =
       Firestore.instance.collection("supervisor");
-  final CollectionReference user = Firestore.instance.collection("user");
   FirebaseAuth auth = FirebaseAuth.instance;
   List allWorkerRequest = List();
 
   acceptRequest(worker) async {
     try {
-      if (worker["signInMethod"] != "email") {
-        await user.document(worker["key"]).delete();
-        await workers.document(worker["key"]).setData({
-          "assignedProject": "No project assigned",
+      if (worker["signInMethod"] != null) {
+        await workers.document(worker["phoneNo"]).setData({
+          "email": worker["email"],
           "mobile": worker["phoneNo"],
           "name": worker["name"],
-          "age": worker["age"],
-          "address": worker["address"],
-          "uid": worker["key"],
-          'signInMethod': worker["signInMethod"]
+          "status": "accepted",
         }).then((value) async {
           await databaseReference
               .child("request")
@@ -39,23 +34,25 @@ class _SupervisorRequestListState extends State<SupervisorRequestList> {
           showToast("Added successfully");
         });
       } else {
-        await user.document(worker["key"]).delete();
-        await workers.document(worker["key"]).setData({
-          "assignedProject": "No project assigned",
-          "email": worker["email"],
-          "password": worker["password"],
-          "age": worker["age"],
-          "address": worker["address"],
-          "mobile": worker["phoneNo"],
-          "name": worker["name"],
-          "uid": worker["key"],
-          'signInMethod': worker["signInMethod"]
-        }).then((value) async {
-          await databaseReference
-              .child("request")
-              .child("supervisor")
-              .child(worker["key"])
-              .remove();
+        print(worker["key"]);
+        print(worker["email"]);
+        print(worker["password"]);
+        await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+                email: worker["email"], password: worker["password"])
+            .then((AuthResult result) async {
+          await workers.document(result.user.uid).setData({
+            "email": worker["email"],
+            "mobile": worker["phoneNo"],
+            "name": worker["name"],
+            "uid": result.user.uid
+          }).then((value) async {
+            await databaseReference
+                .child("request")
+                .child("supervisor")
+                .child(worker["key"])
+                .remove();
+          });
         }).then((value) {
           showToast("Added successfully");
         });
@@ -220,7 +217,7 @@ class _SupervisorRequestListState extends State<SupervisorRequestList> {
                   height: 10,
                 ),
                 Center(
-                  child: titleStyles('Supervisor Request List', 18),
+                child: titleStyles('Supervisor Request List', 18),
                 ),
                 SizedBox(
                   height: 20,
