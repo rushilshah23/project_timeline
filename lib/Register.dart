@@ -2,7 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/CommonWidgets.dart';
-import 'package:uuid/uuid.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -12,6 +12,7 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final databaseReference = FirebaseDatabase.instance.reference();
   FirebaseAuth _auth = FirebaseAuth.instance;
+  final CollectionReference user = Firestore.instance.collection("user");
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -27,7 +28,7 @@ class _RegisterState extends State<Register> {
   String address;
   String age;
   String password;
-  var code;
+  var code, uuid;
 
   TextEditingController controllerName;
   TextEditingController controllerEmail;
@@ -41,24 +42,40 @@ class _RegisterState extends State<Register> {
 
   addUserUsingEmail() async {
     if (_formKey.currentState.validate()) {
-      var uuid = Uuid();
-      String uniqueID = uuid.v1();
       try {
-        await databaseReference
-            .child("request")
-            .child(_requestType)
-            .child(uniqueID)
-            .set({
-          'name': name,
-          'email': email,
-          'phoneNo': phoneNo,
-          'address': address,
-          'age': age,
-          'password': password,
-        }).then((value) {
-          showToast("User requested Added");
+        await _auth
+            .createUserWithEmailAndPassword(email: email, password: password)
+            .then((AuthResult result) async {
+          uuid = result.user.uid;
+          await user.document(result.user.uid).setData({
+            "email": email,
+            "mobile": phoneNo,
+            "name": name,
+            "uid": result.user.uid,
+            "address": address,
+            "age": age,
+            "password": password,
+            'signInMethod': "email"
+          }).then((value) async {
+            await databaseReference
+                .child("request")
+                .child(_requestType)
+                .child(uuid)
+                .set({
+              "uid": result.user.uid,
+              'name': name,
+              'email': email,
+              'phoneNo': phoneNo,
+              'address': address,
+              'age': age,
+              'password': password,
+              'signInMethod': "email"
+            }).then((value) {
+              showToast("User requested Added");
+            });
+          });
         });
-        await setState(() {
+        setState(() {
           controllerAddress = null;
           controllerName = null;
           controllerEmail = null;
@@ -84,10 +101,9 @@ class _RegisterState extends State<Register> {
             print("`````````````````````````````````````````");
             print("Verification Complete");
             print("`````````````````````````````````````````");
-            addDB();
-            // AuthResult result = await _auth.signInWithCredential(credential);
-
-            // FirebaseUser user = result.user;
+            AuthResult result = await _auth.signInWithCredential(credential);
+            FirebaseUser user = result.user;
+            addDB(user.uid);
 
             // if (user != null) {
             //   print(user);
@@ -128,18 +144,17 @@ class _RegisterState extends State<Register> {
                         color: Colors.blue,
                         onPressed: () async {
                           AuthCredential credential =
-                              PhoneAuthProvider.getCredential(
-                                  verificationId: verificationId,
-                                  smsCode: code);
+                          PhoneAuthProvider.getCredential(
+                              verificationId: verificationId,
+                              smsCode: code);
                           print(credential);
                           print("`````````````````````````````````````````");
                           print("Verification Complete");
                           print("`````````````````````````````````````````");
-                          addDB();
-                          // AuthResult result =
-                          //     await _auth.signInWithCredential(credential);
-
-                          // FirebaseUser user = result.user;
+                          AuthResult result =
+                          await _auth.signInWithCredential(credential);
+                          FirebaseUser user = result.user;
+                          addDB(user.uid);
 
                           // if (user != null) {
                           //   print(user);
@@ -156,22 +171,30 @@ class _RegisterState extends State<Register> {
     }
   }
 
-  addDB() async {
-    var uuid = Uuid();
-    String uniqueID = uuid.v1();
+  addDB(uniqueID) async {
     try {
-      await databaseReference
-          .child("request")
-          .child(_requestType)
-          .child(uniqueID)
-          .set({
-        'name': name,
-        'phoneNo': phoneNo,
-        'address': address,
-        'age': age,
+      await user.document(uniqueID).setData({
+        "mobile": phoneNo,
+        "name": name,
+        "uid": uniqueID,
+        "address": address,
+        "age": age,
         'signInMethod': "otp"
-      }).then((value) {
-        showToast("User request Added");
+      }).then((value) async {
+        await databaseReference
+            .child("request")
+            .child(_requestType)
+            .child(uniqueID)
+            .set({
+          "uid": uniqueID,
+          'name': name,
+          'phoneNo': phoneNo,
+          'address': address,
+          'age': age,
+          'signInMethod': "otp"
+        }).then((value) {
+          showToast("User request Added");
+        });
       });
       setState(() {
         controllerAddress = null;
@@ -412,8 +435,7 @@ class _RegisterState extends State<Register> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Center(
-                      child: titleStyles('Register for Work Requests', 18)
-                    ),
+                        child: titleStyles('Register for Work Requests', 18)),
                     SizedBox(height: 15),
                     Row(
                       children: [
@@ -492,7 +514,7 @@ class _RegisterState extends State<Register> {
                     ),
                     Column(
                       children:
-                          _signInMethod == "email" ? emailForm() : mobileForm(),
+                      _signInMethod == "email" ? emailForm() : mobileForm(),
                     ),
                     Center(
                       child: FlatButton(
