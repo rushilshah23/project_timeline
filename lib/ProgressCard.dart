@@ -123,7 +123,7 @@ class _ProgressCardState extends State<ProgressCard> {
                                 itemBuilder: (context, index) {
                                   return Container(
                                     // height: 280,
-                                      margin: EdgeInsets.all(8),
+                                      margin: EdgeInsets.all(10),
                                       child: displayProject(index, allProjects));
                                 },
                               ),
