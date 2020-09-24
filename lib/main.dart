@@ -60,6 +60,15 @@ class _MyHomePageState extends State<MyHomePage> {
         child: ListView(
           children: <Widget>[
             RaisedButton(
+              child: Text("Cards"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AllProjects()),
+                );
+              },
+            ),
+            RaisedButton(
               child: Text("SMS"),
               onPressed: () {
                 Navigator.push(
