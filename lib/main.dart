@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/PDFTesting.dart';
-import 'package:project_timeline/ProgressCard.dart';
+import 'package:project_timeline/ProgressTimeLine/ViewAllProjects/ViewAllProjects.dart';
 import 'package:project_timeline/imageTesting.dart';
 import 'package:project_timeline/manager/CreateAcceptSupervisor/SupervisorFormCreation.dart';
 import 'package:project_timeline/manager/CreateAcceptSupervisor/SupervisorRequestList.dart';
@@ -59,15 +59,6 @@ class _MyHomePageState extends State<MyHomePage> {
         // in the middle of the parent.
         child: ListView(
           children: <Widget>[
-            RaisedButton(
-              child: Text("Progress Card"),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProgressCard()),
-                );
-              },
-            ),
             RaisedButton(
               child: Text("SMS"),
               onPressed: () {
