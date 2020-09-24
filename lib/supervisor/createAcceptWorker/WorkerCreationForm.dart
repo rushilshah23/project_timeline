@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/CommonWidgets.dart';
 import 'package:random_string/random_string.dart';
-import 'package:uuid/uuid.dart';
 
 class WorkerCreationForm extends StatefulWidget {
   @override
@@ -14,6 +13,8 @@ class WorkerCreationForm extends StatefulWidget {
 class _WorkerCreationFormState extends State<WorkerCreationForm> {
   final databaseReference = FirebaseDatabase.instance.reference();
   final CollectionReference workers = Firestore.instance.collection("workers");
+  final CollectionReference newPhoneUser =
+      Firestore.instance.collection("newPhoneUser");
   FirebaseAuth auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
 
@@ -22,7 +23,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
     super.initState();
   }
 
-  String _requestType = null ?? "worker";
+  String _signInMethod = null ?? "email";
   String name;
   String email;
   String phoneNo;
@@ -37,15 +38,8 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
   TextEditingController controllerAge;
   TextEditingController controllerPassword;
 
-  test() {
-    // debugPrint("randpassowrd is " + randPassword.toString());
-  }
-
-  addUser() async {
-    debugPrint(name);
+  addUserUsingEmail() async {
     if (_formKey.currentState.validate()) {
-      var uuid = Uuid();
-      String uniqueID = uuid.v1();
       password = randomAlphaNumeric(6);
       debugPrint("name " + name);
       debugPrint("email " + email);
@@ -86,6 +80,61 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
     }
   }
 
+  addUserUsingPhone() async {
+    if (_formKey.currentState.validate()) {
+      try {
+        await newPhoneUser.document(phoneNo).setData({
+          "userType": "worker",
+          "mobile": phoneNo,
+          "name": name,
+          "address": address,
+          "age": age,
+        }).then((value) async {
+          showToast("Added successfully");
+        });
+        setState(() {
+          controllerAddress = null;
+          controllerName = null;
+          controllerEmail = null;
+          controllerPhoneNo = null;
+          controllerAge = null;
+          controllerPassword = null;
+        });
+      } catch (e) {
+        showToast("Failed. Check your Internet !");
+      }
+    }
+  }
+
+  List<Widget> emailForm() {
+    return [
+      TextFormField(
+        decoration: InputDecoration(
+          labelText: "Email",
+          fillColor: Colors.white,
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.blue, width: 2.0),
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(10),
+                topLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10),
+                bottomLeft: Radius.circular(10)),
+          ),
+        ),
+        controller: controllerEmail,
+        validator: (val) => val.isEmpty ? 'Enter Email' : null,
+        onChanged: (val) {
+          setState(() => email = val);
+        },
+      ),
+      SizedBox(height: 15),
+    ];
+  }
+
+  List<Widget> mobileForm() {
+    return [];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,9 +150,47 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Center(
-                    child: titleStyles('Make worker form', 18),
+                      child: titleStyles('Make worker form', 18),
                     ),
                     SizedBox(height: 15),
+                    Row(
+                      children: [
+                        Text("Sign In Method"),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Row(
+                          children: [
+                            Radio(
+                                value: "email",
+                                groupValue: _signInMethod,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _signInMethod = value;
+                                  });
+                                }),
+                            Text("Email ID")
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Radio(
+                                value: "OTP",
+                                groupValue: _signInMethod,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _signInMethod = value;
+                                  });
+                                }),
+                            Text("OTP")
+                          ],
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children:
+                          _signInMethod == "email" ? emailForm() : mobileForm(),
+                    ),
                     TextFormField(
                       decoration: InputDecoration(
                         labelText: "Name",
@@ -123,27 +210,6 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                           val.isEmpty ? 'Enter your Name' : null,
                       onChanged: (val) {
                         setState(() => name = val);
-                      },
-                    ),
-                    SizedBox(height: 15),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: "Email",
-                        fillColor: Colors.white,
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.blue, width: 2.0),
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              topLeft: Radius.circular(10),
-                              bottomRight: Radius.circular(10),
-                              bottomLeft: Radius.circular(10)),
-                        ),
-                      ),
-                      controller: controllerEmail,
-                      validator: (val) => val.isEmpty ? 'Enter Email' : null,
-                      onChanged: (val) {
-                        setState(() => email = val);
                       },
                     ),
                     SizedBox(height: 15),
@@ -248,11 +314,13 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
 //                            ),
 //                          ),
 //                        ),
-                      child: buttonContainers(400, 20, 'Create Worker', 18),
+                        child: buttonContainers(400, 20, 'Create Worker', 18),
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
                             setState(() {
-                              addUser();
+                              _signInMethod == "email"
+                                  ? addUserUsingEmail()
+                                  : addUserUsingPhone();
                             });
                             // test();
                           }
