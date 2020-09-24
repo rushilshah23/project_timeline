@@ -5,6 +5,7 @@ import 'package:project_timeline/imageTesting.dart';
 import 'package:project_timeline/manager/CreateAcceptSupervisor/SupervisorFormCreation.dart';
 import 'package:project_timeline/manager/CreateAcceptSupervisor/SupervisorRequestList.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
+import 'package:project_timeline/managerRequestList.dart';
 import 'package:project_timeline/progressProject/projectProgress.dart';
 import 'package:project_timeline/sms/sms.dart';
 import 'package:project_timeline/searchable_dropdown.dart';
@@ -137,6 +138,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => SearchWorkerPage()),
+                );
+              },
+            ),
+            RaisedButton(
+              child: Text("Manager Rquest"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ManagerRequestList()),
                 );
               },
             ),
