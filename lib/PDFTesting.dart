@@ -1,10 +1,7 @@
 import 'dart:io';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
-
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -32,7 +29,27 @@ class _PDFTestingState extends State<PDFTesting> {
   String projectID="b570da70-fa93-11ea-9561-89a3a74b28bb";
 
 
-  createPdf() {
+
+
+  createPdf() async{
+
+    // final PdfImage assetImage = await pdfImageFromImageProvider(
+    //   pdf: pdf.document,
+    //   image: const AssetImage('assets/test.jpeg'),
+    // );
+    // final pdfnew = new PdfDocument();
+    // final page = new PdfPage(pdfnew, pageFormat: PdfPageFormat(75.0, 100.0));
+    // final g = page.getGraphics();
+
+
+    // final PdfImage assetImage = await pdfImageFromImageProvider(
+    //   pdf: pdf.document,
+    //   image: const AssetImage('assets/test.jpeg'),
+    // );
+
+    // var imageProvider = await NetworkImage('https://pspdfkit.com/images/blog/2019/opening-a-pdf-in-flutter/article-header-783391c8.png');
+    // final PdfImage image = await pdfImageFromImageProvider(pdf: pdf.document, image: imageProvider);
+
     pdf.addPage(pw.MultiPage(
       pageFormat: PdfPageFormat.a4,
       margin: pw.EdgeInsets.all(32),
@@ -109,8 +126,33 @@ class _PDFTestingState extends State<PDFTesting> {
             },
           ),
         ];
-      },
-    ));
+      },));
+
+
+    //start
+    // ByteData data = await rootBundle.load('assets/test.jpeg');
+    // PdfDocument pdfDoc = pdf.document;
+    // PdfImage image = PdfImage(pdfDoc, image: data.buffer.asUint8List(), width: 100, height: 30);
+    //end
+
+
+    // final PdfImage image = await pdfImageFromImageProvider(
+    //   pdf: pdf.document,
+    //   image: const AssetImage('assets/test.jpeg'),
+    // );
+
+    //
+    // pdf.addPage(
+    //
+    //     pw.MultiPage(
+    //         pageFormat: PdfPageFormat.a4,
+    //         margin: pw.EdgeInsets.all(32),
+    //         build: (pw.Context context) {
+    //           return <pw.Widget>[
+    //             pw.Image(image),
+    //           ];})
+    // );
+
   }
 
   Future savePDF() async {
@@ -180,7 +222,13 @@ class _PDFTestingState extends State<PDFTesting> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("PDF testing"),
+        iconTheme: IconThemeData(
+          color: Colors.indigo[300],
+        ),
+        title:  Text("Todays Report", style: TextStyle(
+          color: Colors.blue[700],
+        )),
+        backgroundColor: Colors.white,
       ),
       body: Container(
         padding: EdgeInsets.all(10),

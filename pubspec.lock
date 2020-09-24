@@ -188,13 +188,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.6"
-  flutter_full_pdf_viewer:
+  flutter_pdfview:
     dependency: "direct main"
     description:
-      name: flutter_full_pdf_viewer
+      name: flutter_pdfview
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.6"
+    version: "1.0.3+5"
   flutter_sms:
     dependency: "direct main"
     description:
@@ -255,12 +255,12 @@ packages:
     source: hosted
     version: "3.1.4"
   image:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.16"
+    version: "2.1.17"
   intl:
     dependency: "direct main"
     description:
@@ -351,7 +351,7 @@ packages:
       name: pdf
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.11.1"
+    version: "1.11.2"
   pedantic:
     dependency: transitive
     description:
@@ -401,6 +401,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  printing:
+    dependency: "direct main"
+    description:
+      name: printing
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.6.1"
   process:
     dependency: transitive
     description:

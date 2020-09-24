@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/PDFTesting.dart';
-import 'package:project_timeline/ProgressTimeLine/ViewAllProjects/ViewAllProjects.dart';
 import 'package:project_timeline/imageTesting.dart';
 import 'package:project_timeline/manager/CreateAcceptSupervisor/SupervisorFormCreation.dart';
 import 'package:project_timeline/manager/CreateAcceptSupervisor/SupervisorRequestList.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
 import 'package:project_timeline/progressProject/projectProgress.dart';
+import 'package:project_timeline/reportGeneration/ReportGeneration.dart';
 import 'package:project_timeline/sms/sms.dart';
 import 'package:project_timeline/searchable_dropdown.dart';
 import 'package:project_timeline/supervisor/approveWork/WorkApproveModule.dart';
 import 'package:project_timeline/supervisor/createAcceptWorker/WorkerCreationForm.dart';
 import 'package:project_timeline/supervisor/createAcceptWorker/workerRequestList.dart';
+import 'package:project_timeline/testing.dart';
 import 'login.dart';
 import 'manager/master/machineMaster/machineMaster.dart';
 import 'manager/createNewProject/test.dart';
@@ -77,12 +78,33 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
+
+            RaisedButton(
+              child: Text("report gen"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ReportGeneration()),
+                );
+              },
+            ),
             RaisedButton(
               child: Text("Add New Project"),
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => Test()),
+                );
+              },
+            ),
+
+
+            RaisedButton(
+              child: Text("testing"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>  DbTesting()),
                 );
               },
             ),
