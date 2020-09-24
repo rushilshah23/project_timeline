@@ -29,16 +29,22 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
             DropdownMenuItem(
               child: Container(
                   child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(result['name']),
-                  Text(
-                    result['mobile'].toString() + "  " + result['email'].toString(),
-                    style: TextStyle(color: Colors.grey, fontSize: 14),
-                  ),
-                ],
-              )),
-              value: result['uid'],
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(result['name']),
+                      Text(
+                        result['mobile'].toString() +
+                            "  " +
+                            result['email'].toString(),
+                        style: TextStyle(color: Colors.grey, fontSize: 14),
+                      ),
+                    ],
+                  )),
+              value: result['uid'].toString() +
+                  "," +
+                  result["name"].toString() +
+                  "," +
+                  result["mobile"].toString(),
             ),
           );
           workersList
@@ -121,7 +127,7 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
                   children: [
                     SizedBox(height: 10),
                     Center(
-                    child: titleStyles('Add Workers', 18),
+                      child: titleStyles('Add Workers', 18),
                     ),
                     SizedBox(height: 10),
                     Center(
@@ -148,24 +154,24 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
                       ),
                     ),
                     SizedBox(height: 20),
-                   FlatButton(
-                     child: Container(
-                       height: 50,
-                       decoration: BoxDecoration(
-                           borderRadius: BorderRadius.circular(10),
-                           gradient: gradients()),
-                       child: Center(
-                         child: Text(
-                           'Save',
-                           style: TextStyle(color: Colors.white),
-                         ),
-                       ),
-                     ),
-                     onPressed: () {
-                       submitForm();
-                     },
-                   ),
-                 // buttons(context, submitForm, 'Save', 18)
+                    FlatButton(
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: gradients()),
+                        child: Center(
+                          child: Text(
+                            'Save',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        submitForm();
+                      },
+                    ),
+                    // buttons(context, submitForm, 'Save', 18)
                   ],
                 ),
               ],
@@ -174,8 +180,8 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
     else
       return Scaffold(
           body: Center(
-        child: CircularProgressIndicator(),
-      ));
+            child: CircularProgressIndicator(),
+          ));
   }
 }
 

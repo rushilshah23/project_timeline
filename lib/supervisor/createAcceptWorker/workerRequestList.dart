@@ -12,17 +12,22 @@ class WorkerRequestList extends StatefulWidget {
 class _WorkerRequestListState extends State<WorkerRequestList> {
   final databaseReference = FirebaseDatabase.instance.reference();
   final CollectionReference workers = Firestore.instance.collection("workers");
+  final CollectionReference user = Firestore.instance.collection("user");
   FirebaseAuth auth = FirebaseAuth.instance;
   List allWorkerRequest = List();
 
   acceptRequest(worker) async {
     try {
-      if (worker["signInMethod"] != null) {
-        await workers.document(worker["phoneNo"]).setData({
-          "email": worker["email"],
+      if (worker["signInMethod"] != "email") {
+        await user.document(worker["key"]).delete();
+        await workers.document(worker["key"]).setData({
+          "assignedProject": "No project assigned",
           "mobile": worker["phoneNo"],
           "name": worker["name"],
-          "status": "accepted",
+          "age": worker["age"],
+          "address": worker["address"],
+          "uid": worker["key"],
+          'signInMethod': worker["signInMethod"]
         }).then((value) async {
           await databaseReference
               .child("request")
@@ -33,25 +38,23 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
           showToast("Added successfully");
         });
       } else {
-        print(worker["key"]);
-        print(worker["email"]);
-        print(worker["password"]);
-        await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(
-                email: worker["email"], password: worker["password"])
-            .then((AuthResult result) async {
-          await workers.document(result.user.uid).setData({
-            "email": worker["email"],
-            "mobile": worker["phoneNo"],
-            "name": worker["name"],
-            "uid": result.user.uid
-          }).then((value) async {
-            await databaseReference
-                .child("request")
-                .child("worker")
-                .child(worker["key"])
-                .remove();
-          });
+        await user.document(worker["key"]).delete();
+        await workers.document(worker["key"]).setData({
+          "assignedProject": "No project assigned",
+          "email": worker["email"],
+          "password": worker["password"],
+          "age": worker["age"],
+          "address": worker["address"],
+          "mobile": worker["phoneNo"],
+          "name": worker["name"],
+          "uid": worker["key"],
+          'signInMethod': worker["signInMethod"]
+        }).then((value) async {
+          await databaseReference
+              .child("request")
+              .child("worker")
+              .child(worker["key"])
+              .remove();
         }).then((value) {
           showToast("Added successfully");
         });
@@ -233,7 +236,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
             allWorkerRequest = [];
 
             data.forEach(
-              (index, data) => allWorkerRequest.add({"key": index, ...data}),
+                  (index, data) => allWorkerRequest.add({"key": index, ...data}),
             );
 
             // debugPrint(data.toString());
@@ -243,7 +246,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
                   height: 10,
                 ),
                 Center(
-                child: titleStyles('Worker Request List', 18),
+                  child: titleStyles('Worker Request List', 18),
                 ),
                 SizedBox(
                   height: 20,
