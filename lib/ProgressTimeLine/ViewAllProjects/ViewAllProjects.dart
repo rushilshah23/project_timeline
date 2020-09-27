@@ -41,7 +41,7 @@ class _AllProjectsState extends State<AllProjects> {
                 elevation: 4,
                 margin: EdgeInsets.only(left: 5, right: 0, top: 7, bottom: 7),
                 semanticContainer: true,
-                color: Colors.indigo[50],
+                color: Colors.blue[50],
                 child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20)

@@ -230,7 +230,7 @@ class LoginPageState extends State<LoginPage> {
                   print("```````````````````````````");
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => WorkerHomePage()),
+                    MaterialPageRoute(builder: (context) => ManagerHomePage()),
                   );
                 }
               }
@@ -557,7 +557,7 @@ class LoginPageState extends State<LoginPage> {
             hintText: 'Email',
             contentPadding: EdgeInsets.all(20.0),
             border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
           ),
         ),
       ),
@@ -576,7 +576,7 @@ class LoginPageState extends State<LoginPage> {
             hintText: 'Password',
             contentPadding: EdgeInsets.all(20.0),
             border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
           ),
         ),
       ),
@@ -600,7 +600,7 @@ class LoginPageState extends State<LoginPage> {
             hintText: 'Mobile Number',
             contentPadding: EdgeInsets.all(20.0),
             border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
           ),
         ),
       ),
@@ -793,16 +793,16 @@ class LoginPageState extends State<LoginPage> {
                           : checkOTP("+91" + _email, context);
                     },
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(32),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                     textColor: Colors.white,
                     padding: EdgeInsets.all(0),
                     child: Container(
                       width: double.infinity,
-                      padding: EdgeInsets.all(20),
+                      padding: EdgeInsets.all(15),
                       decoration: new BoxDecoration(
                           gradient: gradients(),
-                          borderRadius: BorderRadius.circular(32.0)),
+                          borderRadius: BorderRadius.circular(12.0)),
                       child: Text(
                         "LOGIN",
                         textAlign: TextAlign.center,

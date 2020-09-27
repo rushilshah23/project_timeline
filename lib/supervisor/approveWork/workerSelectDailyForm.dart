@@ -73,7 +73,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
   }
 
   Widget buildGridView() {
-    return Scaffold(body: Container(
+    return Container(
         height: MediaQuery.of(context).size.height / 4,
         child: GridView.count(
           crossAxisCount: 3,
@@ -85,7 +85,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
               height: 300,
             );
           }),
-        )));
+        ));
   }
 
   Future<void> loadAssets() async {
@@ -342,9 +342,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
     if (machines.length > 0)
       return Scaffold(
         body: Container(
-
-            height: MediaQuery.of(context).size.height-100,
-            // Center is a layout widget. It takes a single child and positions it
+    // Center is a layout widget. It takes a single child and positions it
             // in the middle of the parent.
             padding: EdgeInsets.all(20),
             child: Form(
@@ -598,7 +596,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                     height: 50,
                     child: FlatButton(
                       onPressed: () => submitForm(),
-                      child: buttonContainers(double.infinity, 20, 'Submit', 18),
+                      child: buttonContainers(double.infinity, 10, 'Submit', 18),
                     ),
                   )
                 ],

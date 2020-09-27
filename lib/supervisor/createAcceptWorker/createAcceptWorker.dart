@@ -71,7 +71,7 @@ class _CreateAcceptWorkerState extends State<CreateAcceptWorker> with SingleTick
 
   TabBar _getTabBar() {
     return TabBar(
-      labelColor: Colors.orange,
+      labelColor: Colors.blue,
       tabs: <Widget>[
         Tab(text: "Create",),
         Tab(text: "Accept"),

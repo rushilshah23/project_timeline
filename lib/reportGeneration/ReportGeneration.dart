@@ -61,8 +61,6 @@ class _ReportGenerationState extends State<ReportGeneration> {
 
   allDayReportPdf() async{
 
-
-
     pdf.addPage(pw.MultiPage(
       pageFormat: PdfPageFormat.a4,
       margin: pw.EdgeInsets.all(32),

@@ -6,8 +6,10 @@ import 'package:project_timeline/manager/CreateAcceptSupervisor/SupervisorFormCr
 import 'package:project_timeline/manager/CreateAcceptSupervisor/SupervisorRequestList.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
 import 'package:project_timeline/reportGeneration/ReportGeneration.dart';
+import 'package:project_timeline/reportGeneration/reportTest.dart';
 import 'package:project_timeline/sms/sms.dart';
 import 'package:project_timeline/supervisor/approveWork/WorkApproveModule.dart';
+import 'package:project_timeline/supervisor/approveWork/workerSelectDailyForm.dart';
 import 'package:project_timeline/supervisor/createAcceptWorker/WorkerCreationForm.dart';
 import 'package:project_timeline/supervisor/createAcceptWorker/workerRequestList.dart';
 import 'login.dart';
@@ -72,19 +74,19 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ReportGeneration()),
+                  MaterialPageRoute(builder: (context) => ReportGenerationTesting()),
                 );
               },
             ),
-            // RaisedButton(
-            //   child: Text("Add New Project"),
-            //   onPressed: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => Test()),
-            //     );
-            //   },
-            // ),
+            RaisedButton(
+              child: Text("Add New Project"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Test()),
+                );
+              },
+            ),
             // RaisedButton(
             //   child: Text("Machine Master"),
             //   onPressed: () {
@@ -121,15 +123,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-            // RaisedButton(
-            //   child: Text("Search Worker"),
-            //   onPressed: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => SearchWorkerPage()),
-            //     );
-            //   },
-            // ),
+            RaisedButton(
+              child: Text("Search Worker"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SpecialWorkerFormPage()),
+                );
+              },
+            ),
             // RaisedButton(
             //   child: Text("Supervisor Rquest"),
             //   onPressed: () {
