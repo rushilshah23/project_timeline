@@ -20,6 +20,7 @@ class _RegisterState extends State<Register> {
     super.initState();
   }
 
+  List<String> _type = ["user", "worker", "supervisor", "manager"];
   String _requestType = null ?? "user";
   String _signInMethod = null ?? "email";
   String name;
@@ -473,89 +474,28 @@ class _RegisterState extends State<Register> {
                       ],
                     ),
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Column(
-                          children: [
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text("Type:"),
-                          ],
+                        Text("User Type:"),
+                        SizedBox(
+                          width: 30,
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Radio(
-                                  visualDensity: VisualDensity.compact,
-                                  value: "user",
-                                  groupValue: _requestType,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _requestType = value;
-                                    });
-                                  },
+                        DropdownButton(
+                            hint: Text("Select User Type"),
+                            value: _requestType,
+                            items: _type.map((String userType) {
+                              return DropdownMenuItem<String>(
+                                value: userType,
+                                child: Text(
+                                  userType,
                                 ),
-                                Text(
-                                  'User',
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Radio(
-                                  visualDensity: VisualDensity.compact,
-                                  value: "supervisor",
-                                  groupValue: _requestType,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _requestType = value;
-                                    });
-                                  },
-                                ),
-                                Text(
-                                  'Supervisor',
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Radio(
-                                  visualDensity: VisualDensity.compact,
-                                  value: "worker",
-                                  groupValue: _requestType,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _requestType = value;
-                                    });
-                                  },
-                                ),
-                                Text(
-                                  'Worker',
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Radio(
-                                  visualDensity: VisualDensity.compact,
-                                  value: "manager",
-                                  groupValue: _requestType,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _requestType = value;
-                                    });
-                                  },
-                                ),
-                                Text(
-                                  'Manager',
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                _requestType = value;
+                              });
+                            }),
                       ],
                     ),
                     Column(
