@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:project_timeline/CommonWidgets.dart';
+import 'package:project_timeline/supervisor/approveWork/WorkApproveModTabs.dart';
 
 import 'addWorkers.dart';
 import 'approveWork/WorkApproveModule.dart';
@@ -103,11 +104,11 @@ class _TestAllocProjectsState extends State<TestAllocProjects> {
                               ),
                             ),
                             Text(
-                              'Username',
+                              projectDetails["siteAddress"].toString(),
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 20.0
+                                  fontSize: 14.0
                               ),
                             ),
                           ],
@@ -136,11 +137,11 @@ class _TestAllocProjectsState extends State<TestAllocProjects> {
                               progressColor: Colors.indigo[400],
                             ),
                             Text(
-                              'Username',
+                              'Project Completion',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 20.0
+                                  fontSize: 15.0
                               ),
                             ),
                           ],
@@ -170,7 +171,7 @@ class _TestAllocProjectsState extends State<TestAllocProjects> {
                 Column(
                   children: [
                     Text(
-                        'Projects',
+                        'Goals',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
@@ -179,7 +180,7 @@ class _TestAllocProjectsState extends State<TestAllocProjects> {
                     ),
                     SizedBox(height: 10),
                     Text(
-                        '10',
+                        projectDetails["volumeToBeExcavated"].toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
@@ -192,7 +193,7 @@ class _TestAllocProjectsState extends State<TestAllocProjects> {
                 Column(
                   children: [
                     Text(
-                        'Team',
+                        'Machines',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
@@ -201,7 +202,7 @@ class _TestAllocProjectsState extends State<TestAllocProjects> {
                     ),
                     SizedBox(height: 10),
                     Text(
-                        '150',
+                        "2",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
@@ -215,7 +216,7 @@ class _TestAllocProjectsState extends State<TestAllocProjects> {
                Column(
                  children: [
                    Text(
-                       'Donation',
+                       'Workers',
                        style: TextStyle(
                            fontWeight: FontWeight.bold,
                            color: Colors.grey[600],
@@ -224,7 +225,7 @@ class _TestAllocProjectsState extends State<TestAllocProjects> {
                    ),
                    SizedBox(height: 10),
                    Text(
-                       '123',
+                       '4',
                        style: TextStyle(
                            fontWeight: FontWeight.bold,
                            color: Colors.grey[600],
@@ -305,7 +306,7 @@ class _TestAllocProjectsState extends State<TestAllocProjects> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ApproveWork()),
+                            builder: (context) => WorkApproveModTabs()),
                       );
                     },
                     child: Card(

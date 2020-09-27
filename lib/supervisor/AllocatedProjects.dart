@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../CommonWidgets.dart';
 import 'addWorkers.dart';
+import 'approveWork/WorkApproveModTabs.dart';
 import 'approveWork/WorkApproveModule.dart';
 
 
@@ -118,7 +119,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => ApproveWork()),
+                                          builder: (context) => WorkApproveModTabs()),
                                     );
                                   },
                                 ),

@@ -40,8 +40,8 @@ class _WorkDetailsState extends State<WorkDetails> {
         .child(widget.projectID)
         .child("progress").child(widget.data["date"]).child(widget.data["workerUID"])
         .update({
-          'status':status,
-        });
+      'status':status,
+    });
 
     if(status=="Accepted")
       {
@@ -50,6 +50,15 @@ class _WorkDetailsState extends State<WorkDetails> {
             .child(widget.projectID)
             .update({
           'approvedImages':widget.data["images"],
+        });
+
+
+
+        await databaseReference
+            .child("projects")
+            .child(widget.projectID)
+            .update({
+          'status':status,
         });
       }
 
@@ -169,7 +178,7 @@ class _WorkDetailsState extends State<WorkDetails> {
 //                                ),
 //                                  child: Center(child: Text("Approve",style: titlestyles(18, Colors.white),))
 //                              ),
-                              child: buttonContainers(150, 20, 'Approve', 18),
+                              child: buttonContainers(150, 10, 'Approve', 18),
                               onPressed: () {
                                 repondToWork("Accepted");
                               },
@@ -186,7 +195,7 @@ class _WorkDetailsState extends State<WorkDetails> {
 //                                    borderRadius: BorderRadius.circular(5)
 //                                ),
 //                                child: Center(child: Text("Reject",style: titlestyles(18, Colors.white),))),
-                            child: buttonContainers(150, 20, 'Reject', 18),
+                            child: buttonContainers(150, 10, 'Reject', 18),
                             onPressed: () {
                               repondToWork("Declined");
                             },

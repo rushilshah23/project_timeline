@@ -12,23 +12,12 @@ import 'package:project_timeline/manager/master/machineMaster/addNewMachine.dart
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
-import 'CommonWidgets.dart';
+import '../../CommonWidgets.dart';
 
 int timeIntervals;
 List<DateTime> startTime = List.generate(74, (i) => DateTime.now());
 List<DateTime> endTime = List.generate(74, (i) => DateTime.now());
 
-class SpecialWorkerForm extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-//      appBar: AppBar(
-//        title: Text("Update work"),
-//      ),
-      body: SpecialWorkerFormPage(),
-    );
-  }
-}
 
 class SpecialWorkerFormPage extends StatefulWidget {
   @override
@@ -63,7 +52,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
   TextEditingController commentController = TextEditingController();
   final DateTime now = DateTime.now();
   final DateFormat formatter = DateFormat('dd-MM-yyyy');
-  var projectID = 'project1';
+  var projectID = 'b570da70-fa93-11ea-9561-89a3a74b28bb';
   var workerID;
   var workerName;
   List<Asset> images = List<Asset>();
@@ -84,7 +73,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
   }
 
   Widget buildGridView() {
-    return Container(
+    return Scaffold(body: Container(
         height: MediaQuery.of(context).size.height / 4,
         child: GridView.count(
           crossAxisCount: 3,
@@ -96,7 +85,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
               height: 300,
             );
           }),
-        ));
+        )));
   }
 
   Future<void> loadAssets() async {
@@ -353,6 +342,8 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
     if (machines.length > 0)
       return Scaffold(
         body: Container(
+
+            height: MediaQuery.of(context).size.height-100,
             // Center is a layout widget. It takes a single child and positions it
             // in the middle of the parent.
             padding: EdgeInsets.all(20),

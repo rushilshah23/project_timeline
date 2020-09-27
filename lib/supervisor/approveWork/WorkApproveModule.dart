@@ -45,7 +45,7 @@ class _ApproveWorkState extends State<ApproveWork> {
   Widget build(BuildContext context) {
     return new Scaffold(
 
-      appBar:  ThemeAppbar("Approve Work"),
+     // appBar:  ThemeAppbar("Approve Work"),
 
 
       body: StreamBuilder(

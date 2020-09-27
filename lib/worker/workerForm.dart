@@ -250,7 +250,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
           .child("projects")
           .child(projectID)
           .child("progress")
-          .child("12-09-2020")
+          .child("13-09-2020")
           .child(workerID)
           .set({
         "MachineUsed": machineUsed,

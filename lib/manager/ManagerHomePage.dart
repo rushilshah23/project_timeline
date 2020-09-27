@@ -5,6 +5,7 @@ import 'package:project_timeline/ProgressTimeLine/ProgressPage.dart';
 import 'package:project_timeline/manager/createNewProject/projects.dart';
 import 'package:project_timeline/manager/master/machineMaster/machineMaster.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
+import 'package:project_timeline/reportGeneration/ReportGeneration.dart';
 import '../dashboard.dart';
 import 'CreateAcceptSupervisor/createAcceptSupervisor.dart';
 
@@ -46,6 +47,9 @@ class ManagerHomePageState extends State<ManagerHomePage> {
 
       case 5:
         return new CreateAcceptSupervisor();
+
+      case 6:
+        return new ReportGeneration();
 
 
       default:
@@ -164,8 +168,8 @@ class ManagerHomePageState extends State<ManagerHomePage> {
                       Text(" Report Generation")
                     ]),
                     onTap: () {
-                      _onSelectItem(5);
-                      appbartitle = "Create/Accept Supervisors";
+                      _onSelectItem(6);
+                      appbartitle = " Report Generation";
                     }),
 
                 ListTile(

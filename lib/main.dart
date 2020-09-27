@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/PDFTesting.dart';
 import 'package:project_timeline/ProgressTimeLine/ViewAllProjects/ViewAllProjects.dart';
-import 'package:project_timeline/imageTesting.dart';
+
 import 'package:project_timeline/manager/CreateAcceptSupervisor/SupervisorFormCreation.dart';
 import 'package:project_timeline/manager/CreateAcceptSupervisor/SupervisorRequestList.dart';
 import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
-import 'package:project_timeline/progressProject/projectProgress.dart';
+import 'package:project_timeline/reportGeneration/ReportGeneration.dart';
 import 'package:project_timeline/sms/sms.dart';
-import 'package:project_timeline/searchable_dropdown.dart';
 import 'package:project_timeline/supervisor/approveWork/WorkApproveModule.dart';
 import 'package:project_timeline/supervisor/createAcceptWorker/WorkerCreationForm.dart';
 import 'package:project_timeline/supervisor/createAcceptWorker/workerRequestList.dart';
@@ -59,42 +58,42 @@ class _MyHomePageState extends State<MyHomePage> {
         // in the middle of the parent.
         child: ListView(
           children: <Widget>[
-            RaisedButton(
-              child: Text("SMS"),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Sms()),
-                );
-              },
-            ),
+            // RaisedButton(
+            //   child: Text("SMS"),
+            //   onPressed: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => Sms()),
+            //     );
+            //   },
+            // ),
             RaisedButton(
               child: Text("PDF testing"),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => PDFTesting()),
+                  MaterialPageRoute(builder: (context) => ReportGeneration()),
                 );
               },
             ),
-            RaisedButton(
-              child: Text("Add New Project"),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Test()),
-                );
-              },
-            ),
-            RaisedButton(
-              child: Text("Machine Master"),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MachineMaster()),
-                );
-              },
-            ),
+            // RaisedButton(
+            //   child: Text("Add New Project"),
+            //   onPressed: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => Test()),
+            //     );
+            //   },
+            // ),
+            // RaisedButton(
+            //   child: Text("Machine Master"),
+            //   onPressed: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => MachineMaster()),
+            //     );
+            //   },
+            // ),
             RaisedButton(
               child: Text("Supervisor Section"),
               onPressed: () {
@@ -104,15 +103,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-            RaisedButton(
-              child: Text("Petrol Module"),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PetrolMaster()),
-                );
-              },
-            ),
+            // RaisedButton(
+            //   child: Text("Petrol Module"),
+            //   onPressed: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => PetrolMaster()),
+            //     );
+            //   },
+            // ),
             RaisedButton(
               child: Text("Login"),
               onPressed: () {
@@ -122,62 +121,53 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-            RaisedButton(
-              child: Text("Search Worker"),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SearchWorkerPage()),
-                );
-              },
-            ),
-            RaisedButton(
-              child: Text("Supervisor Rquest"),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SupervisorRequestList()),
-                );
-              },
-            ),
-            RaisedButton(
-              child: Text("Worker Request"),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => WorkerRequestList()),
-                );
-              },
-            ),
-            RaisedButton(
-              child: Text("Worker Form- Supervisor can create himself"),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => WorkerCreationForm()),
-                );
-              },
-            ),
-            RaisedButton(
-              child: Text("Supervisor Form- Manager can create himself"),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SupervisorFormCreation()),
-                );
-              },
-            ),
-            RaisedButton(
-              child: Text("Project Progress"),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProjectProgress()),
-                );
-              },
-            ),
+            // RaisedButton(
+            //   child: Text("Search Worker"),
+            //   onPressed: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => SearchWorkerPage()),
+            //     );
+            //   },
+            // ),
+            // RaisedButton(
+            //   child: Text("Supervisor Rquest"),
+            //   onPressed: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //           builder: (context) => SupervisorRequestList()),
+            //     );
+            //   },
+            // ),
+            // RaisedButton(
+            //   child: Text("Worker Request"),
+            //   onPressed: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => WorkerRequestList()),
+            //     );
+            //   },
+            // ),
+            // RaisedButton(
+            //   child: Text("Worker Form- Supervisor can create himself"),
+            //   onPressed: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => WorkerCreationForm()),
+            //     );
+            //   },
+            // ),
+            // RaisedButton(
+            //   child: Text("Supervisor Form- Manager can create himself"),
+            //   onPressed: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //           builder: (context) => SupervisorFormCreation()),
+            //     );
+            //   },
+            // ),
             RaisedButton(
               child: Text("Worker Form"),
               onPressed: () {
@@ -187,33 +177,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-            RaisedButton(
-              child: Text("Worker Daily Updates"),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => WorkerDaily()),
-                );
-              },
-            ),
-            RaisedButton(
-              child: Text("Image test"),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ImageTesting()),
-                );
-              },
-            ),
-            RaisedButton(
-              child: Text("dropdown test"),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => TestPage()),
-                );
-              },
-            ),
+            // RaisedButton(
+            //   child: Text("Worker Daily Updates"),
+            //   onPressed: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => WorkerDaily()),
+            //     );
+            //   },
+            // ),
+
           ],
         ),
       ),
