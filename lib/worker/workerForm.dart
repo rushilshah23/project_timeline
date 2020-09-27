@@ -48,7 +48,6 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
       comment,
       estimateVolume,
       estimation,
-      soilType,
       exacavatedPerHour,
       workDifference;
   final databaseReference = FirebaseDatabase.instance.reference();
@@ -60,7 +59,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
   TextEditingController commentController = TextEditingController();
   final DateTime now = DateTime.now();
   final DateFormat formatter = DateFormat('dd-MM-yyyy');
-  var projectID =  "b570da70-fa93-11ea-9561-89a3a74b28bb";
+  var projectID = "b570da70-fa93-11ea-9561-89a3a74b28bb";
   var workerID = '8YiMHLBnBaNjmr3yPvk8NWvNPmm2';
   var workerName = 'rajesh kumar';
   List<Asset> images = List<Asset>();
@@ -131,14 +130,6 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
 
   void loadData() async {
     await databaseReference
-        .child("projects")
-        .child(projectID)
-        .child("soilType")
-        .once()
-        .then((snapshot) {
-      soilType = snapshot.value;
-    });
-    await databaseReference
         .child("masters")
         .child("machineMaster")
         .once()
@@ -166,10 +157,14 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                   values['modelName'].toString(),
             ),
           );
-          machineDetails
-              .add(MachineDetails(values["machineID"], values["excavation"]));
+          machineDetails.add(MachineDetails(
+              values["machineID"], values["amountOfExcavation"]));
         });
       });
+    });
+    print("````````````````````````````");
+    machineDetails.forEach((element) {
+      print(element.excavation);
     });
   }
 
@@ -214,12 +209,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
         print(hoursWorked);
         machineDetails.forEach((machine) {
           if (machine.machineID == machineUsed) {
-            machine.excavation.forEach((exacavation) {
-              if (exacavation["soilType"] == soilType) {
-                exacavatedPerHour =
-                    double.parse(exacavation["amountOfExcavation"]);
-              }
-            });
+            exacavatedPerHour = double.parse(machine.excavation);
           }
         });
 
@@ -236,53 +226,53 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
       });
 
       if (images.length > 0) {
-        await uploadFile();
-        addtoDB();
+        //await uploadFile();
+        //addtoDB();
       } else if (images.length == 0) {
-        addtoDB();
+        //addtoDB();
       }
     }
   }
 
   addtoDB() async {
     // try {
-      await databaseReference
-          .child("projects")
-          .child(projectID)
-          .child("progress")
-          .child("13-09-2020")
-          .child(workerID)
-          .set({
-        "MachineUsed": machineUsed,
-        "hoursWorked": hoursWorked,
-        "workerID": workerID,
-        'intervals': {
-          for (int i = 0; i < timeIntervals; i++)
-            '$i': {
-              'startTime': startTime[i].toString(),
-              'endTime': endTime[i].toString(),
-            }
-        },
-        'images': {
-          for (int i = 0; i < _uploadedFileURL.length; i++)
-            '$i': _uploadedFileURL[i].toString(),
-        },
-        "workerName": workerName,
-        "depth": depth,
-        "length": length,
-        "upperWidth": upperWidth,
-        "lowerWidth": lowerWidth,
-        "volumeExcavated": volume,
-        "estimatedVolume": estimateVolume,
-        "workDifference": workDifference,
-        "result": estimation,
-        "status": "Pending",
-        "comment": comment,
-      });
+    await databaseReference
+        .child("projects")
+        .child(projectID)
+        .child("progress")
+        .child("12-09-2020")
+        .child(workerID)
+        .set({
+      "MachineUsed": machineUsed,
+      "hoursWorked": hoursWorked,
+      "workerID": workerID,
+      'intervals': {
+        for (int i = 0; i < timeIntervals; i++)
+          '$i': {
+            'startTime': startTime[i].toString(),
+            'endTime': endTime[i].toString(),
+          }
+      },
+      'images': {
+        for (int i = 0; i < _uploadedFileURL.length; i++)
+          '$i': _uploadedFileURL[i].toString(),
+      },
+      "workerName": workerName,
+      "depth": depth,
+      "length": length,
+      "upperWidth": upperWidth,
+      "lowerWidth": lowerWidth,
+      "volumeExcavated": volume,
+      "estimatedVolume": estimateVolume,
+      "workDifference": workDifference,
+      "result": estimation,
+      "status": "Pending",
+      "comment": comment,
+    });
 
-      pr.hide().then((isHidden) {
-        showToast("Added successfully");
-      });
+    pr.hide().then((isHidden) {
+      showToast("Added successfully");
+    });
     // } catch (e) {
     //   showToast("Failed. Check your Internet");
     // }
@@ -314,7 +304,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
               child: ListView(
                 children: <Widget>[
                   Center(
-                  child: titleStyles('For :' + todaysDate, 18),
+                    child: titleStyles('For :' + todaysDate, 18),
                   ),
                   SizedBox(
                     height: 10,
@@ -562,24 +552,24 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                   Container(
                     width: double.infinity,
                     height: 50,
-                   child: FlatButton(
-                     onPressed: submitForm,
-                     child: Container(
-                       height: 50,
-                       width: double.infinity,
-                       decoration: BoxDecoration(
-                         gradient: gradients(),
-                         borderRadius: BorderRadius.circular(10),
-                       ),
-                       child: Center(
-                         child: Text(
-                           "Submit",
-                           style: TextStyle(color: Colors.white),
-                         ),
-                       ),
-                     ),
-                   ),
-                  //child: buttons(context, submitForm, 'Submit', 18),
+                    child: FlatButton(
+                      onPressed: submitForm,
+                      child: Container(
+                        height: 50,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          gradient: gradients(),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Submit",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                    //child: buttons(context, submitForm, 'Submit', 18),
                   )
                 ],
               ),
