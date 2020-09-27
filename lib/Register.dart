@@ -144,15 +144,15 @@ class _RegisterState extends State<Register> {
                         color: Colors.blue,
                         onPressed: () async {
                           AuthCredential credential =
-                          PhoneAuthProvider.getCredential(
-                              verificationId: verificationId,
-                              smsCode: code);
+                              PhoneAuthProvider.getCredential(
+                                  verificationId: verificationId,
+                                  smsCode: code);
                           print(credential);
                           print("`````````````````````````````````````````");
                           print("Verification Complete");
                           print("`````````````````````````````````````````");
                           AuthResult result =
-                          await _auth.signInWithCredential(credential);
+                              await _auth.signInWithCredential(credential);
                           FirebaseUser user = result.user;
                           addDB(user.uid);
 
@@ -179,6 +179,7 @@ class _RegisterState extends State<Register> {
         "uid": uniqueID,
         "address": address,
         "age": age,
+        "userType": _requestType,
         'signInMethod': "otp"
       }).then((value) async {
         await databaseReference
@@ -472,49 +473,94 @@ class _RegisterState extends State<Register> {
                       ],
                     ),
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Type:"),
-                        Radio(
-                          value: "user",
-                          groupValue: _requestType,
-                          onChanged: (value) {
-                            setState(() {
-                              _requestType = value;
-                            });
-                          },
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text("Type:"),
+                          ],
                         ),
-                        Text(
-                          'User',
-                        ),
-                        Radio(
-                          value: "supervisor",
-                          groupValue: _requestType,
-                          onChanged: (value) {
-                            setState(() {
-                              _requestType = value;
-                            });
-                          },
-                        ),
-                        Text(
-                          'Supervisor',
-                        ),
-                        Radio(
-                          value: "worker",
-                          groupValue: _requestType,
-                          onChanged: (value) {
-                            setState(() {
-                              _requestType = value;
-                            });
-                          },
-                        ),
-                        Text(
-                          'Worker',
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Radio(
+                                  visualDensity: VisualDensity.compact,
+                                  value: "user",
+                                  groupValue: _requestType,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _requestType = value;
+                                    });
+                                  },
+                                ),
+                                Text(
+                                  'User',
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Radio(
+                                  visualDensity: VisualDensity.compact,
+                                  value: "supervisor",
+                                  groupValue: _requestType,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _requestType = value;
+                                    });
+                                  },
+                                ),
+                                Text(
+                                  'Supervisor',
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Radio(
+                                  visualDensity: VisualDensity.compact,
+                                  value: "worker",
+                                  groupValue: _requestType,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _requestType = value;
+                                    });
+                                  },
+                                ),
+                                Text(
+                                  'Worker',
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Radio(
+                                  visualDensity: VisualDensity.compact,
+                                  value: "manager",
+                                  groupValue: _requestType,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _requestType = value;
+                                    });
+                                  },
+                                ),
+                                Text(
+                                  'Manager',
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ],
                     ),
                     Column(
                       children:
-                      _signInMethod == "email" ? emailForm() : mobileForm(),
+                          _signInMethod == "email" ? emailForm() : mobileForm(),
                     ),
                     Center(
                       child: FlatButton(

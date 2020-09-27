@@ -1,10 +1,9 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_timeline/CommonWidgets.dart';
 import 'package:project_timeline/ProgressTimeLine/ViewAllProjects/ProjectDetails.dart';
-
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:project_timeline/CommonWidgets.dart';
 
 class AllProjects extends StatefulWidget {
   @override
@@ -20,250 +19,73 @@ class _AllProjectsState extends State<AllProjects> {
     super.initState();
   }
 
-//   Widget displayProject(int index, allProjects) {
-//     return Stack(
-//       children: [
-//         Positioned.fill(
-//           top: 150,
-//           bottom: -190,
-//           child: Container(
-//             decoration: BoxDecoration(
-//                 boxShadow: customShadow,
-//                 shape:BoxShape.circle,
-//                 color:Colors.white38
-//             ),
-//           ),
-//         ),
-//         Positioned.fill(
-//           left: -300,
-//           top: -2,
-//           bottom: -80,
-//           child: Container(
-//             decoration: BoxDecoration(
-//                 boxShadow: customShadow,
-//                 shape: BoxShape.circle,
-//                 color: Colors.white38
-//             ),
-//           ),
-//         ),
-//         Stack(
-//           children: [
-//             Align(
-//               alignment: Alignment.topRight,
-//               child: Padding(
-//                 padding: const EdgeInsets.only(right: 10),
-//                 child: Column(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [
-//                     CircularPercentIndicator(
-//                       backgroundColor: Colors.grey[200],
-//                       radius: 120.0,
-//                       lineWidth: 10.0,
-//                       animation: true,
-// //                      percent: double.parse(
-// //                              allProjects[index]["progress"].toString()) /
-// //                          100,
-//
-//                       percent: double.parse("70") / 100,
-// //                      center: new Text(
-// //                        allProjects[index]["progress"].toString() + "%",
-// //                        style: new TextStyle(
-// //                            fontWeight: FontWeight.bold, fontSize: 20.0),
-// //                      ),
-//
-//                       center: new Text(
-//                         "70" + "%",
-//                         style: new TextStyle(
-//                             fontWeight: FontWeight.bold, fontSize: 20.0),
-//                       ),
-//                       circularStrokeCap: CircularStrokeCap.round,
-//                       progressColor: Colors.indigo[400],
-//                     ),
-//                     Padding(
-//                       padding: const EdgeInsets.all(20.0),
-//                       child: Container(
-//                         height: 50,
-//                         width: 70,
-//                         decoration: BoxDecoration(
-//                           color: Colors.indigo[300],
-//                           borderRadius: BorderRadius.circular(15),
-//                         ),
-//                         child: IconButton(
-//                           color: Colors.deepPurple,
-//                           icon: Icon(
-//                             Icons.navigate_next,
-//                             color: Colors.white,
-//                             size: 30,
-//                           ),
-//                           onPressed: () {
-//                             Navigator.push(
-//                               context,
-//                               MaterialPageRoute(
-//                                   builder: (context) => ProjectDetails(
-//                                         projectDetails: allProjects[index],
-//                                       )),
-//                             );
-//                           },
-//                         ),
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//             Align(
-//               alignment: Alignment.topLeft,
-//               child: Padding(
-//                 padding: const EdgeInsets.only(top: 60, left: 5),
-//                 child: Container(
-//                   child: Column(
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: [
-//                       Text(
-//                         'Project Name:',
-//                         style: TextStyle(
-//                             fontSize: 20, fontWeight: FontWeight.bold),
-//                       ),
-//                       Text(
-//                         allProjects[index]["projectName"],
-//                         style: TextStyle(
-//                             fontSize: 20, fontWeight: FontWeight.bold),
-//                       ),
-//                       SizedBox(
-//                         height: 20,
-//                       ),
-// //                      Text(
-// //                        'Project Supervisor: ' +
-// //                            allProjects[index]["supervisorName"],
-// //                        style: TextStyle(
-// //                            fontSize: 16, fontWeight: FontWeight.bold),
-// //                      ),
-//                       SizedBox(
-//                         height: 10,
-//                       ),
-//                       Container(
-//                         width: 150,
-//                         child: Text(
-//                           'Site Address: ' + allProjects[index]["siteAddress"],
-//                           overflow: TextOverflow.visible,
-//                           softWrap: true,
-//                           style: TextStyle(
-//                               fontSize: 14, fontWeight: FontWeight.bold),
-//                         ),
-//                       ),
-// //                      Text(
-// //                        allProjects[index]["siteAddress"],
-// //                        style: TextStyle(
-// //                            fontSize: 14, fontWeight: FontWeight.bold),
-// //                      ),
-//                       SizedBox(
-//                         height: 10,
-//                       ),
-//                       Text(
-//                         'Project Status: ' + allProjects[index]["projectStatus"],
-//                         style: TextStyle(
-//                             fontSize: 16, fontWeight: FontWeight.bold),
-//                       ),
-//                       SizedBox(
-//                         height: 20,
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ],
-//     );
-//   }
+  Widget displayProject(int index, allProjects) {
+    return Container(
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ProjectDetails(
+                    projectDetails: allProjects[index],
+                  )),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8,right: 8),
+            child: Card(
 
-  Widget displayProject(int index) {
-    return GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ProjectDetails(
-                      projectDetails: allProjects[index],
-                    )),
-          );
-        },
-        child: Container(
-          decoration: BoxDecoration(
-//            image: DecorationImage(
-//              fit: BoxFit.fitWidth,
-//              image: NetworkImage('https://png.pngtree.com/thumb_back/fw800/back_our/20190628/ourmid/pngtree-pure-original-spring-mountain-spring-water-green-leaf-background-image_268889.jpg'),
-//              colorFilter: ColorFilter.mode(Colors.white.withOpacity(0.6), BlendMode.dstATop),
-//            ),
-//            image: DecorationImage(
-//              fit: BoxFit.fitHeight,
-//              image: NetworkImage('https://png.pngtree.com/thumb_back/fw800/back_our/20190619/ourmid/pngtree-green-lotus-leaf-summer-cosmetics-psd-layered-master-map-background-material-image_136755.jpg'),
-//              colorFilter: ColorFilter.mode(Colors.white.withOpacity(0.6), BlendMode.dstATop),
-//            ),
-            image: DecorationImage(
-              fit: BoxFit.fitHeight,
-              image: NetworkImage('https://png.pngtree.com/thumb_back/fw800/back_our/20190619/ourmid/pngtree-blue-splash-water-flower-cosmetic-psd-layered-master-map-background-material-image_136618.jpg'),
-              colorFilter: ColorFilter.mode(Colors.white.withOpacity(0.6), BlendMode.dstATop),
-            ),
-//            image: DecorationImage(
-//              fit: BoxFit.cover,
-//              image: NetworkImage('https://png.pngtree.com/thumb_back/fh260/back_our/20190620/ourmid/pngtree-green-blue-sky-leaf-gradient-h5-background-material-image_148612.jpg'),
-//              colorFilter: ColorFilter.mode(Colors.white.withOpacity(0.6), BlendMode.dstATop),
-//            ),
-            color: Colors.white70,
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(25),bottomRight: Radius.circular(25)),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: 10),
-              CircularPercentIndicator(
-                backgroundColor: Colors.grey[200],
-                radius: 80.0,
-                lineWidth: 7.5,
-                animation: true,
-//                      percent: double.parse(
-//                              allProjects[index]["progress"].toString()) /
-//                          100,
-
-                percent: double.parse(allProjects[index]["progressPercent"].toString()) / 100,
-//                      center: new Text(
-//                        allProjects[index]["progress"].toString() + "%",
-//                        style: new TextStyle(
-//                            fontWeight: FontWeight.bold, fontSize: 20.0),
-//                      ),
-
-                center: new Text(
-                  allProjects[index]["progressPercent"].toString() + "%",
-                  style: new TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 18.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
-                circularStrokeCap: CircularStrokeCap.round,
-                progressColor: Colors.blue[900],
-              ),
-                    SizedBox(height: 10,),
-                      titleStyles(allProjects[index]["projectName"], 20),
-                      SizedBox(
-                height: 5,
-              ),
-
-              Text(
-                allProjects[index]["projectStatus"],
-                style: TextStyle(
-                    fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-
-
-
-//                Text(
-//                  allProjects[index]["siteAddress"],
-//                  style: TextStyle(
-//                      fontSize: 12, fontWeight: FontWeight.bold),
-//                ),
-            ],
+                elevation: 4,
+                margin: EdgeInsets.only(left: 5, right: 0, top: 7, bottom: 7),
+                semanticContainer: true,
+                color: Colors.indigo[50],
+                child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20)
+                    ),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                      leading: Container(
+                        padding: EdgeInsets.only(right: 12),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                right: BorderSide(
+                                    width: 1.0,
+                                    color: Colors.grey
+                                )
+                            )
+                        ),
+                        child: CircularPercentIndicator(
+                          backgroundColor: Colors.grey[400],
+                          radius: 48.0,
+                          lineWidth: 5,
+                          animation: true,
+                          percent: double.parse(allProjects[index]["progressPercent"].toString()) / 100,
+                          center: new Text(
+                            allProjects[index]["progressPercent"].toString() + "%",
+                            style: new TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14.0),
+                          ),
+                          circularStrokeCap: CircularStrokeCap.round,
+                          progressColor: Colors.blue[900],
+                        ),
+                      ),
+                      title: titleStyles(allProjects[index]["projectName"], 16),
+                      subtitle: Text(
+                        allProjects[index]["projectStatus"],
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      trailing: Icon(Icons.arrow_forward_ios),
+                    )
+                )
+            ),
           ),
-        ));
+        )
+    );
   }
 
   @override
@@ -277,61 +99,47 @@ class _AllProjectsState extends State<AllProjects> {
             Map data = snap.data.snapshot.value;
             allProjects = [];
             data.forEach(
-              (index, data) => allProjects.add({"key": index, ...data}),
+                  (index, data) => allProjects.add({"key": index, ...data}),
             );
 
-            return new Column(
-              children: [
-                Expanded(
-                    child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  //                      margin: EdgeInsets.only(
-                  //                          top: 15, bottom: 230, right: 10, left: 20),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    // color: primaryColor,
-                  ),
-                  child: Column(
-                    children: [
-                      // Text(allProjects.toString()),
-                      Expanded(
-                        child: new GridView.builder(
-                          itemCount: allProjects.length,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio:
-                                MediaQuery.of(context).size.width /
-                                    (MediaQuery.of(context).size.height / 1.4),
-                          ),
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(left: 5,right: 5),
-                              child: Card(
-                                  semanticContainer: true,
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  elevation: 5,
-                                  color: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(25),bottomRight: Radius.circular(25)),
-                                  ),
-                                  margin: EdgeInsets.all(10),
-                                  child: GridTile(child: displayProject(index))
-                              ),
-                            );
-                          },
+            return Scaffold(
+              body: new Column(
+                children: [
+                  Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+//                      margin: EdgeInsets.only(
+//                          top: 15, bottom: 230, right: 10, left: 20),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          // color: primaryColor,
+
                         ),
-                      ),
-                    ],
-                  ),
-                )),
-              ],
+                        child: Column(
+                          children: [
+                            // Text(allProjects.toString()),
+                            Expanded(
+                              child: new ListView.builder(
+                                itemCount: allProjects.length,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    // height: 280,
+                                      margin: EdgeInsets.all(8),
+                                      child: displayProject(index, allProjects));
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      )),
+                ],
+              ),
             );
           } else {
             return Center(
                 child: CircularProgressIndicator(
-              valueColor: new AlwaysStoppedAnimation<Color>(Colors.orange),
-            ));
+                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.indigo),
+                ));
           }
         });
   }
