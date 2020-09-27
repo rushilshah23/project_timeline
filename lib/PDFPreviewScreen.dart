@@ -13,26 +13,16 @@ class PDFPreviewScreen extends StatefulWidget {
 class _PDFPreviewScreenState extends State<PDFPreviewScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('asdfasf'),
-        backgroundColor: Colors.red,
-      ),
-      body: Column(
-        children: [
-          Container(
-            child: PDFViewerScaffold(
-              path: widget.path,
+    return PDFViewerScaffold(
+        appBar: AppBar(
+          title: Text("Document"),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.share),
+              onPressed: () {},
             ),
-          ),
-          FlatButton(
-            onPressed: () {},
-            child: Text('ajsd;asf'),
-          )
-        ],
-      ),
-      floatingActionButton:
-          FloatingActionButton(onPressed: null, child: Text('kl;asdjfa')),
-    );
+          ],
+        ),
+        path: widget.path);
   }
 }

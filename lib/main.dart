@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/PDFTesting.dart';
-import 'package:project_timeline/ProgressTimeLine/ViewAllProjects/ViewAllProjects.dart';
 
-import 'package:project_timeline/manager/CreateAcceptSupervisor/SupervisorFormCreation.dart';
-import 'package:project_timeline/manager/CreateAcceptSupervisor/SupervisorRequestList.dart';
-import 'package:project_timeline/manager/master/petrolMaster/petrolMaster.dart';
-import 'package:project_timeline/reportGeneration/ReportGeneration.dart';
 import 'package:project_timeline/reportGeneration/reportTest.dart';
-import 'package:project_timeline/sms/sms.dart';
+
 import 'package:project_timeline/supervisor/approveWork/WorkApproveModule.dart';
 import 'package:project_timeline/supervisor/approveWork/workerSelectDailyForm.dart';
-import 'package:project_timeline/supervisor/createAcceptWorker/WorkerCreationForm.dart';
-import 'package:project_timeline/supervisor/createAcceptWorker/workerRequestList.dart';
+
 import 'login.dart';
-import 'manager/master/machineMaster/machineMaster.dart';
+
 import 'manager/createNewProject/test.dart';
-import 'supervisor/addWorkers.dart';
+
 import 'supervisor/approveWork/WorkApproveModule.dart';
-import 'worker/workerDaily.dart';
+
 import 'worker/workerForm.dart';
 
 void main() {
@@ -60,15 +54,15 @@ class _MyHomePageState extends State<MyHomePage> {
         // in the middle of the parent.
         child: ListView(
           children: <Widget>[
-            // RaisedButton(
-            //   child: Text("SMS"),
-            //   onPressed: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => Sms()),
-            //     );
-            //   },
-            // ),
+            RaisedButton(
+              child: Text("SMS"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PDFTesting()),
+                );
+              },
+            ),
             RaisedButton(
               child: Text("PDF testing"),
               onPressed: () {

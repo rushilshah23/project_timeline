@@ -32,6 +32,7 @@ class _PDFTestingState extends State<PDFTesting> {
   static const _redColor = PdfColors.grey700;
   static const white = PdfColors.white;
 
+
   static final tableHeadersTable = [
     'SKU#',
     'Item Description',
@@ -84,99 +85,99 @@ class _PDFTestingState extends State<PDFTesting> {
       margin: pw.EdgeInsets.all(60),
       build: (pw.Context context) {
         return <pw.Widget>[
-          // pw.Chart(
-          //   left: pw.Container(
-          //     alignment: pw.Alignment.topCenter,
-          //     margin: const pw.EdgeInsets.only(right: 5, top: 10),
-          //     child: pw.Transform.rotateBox(
-          //       angle: pi / 2,
-          //       child: pw.Text('Amount'),
-          //     ),
-          //   ),
-          //   overlay: pw.ChartLegend(
-          //     position: const pw.Alignment(-.7, 1),
-          //     decoration: const pw.BoxDecoration(
-          //       color: PdfColors.white,
-          //       border: pw.BoxBorder(
-          //         bottom: true,
-          //         top: true,
-          //         left: true,
-          //         right: true,
-          //         color: PdfColors.black,
-          //         width: .5,
-          //       ),
-          //     ),
-          //   ),
-          //   grid: pw.CartesianGrid(
-          //     xAxis: pw.FixedAxis.fromStrings(
-          //       List<String>.generate(
-          //           dataTable.length, (index) => dataTable[index][0]),
-          //       marginStart: 30,
-          //       marginEnd: 30,
-          //       ticks: true,
-          //     ),
-          //     yAxis: pw.FixedAxis(
-          //       [0, 100, 200, 300, 400, 500, 600, 700],
-          //       format: (v) => '\$$v',
-          //       divisions: true,
-          //     ),
-          //   ),
-          //   datasets: [
-          //     pw.BarDataSet(
-          //       color: PdfColors.blue100,
-          //       legend: tableHeaders[2],
-          //       width: 30,
-          //       offset: -10,
-          //       borderColor: PdfColors.cyan,
-          //       data: List<pw.LineChartValue>.generate(
-          //         dataTable.length,
-          //         (i) {
-          //           final num v = dataTable[i][2];
-          //           return pw.LineChartValue(i.toDouble(), v.toDouble());
-          //         },
-          //       ),
-          //     ),
-          //     // pw.BarDataSet(
-          //     //   color: PdfColors.amber100,
-          //     //   legend: tableHeaders[1],
-          //     //   width: 15,
-          //     //   offset: 10,
-          //     //   borderColor: PdfColors.amber,
-          //     //   data: List<pw.LineChartValue>.generate(
-          //     //     dataTable.length,
-          //     //     (i) {
-          //     //       final num v = dataTable[i][1];
-          //     //       return pw.LineChartValue(i.toDouble(), v.toDouble());
-          //     //     },
-          //     //   ),
-          //     // ),
-          //   ],
-          // ),
+          pw.Chart(
+            left: pw.Container(
+              alignment: pw.Alignment.topCenter,
+              margin: const pw.EdgeInsets.only(right: 5, top: 10),
+              child: pw.Transform.rotateBox(
+                angle: pi / 2,
+                child: pw.Text('Amount'),
+              ),
+            ),
+            overlay: pw.ChartLegend(
+              position: const pw.Alignment(-.7, 1),
+              decoration: const pw.BoxDecoration(
+                color: PdfColors.white,
+                border: pw.BoxBorder(
+                  bottom: true,
+                  top: true,
+                  left: true,
+                  right: true,
+                  color: PdfColors.black,
+                  width: .5,
+                ),
+              ),
+            ),
+            grid: pw.CartesianGrid(
+              xAxis: pw.FixedAxis.fromStrings(
+                List<String>.generate(
+                    dataTable.length, (index) => dataTable[index][0]),
+                marginStart: 30,
+                marginEnd: 30,
+                ticks: true,
+              ),
+              yAxis: pw.FixedAxis(
+                [0, 100, 200, 300, 400, 500, 600, 700],
+                format: (v) => '\$$v',
+                divisions: true,
+              ),
+            ),
+            datasets: [
+              pw.BarDataSet(
+                color: PdfColors.blue100,
+                legend: tableHeaders[2],
+                width: 30,
+                offset: -10,
+                borderColor: PdfColors.cyan,
+                data: List<pw.LineChartValue>.generate(
+                  dataTable.length,
+                  (i) {
+                    final num v = dataTable[i][2];
+                    return pw.LineChartValue(i.toDouble(), v.toDouble());
+                  },
+                ),
+              ),
+              // pw.BarDataSet(
+              //   color: PdfColors.amber100,
+              //   legend: tableHeaders[1],
+              //   width: 15,
+              //   offset: 10,
+              //   borderColor: PdfColors.amber,
+              //   data: List<pw.LineChartValue>.generate(
+              //     dataTable.length,
+              //     (i) {
+              //       final num v = dataTable[i][1];
+              //       return pw.LineChartValue(i.toDouble(), v.toDouble());
+              //     },
+              //   ),
+              // ),
+            ],
+          ),
 
-          // pw.Chart(
-          //   grid: pw.CartesianGrid(
-          //     xAxis: pw.FixedAxis([0, 1, 2, 3, 4, 5, 6]),
-          //     yAxis: pw.FixedAxis(
-          //       [0, 200, 400, 600],
-          //       divisions: true,
-          //     ),
-          //   ),
-          //   datasets: [
-          //     pw.LineDataSet(
-          //       drawSurface: false,
-          //       isCurved: true,
-          //       drawPoints: true,
-          //       color: PdfColors.cyan,
-          //       data: List<pw.LineChartValue>.generate(
-          //         dataTable.length,
-          //         (i) {
-          //           final num v = dataTable[i][2];
-          //           return pw.LineChartValue(i.toDouble(), v.toDouble());
-          //         },
-          //       ),
-          //     ),
-          //   ],
-          // ),
+          pw.Chart(
+            grid: pw.CartesianGrid(
+              xAxis: pw.FixedAxis([0, 1, 2, 3, 4, 5, 6]),
+              yAxis: pw.FixedAxis(
+                [0, 200, 400, 600],
+                divisions: true,
+              ),
+            ),
+            datasets: [
+              pw.LineDataSet(
+                drawSurface: false,
+                isCurved: true,
+                drawPoints: true,
+                color: PdfColors.cyan,
+                data: List<pw.LineChartValue>.generate(
+                  dataTable.length,
+                  (i) {
+                    final num v = dataTable[i][2];
+                    return pw.LineChartValue(i.toDouble(), v.toDouble());
+                  },
+                ),
+              ),
+            ],
+          ),
           pw.Header(
             level: 0,
             child: pw.Center(
@@ -216,6 +217,18 @@ class _PDFTestingState extends State<PDFTesting> {
           //   ],
           //   ...supervisors.map((msg) => [msg["name"], msg["mobile"]])
           // ]),
+
+          pw.Container(
+            height: 50,
+            width: 50,
+            child: pw.CircularProgressIndicator(
+              value: 0.80,
+              backgroundColor: PdfColors.grey,
+              color: PdfColors.blue,
+              strokeWidth: 5,
+                ),
+          ),
+
           pw.SizedBox(height: 25),
           pw.Table.fromTextArray(
             border: null,
@@ -281,58 +294,7 @@ class _PDFTestingState extends State<PDFTesting> {
       },
     ));
 
-    pdf.addPage(pw.MultiPage(
-      pageFormat: PdfPageFormat.a4,
-      margin: pw.EdgeInsets.all(32),
-      build: (pw.Context context) {
-        return <pw.Widget>[
-          pw.Header(
-            level: 0,
-            child: pw.Center(
-                child: pw.Text("Project name: " + projectData["projectName"],
-                    style: pw.TextStyle(
-                      fontSize: 18,
-                    ))),
-          ),
-          pw.SizedBox(height: 25),
-          // pw.Flexible(
-          //   child: pw.CircularProgressIndicator(value: 23),
-          // ),
-          pw.Center(
-              child: pw.Text('Work Images: ',
-                  style: pw.TextStyle(
-                    fontSize: 18,
-                  ))),
-          pw.ListView.builder(
-            itemCount: todaysReport.length,
-            itemBuilder: (context, index) {
-              return pw.Container(
-                  child: pw.Column(
-                children: [
-                  pw.Text(
-                      "Images from " + todaysReport[index]["workerName"] + ":",
-                      style: pw.TextStyle(
-                        fontSize: 18,
-                      )),
-                  pw.GridView(
-                    childAspectRatio: 1,
-                    crossAxisCount: 4,
-                    // Generate 100 widgets that display their index in the List.
-                    children: List.generate(2, (index) {
-                      return pw.Container(
-                        child: pw.Text('Item $index',
-                            style: pw.TextStyle(
-                              fontSize: 18,
-                            )),
-                      );
-                    }),
-                  )
-                ],
-              ));
-            },
-          ),
-        ];
-      },));
+
 
 
     //start

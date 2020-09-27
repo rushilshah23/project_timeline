@@ -1,21 +1,18 @@
 import 'dart:io';
-import 'dart:ui' as ui;
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:image/image.dart';
+
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
-import 'package:project_timeline/PDFPreviewScreen.dart';
+
 import 'package:project_timeline/reportGeneration/reportPreviewTesting.dart';
-import 'package:searchable_dropdown/searchable_dropdown.dart';
+
 
 import '../CommonWidgets.dart';
-import 'ReportPreview.dart';
+
 
 class ReportGenerationTesting extends StatefulWidget {
   @override
@@ -27,9 +24,11 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
 
   final databaseReference = FirebaseDatabase.instance.reference();
 
-  final DateTime now = DateTime.now();
+  final DateTime date = DateTime.now();
   final DateFormat formatter = DateFormat('dd-MM-yyyy');
   String todaysDate="12-09-2020";
+
+  final DateFormat formatterForTime = DateFormat('dd-MM-yyyy hh:mm:ss');
 
   Map allMachinesData;
   List projects=[];
@@ -42,14 +41,38 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
   List todaysReport=List() ;
   List supervisors=List() ;
   Map projectData;
-  double totalVol=0;
   double approvedVol=0;
+
+  List allDaysReport=List();
+  List allDates=List();
+  List allDatesApprovedVolume= [];
+  List perDayExcavation=List();
+
+  static const tableHeaders = ['Category', 'Budget', 'Expense', 'Result'];
+  static const pi = 22 / 7;
+  static const dataTable = [
+    ['Phone', 80, 95, -15],
+    ['Internet', 250, 230, 20],
+    ['Electricity', 300, 375, -75],
+    ['Movies', 85, 80, 5],
+    ['Food', 300, 350, -50],
+    ['Fuel', 650, 550, 100],
+    ['Insurance', 250, 310, -60],
+  ];
+
 
 
   Future savePDF() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
     String documentPath = documentDirectory.path;
-    File file = File("$documentPath/example.pdf");
+    File file = File("$documentPath/todaysReport.pdf");
+    file.writeAsBytesSync(pdf.save());
+  }
+
+  Future savePDFOverall() async {
+    Directory documentDirectory = await getApplicationDocumentsDirectory();
+    String documentPath = documentDirectory.path;
+    File file = File("$documentPath/overallProgress.pdf");
     file.writeAsBytesSync(pdf.save());
   }
 
@@ -74,7 +97,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
                 pw.Text('Approved Excavation: '+approvedVol.toString()),
-                pw.Text('Total Excavation: '+totalVol.toString()),
+                // pw.Text('Total Excavation: '+totalVol.toString()),
               ]
           ),
 
@@ -98,6 +121,153 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
 
 
 
+
+  }
+
+
+
+
+  createOverallPdf() async{
+
+    pdf.addPage(pw.MultiPage(
+      pageFormat: PdfPageFormat.a4,
+      margin: pw.EdgeInsets.all(32),
+      build: (pw.Context context) {
+        return <pw.Widget>[
+          pw.Center(child:pw.Text('Report is generated on '+formatterForTime.format(date).toString())),
+          pw.SizedBox(height: 25),
+          pw.Header(
+            level: 0,
+            child: pw.Center(child:pw.Text("Project name: "+projectData["projectName"])),
+          ),
+          pw.Center(child:pw.Text('Site Address: '+projectData["siteAddress"])),
+
+          pw.SizedBox(height: 25),
+
+          pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+            children: [
+              pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                  children: [
+                    pw.Text('Soil Type: '+projectData["soilType"]),
+                    pw.SizedBox(height: 25),
+
+                    pw.Text('Excavation Goals: '+projectData["volumeToBeExcavated"]+" m3"),
+                    pw.Text('Estimated Duration: '+projectData["projectDuration"]+" days"),
+                    pw.Text('Estimated Fuel Consumption: '+projectData["totalFuelConsumption"]+" litre"),
+                    pw.Text('Estimated Rent: '+projectData["totalMachineRent"]+" rs"),
+
+                    pw.SizedBox(height: 25),
+
+                    pw.Text('Approved Excavation: '+projectData["volumeExcavated"]+" m3"),
+                    pw.Text('Completion Percent: '+projectData["progressPercent"]+" %"),
+
+
+                  ]
+              ),
+
+
+              pw.Container(
+                width: 130,
+                height: 130,
+                child: pw.Stack(
+                  alignment: pw.Alignment.center,
+                  fit: pw.StackFit.expand,
+                  children: <pw.Widget>[
+                    pw.Center(
+                      child: pw.Text(
+                          (double.parse(projectData["progressPercent"])).toString()+'%',
+                        textScaleFactor: 1.2,
+                      ),
+                    ),
+                    pw.CircularProgressIndicator(
+                      value: double.parse(projectData["progressPercent"])/100,
+                      backgroundColor: PdfColors.grey400,
+                      color: PdfColors.blue,
+                      strokeWidth: 10,
+                    ),
+                  ],
+                ),
+              )
+
+
+            ]
+          ),
+
+
+          pw.SizedBox(height: 25),
+
+pw.Container(
+  height: 300,
+
+  child:      pw.Chart(
+    grid: pw.CartesianGrid(
+      xAxis: pw.FixedAxis.fromStrings( List<String>.generate(
+          allDates.length, (index) => allDates[index]),
+        marginStart: 30,
+        marginEnd: 30,
+        ticks: true,
+      ),
+      yAxis: pw.FixedAxis(
+        [0, 20, 40, 60, 80,100, 120,140, 160,180, 200,],
+        divisions: true,
+      ),
+    ),
+    datasets: [
+      pw.LineDataSet(
+        drawSurface: false,
+        isCurved: true,
+        drawPoints: true,
+        color: PdfColors.cyan,
+        data: List<pw.LineChartValue>.generate(
+          allDatesApprovedVolume.length,
+              (i) {
+            final num v = allDatesApprovedVolume[i];
+            return pw.LineChartValue(i.toDouble(), v.toDouble());
+          },
+        ),
+      ),
+    ],
+  ),
+
+),
+
+          pw.SizedBox(height: 25),
+          pw.Center(child:pw.Text('Project Supervisors Details: ')),
+          pw.SizedBox(height: 25),
+          pw.Table.fromTextArray(context: context, data: <List<String>>[
+            <String>['Supervisor Name', 'Contact No',],
+            ...supervisors.map(
+                    (msg) => [msg["name"], msg["mobile"]])
+          ]),
+          pw.SizedBox(height: 25),
+
+          pw.ListView.builder(
+              itemCount: allDates.length,
+              itemBuilder: (context, index) {
+
+                //debugPrint(selectedProjectsAllDaysWorkersList[index][index2].toString());
+                return pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    children: [
+                      pw.SizedBox(height: 20,),
+                      pw.Center(child:pw.Text('Work Details of '+allDates[index])),
+                      pw.SizedBox(height: 10,),
+                      pw.Text('Approved Excavation: '+allDatesApprovedVolume[index].toString()),
+                      pw.SizedBox(height: 10,),
+                      pw.Table.fromTextArray(context: context, data: <List<dynamic>>[
+                        <String>['Worker Name', 'Hours Worked', 'Machine used', 'Volume Excavated','Approval Status'],
+                        ...allDaysReport[index].map(
+                                (msg) => [msg["workerName"], msg["hoursWorked"].toString(),msg["MachineUsed"], msg["volumeExcavated"].toString(), msg["status"]])
+                      ]),
+                    ]
+
+                );}),
+
+        ];
+      },
+    ));
 
   }
 
@@ -172,8 +342,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
 
           for (int i = 0; i < todaysReport.length; i++) {
             if(todaysReport[i]["status"].toString()=="Accepted")
-              approvedVol = approvedVol + double.parse(todaysReport[i]["volumeExcavated"].toString());
-            totalVol = totalVol + double.parse(todaysReport[i]["volumeExcavated"].toString());
+                approvedVol = approvedVol + double.parse(todaysReport[i]["volumeExcavated"].toString());
 
             if(allMachinesData.containsKey(todaysReport[i]["MachineUsed"]))
             {
@@ -195,7 +364,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
     Directory documentDirectory =
     await getApplicationDocumentsDirectory();
     String documentPath = documentDirectory.path;
-    String fullPath = "$documentPath/example.pdf";
+    String fullPath = "$documentPath/todaysReport.pdf";
 
     Navigator.push(
         context,
@@ -205,6 +374,76 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
 
   }
 
+
+
+  void generateOverallReport() async
+  {
+    allDaysReport.clear();
+    allDates.clear();
+    approvedVol=0;
+    allDatesApprovedVolume.clear();
+    await databaseReference.child("projects").child(selectedProject).once().then((DataSnapshot dataSnapshot) {
+
+      projectData= dataSnapshot.value;
+
+      Map data1 = dataSnapshot.value["progress"];
+      //debugPrint(data.toString());
+
+      Map supMap= dataSnapshot.value["supervisors"];
+      supervisors=supMap.values.toList();
+
+      allDates= data1.keys.toList();
+      List allDatesData= data1.values.toList();
+
+      allDatesApprovedVolume =List.generate(allDates.length, (i) =>0.0);
+
+      debugPrint(allDatesData.toString());
+
+      for(int i=0;i<allDates.length;i++)
+        {
+          Map todaysDataMap= allDatesData[i];
+          debugPrint(todaysDataMap.values.toList().toString());
+          allDaysReport.add(todaysDataMap.values.toList());
+        }
+
+      debugPrint(allDaysReport.toString());
+
+          for (int i = 0; i < allDaysReport.length; i++) {
+            debugPrint(allDaysReport[i].toString());
+
+            List todaysWorkersDataList = allDaysReport[i];
+
+
+            for(int j=0;j<todaysWorkersDataList.length;j++)
+              {
+                if(todaysWorkersDataList[j]["status"]=="Accepted")
+                {
+                   debugPrint(todaysWorkersDataList[j]["workerName"].toString());
+                   allDatesApprovedVolume[i]=allDatesApprovedVolume[i]+double.parse(todaysWorkersDataList[j]["volumeExcavated"].toString());
+                   approvedVol= approvedVol+double.parse(todaysWorkersDataList[j]["volumeExcavated"].toString());
+                }
+              }
+          }
+
+      debugPrint(allDatesApprovedVolume.toString());
+    }
+    );
+
+    await createOverallPdf();
+    await savePDFOverall();
+
+    Directory documentDirectory =
+    await getApplicationDocumentsDirectory();
+    String documentPath = documentDirectory.path;
+    String fullPath = "$documentPath/overallProgress.pdf";
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ReportPreviewTesting(path: fullPath),
+        ));
+
+  }
 
 
 
@@ -295,24 +534,26 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                         SizedBox(
                           height: 50,
                         ),
-                        // FlatButton(
-                        //   child: buttonContainers(double.infinity, 20, 'Generate Overall Report', 18),
-                        //   onPressed: () async{
-                        //     await selectedProjs();
-                        //     await allDayReportPdf();
-                        //     await savePDF();
-                        //     Directory documentDirectory =
-                        //     await getApplicationDocumentsDirectory();
-                        //     String documentPath = documentDirectory.path;
-                        //     String fullPath = "$documentPath/example.pdf";
-                        //
-                        //     Navigator.push(
-                        //         context,
-                        //         MaterialPageRoute(
-                        //           builder: (context) => ReportPreview(path: fullPath),
-                        //         ));
-                        //   },
-                        // ),
+                        FlatButton(
+                          child: buttonContainers(double.infinity, 20, 'Generate Overall Report', 18),
+                          onPressed: () async{
+                            // await selectedProjs();
+                            // await allDayReportPdf();
+                            // await savePDF();
+                            // Directory documentDirectory =
+                            // await getApplicationDocumentsDirectory();
+                            // String documentPath = documentDirectory.path;
+                            // String fullPath = "$documentPath/example.pdf";
+                            //
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //       builder: (context) => ReportPreview(path: fullPath),
+                            //     ));
+
+                            generateOverallReport();
+                          },
+                        ),
 
                         SizedBox(
                           height: 20,

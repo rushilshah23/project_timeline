@@ -20,6 +20,13 @@ class _WorkDetailsState extends State<WorkDetails> {
   int indexes;
   List images=[];
   final databaseReference = FirebaseDatabase.instance.reference();
+  Map projectData;
+  String volumeExcavated;
+  String volumeToBeExcavated;
+  String progressPercent;
+  double totalVol;
+  double totalProgress;
+
 
   @override
   void initState() {
@@ -27,6 +34,16 @@ class _WorkDetailsState extends State<WorkDetails> {
     debugPrint(widget.data["date"].toString());
     debugPrint(widget.data["images"].toString());
     images=widget.data["images"];
+
+     databaseReference .child("projects").child(widget.projectID).once().then((DataSnapshot dataSnapshot) {
+       projectData=dataSnapshot.value;
+       setState(() {
+         volumeExcavated=projectData["volumeExcavated"];
+         volumeToBeExcavated=projectData["volumeToBeExcavated"];
+         progressPercent=projectData["progressPercent"];
+       });
+     });
+
     setState(() {
 
     });
@@ -45,21 +62,19 @@ class _WorkDetailsState extends State<WorkDetails> {
 
     if(status=="Accepted")
       {
+        totalVol= double.parse(volumeExcavated)+double.parse(widget.data["volumeExcavated"].toString());
+        totalProgress = (totalVol/double.parse(volumeToBeExcavated))*100;
+
         await databaseReference
             .child("projects")
             .child(widget.projectID)
             .update({
           'approvedImages':widget.data["images"],
+          'volumeExcavated':totalVol.ceil().toString(),
+          'progressPercent':totalProgress.ceil().toString(),
         });
 
 
-
-        await databaseReference
-            .child("projects")
-            .child(widget.projectID)
-            .update({
-          'status':status,
-        });
       }
 
     showToast("$status successfully");

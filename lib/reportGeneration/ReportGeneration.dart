@@ -1,16 +1,13 @@
 import 'dart:io';
-import 'dart:ui' as ui;
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:image/image.dart';
+
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
-import 'package:project_timeline/PDFPreviewScreen.dart';
+
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 import '../CommonWidgets.dart';
@@ -26,10 +23,13 @@ class _ReportGenerationState extends State<ReportGeneration> {
 
   final databaseReference = FirebaseDatabase.instance.reference();
 
-  final DateTime now = DateTime.now();
+  final DateTime date = DateTime.now();
   final DateFormat formatter = DateFormat('dd-MM-yyyy');
   String todaysDate="12-09-2020";
-  
+
+
+  final DateTime now = DateTime.now();
+  final DateFormat formatterForTime = DateFormat('dd-MM-yyyy hh:mm:ss');
 
   Map allMachinesData;
   String uid="8YiMHLBnBaNjmr3yPvk8NWvNPmm2";
