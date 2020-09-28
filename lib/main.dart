@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/PDFTesting.dart';
+import 'package:project_timeline/dashboard.dart';
 
 import 'package:project_timeline/reportGeneration/reportTest.dart';
 
@@ -68,7 +69,8 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ReportGenerationTesting()),
+                  MaterialPageRoute(
+                      builder: (context) => ReportGenerationTesting()),
                 );
               },
             ),
@@ -78,6 +80,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => Test()),
+                );
+              },
+            ),
+            RaisedButton(
+              child: Text("Dashboard"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DashBoard()),
                 );
               },
             ),
@@ -122,7 +133,8 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SpecialWorkerFormPage()),
+                  MaterialPageRoute(
+                      builder: (context) => SpecialWorkerFormPage()),
                 );
               },
             ),
@@ -182,7 +194,6 @@ class _MyHomePageState extends State<MyHomePage> {
             //     );
             //   },
             // ),
-
           ],
         ),
       ),
