@@ -3,6 +3,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_timeline/manager/createNewProject/EditProject.dart';
+import 'package:project_timeline/manager/createNewProject/createNewProject.dart';
 import 'package:project_timeline/manager/createNewProject/test.dart';
 import '../../CommonWidgets.dart';
 
@@ -103,7 +105,14 @@ class _CreatedProjectsState extends State<CreatedProjects> {
                             IconButton(
                               icon: Icon(Icons.edit),
                               color: Colors.grey,
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => EditProject(
+                                          uniqueId: ourCreatedProjects[index])),
+                                );
+                              },
                             ),
                             IconButton(
                               icon: Icon(Icons.delete),
@@ -173,7 +182,10 @@ class _CreatedProjectsState extends State<CreatedProjects> {
               ));
             }
           }),
-      floatingActionButton: floats(context, Test()),
+      floatingActionButton: floats(
+        context,
+        Test(),
+      ),
     );
   }
 }

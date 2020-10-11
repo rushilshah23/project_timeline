@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/PDFTesting.dart';
 import 'package:project_timeline/dashboard.dart';
+import 'package:project_timeline/manager/createNewProject/EditProject.dart';
+import 'package:project_timeline/manager/createNewProject/projects.dart';
 
 import 'package:project_timeline/reportGeneration/reportTest.dart';
 
@@ -71,6 +73,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => ReportGenerationTesting()),
+                );
+              },
+            ),
+
+            RaisedButton(
+              child: Text("Projects"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CreatedProjects()),
                 );
               },
             ),
