@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'manager/master/petrolMaster/AddPetrolLocation.dart';
 
 showToast(String msg)
 {
@@ -31,7 +30,7 @@ Widget ThemeAppbar(String title)
 gradients()
 {
   return LinearGradient(
-        colors: [ Color(0xff09b0ea),Color(0xff0db9eb),Color(0xff0fbdea),Color(0xff16cbea),Color(0xff1cd7ea)],
+        colors: [ Color(0xff005c9d),Color(0xff018abd),Color(0xff93e1ed)],
         begin: Alignment.centerRight,
         end: Alignment(-1.0,-2.0)
     );
