@@ -619,6 +619,9 @@ class _WorkIntervalsState extends State<WorkIntervals> {
                     "START",
                     style: TextStyle(fontSize: 12),
                   ),
+                  SizedBox(
+                    height: 5,
+                  ),
                   TimePickerSpinner(
                     normalTextStyle: TextStyle(
                       fontSize: 15,
@@ -628,7 +631,7 @@ class _WorkIntervalsState extends State<WorkIntervals> {
                       fontSize: 15,
                       color: Colors.deepOrange,
                     ),
-                    itemHeight: 20,
+                    itemHeight: 30,
                     spacing: 0,
                     minutesInterval: 15,
                     is24HourMode: false,
@@ -650,6 +653,9 @@ class _WorkIntervalsState extends State<WorkIntervals> {
                     "END",
                     style: TextStyle(fontSize: 12),
                   ),
+                  SizedBox(
+                    height: 5,
+                  ),
                   TimePickerSpinner(
                     normalTextStyle: TextStyle(
                       fontSize: 15,
@@ -659,7 +665,7 @@ class _WorkIntervalsState extends State<WorkIntervals> {
                       fontSize: 15,
                       color: Colors.deepOrange,
                     ),
-                    itemHeight: 20,
+                    itemHeight: 30,
                     spacing: 0,
                     minutesInterval: 15,
                     is24HourMode: false,

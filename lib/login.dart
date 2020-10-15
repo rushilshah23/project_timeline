@@ -8,6 +8,7 @@ import 'supervisor/SupervisorHomePage.dart';
 import 'worker/WorkerHomePage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -42,7 +43,8 @@ class LoginPageState extends State<LoginPage> {
     });
   }
 
-  Future checkOTP(String phone, BuildContext context) async {
+  Future checkOTP(String phone, BuildContext context, pr) async {
+    await pr.show();
     _auth.verifyPhoneNumber(
         phoneNumber: phone,
         timeout: Duration(seconds: 120),
@@ -52,7 +54,7 @@ class LoginPageState extends State<LoginPage> {
           print("`````````````````````````````````````````");
           print("Verification Complete");
           print("`````````````````````````````````````````");
-          loginUsingOTP(credential);
+          loginUsingOTP(credential, pr);
         },
         verificationFailed: (AuthException exception) {
           print("`````````````````````````````````````````");
@@ -60,7 +62,8 @@ class LoginPageState extends State<LoginPage> {
           print("`````````````````````````````````````````");
           print(exception.message);
         },
-        codeSent: (String verificationId, [int forceResendingToken]) {
+        codeSent: (String verificationId, [int forceResendingToken]) async {
+          await pr.hide();
           showDialog(
               context: context,
               barrierDismissible: false,
@@ -81,6 +84,7 @@ class LoginPageState extends State<LoginPage> {
                       textColor: Colors.white,
                       color: Colors.blue,
                       onPressed: () async {
+                        await pr.show();
                         final code = controllerOTP.text.trim();
                         AuthCredential credential =
                             PhoneAuthProvider.getCredential(
@@ -89,7 +93,7 @@ class LoginPageState extends State<LoginPage> {
                         print("`````````````````````````````````````````");
                         print("Verification Complete");
                         print("`````````````````````````````````````````");
-                        loginUsingOTP(credential);
+                        loginUsingOTP(credential, pr);
                       },
                     )
                   ],
@@ -99,7 +103,8 @@ class LoginPageState extends State<LoginPage> {
         codeAutoRetrievalTimeout: null);
   }
 
-  loginUsingEmail() async {
+  loginUsingEmail(pr) async {
+    await pr.show();
     print(_email);
     print(_password);
     try {
@@ -118,6 +123,7 @@ class LoginPageState extends State<LoginPage> {
                 });
                 FirebaseUser user = result.user;
                 if (user.uid != null) {
+                  await pr.hide();
                   print("```````````````````````````");
                   print("account login successful");
                   print(user.uid);
@@ -248,7 +254,7 @@ class LoginPageState extends State<LoginPage> {
     }
   }
 
-  loginUsingOTP(credential) async {
+  loginUsingOTP(credential, pr) async {
     print("```````````````````````````");
     print(_requestType);
     print("```````````````````````````");
@@ -264,6 +270,7 @@ class LoginPageState extends State<LoginPage> {
                     await _auth.signInWithCredential(credential);
                 FirebaseUser user = result.user;
                 if (user.uid != null) {
+                  await pr.hide();
                   print("```````````````````````````");
                   print("account creation successful");
                   print(user.uid);
@@ -302,6 +309,7 @@ class LoginPageState extends State<LoginPage> {
                       await _auth.signInWithCredential(credential);
                   FirebaseUser user = result.user;
                   if (user.uid != null) {
+                    await pr.hide();
                     print("```````````````````````````");
                     print(element.data["uid"]);
                     print(element.data["mobile"]);
@@ -335,6 +343,8 @@ class LoginPageState extends State<LoginPage> {
                     await _auth.signInWithCredential(credential);
                 FirebaseUser user = result.user;
                 if (user.uid != null) {
+                  await pr.hide();
+
                   print("```````````````````````````");
                   print("account creation successful");
                   print(user.uid);
@@ -373,6 +383,8 @@ class LoginPageState extends State<LoginPage> {
                       await _auth.signInWithCredential(credential);
                   FirebaseUser user = result.user;
                   if (user.uid != null) {
+                    await pr.hide();
+
                     print("```````````````````````````");
                     print(element.data["uid"]);
                     print(element.data["mobile"]);
@@ -406,6 +418,8 @@ class LoginPageState extends State<LoginPage> {
                     await _auth.signInWithCredential(credential);
                 FirebaseUser user = result.user;
                 if (user.uid != null) {
+                  await pr.hide();
+
                   print("```````````````````````````");
                   print("account creation successful");
                   print(user.uid);
@@ -444,6 +458,8 @@ class LoginPageState extends State<LoginPage> {
                       await _auth.signInWithCredential(credential);
                   FirebaseUser user = result.user;
                   if (user.uid != null) {
+                    await pr.hide();
+
                     print("```````````````````````````");
                     print(element.data["uid"]);
                     print(element.data["mobile"]);
@@ -476,6 +492,8 @@ class LoginPageState extends State<LoginPage> {
                     await _auth.signInWithCredential(credential);
                 FirebaseUser user = result.user;
                 if (user.uid != null) {
+                  await pr.hide();
+
                   print("```````````````````````````");
                   print("account creation successful");
                   print(user.uid);
@@ -514,6 +532,8 @@ class LoginPageState extends State<LoginPage> {
                       await _auth.signInWithCredential(credential);
                   FirebaseUser user = result.user;
                   if (user.uid != null) {
+                    await pr.hide();
+
                     print("```````````````````````````");
                     print(element.data["uid"]);
                     print(element.data["mobile"]);
@@ -614,6 +634,8 @@ class LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final ProgressDialog pr = ProgressDialog(context);
+
     // TODO: implement build
     return new Scaffold(
         //resizeToAvoidBottomInset: false,
@@ -650,7 +672,6 @@ class LoginPageState extends State<LoginPage> {
 //                ],
 //              ),
 //            ),
-
 
             TopBar(),
 
@@ -728,10 +749,10 @@ class LoginPageState extends State<LoginPage> {
                     height: 15,
                   ),
                   RaisedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       _signInMethod == "email"
-                          ? loginUsingEmail()
-                          : checkOTP("+91" + _email, context);
+                          ? loginUsingEmail(pr)
+                          : checkOTP("+91" + _email, context, pr);
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -790,8 +811,6 @@ class LoginPageState extends State<LoginPage> {
   }
 }
 
-
-
 class TopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -804,43 +823,49 @@ class TopBar extends StatelessWidget {
   }
 }
 
-class CurvePainter extends CustomPainter{
+class CurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Path path = Path();
     Paint paint = Paint();
 
-
-    path.lineTo(0, size.height *0.75);
-    path.quadraticBezierTo(size.width* 0.10, size.height*0.70, size.width*0.17, size.height*0.90);
-    path.quadraticBezierTo(size.width*0.20, size.height, size.width*0.25, size.height*0.90);
-    path.quadraticBezierTo(size.width*0.40, size.height*0.40, size.width*0.50, size.height*0.70);
-    path.quadraticBezierTo(size.width*0.60, size.height*0.85, size.width*0.65, size.height*0.65);
-    path.quadraticBezierTo(size.width*0.70, size.height*0.90, size.width, 0);
+    path.lineTo(0, size.height * 0.75);
+    path.quadraticBezierTo(size.width * 0.10, size.height * 0.70,
+        size.width * 0.17, size.height * 0.90);
+    path.quadraticBezierTo(
+        size.width * 0.20, size.height, size.width * 0.25, size.height * 0.90);
+    path.quadraticBezierTo(size.width * 0.40, size.height * 0.40,
+        size.width * 0.50, size.height * 0.70);
+    path.quadraticBezierTo(size.width * 0.60, size.height * 0.85,
+        size.width * 0.65, size.height * 0.65);
+    path.quadraticBezierTo(
+        size.width * 0.70, size.height * 0.90, size.width, 0);
     path.close();
 
     paint.color = colorThree;
     canvas.drawPath(path, paint);
 
     path = Path();
-    path.lineTo(0, size.height*0.50);
-    path.quadraticBezierTo(size.width*0.10, size.height*0.80, size.width*0.15, size.height*0.60);
-    path.quadraticBezierTo(size.width*0.20, size.height*0.45, size.width*0.27, size.height*0.60);
-    path.quadraticBezierTo(size.width*0.45, size.height, size.width*0.50, size.height*0.80);
-    path.quadraticBezierTo(size.width*0.55, size.height*0.30, size.width*0.75, size.height*0.65);
-    path.quadraticBezierTo(size.width*0.85, size.height*0.93, size.width, size.height*0.50);
+    path.lineTo(0, size.height * 0.50);
+    path.quadraticBezierTo(size.width * 0.10, size.height * 0.80,
+        size.width * 0.15, size.height * 0.60);
+    path.quadraticBezierTo(size.width * 0.20, size.height * 0.45,
+        size.width * 0.27, size.height * 0.60);
+    path.quadraticBezierTo(
+        size.width * 0.45, size.height, size.width * 0.50, size.height * 0.80);
+    path.quadraticBezierTo(size.width * 0.55, size.height * 0.30,
+        size.width * 0.75, size.height * 0.65);
+    path.quadraticBezierTo(
+        size.width * 0.85, size.height * 0.93, size.width, size.height * 0.50);
     path.lineTo(size.width, 0);
     path.close();
 
     paint.color = colorTwo;
     canvas.drawPath(path, paint);
-
-
   }
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     return oldDelegate != this;
   }
-
 }
