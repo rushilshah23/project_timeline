@@ -1,196 +1,442 @@
-//This page is under manager section
-
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../CommonWidgets.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:project_timeline/CommonWidgets.dart';
+import 'package:project_timeline/supervisor/approveWork/WorkApproveModTabs.dart';
+
 import 'addWorkers.dart';
-import 'approveWork/WorkApproveModTabs.dart';
 import 'approveWork/WorkApproveModule.dart';
 
 
 
 
+
 class YourAllocatedProjects extends StatefulWidget {
+  String name , email,  mobile , password,uid, userType,assignedProject;
+  YourAllocatedProjects({Key key, this.name, this.email, this.mobile, this.assignedProject, this.userType, this.uid}) : super(key: key);
   @override
   _YourAllocatedProjectsState createState() => _YourAllocatedProjectsState();
 }
 
 class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
-  final databaseReference = FirebaseDatabase.instance.reference();
-  List ourCreatedProjects = List();
-  List allProjects = List();
-  String projectID="b570da70-fa93-11ea-9561-89a3a74b28bb";
 
+  double percent = 10;
+  double percent1 = 10;
+  Map projectDetails;
+  double percent2 = 80;
 
-  @override
-  void initState() {
+  final databaseReference = FirebaseDatabase.instance.reference().child("projects");
+
+  bool allocated= false;
+  bool isLoading= true;
+
+  void initState(){
     super.initState();
+    getProjDetails();
   }
 
-  Widget displayProject(int index) {
-    return Container(
-        child: Card(
-            elevation: 4,
-            margin: EdgeInsets.only(left: 15, right: 15, top: 7, bottom: 7),
-            semanticContainer: true,
-            color: Colors.amberAccent.shade50,
-            child: Container(
-              padding: EdgeInsets.all(15),
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Container(
-                            width: MediaQuery.of(context).size.width / 1.4,
-                            padding: EdgeInsets.all(5),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "Project: " +
-                                      ourCreatedProjects[index]["projectName"],
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 1,
-                                  softWrap: false,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "Site Address: " +
-                                      ourCreatedProjects[index]["siteAddress"],
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 2,
-                                  softWrap: false,
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                                Text(
-                                  "Supervisor Name" +
-                                      ": " +
-                                      "Shraddha.V.Pawar",
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 2,
-                                  softWrap: false,
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Text(
-                                      "Progress" +
-                                          ": " +
-                                          "20%",
-                                      overflow: TextOverflow.clip,
-                                      maxLines: 2,
-                                      softWrap: false,
-                                      style: TextStyle(fontSize: 14),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      "Status" +
-                                          ": " +
-                                          "On Going",
-                                      overflow: TextOverflow.clip,
-                                      maxLines: 2,
-                                      softWrap: false,
-                                      style: TextStyle(fontSize: 14),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            )),
-                        Container(
-                            margin: EdgeInsets.only(top: 5),
-                            child: Column(
-                              children: <Widget>[
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                IconButton(
-                                  icon: Icon(Icons.update),
-                                  color: Colors.grey,
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => WorkApproveModTabs()),
-                                    );
-                                  },
-                                ),
-//                                IconButton(
-//                                  icon: Icon(Icons.delete),
-//                                  color: Colors.grey,
-//                                  onPressed: () {},
-//                                ),
-                                IconButton(
-                                  icon: Icon(Icons.add_box),
-                                  color: Colors.grey,
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => SearchWorkerPage()),
-                                    );
-                                  },
-                                ),
-                              ],
-                            ))
-                      ],
-                    )
-                  ],
-                ))));
+
+  getProjDetails()
+  {
+    debugPrint("----------------"+widget.assignedProject.toString());
+    try {
+      if(widget.assignedProject!="No project assigned"|| widget.assignedProject!='' )
+      {
+        databaseReference.child(widget.assignedProject).once().then((
+            DataSnapshot dataSnapshot) {
+          debugPrint(dataSnapshot.value.toString());
+          setState(() {
+            projectDetails = dataSnapshot.value;
+            allocated=true;
+            isLoading=false;
+          });
+        });
+      }
+      else
+        setState(() {
+          allocated=false;
+          isLoading=true;
+        });
+    }
+    catch(e)
+    {
+      debugPrint(e.toString());
+      setState(() {
+        allocated=false;
+        isLoading=true;
+      });
+    }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-//      appBar: AppBar(
-//        title: Text("Your Created Projects"),
-//      ),
-      body: StreamBuilder(
-          stream: databaseReference.child("projects").onValue,
-          builder: (context, snap) {
-            if (snap.hasData &&
-                !snap.hasError &&
-                snap.data.snapshot.value != null) {
-              Map data = snap.data.snapshot.value;
-              ourCreatedProjects.clear();
-              allProjects = [];
-              data.forEach(
-                    (index, data) => allProjects.add({"key": index, ...data}),
-              );
+    debugPrint(allocated.toString());
 
-              for (int i = 0; i < allProjects.length; i++) {
+    if (isLoading == false)
+    {
+      if (allocated == true) {
+        if (projectDetails != null) {
+          return Scaffold(
 
-                  ourCreatedProjects.add(allProjects[i]);
-
-              }
-              return new Column(
+              body: ListView(
                 children: <Widget>[
-                  new Expanded(
-                    child: new ListView.builder(
-                      itemCount: ourCreatedProjects.length,
-                      itemBuilder: (context, index) {
-                        return displayProject(index);
-                      },
-                    ),
-                  ),
+                  _myAppBar2(),
+                  _body()
                 ],
-              );
-            } else {
-              return Center(
-                  child: CircularProgressIndicator(
-                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
-                  ));
-            }
-          }),
-      //floatingActionButton: floats(context, Test()),
+              )
+          );
+        }
+
+      }
+      else {
+        return Scaffold(
+          body: Center(
+            child: Text("You've not been assigned\nto any project"),),
+        );
+      }
+    }else{
+
+      return Scaffold(
+        body: Center(child: CircularProgressIndicator(),),
+      );
+
+    }
+
+  }
+
+  Widget _myAppBar2() {
+    return Container(
+      height: MediaQuery.of(context).size.height/3.5,
+      width: MediaQuery
+          .of(context)
+          .size
+          .width,
+      decoration: BoxDecoration(
+//        gradient: LinearGradient(
+//            colors: [ Colors.orange[200],Colors.orange[400],Colors.orange[600],Colors.orange[800],Colors.deepOrange[600]],
+//            begin: Alignment.centerRight,
+//            end: Alignment(-1.0,-2.0)
+//        ),// Gradient
+          gradient: gradients()
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 5,left: 30),
+        child: Container(
+
+            child: Column(
+              children: [
+                SizedBox(height: 35),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+
+                    SizedBox(width: 15),
+                    Expanded(
+                      flex: 5,
+                      child:Container(
+                        child:Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              projectDetails["projectName"].toString(),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18.0
+                              ),
+                            ),
+                            Text(
+                              projectDetails["siteAddress"].toString(),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14.0
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    Expanded(
+                      flex: 5,
+                      child:Container(
+                        child:Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CircularPercentIndicator(
+                              backgroundColor: Colors.grey[200],
+                              radius: 120.0,
+                              lineWidth: 13.0,
+                              animation: true,
+                              percent: double.parse("70") / 100,
+                              center: new Text(
+                                "70" + "%",
+                                style: new TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 20.0),
+                              ),
+                              circularStrokeCap: CircularStrokeCap.round,
+                              progressColor: Colors.indigo[400],
+                            ),
+                            Text(
+                              'Project Completion',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 15.0
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+              ],
+            )
+        ),
+      ),
     );
   }
+
+  Widget _body() {
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 20.0,left: 20,right: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Column(
+                  children: [
+                    Text(
+                        'Goals',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey[600],
+                            fontSize: 18
+                        )
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                        projectDetails["volumeToBeExcavated"].toString(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey[600],
+                            fontSize: 12
+                        )
+                    ),
+                  ],
+                ),
+                Container(height: 60, child: VerticalDivider(color: Colors.grey[400],width: 20,thickness: 2,)),
+                Column(
+                  children: [
+                    Text(
+                        'Machines',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey[600],
+                            fontSize: 18
+                        )
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                        "2",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey[600],
+                            fontSize: 12
+                        )
+                    ),
+
+                  ],
+                ),
+                Container(height: 60, child: VerticalDivider(color: Colors.grey[400],width: 20,thickness: 2,)),
+                Column(
+                  children: [
+                    Text(
+                        'Workers',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey[600],
+                            fontSize: 18
+                        )
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                        '4',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey[600],
+                            fontSize: 12
+                        )
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: 35),
+
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                GestureDetector(
+                    onTap: (){
+
+                    },
+                    child:Card(
+                      child:Container(
+                          height: MediaQuery.of(context).size.height/5,
+                          width: MediaQuery.of(context).size.width/2.5,
+                          padding: EdgeInsets.only(top: 10),
+                          child:ListView(
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.description,size: 50, color: Colors.grey,),
+                                  SizedBox(height:10),
+                                  Text("Project Details"),
+                                ],
+                              ),
+                            ],
+                          )
+                      ),
+                    )),
+
+                GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SearchWorkerPage()),
+                      );
+                    },
+                    child:Card(
+                      child:Container(
+                          height: MediaQuery.of(context).size.height/5,
+                          width: MediaQuery.of(context).size.width/2.5,
+                          padding: EdgeInsets.only(top: 10),
+                          child:ListView(
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.people,size: 50, color: Colors.grey,),
+                                  SizedBox(height:10),
+                                  Text("Add Workers"),
+                                ],
+                              ),
+                            ],
+                          )
+
+                      ),
+                    )),
+
+              ],
+            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>  WorkApproveModTabs(name: widget.name,email: widget.email, uid: widget.uid,
+                            assignedProject: widget.assignedProject,mobile: widget.mobile,userType: widget.userType,),),
+                      );
+                    },
+                    child: Card(
+                      child:Container(
+                          height: MediaQuery.of(context).size.height/5,
+                          width: MediaQuery.of(context).size.width/2.5,
+                          padding: EdgeInsets.only(top: 10),
+                          child:ListView(
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.check_circle_outline,size: 50, color: Colors.grey,),
+                                  SizedBox(height:10),
+                                  Text("Approve Work"),
+                                ],
+                              ),
+                            ],
+                          )
+
+                      ),
+                    )),
+
+                GestureDetector(
+                    onTap: (){
+
+                    },
+                    child:Card(
+                      child:Container(
+                          height: MediaQuery.of(context).size.height/5,
+                          width: MediaQuery.of(context).size.width/2.5,
+                          padding: EdgeInsets.only(top: 10),
+                          child:ListView(
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.insert_drive_file,size: 50, color: Colors.grey,),
+                                  SizedBox(height:10),
+                                  Text("Today's Report"),
+                                ],
+                              ),
+                            ],
+                          )
+
+                      ),
+                    )),
+
+              ],
+            ),
+
+
+            // SizedBox(height: 70),
+            // Center(
+            //   child: FlatButton(
+            //     child: Container(
+            //       height: 50,
+            //       width: double.infinity,
+            //       decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            //         gradient: LinearGradient(
+            //             colors: [ Colors.orange[200],Colors.orange[400],Colors.orange[600],Colors.orange[800],Colors.deepOrange[600]],
+            //             begin: Alignment.centerRight,
+            //             end: Alignment(-1.0,-2.0)
+            //         ), //Gradient
+            //       ),
+            //       child: Center(
+            //
+            //         child: Text(
+            //           'Our Projects',
+            //           style: TextStyle(
+            //               color: Colors.white,
+            //               fontWeight: FontWeight.bold
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //     // child: buttonContainers(double.infinity, 20, 'Our Projects', 18),
+            //     onPressed: () {},
+            //   ),
+            // )
+          ],
+        ),
+      ),
+    );
+  }
+
 }

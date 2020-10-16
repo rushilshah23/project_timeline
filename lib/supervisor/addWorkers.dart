@@ -7,6 +7,8 @@ import 'package:project_timeline/CommonWidgets.dart';
 import '../CommonWidgets.dart';
 
 class SearchWorkerPage extends StatefulWidget {
+  String name , email,  mobile , password,uid, userType,assignedProject;
+  SearchWorkerPage({Key key, this.name, this.email, this.mobile, this.assignedProject, this.userType, this.uid}) : super(key: key);
   @override
   _SearchWorkerPageState createState() => _SearchWorkerPageState();
 }
@@ -19,7 +21,9 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
   final List<WorkerList> workersList = [];
   final CollectionReference workers = Firestore.instance.collection("workers");
   final databaseReference = FirebaseDatabase.instance.reference();
-  var projectID = "b570da70-fa93-11ea-9561-89a3a74b28bb";
+  var projectID ;
+
+
 
   Future<void> getData() async {
     await workers.getDocuments().then((querySnapshot) {
@@ -109,6 +113,7 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
 
   @override
   void initState() {
+    projectID=widget.assignedProject;
     getData();
     super.initState();
   }

@@ -20,6 +20,8 @@ List<DateTime> endTime = List.generate(74, (i) => DateTime.now());
 
 
 class SpecialWorkerFormPage extends StatefulWidget {
+  String name , email,  mobile , password,uid, userType,assignedProject;
+  SpecialWorkerFormPage({Key key, this.name, this.email, this.mobile, this.assignedProject, this.userType, this.uid}) : super(key: key);
   @override
   _SpecialWorkerFormPageState createState() => _SpecialWorkerFormPageState();
 }
@@ -52,7 +54,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
   TextEditingController commentController = TextEditingController();
   final DateTime now = DateTime.now();
   final DateFormat formatter = DateFormat('dd-MM-yyyy');
-  var projectID = 'b570da70-fa93-11ea-9561-89a3a74b28bb';
+  String projectID;
   var workerID;
   var workerName;
   List<Asset> images = List<Asset>();
@@ -64,9 +66,12 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
 
   @override
   void initState() {
+
     setState(() {
+      projectID=widget.assignedProject;
       loadData();
     });
+
     timeIntervals = 1;
     super.initState();
     todaysDate = formatter.format(now);
@@ -124,7 +129,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
   void loadData() async {
     await databaseReference
         .child("projects")
-        .child(projectID)
+        .child(widget.assignedProject)
         .child("soilType")
         .once()
         .then((snapshot) {
@@ -132,7 +137,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
     });
     await databaseReference
         .child("projects")
-        .child(projectID)
+        .child(widget.assignedProject)
         .child("workers")
         .once()
         .then((snapshot) {

@@ -7,6 +7,9 @@ import 'package:project_timeline/CommonWidgets.dart';
 
 
 class DashBoard extends StatefulWidget {
+
+  String name , email,  mobile , password,uid, userType,assignedProject;
+  DashBoard({Key key, this.name, this.email, this.mobile, this.assignedProject, this.userType, this.uid}) : super(key: key);
   @override
   _DashBoardState createState() => _DashBoardState();
 }
@@ -85,7 +88,7 @@ class _DashBoardState extends State<DashBoard> {
                               ),
                             ),
                             Text(
-                              'Username',
+                              widget.name,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500,

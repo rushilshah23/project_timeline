@@ -50,6 +50,7 @@ dependencies:
     firebase_storage: ^3.0.3
     progress_dialog: ^1.2.4
     flutter_sms: ^2.0.1+2
+    shared_preferences: ^0.5.12+2
 
 dev_dependencies:
     flutter_test:

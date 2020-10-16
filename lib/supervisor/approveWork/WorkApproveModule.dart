@@ -10,6 +10,9 @@ import '../../CommonWidgets.dart';
 
 
 class ApproveWork extends StatefulWidget {
+
+  String name , email,  mobile , password,uid, userType,assignedProject;
+  ApproveWork({Key key, this.name, this.email, this.mobile, this.assignedProject, this.userType, this.uid}) : super(key: key);
   @override
   _ApproveWorkState createState() => _ApproveWorkState();
 }
@@ -17,12 +20,14 @@ class ApproveWork extends StatefulWidget {
 
 class _ApproveWorkState extends State<ApproveWork> {
 
+
+
   final databaseReference = FirebaseDatabase.instance.reference();
   List allDataList=List() ;
   List work=List() ;
 
-  String uid="8YiMHLBnBaNjmr3yPvk8NWvNPmm2";
-  String projectID="b570da70-fa93-11ea-9561-89a3a74b28bb";
+
+  String projectID;
 
   List days=List();
   List finalDisplayList =List();
@@ -30,6 +35,15 @@ class _ApproveWorkState extends State<ApproveWork> {
 
 
   List listOfWork=List();
+
+
+  @override
+  void initState() {
+    setState(() {
+      projectID=widget.assignedProject;
+    });
+    super.initState();
+  }
 
   Widget getIcon(status) {
     switch (status) {
@@ -43,52 +57,55 @@ class _ApproveWorkState extends State<ApproveWork> {
   }
 
   Widget build(BuildContext context) {
+
+
     return new Scaffold(
 
      // appBar:  ThemeAppbar("Approve Work"),
 
 
       body: StreamBuilder(
-          stream: databaseReference.child("projects").child(projectID).child("progress").onValue,
+          stream: databaseReference.child("projects").child(widget.assignedProject).onValue,
           builder: (context, snap) {
             if (snap.hasData &&
                 !snap.hasError &&
                 snap.data.snapshot.value != null) {
               Map data = snap.data.snapshot.value;
               //debugPrint(data.toString());
-              allDataList = [];
-              data.forEach(
-                    (index, data) => allDataList.add({"date": index, ...data}),
-              );
+              if(data.containsKey("progress")) {
+                Map data = snap.data.snapshot.value["progress"];
+                allDataList = [];
+                data.forEach(
+                      (index, data) =>
+                      allDataList.add({"date": index, ...data}),
+                );
 
-             //debugPrint(allMachines.toString());
-             debugPrint(data.keys.toList().toString());
-             days = data.keys.toList();
-             work= data.values.toList();
-             Map temp;
-             List uidTemp=[];
-             finalDisplayList.clear();
+                //debugPrint(allMachines.toString());
+                debugPrint(data.keys.toList().toString());
+                days = data.keys.toList();
+                work = data.values.toList();
+                Map temp;
+                List uidTemp = [];
+                finalDisplayList.clear();
 
-             for(int i=0 ;i<work.length;i++)
-               {
-                 //debugPrint(work[i].toString());
-                 temp=work[i];
-                 uidTemp=temp.keys.toList();
-                 //debugPrint(temp.values.toList().toString());
-                 listOfWork= temp.values.toList();
+                for (int i = 0; i < work.length; i++) {
+                  //debugPrint(work[i].toString());
+                  temp = work[i];
+                  uidTemp = temp.keys.toList();
+                  //debugPrint(temp.values.toList().toString());
+                  listOfWork = temp.values.toList();
 
-                 for(int j=0;j<listOfWork.length;j++)
-                   {
-                     listOfWork[j]["workerUID"]=uidTemp[j];
-                     listOfWork[j]["date"]=days[i];
-                     finalDisplayList.add(listOfWork[j]);
-                   }
-               //  debugPrint(listOfWork.toString());
+                  for (int j = 0; j < listOfWork.length; j++) {
+                    listOfWork[j]["workerUID"] = uidTemp[j];
+                    listOfWork[j]["date"] = days[i];
+                    finalDisplayList.add(listOfWork[j]);
+                  }
+                  //  debugPrint(listOfWork.toString());
 
 
-               }
-             debugPrint(finalDisplayList.toString());
-
+                }
+                debugPrint(finalDisplayList.toString());
+              }
               return
                 new GroupedListView<dynamic, String>(
                   groupBy: (element) => element['date'],

@@ -8,6 +8,7 @@ import 'package:project_timeline/manager/CreateAcceptSupervisor/createAcceptSupe
 import 'package:project_timeline/worker/updateWork.dart';
 import 'package:project_timeline/worker/workerDaily.dart';
 import 'package:project_timeline/worker/workerForm.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../dashboard.dart';
 
@@ -23,6 +24,31 @@ class WorkerHomePageState extends State<WorkerHomePage> {
   int _selectedDrawerIndex = 0;
   String appbartitle = "Dashboard";
 
+  String name = '', lname = '', email = '', mobile = '', password = '',uid='', userType,assignedProject;
+  _loadData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      email = (prefs.getString('email') ?? '');
+      name = (prefs.getString('name') ?? '');
+      mobile = (prefs.getString('mobile') ?? '');
+      uid = (prefs.getString('uid') ?? '');
+      userType = (prefs.getString('userType') ?? '');
+      assignedProject = (prefs.getString('assignedProject') ?? '');
+
+      print("inside profile="+email + name + mobile + lname+ assignedProject);
+
+
+    });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _loadData();
+
+  }
+
   _onSelectItem(int index) {
     setState(() => _selectedDrawerIndex = index);
     Navigator.of(context).pop(); // close the drawer
@@ -34,7 +60,7 @@ class WorkerHomePageState extends State<WorkerHomePage> {
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
-        return new DashBoard();
+        return new DashBoard(name: name,email: email, uid: uid, assignedProject: assignedProject,mobile: mobile,userType: userType,);
 
       case 1:
         return new OurPetrolPumps();
@@ -83,8 +109,8 @@ class WorkerHomePageState extends State<WorkerHomePage> {
                   decoration: BoxDecoration(
                     gradient: gradients()
                   ),
-                  accountName: Text("worker"),
-                  accountEmail: Text("worker1@gmail.com"),
+                  accountName: Text("Worker"),
+                  accountEmail: Text(email),
                   currentAccountPicture: InkWell(
                     onTap: () {
                       print("image clicked");

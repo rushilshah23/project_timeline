@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/Register.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'CommonWidgets.dart';
 import 'colors.dart';
 import 'manager/ManagerHomePage.dart';
@@ -42,6 +43,22 @@ class LoginPageState extends State<LoginPage> {
       showToast("Logout Successful");
     });
   }
+
+  _setData(String name, String email,String mobile,String uid,String assignedProject) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+
+    prefs.setString('email', email);
+    prefs.setString('name', name);
+    prefs.setString('mobile', mobile);
+    prefs.setString('uid', uid);
+    prefs.setString('assignedProject', assignedProject);
+    prefs.setString('userType', _requestType);
+    prefs.setBool("isLoggedIn", true);
+  }
+
+
+
 
   Future checkOTP(String phone, BuildContext context, pr) async {
     await pr.show();
@@ -167,6 +184,7 @@ class LoginPageState extends State<LoginPage> {
                   print(element.data["assignedProject"]);
                   showToast("Login Successful");
                   print("```````````````````````````");
+                  _setData(element.data["name"], element.data["email"], element.data["mobile"], element.data["uid"],element.data["assignedProject"]);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -202,6 +220,7 @@ class LoginPageState extends State<LoginPage> {
                   print(element.data["assignedProject"]);
                   showToast("Login Successful");
                   print("```````````````````````````");
+                  _setData(element.data["name"], element.data["email"], element.data["mobile"], element.data["uid"],element.data["assignedProject"]);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => WorkerHomePage()),
@@ -236,6 +255,7 @@ class LoginPageState extends State<LoginPage> {
                   print(element.data["assignedProject"]);
                   showToast("Login Successful");
                   print("```````````````````````````");
+                  _setData(element.data["name"], element.data["email"], element.data["mobile"], element.data["uid"],element.data["assignedProject"]);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => ManagerHomePage()),
@@ -289,6 +309,7 @@ class LoginPageState extends State<LoginPage> {
                     'signInMethod': "otp"
                   }).then((value) async {
                     await newPhoneUser.document(_email).delete().then((value) {
+                      _setData(element["name"], element["email"], element["mobile"],user.uid,"No project assigned");
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -317,6 +338,8 @@ class LoginPageState extends State<LoginPage> {
                     print(element.data["assignedProject"]);
                     showToast("Login Successful");
                     print("```````````````````````````");
+                    _setData(element.data["name"], element.data["email"], element.data["mobile"], element.data["uid"],element.data["assignedProject"]);
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -363,6 +386,7 @@ class LoginPageState extends State<LoginPage> {
                     'signInMethod': "otp"
                   }).then((value) async {
                     await newPhoneUser.document(_email).delete().then((value) {
+                      _setData(element["name"], element["email"], element["mobile"],user.uid,"No project assigned");
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -392,6 +416,7 @@ class LoginPageState extends State<LoginPage> {
                     print(element.data["assignedProject"]);
                     showToast("Login Successful");
                     print("```````````````````````````");
+                    _setData(element.data["name"], element.data["email"], element.data["mobile"], element.data["uid"],element.data["assignedProject"]);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -437,6 +462,7 @@ class LoginPageState extends State<LoginPage> {
                     "uid": user.uid,
                     'signInMethod': "otp"
                   }).then((value) async {
+                    _setData(element["name"], element["email"], element["mobile"],user.uid,"No project assigned");
                     await newPhoneUser.document(_email).delete().then((value) {
                       Navigator.push(
                         context,
@@ -467,6 +493,8 @@ class LoginPageState extends State<LoginPage> {
                     print(element.data["assignedProject"]);
                     showToast("Login Successful");
                     print("```````````````````````````");
+                    _setData(element.data["name"], element.data["email"], element.data["mobile"], element.data["uid"],element.data["assignedProject"]);
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => WorkerHomePage()),
@@ -512,6 +540,7 @@ class LoginPageState extends State<LoginPage> {
                     'signInMethod': "otp"
                   }).then((value) async {
                     await newPhoneUser.document(_email).delete().then((value) {
+                      _setData(element["name"], element["email"], element["mobile"],user.uid,"No project assigned");
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -541,6 +570,8 @@ class LoginPageState extends State<LoginPage> {
                     print(element.data["assignedProject"]);
                     showToast("Login Successful");
                     print("```````````````````````````");
+                    _setData(element.data["name"], element.data["email"], element.data["mobile"], element.data["uid"],element.data["assignedProject"]);
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(

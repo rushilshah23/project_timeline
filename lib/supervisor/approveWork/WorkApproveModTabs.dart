@@ -9,6 +9,8 @@ import 'WorkApproveModule.dart';
 //tab view code which is not working
 
 class WorkApproveModTabs extends StatefulWidget {
+  String name , email,  mobile , password,uid, userType,assignedProject;
+  WorkApproveModTabs({Key key, this.name, this.email, this.mobile, this.assignedProject, this.userType, this.uid}) : super(key: key);
   @override
   _WorkApproveModTabsState createState() => _WorkApproveModTabsState();
 }
@@ -102,8 +104,10 @@ class _WorkApproveModTabsState extends State<WorkApproveModTabs> with SingleTick
               height: MediaQuery.of(context).size.height-130,
               child: _getTabBarView(
                 <Widget>[
-                  ApproveWork(),
-                  SpecialWorkerFormPage(),
+                  ApproveWork(name: widget.name,email: widget.email, uid: widget.uid,
+                    assignedProject: widget.assignedProject,mobile: widget.mobile,userType: widget.userType,),
+                  SpecialWorkerFormPage(name: widget.name,email: widget.email, uid: widget.uid,
+                    assignedProject: widget.assignedProject,mobile: widget.mobile,userType: widget.userType,),
                 ],
               ),
             )
