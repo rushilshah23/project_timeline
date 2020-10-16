@@ -7,7 +7,7 @@ class WorkerDaily extends StatefulWidget {
 }
 
 class _WorkerDailyState extends State<WorkerDaily> {
-  var projectID =  "b570da70-fa93-11ea-9561-89a3a74b28bb";
+  var projectID = "b570da70-fa93-11ea-9561-89a3a74b28bb";
   var workerID = "8YiMHLBnBaNjmr3yPvk8NWvNPmm2"; //not working
   Widget getIcon(status) {
     switch (status) {
@@ -66,6 +66,12 @@ class _WorkerDailyState extends State<WorkerDaily> {
                         ),
                       );
                     },
+                  );
+                } else if (!snap.hasData ||
+                    snap.hasError ||
+                    snap.data.snapshot.value == null) {
+                  return Center(
+                    child: Text("No Data Found"),
                   );
                 } else
                   return Center(

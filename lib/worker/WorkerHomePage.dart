@@ -12,19 +12,23 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../dashboard.dart';
 
-
-
 class WorkerHomePage extends StatefulWidget {
   @override
   State createState() => WorkerHomePageState();
 }
 
 class WorkerHomePageState extends State<WorkerHomePage> {
-
   int _selectedDrawerIndex = 0;
   String appbartitle = "Dashboard";
 
-  String name = '', lname = '', email = '', mobile = '', password = '',uid='', userType,assignedProject;
+  String name = '',
+      lname = '',
+      email = '',
+      mobile = '',
+      password = '',
+      uid = '',
+      userType,
+      assignedProject;
   _loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -35,18 +39,16 @@ class WorkerHomePageState extends State<WorkerHomePage> {
       uid = (prefs.getString('uid') ?? '');
       userType = (prefs.getString('userType') ?? '');
       assignedProject = (prefs.getString('assignedProject') ?? '');
-
-      print("inside profile="+email + name + mobile + lname+ assignedProject);
-
-
+      print(
+          "inside profile=" + email + name + mobile + lname + assignedProject);
     });
   }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _loadData();
-
   }
 
   _onSelectItem(int index) {
@@ -56,11 +58,17 @@ class WorkerHomePageState extends State<WorkerHomePage> {
     // Navigator.pop(context);
   }
 
-
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
-        return new DashBoard(name: name,email: email, uid: uid, assignedProject: assignedProject,mobile: mobile,userType: userType,);
+        return new DashBoard(
+          name: name,
+          email: email,
+          uid: uid,
+          assignedProject: assignedProject,
+          mobile: mobile,
+          userType: userType,
+        );
 
       case 1:
         return new OurPetrolPumps();
@@ -72,11 +80,14 @@ class WorkerHomePageState extends State<WorkerHomePage> {
         return new ProgressPage();
 
       case 4:
-        return new UpdateWork();
-
-
-
-
+        return new UpdateWork(
+          name: name,
+          email: email,
+          uid: uid,
+          assignedProject: assignedProject,
+          mobile: mobile,
+          userType: userType,
+        );
 
       default:
         return new Text("Error");
@@ -90,9 +101,10 @@ class WorkerHomePageState extends State<WorkerHomePage> {
         iconTheme: IconThemeData(
           color: Colors.indigo[200],
         ),
-        title:  Text(appbartitle, style: TextStyle(
-          color: Colors.indigo,
-        )),
+        title: Text(appbartitle,
+            style: TextStyle(
+              color: Colors.indigo,
+            )),
         backgroundColor: Colors.white,
       ),
 
@@ -102,13 +114,10 @@ class WorkerHomePageState extends State<WorkerHomePage> {
           context: context,
           removeTop: true,
           child: new Drawer(
-
             child: ListView(
               children: <Widget>[
                 UserAccountsDrawerHeader(
-                  decoration: BoxDecoration(
-                    gradient: gradients()
-                  ),
+                  decoration: BoxDecoration(gradient: gradients()),
                   accountName: Text("Worker"),
                   accountEmail: Text(email),
                   currentAccountPicture: InkWell(
@@ -116,7 +125,7 @@ class WorkerHomePageState extends State<WorkerHomePage> {
                       print("image clicked");
                     },
                     child: CircleAvatar(
-                      backgroundColor:Colors.white,
+                      backgroundColor: Colors.white,
                       child: Text(
                         "M",
                         style: TextStyle(fontSize: 40.0),
@@ -134,8 +143,10 @@ class WorkerHomePageState extends State<WorkerHomePage> {
                       appbartitle = "Dashboard";
                     }),
                 ExpansionTile(
-                  title:
-                  Row(children: <Widget>[Icon(Icons.check_circle), Text(" Our Resources")]),
+                  title: Row(children: <Widget>[
+                    Icon(Icons.check_circle),
+                    Text(" Our Resources")
+                  ]),
                   children: <Widget>[
                     ListTile(
                         title: Row(children: <Widget>[
@@ -147,7 +158,6 @@ class WorkerHomePageState extends State<WorkerHomePage> {
 
                           appbartitle = "Our Petrol Pumps";
                         }),
-
                     ListTile(
                         title: Row(children: <Widget>[
                           Icon(Icons.arrow_right),
@@ -158,8 +168,6 @@ class WorkerHomePageState extends State<WorkerHomePage> {
 
                           appbartitle = "Our Machines";
                         }),
-
-
                   ],
                 ),
                 ListTile(
@@ -171,16 +179,18 @@ class WorkerHomePageState extends State<WorkerHomePage> {
                       _onSelectItem(3);
                       appbartitle = "Our Projects";
                     }),
-
-                ListTile(
-                    title: Row(children: <Widget>[
-                      Icon(Icons.work),
-                      Text(" Update Your Work")
-                    ]),
-                    onTap: () {
-                      _onSelectItem(4);
-                      appbartitle = "Update Your Work";
-                    }),
+                if (assignedProject != "No project assigned" ||
+                    assignedProject == '' ||
+                    assignedProject == null)
+                  ListTile(
+                      title: Row(children: <Widget>[
+                        Icon(Icons.work),
+                        Text(" Update Your Work")
+                      ]),
+                      onTap: () {
+                        _onSelectItem(4);
+                        appbartitle = "Update Your Work";
+                      }),
 
 //                ListTile(
 //                    title: Row(children: <Widget>[

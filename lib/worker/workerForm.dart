@@ -30,6 +30,16 @@ class WorkerForm extends StatelessWidget {
 }
 
 class WorkerFormPage extends StatefulWidget {
+  String name, email, mobile, password, uid, userType, assignedProject;
+  WorkerFormPage(
+      {Key key,
+      this.name,
+      this.email,
+      this.mobile,
+      this.assignedProject,
+      this.userType,
+      this.uid})
+      : super(key: key);
   @override
   _WorkerFormPageState createState() => _WorkerFormPageState();
 }
@@ -59,7 +69,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
   TextEditingController commentController = TextEditingController();
   final DateTime now = DateTime.now();
   final DateFormat formatter = DateFormat('dd-MM-yyyy');
-  var projectID = "b570da70-fa93-11ea-9561-89a3a74b28bb";
+  var projectID;
   var workerID = '8YiMHLBnBaNjmr3yPvk8NWvNPmm2';
   var workerName = 'rajesh kumar';
   List<Asset> images = List<Asset>();
@@ -72,6 +82,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
   @override
   void initState() {
     setState(() {
+      projectID = widget.assignedProject;
       loadData();
     });
     timeIntervals = 1;

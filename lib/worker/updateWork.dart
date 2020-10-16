@@ -5,13 +5,22 @@ import 'package:project_timeline/worker/workerForm.dart';
 //tab view code which is not working
 
 class UpdateWork extends StatefulWidget {
+  String name, email, mobile, password, uid, userType, assignedProject;
+  UpdateWork(
+      {Key key,
+      this.name,
+      this.email,
+      this.mobile,
+      this.assignedProject,
+      this.userType,
+      this.uid})
+      : super(key: key);
   @override
   _UpdateWorkState createState() => _UpdateWorkState();
 }
 
-class _UpdateWorkState extends State<UpdateWork> with SingleTickerProviderStateMixin{
-
-
+class _UpdateWorkState extends State<UpdateWork>
+    with SingleTickerProviderStateMixin {
 //  @override
 //  Widget build(BuildContext context) {
 //    return MaterialApp(
@@ -51,7 +60,6 @@ class _UpdateWorkState extends State<UpdateWork> with SingleTickerProviderStateM
 //    );
 //  }
 
-
   TabController tabController;
 
   @override
@@ -70,7 +78,9 @@ class _UpdateWorkState extends State<UpdateWork> with SingleTickerProviderStateM
     return TabBar(
       labelColor: Colors.blue,
       tabs: <Widget>[
-        Tab(text: "Update",),
+        Tab(
+          text: "Update",
+        ),
         Tab(text: "Approvals"),
       ],
       controller: tabController,
@@ -80,7 +90,6 @@ class _UpdateWorkState extends State<UpdateWork> with SingleTickerProviderStateM
   TabBarView _getTabBarView(tabs) {
     return TabBarView(
       children: tabs,
-
       controller: tabController,
     );
   }
@@ -93,10 +102,17 @@ class _UpdateWorkState extends State<UpdateWork> with SingleTickerProviderStateM
           children: <Widget>[
             _getTabBar(),
             Container(
-              height: MediaQuery.of(context).size.height-130,
+              height: MediaQuery.of(context).size.height - 130,
               child: _getTabBarView(
                 <Widget>[
-                  WorkerFormPage(),
+                  WorkerFormPage(
+                    name: widget.name,
+                    email: widget.email,
+                    uid: widget.uid,
+                    assignedProject: widget.assignedProject,
+                    mobile: widget.mobile,
+                    userType: widget.userType,
+                  ),
                   WorkerDaily(),
                 ],
               ),

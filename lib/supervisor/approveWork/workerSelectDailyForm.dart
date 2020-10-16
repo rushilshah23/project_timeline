@@ -18,10 +18,17 @@ int timeIntervals;
 List<DateTime> startTime = List.generate(74, (i) => DateTime.now());
 List<DateTime> endTime = List.generate(74, (i) => DateTime.now());
 
-
 class SpecialWorkerFormPage extends StatefulWidget {
-  String name , email,  mobile , password,uid, userType,assignedProject;
-  SpecialWorkerFormPage({Key key, this.name, this.email, this.mobile, this.assignedProject, this.userType, this.uid}) : super(key: key);
+  String name, email, mobile, password, uid, userType, assignedProject;
+  SpecialWorkerFormPage(
+      {Key key,
+      this.name,
+      this.email,
+      this.mobile,
+      this.assignedProject,
+      this.userType,
+      this.uid})
+      : super(key: key);
   @override
   _SpecialWorkerFormPageState createState() => _SpecialWorkerFormPageState();
 }
@@ -66,9 +73,8 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
 
   @override
   void initState() {
-
     setState(() {
-      projectID=widget.assignedProject;
+      projectID = widget.assignedProject;
       loadData();
     });
 
@@ -138,37 +144,41 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
     await databaseReference
         .child("projects")
         .child(widget.assignedProject)
-        .child("workers")
         .once()
         .then((snapshot) {
       print(snapshot.value);
-      snapshot.value.forEach((key, values) {
-        setState(() {
-          workers.add(
-            DropdownMenuItem(
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(values["name"].toString()),
-                    Text(
-                      values["mobile"].toString(),
-                      style: TextStyle(color: Colors.grey, fontSize: 14),
-                    ),
-                  ],
+      Map data = snapshot.value;
+      //debugPrint(data.toString());
+      if (data.containsKey("workers")) {
+        Map data = snapshot.value["workers"];
+        data.forEach((key, values) {
+          setState(() {
+            workers.add(
+              DropdownMenuItem(
+                child: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(values["name"].toString()),
+                      Text(
+                        values["mobile"].toString(),
+                        style: TextStyle(color: Colors.grey, fontSize: 14),
+                      ),
+                    ],
+                  ),
                 ),
+                value: key.toString() +
+                    "," +
+                    values["name"].toString() +
+                    "," +
+                    values["mobile"].toString(),
               ),
-              value: key.toString() +
-                  "," +
-                  values["name"].toString() +
-                  "," +
-                  values["mobile"].toString(),
-            ),
-          );
-          workersList.add(
-              WorkerList(values['name'], values['mobile'], key.toString()));
+            );
+            workersList.add(
+                WorkerList(values['name'], values['mobile'], key.toString()));
+          });
         });
-      });
+      }
     });
     await databaseReference
         .child("masters")
@@ -347,7 +357,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
     if (machines.length > 0)
       return Scaffold(
         body: Container(
-    // Center is a layout widget. It takes a single child and positions it
+            // Center is a layout widget. It takes a single child and positions it
             // in the middle of the parent.
             padding: EdgeInsets.all(20),
             child: Form(
@@ -355,7 +365,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
               child: ListView(
                 children: <Widget>[
                   Center(
-                  child: titleStyles('For :' + todaysDate, 18),
+                    child: titleStyles('For :' + todaysDate, 18),
                   ),
                   SizedBox(
                     height: 10,
@@ -601,7 +611,8 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                     height: 50,
                     child: FlatButton(
                       onPressed: () => submitForm(),
-                      child: buttonContainers(double.infinity, 10, 'Submit', 18),
+                      child:
+                          buttonContainers(double.infinity, 10, 'Submit', 18),
                     ),
                   )
                 ],
