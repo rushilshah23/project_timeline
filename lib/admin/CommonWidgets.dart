@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+
+String workerType="Worker";
+String managerType="Manager";
+String supervisorType="Supervisor";
+
 showToast(String msg)
 {
   return  Fluttertoast.showToast(

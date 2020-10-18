@@ -112,7 +112,11 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
 
   @override
   void initState() {
-    projectID=widget.assignedProject;
+    setState(() {
+      projectID=widget.assignedProject;
+    });
+
+    debugPrint("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"+widget.assignedProject.toString());
     getData();
     super.initState();
   }

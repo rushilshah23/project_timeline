@@ -259,12 +259,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
         print(hoursWorked);
         machineDetails.forEach((machine) {
           if (machine.machineID == machineUsed) {
-            machine.excavation.forEach((exacavation) {
-              if (exacavation["soilType"] == soilType) {
-                exacavatedPerHour =
-                    double.parse(exacavation["amountOfExcavation"]);
-              }
-            });
+            exacavatedPerHour = double.parse(machine.excavation);
           }
         });
         depth = double.parse(depthController.text);

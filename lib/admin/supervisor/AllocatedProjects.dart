@@ -119,6 +119,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
 //            end: Alignment(-1.0,-2.0)
 //        ),// Gradient
           gradient: gradients()
+
       ),
       child: Padding(
         padding: const EdgeInsets.only(top: 5,left: 30),
@@ -314,7 +315,8 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => SearchWorkerPage()),
+                            builder: (context) => SearchWorkerPage(name: widget.name,email: widget.email, uid: widget.uid,
+                              assignedProject: widget.assignedProject,mobile: widget.mobile,userType: widget.userType,)),
                       );
                     },
                     child:Card(

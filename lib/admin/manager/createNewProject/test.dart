@@ -685,6 +685,42 @@ class _TestState extends State<Test> {
               Center(
               child: titleStyles('Create New Project', 24),
               ),
+
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Center(
+                    child: SearchableDropdown.multiple(
+                      items: supervisorDropdwnItems,
+                      selectedItems: selectedSupervisors,
+                      hint: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text("Select Supervisors"),
+                      ),
+                      searchHint: "Select any",
+                      onChanged: (value) {
+                        setState(() {
+                          selectedSupervisors = value;
+                          debugPrint("vvvvvvvvvvvvvvvvvvv  "+value.toString());
+                        });
+                        print(selectedSupervisors.toString());
+                      },
+                      closeButton: (selectedItems) {
+                        return (selectedItems.isNotEmpty
+                            ? "Save ${selectedItems.length == 1 ? '"' + supervisorDropdwnItems[selectedItems.first].value.toString() + '"' : '(' + selectedItems.length.toString() + ')'}"
+                            : "Save without selection");
+                      },
+                      isExpanded: true,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+
               SizedBox(height: 20,),
               TextFormField(
                 textInputAction: TextInputAction.newline,
@@ -974,39 +1010,6 @@ class _TestState extends State<Test> {
                     ],
                   )),
               SizedBox(height: 20.0),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Center(
-                    child: SearchableDropdown.multiple(
-                      items: supervisorDropdwnItems,
-                      selectedItems: selectedSupervisors,
-                      hint: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Text("Select Supervisors"),
-                      ),
-                      searchHint: "Select any",
-                      onChanged: (value) {
-                        setState(() {
-                          selectedSupervisors = value;
-                        });
-                        print(selectedSupervisors.toString());
-                      },
-                      closeButton: (selectedItems) {
-                        return (selectedItems.isNotEmpty
-                            ? "Save ${selectedItems.length == 1 ? '"' + supervisorDropdwnItems[selectedItems.first].value.toString() + '"' : '(' + selectedItems.length.toString() + ')'}"
-                            : "Save without selection");
-                      },
-                      isExpanded: true,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
 
 
 
