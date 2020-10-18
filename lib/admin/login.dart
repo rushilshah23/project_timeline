@@ -19,14 +19,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  List<String> _type = ["worker", "supervisor", "manager"];
-  String _requestType = null ?? "worker";
+  List<String> _type = [workerType, supervisorType, managerType];
+  String _requestType = null ?? workerType;
   String _signInMethod = null ?? "email";
   String _email, _password;
   var credential, selectedType, flag = 0, firstTimeLogin = 0;
 
   final formKey = new GlobalKey<FormState>();
-  //final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final userController = TextEditingController();
   final passController = TextEditingController();
   final controllerOTP = TextEditingController();
@@ -125,31 +124,234 @@ class LoginPageState extends State<LoginPage> {
     print(_email);
     print(_password);
     try {
-      switch (_requestType) {
-        case "user":
-          print("user");
+      if (_requestType == userType) {
+        print("user");
+        await users.getDocuments().then((value) {
+          value.documents.forEach((element) async {
+            if (element.data["email"] == _email) {
+              flag = 1;
+              AuthResult result = await _auth
+                  .signInWithEmailAndPassword(
+                      email: _email, password: _password)
+                  .catchError((e) {
+                showToast(e.toString());
+              });
+              FirebaseUser user = result.user;
+              if (user.uid != null) {
+                await pr.hide();
+                print("```````````````````````````");
+                print("account login successful");
+                print(user.uid);
+                print(element.data["email"]);
+                print(element.data["mobile"]);
+                print(element.data["name"]);
+                print(element.data["assignedProject"]);
+                showToast("Login Successful");
+                print("```````````````````````````");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ManagerHomePage()),
+                );
+              }
+            }
+          });
+        });
+        if (flag == 0) showToast("Account is not Accepted");
+      } else if (_requestType == supervisorType) {
+        print("supervisor");
+        await supervisor.getDocuments().then((value) {
+          value.documents.forEach((element) async {
+            if (element.data["email"] == _email) {
+              flag = 1;
+              AuthResult result = await _auth
+                  .signInWithEmailAndPassword(
+                      email: _email, password: _password)
+                  .catchError((e) {
+                showToast(e.toString());
+              });
+
+              FirebaseUser user = result.user;
+              if (user.uid != null) {
+                print("```````````````````````````");
+                print("account login successful");
+                print(user.uid);
+                print(element.data["email"]);
+                print(element.data["mobile"]);
+                print(element.data["name"]);
+                print(element.data["assignedProject"]);
+                showToast("Login Successful");
+                print("```````````````````````````");
+                _setData(
+                    element.data["name"],
+                    element.data["email"],
+                    element.data["mobile"],
+                    element.data["uid"],
+                    element.data["assignedProject"]);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SupervisorHomePage()),
+                );
+              }
+            }
+          });
+        });
+        if (flag == 0) showToast("Account is not Accepted");
+      } else if (_requestType == workerType) {
+        print("worker");
+        await workers.getDocuments().then((value) {
+          value.documents.forEach((element) async {
+            if (element.data["email"] == _email) {
+              flag = 1;
+              print(element.data);
+              AuthResult result = await _auth
+                  .signInWithEmailAndPassword(
+                      email: _email, password: _password)
+                  .catchError((e) {
+                showToast(e.toString());
+              });
+              FirebaseUser user = result.user;
+              if (user.uid != null) {
+                print("```````````````````````````");
+                print("account login successful");
+                print(user.uid);
+                print(element.data["email"]);
+                print(element.data["mobile"]);
+                print(element.data["name"]);
+                print(element.data["assignedProject"]);
+                showToast("Login Successful");
+                print("```````````````````````````");
+                _setData(
+                    element.data["name"],
+                    element.data["email"],
+                    element.data["mobile"],
+                    element.data["uid"],
+                    element.data["assignedProject"]);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => WorkerHomePage()),
+                );
+              }
+            }
+          });
+        });
+        if (flag == 0) showToast("Account is not Accepted");
+      } else if (_requestType == userType) {
+        print("manager");
+        await manager.getDocuments().then((value) {
+          value.documents.forEach((element) async {
+            if (element.data["email"] == _email) {
+              flag = 1;
+              print(element.data);
+              AuthResult result = await _auth
+                  .signInWithEmailAndPassword(
+                      email: _email, password: _password)
+                  .catchError((e) {
+                showToast(e.toString());
+              });
+              FirebaseUser user = result.user;
+              if (user.uid != null) {
+                print("```````````````````````````");
+                print("account login successful");
+                print(user.uid);
+                print(element.data["email"]);
+                print(element.data["mobile"]);
+                print(element.data["name"]);
+                print(element.data["assignedProject"]);
+                showToast("Login Successful");
+                print("```````````````````````````");
+                _setData(
+                    element.data["name"],
+                    element.data["email"],
+                    element.data["mobile"],
+                    element.data["uid"],
+                    element.data["assignedProject"]);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ManagerHomePage()),
+                );
+              }
+            }
+          });
+        });
+        if (flag == 0) showToast("Account is not Accepted");
+      }
+    } catch (e) {
+      print("```````````````````````````");
+      print(e.toString());
+      print("```````````````````````````");
+    }
+  }
+
+  loginUsingOTP(credential, pr) async {
+    print("```````````````````````````");
+    print(_requestType);
+    print("```````````````````````````");
+    try {
+      if (_requestType == userType) {
+        await newPhoneUser.getDocuments().then((value) {
+          value.documents.forEach((element) async {
+            if (element.documentID == _email &&
+                element.data["userType"] == userType) {
+              firstTimeLogin = 1;
+              AuthResult result = await _auth.signInWithCredential(credential);
+              FirebaseUser user = result.user;
+              if (user.uid != null) {
+                await pr.hide();
+                print("```````````````````````````");
+                print("account creation successful");
+                print(user.uid);
+                print(element.data["mobile"]);
+                print(element.data["name"]);
+                print(element.data["assignedProject"]);
+                showToast("Login Successful");
+                print("```````````````````````````");
+                users.document(user.uid).setData({
+                  "assignedProject": "No project assigned",
+                  "mobile": element["mobile"],
+                  "name": element["name"],
+                  "age": element["age"],
+                  "address": element["address"],
+                  "uid": user.uid,
+                  'signInMethod': "otp"
+                }).then((value) async {
+                  await newPhoneUser.document(_email).delete().then((value) {
+                    _setData(element["name"], element["email"],
+                        element["mobile"], user.uid, "No project assigned");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ManagerHomePage()),
+                    );
+                  });
+                });
+              }
+            }
+          });
+        });
+        if (firstTimeLogin != 1) {
           await users.getDocuments().then((value) {
             value.documents.forEach((element) async {
-              if (element.data["email"] == _email) {
+              if (element.data["mobile"] == _email) {
                 flag = 1;
-                AuthResult result = await _auth
-                    .signInWithEmailAndPassword(
-                        email: _email, password: _password)
-                    .catchError((e) {
-                  showToast(e.toString());
-                });
+                AuthResult result =
+                    await _auth.signInWithCredential(credential);
                 FirebaseUser user = result.user;
                 if (user.uid != null) {
                   await pr.hide();
                   print("```````````````````````````");
-                  print("account login successful");
-                  print(user.uid);
-                  print(element.data["email"]);
+                  print(element.data["uid"]);
                   print(element.data["mobile"]);
                   print(element.data["name"]);
                   print(element.data["assignedProject"]);
                   showToast("Login Successful");
                   print("```````````````````````````");
+                  _setData(
+                      element.data["name"],
+                      element.data["email"],
+                      element.data["mobile"],
+                      element.data["uid"],
+                      element.data["assignedProject"]);
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => ManagerHomePage()),
@@ -158,27 +360,67 @@ class LoginPageState extends State<LoginPage> {
               }
             });
           });
-          if (flag == 0) showToast("Account is not Accepted");
-          break;
-        case "supervisor":
-          print("supervisor");
+          if (flag == 0) {
+            showToast("Please register first");
+          }
+        } else {
+          await newPhoneUser.document(_email).delete();
+        }
+      } else if (_requestType == supervisorType) {
+        await newPhoneUser.getDocuments().then((value) {
+          value.documents.forEach((element) async {
+            if (element.documentID == _email &&
+                element.data["userType"] == supervisorType) {
+              firstTimeLogin = 1;
+              AuthResult result = await _auth.signInWithCredential(credential);
+              FirebaseUser user = result.user;
+              if (user.uid != null) {
+                await pr.hide();
+
+                print("```````````````````````````");
+                print("account creation successful");
+                print(user.uid);
+                print(element.data["mobile"]);
+                print(element.data["name"]);
+                print(element.data["assignedProject"]);
+                showToast("Login Successful");
+                print("```````````````````````````");
+                supervisor.document(user.uid).setData({
+                  "assignedProject": "No project assigned",
+                  "mobile": element["mobile"],
+                  "name": element["name"],
+                  "age": element["age"],
+                  "address": element["address"],
+                  "uid": user.uid,
+                  'signInMethod': "otp"
+                }).then((value) async {
+                  await newPhoneUser.document(_email).delete().then((value) {
+                    _setData(element["name"], element["email"],
+                        element["mobile"], user.uid, "No project assigned");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ManagerHomePage()),
+                    );
+                  });
+                });
+              }
+            }
+          });
+        });
+        if (firstTimeLogin != 1) {
           await supervisor.getDocuments().then((value) {
             value.documents.forEach((element) async {
-              if (element.data["email"] == _email) {
+              if (element.data["mobile"] == _email) {
                 flag = 1;
-                AuthResult result = await _auth
-                    .signInWithEmailAndPassword(
-                        email: _email, password: _password)
-                    .catchError((e) {
-                  showToast(e.toString());
-                });
-
+                AuthResult result =
+                    await _auth.signInWithCredential(credential);
                 FirebaseUser user = result.user;
                 if (user.uid != null) {
+                  await pr.hide();
+
                   print("```````````````````````````");
-                  print("account login successful");
-                  print(user.uid);
-                  print(element.data["email"]);
+                  print(element.data["uid"]);
                   print(element.data["mobile"]);
                   print(element.data["name"]);
                   print(element.data["assignedProject"]);
@@ -199,27 +441,67 @@ class LoginPageState extends State<LoginPage> {
               }
             });
           });
-          if (flag == 0) showToast("Account is not Accepted");
-          break;
-        case "worker":
-          print("worker");
+          if (flag == 0) {
+            showToast("Please register first");
+          }
+        } else {
+          await newPhoneUser.document(_email).delete();
+        }
+      } else if (_requestType == workerType) {
+        await newPhoneUser.getDocuments().then((value) {
+          value.documents.forEach((element) async {
+            if (element.documentID == _email &&
+                element.data["userType"] == workerType) {
+              firstTimeLogin = 1;
+              AuthResult result = await _auth.signInWithCredential(credential);
+              FirebaseUser user = result.user;
+              if (user.uid != null) {
+                await pr.hide();
+
+                print("```````````````````````````");
+                print("account creation successful");
+                print(user.uid);
+                print(element.data["mobile"]);
+                print(element.data["name"]);
+                print(element.data["assignedProject"]);
+                showToast("Login Successful");
+                print("```````````````````````````");
+                workers.document(user.uid).setData({
+                  "assignedProject": "No project assigned",
+                  "mobile": element["mobile"],
+                  "name": element["name"],
+                  "age": element["age"],
+                  "address": element["address"],
+                  "uid": user.uid,
+                  'signInMethod': "otp"
+                }).then((value) async {
+                  _setData(element["name"], element["email"], element["mobile"],
+                      user.uid, "No project assigned");
+                  await newPhoneUser.document(_email).delete().then((value) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ManagerHomePage()),
+                    );
+                  });
+                });
+              }
+            }
+          });
+        });
+        if (firstTimeLogin != 1) {
           await workers.getDocuments().then((value) {
             value.documents.forEach((element) async {
-              if (element.data["email"] == _email) {
+              if (element.data["mobile"] == _email) {
                 flag = 1;
-                print(element.data);
-                AuthResult result = await _auth
-                    .signInWithEmailAndPassword(
-                        email: _email, password: _password)
-                    .catchError((e) {
-                  showToast(e.toString());
-                });
+                AuthResult result =
+                    await _auth.signInWithCredential(credential);
                 FirebaseUser user = result.user;
                 if (user.uid != null) {
+                  await pr.hide();
+
                   print("```````````````````````````");
-                  print("account login successful");
-                  print(user.uid);
-                  print(element.data["email"]);
+                  print(element.data["uid"]);
                   print(element.data["mobile"]);
                   print(element.data["name"]);
                   print(element.data["assignedProject"]);
@@ -231,6 +513,7 @@ class LoginPageState extends State<LoginPage> {
                       element.data["mobile"],
                       element.data["uid"],
                       element.data["assignedProject"]);
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => WorkerHomePage()),
@@ -239,27 +522,67 @@ class LoginPageState extends State<LoginPage> {
               }
             });
           });
-          if (flag == 0) showToast("Account is not Accepted");
-          break;
-        case "manager":
-          print("manager");
+          if (flag == 0) {
+            showToast("Please register first");
+          }
+        } else {
+          await newPhoneUser.document(_email).delete();
+        }
+      } else if (_requestType == managerType) {
+        await newPhoneUser.getDocuments().then((value) {
+          value.documents.forEach((element) async {
+            if (element.documentID == _email &&
+                element.data["userType"] == managerType) {
+              firstTimeLogin = 1;
+              AuthResult result = await _auth.signInWithCredential(credential);
+              FirebaseUser user = result.user;
+              if (user.uid != null) {
+                await pr.hide();
+
+                print("```````````````````````````");
+                print("account creation successful");
+                print(user.uid);
+                print(element.data["mobile"]);
+                print(element.data["name"]);
+                print(element.data["assignedProject"]);
+                showToast("Login Successful");
+                print("```````````````````````````");
+                manager.document(user.uid).setData({
+                  "assignedProject": "No project assigned",
+                  "mobile": element["mobile"],
+                  "name": element["name"],
+                  "age": element["age"],
+                  "address": element["address"],
+                  "uid": user.uid,
+                  'signInMethod': "otp"
+                }).then((value) async {
+                  await newPhoneUser.document(_email).delete().then((value) {
+                    _setData(element["name"], element["email"],
+                        element["mobile"], user.uid, "No project assigned");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ManagerHomePage()),
+                    );
+                  });
+                });
+              }
+            }
+          });
+        });
+        if (firstTimeLogin != 1) {
           await manager.getDocuments().then((value) {
             value.documents.forEach((element) async {
-              if (element.data["email"] == _email) {
+              if (element.data["mobile"] == _email) {
                 flag = 1;
-                print(element.data);
-                AuthResult result = await _auth
-                    .signInWithEmailAndPassword(
-                        email: _email, password: _password)
-                    .catchError((e) {
-                  showToast(e.toString());
-                });
+                AuthResult result =
+                    await _auth.signInWithCredential(credential);
                 FirebaseUser user = result.user;
                 if (user.uid != null) {
+                  await pr.hide();
+
                   print("```````````````````````````");
-                  print("account login successful");
-                  print(user.uid);
-                  print(element.data["email"]);
+                  print(element.data["uid"]);
                   print(element.data["mobile"]);
                   print(element.data["name"]);
                   print(element.data["assignedProject"]);
@@ -271,6 +594,7 @@ class LoginPageState extends State<LoginPage> {
                       element.data["mobile"],
                       element.data["uid"],
                       element.data["assignedProject"]);
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => ManagerHomePage()),
@@ -279,354 +603,12 @@ class LoginPageState extends State<LoginPage> {
               }
             });
           });
-          if (flag == 0) showToast("Account is not Accepted");
-          break;
-      }
-    } catch (e) {
-      print("```````````````````````````");
-      print(e.toString());
-      print("```````````````````````````");
-    }
-  }
-
-  loginUsingOTP(credential, pr) async {
-    print("```````````````````````````");
-    print(_requestType);
-    print("```````````````````````````");
-    try {
-      switch (_requestType) {
-        case "user":
-          await newPhoneUser.getDocuments().then((value) {
-            value.documents.forEach((element) async {
-              if (element.documentID == _email &&
-                  element.data["userType"] == "user") {
-                firstTimeLogin = 1;
-                AuthResult result =
-                    await _auth.signInWithCredential(credential);
-                FirebaseUser user = result.user;
-                if (user.uid != null) {
-                  await pr.hide();
-                  print("```````````````````````````");
-                  print("account creation successful");
-                  print(user.uid);
-                  print(element.data["mobile"]);
-                  print(element.data["name"]);
-                  print(element.data["assignedProject"]);
-                  showToast("Login Successful");
-                  print("```````````````````````````");
-                  users.document(user.uid).setData({
-                    "assignedProject": "No project assigned",
-                    "mobile": element["mobile"],
-                    "name": element["name"],
-                    "age": element["age"],
-                    "address": element["address"],
-                    "uid": user.uid,
-                    'signInMethod': "otp"
-                  }).then((value) async {
-                    await newPhoneUser.document(_email).delete().then((value) {
-                      _setData(element["name"], element["email"],
-                          element["mobile"], user.uid, "No project assigned");
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ManagerHomePage()),
-                      );
-                    });
-                  });
-                }
-              }
-            });
-          });
-          if (firstTimeLogin != 1) {
-            await users.getDocuments().then((value) {
-              value.documents.forEach((element) async {
-                if (element.data["mobile"] == _email) {
-                  flag = 1;
-                  AuthResult result =
-                      await _auth.signInWithCredential(credential);
-                  FirebaseUser user = result.user;
-                  if (user.uid != null) {
-                    await pr.hide();
-                    print("```````````````````````````");
-                    print(element.data["uid"]);
-                    print(element.data["mobile"]);
-                    print(element.data["name"]);
-                    print(element.data["assignedProject"]);
-                    showToast("Login Successful");
-                    print("```````````````````````````");
-                    _setData(
-                        element.data["name"],
-                        element.data["email"],
-                        element.data["mobile"],
-                        element.data["uid"],
-                        element.data["assignedProject"]);
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ManagerHomePage()),
-                    );
-                  }
-                }
-              });
-            });
-            if (flag == 0) {
-              showToast("Please register first");
-            }
-          } else {
-            await newPhoneUser.document(_email).delete();
+          if (flag == 0) {
+            showToast("Please register first");
           }
-          break;
-        case "supervisor":
-          await newPhoneUser.getDocuments().then((value) {
-            value.documents.forEach((element) async {
-              if (element.documentID == _email &&
-                  element.data["userType"] == "supervisor") {
-                firstTimeLogin = 1;
-                AuthResult result =
-                    await _auth.signInWithCredential(credential);
-                FirebaseUser user = result.user;
-                if (user.uid != null) {
-                  await pr.hide();
-
-                  print("```````````````````````````");
-                  print("account creation successful");
-                  print(user.uid);
-                  print(element.data["mobile"]);
-                  print(element.data["name"]);
-                  print(element.data["assignedProject"]);
-                  showToast("Login Successful");
-                  print("```````````````````````````");
-                  supervisor.document(user.uid).setData({
-                    "assignedProject": "No project assigned",
-                    "mobile": element["mobile"],
-                    "name": element["name"],
-                    "age": element["age"],
-                    "address": element["address"],
-                    "uid": user.uid,
-                    'signInMethod': "otp"
-                  }).then((value) async {
-                    await newPhoneUser.document(_email).delete().then((value) {
-                      _setData(element["name"], element["email"],
-                          element["mobile"], user.uid, "No project assigned");
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ManagerHomePage()),
-                      );
-                    });
-                  });
-                }
-              }
-            });
-          });
-          if (firstTimeLogin != 1) {
-            await supervisor.getDocuments().then((value) {
-              value.documents.forEach((element) async {
-                if (element.data["mobile"] == _email) {
-                  flag = 1;
-                  AuthResult result =
-                      await _auth.signInWithCredential(credential);
-                  FirebaseUser user = result.user;
-                  if (user.uid != null) {
-                    await pr.hide();
-
-                    print("```````````````````````````");
-                    print(element.data["uid"]);
-                    print(element.data["mobile"]);
-                    print(element.data["name"]);
-                    print(element.data["assignedProject"]);
-                    showToast("Login Successful");
-                    print("```````````````````````````");
-                    _setData(
-                        element.data["name"],
-                        element.data["email"],
-                        element.data["mobile"],
-                        element.data["uid"],
-                        element.data["assignedProject"]);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SupervisorHomePage()),
-                    );
-                  }
-                }
-              });
-            });
-            if (flag == 0) {
-              showToast("Please register first");
-            }
-          } else {
-            await newPhoneUser.document(_email).delete();
-          }
-          break;
-        case "worker":
-          await newPhoneUser.getDocuments().then((value) {
-            value.documents.forEach((element) async {
-              if (element.documentID == _email &&
-                  element.data["userType"] == "worker") {
-                firstTimeLogin = 1;
-                AuthResult result =
-                    await _auth.signInWithCredential(credential);
-                FirebaseUser user = result.user;
-                if (user.uid != null) {
-                  await pr.hide();
-
-                  print("```````````````````````````");
-                  print("account creation successful");
-                  print(user.uid);
-                  print(element.data["mobile"]);
-                  print(element.data["name"]);
-                  print(element.data["assignedProject"]);
-                  showToast("Login Successful");
-                  print("```````````````````````````");
-                  workers.document(user.uid).setData({
-                    "assignedProject": "No project assigned",
-                    "mobile": element["mobile"],
-                    "name": element["name"],
-                    "age": element["age"],
-                    "address": element["address"],
-                    "uid": user.uid,
-                    'signInMethod': "otp"
-                  }).then((value) async {
-                    _setData(element["name"], element["email"],
-                        element["mobile"], user.uid, "No project assigned");
-                    await newPhoneUser.document(_email).delete().then((value) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ManagerHomePage()),
-                      );
-                    });
-                  });
-                }
-              }
-            });
-          });
-          if (firstTimeLogin != 1) {
-            await workers.getDocuments().then((value) {
-              value.documents.forEach((element) async {
-                if (element.data["mobile"] == _email) {
-                  flag = 1;
-                  AuthResult result =
-                      await _auth.signInWithCredential(credential);
-                  FirebaseUser user = result.user;
-                  if (user.uid != null) {
-                    await pr.hide();
-
-                    print("```````````````````````````");
-                    print(element.data["uid"]);
-                    print(element.data["mobile"]);
-                    print(element.data["name"]);
-                    print(element.data["assignedProject"]);
-                    showToast("Login Successful");
-                    print("```````````````````````````");
-                    _setData(
-                        element.data["name"],
-                        element.data["email"],
-                        element.data["mobile"],
-                        element.data["uid"],
-                        element.data["assignedProject"]);
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => WorkerHomePage()),
-                    );
-                  }
-                }
-              });
-            });
-            if (flag == 0) {
-              showToast("Please register first");
-            }
-          } else {
-            await newPhoneUser.document(_email).delete();
-          }
-          break;
-        case "manager":
-          await newPhoneUser.getDocuments().then((value) {
-            value.documents.forEach((element) async {
-              if (element.documentID == _email &&
-                  element.data["userType"] == "manager") {
-                firstTimeLogin = 1;
-                AuthResult result =
-                    await _auth.signInWithCredential(credential);
-                FirebaseUser user = result.user;
-                if (user.uid != null) {
-                  await pr.hide();
-
-                  print("```````````````````````````");
-                  print("account creation successful");
-                  print(user.uid);
-                  print(element.data["mobile"]);
-                  print(element.data["name"]);
-                  print(element.data["assignedProject"]);
-                  showToast("Login Successful");
-                  print("```````````````````````````");
-                  manager.document(user.uid).setData({
-                    "assignedProject": "No project assigned",
-                    "mobile": element["mobile"],
-                    "name": element["name"],
-                    "age": element["age"],
-                    "address": element["address"],
-                    "uid": user.uid,
-                    'signInMethod': "otp"
-                  }).then((value) async {
-                    await newPhoneUser.document(_email).delete().then((value) {
-                      _setData(element["name"], element["email"],
-                          element["mobile"], user.uid, "No project assigned");
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ManagerHomePage()),
-                      );
-                    });
-                  });
-                }
-              }
-            });
-          });
-          if (firstTimeLogin != 1) {
-            await manager.getDocuments().then((value) {
-              value.documents.forEach((element) async {
-                if (element.data["mobile"] == _email) {
-                  flag = 1;
-                  AuthResult result =
-                      await _auth.signInWithCredential(credential);
-                  FirebaseUser user = result.user;
-                  if (user.uid != null) {
-                    await pr.hide();
-
-                    print("```````````````````````````");
-                    print(element.data["uid"]);
-                    print(element.data["mobile"]);
-                    print(element.data["name"]);
-                    print(element.data["assignedProject"]);
-                    showToast("Login Successful");
-                    print("```````````````````````````");
-                    _setData(
-                        element.data["name"],
-                        element.data["email"],
-                        element.data["mobile"],
-                        element.data["uid"],
-                        element.data["assignedProject"]);
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ManagerHomePage()),
-                    );
-                  }
-                }
-              });
-            });
-            if (flag == 0) {
-              showToast("Please register first");
-            }
-          } else {
-            await newPhoneUser.document(_email).delete();
-          }
-          break;
+        } else {
+          await newPhoneUser.document(_email).delete();
+        }
       }
     } catch (e) {
       print("```````````````````````````");

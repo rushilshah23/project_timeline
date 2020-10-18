@@ -21,8 +21,8 @@ class _RegisterState extends State<Register> {
     super.initState();
   }
 
-  List<String> _type = ["user", "worker", "supervisor", "manager"];
-  String _requestType = null ?? "user";
+  List<String> _type = [workerType, supervisorType, managerType];
+  String _requestType = null ?? workerType;
   String _signInMethod = null ?? "email";
   String name;
   String email;

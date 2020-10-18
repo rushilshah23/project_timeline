@@ -2,7 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'file:///D:/flutterProjects/project_timeline/lib/admin/CommonWidgets.dart';
+import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:random_string/random_string.dart';
 
 class WorkerCreationForm extends StatefulWidget {
@@ -14,7 +14,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
   final databaseReference = FirebaseDatabase.instance.reference();
   final CollectionReference workers = Firestore.instance.collection("workers");
   final CollectionReference newPhoneUser =
-  Firestore.instance.collection("newPhoneUser");
+      Firestore.instance.collection("newPhoneUser");
   FirebaseAuth auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
 
@@ -189,7 +189,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                     ),
                     Column(
                       children:
-                      _signInMethod == "email" ? emailForm() : mobileForm(),
+                          _signInMethod == "email" ? emailForm() : mobileForm(),
                     ),
                     TextFormField(
                       decoration: InputDecoration(
@@ -197,7 +197,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                          const BorderSide(color: Colors.blue, width: 2.0),
+                              const BorderSide(color: Colors.blue, width: 2.0),
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(10),
                               topLeft: Radius.circular(10),
@@ -207,7 +207,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                       ),
                       controller: controllerName,
                       validator: (val) =>
-                      val.isEmpty ? 'Enter your Name' : null,
+                          val.isEmpty ? 'Enter your Name' : null,
                       onChanged: (val) {
                         setState(() => name = val);
                       },
@@ -219,7 +219,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                          const BorderSide(color: Colors.blue, width: 2.0),
+                              const BorderSide(color: Colors.blue, width: 2.0),
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(10),
                               topLeft: Radius.circular(10),
@@ -229,7 +229,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                       ),
                       controller: controllerPhoneNo,
                       validator: (val) =>
-                      val.isEmpty ? 'Enter Phone Number' : null,
+                          val.isEmpty ? 'Enter Phone Number' : null,
                       onChanged: (val) {
                         setState(() => phoneNo = val);
                       },
@@ -241,7 +241,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                          const BorderSide(color: Colors.blue, width: 2.0),
+                              const BorderSide(color: Colors.blue, width: 2.0),
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(10),
                               topLeft: Radius.circular(10),
@@ -251,7 +251,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                       ),
                       controller: controllerAddress,
                       validator: (val) =>
-                      val.isEmpty ? 'Enter your Address' : null,
+                          val.isEmpty ? 'Enter your Address' : null,
                       onChanged: (val) {
                         setState(() => address = val);
                       },
@@ -263,7 +263,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                          const BorderSide(color: Colors.blue, width: 2.0),
+                              const BorderSide(color: Colors.blue, width: 2.0),
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(10),
                               topLeft: Radius.circular(10),
