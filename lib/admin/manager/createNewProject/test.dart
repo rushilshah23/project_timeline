@@ -7,40 +7,30 @@ import 'package:uuid/uuid.dart';
 
 import '../../CommonWidgets.dart';
 
-
-
 List<String> machineTypeSelected = [];
 List<TextEditingController> usagePerDay = [];
 List<GlobalKey<FormState>> machinesFormKeys = [];
-int machinesCount=1;
-
-
+int machinesCount = 1;
 List<MachineDetails> machineDetailsList = [];
-
-
-
 
 class Test extends StatefulWidget {
   @override
   _TestState createState() => _TestState();
 }
 
-
-
 class _TestState extends State<Test> {
-
-  final GlobalKey<FormState> _formKeyValue = new GlobalKey<FormState>();
-  final GlobalKey<FormState> workDoneAlready = new GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKeyValue = GlobalKey<FormState>();
+  final GlobalKey<FormState> workDoneAlready = GlobalKey<FormState>();
   final CollectionReference supervisors =
       Firestore.instance.collection("supervisor");
 
   //Project Name
   String projectName = '';
-  var projectNameControl = new TextEditingController();
+  var projectNameControl = TextEditingController();
 
   //Site Address
   String siteAddress = '';
-  var siteAddressControl = new TextEditingController();
+  var siteAddressControl = TextEditingController();
 
   //Soil Type
   var soilType;
@@ -56,58 +46,53 @@ class _TestState extends State<Test> {
 
   ProgressDialog pr;
 
-  double totalfuel=0;
-  double totalRent=0;
-  int days=0;
+  double totalfuel = 0;
+  double totalRent = 0;
+  int days = 0;
   double volume;
   String status;
-  double excavationDone=0;
-  double ourExcavtn=0;
-  double progressPercent=0;
+  double excavationDone = 0;
+  double ourExcavtn = 0;
+  double progressPercent = 0;
 
   //Length
   String length = '';
-  var lenControl = new TextEditingController();
+  var lenControl = TextEditingController();
 
   //Depth
   String depth = '';
-  var depControl = new TextEditingController();
+  var depControl = TextEditingController();
 
   //Upper Width
   String upwidth = '';
-  var upwidthControl = new TextEditingController();
+  var upwidthControl = TextEditingController();
 
   //Upper Width
   String lowidth = '';
-  var lowidthControl = new TextEditingController();
-
+  var lowidthControl = TextEditingController();
 
   //Length
   String completedlength = '0';
-  var completedlenControl = new TextEditingController();
+  var completedlenControl = TextEditingController();
 
   //Depth
   String completeddepth = '0';
-  var completeddepControl = new TextEditingController();
+  var completeddepControl = TextEditingController();
 
   //Upper Width
   String completedupwidth = '0';
-  var completedupwidthControl = new TextEditingController();
+  var completedupwidthControl = TextEditingController();
 
   //Upper Width
   String completedlowidth = '0';
-  var completedlowidthControl = new TextEditingController();
+  var completedlowidthControl = TextEditingController();
 
   //supervisor
   var supervisor;
 
   List<SupervisorList> supervisorList = [];
 
-
   final databaseReference = FirebaseDatabase.instance.reference();
-
-
-
 
   removeDynamic() {
     setState(() {
@@ -120,12 +105,9 @@ class _TestState extends State<Test> {
     setState(() {});
   }
 
-
-
   void loadMachines() async {
-
     machineDetailsList.clear();
-   // machineDetailsList.add(MachineDetails(machineID: 'None',machineName: 'None',modelName: 'None',amountOfExcavation: 'None',rentPerHour: 'None'));
+    // machineDetailsList.add(MachineDetails(machineID: 'None',machineName: 'None',modelName: 'None',amountOfExcavation: 'None',rentPerHour: 'None'));
     await databaseReference
         .child("masters")
         .child("machineMaster")
@@ -135,80 +117,72 @@ class _TestState extends State<Test> {
         setState(() {
 //          ourMachines.add(values["machineName"]);
           machineDetailsList.add(MachineDetails(
-              machineName:values['machineName'],machineID: values['machineID'],modelName: values['modelName'],
-              amountOfExcavation: values['amountOfExcavation'],fuelConsumption: values["fuelConsumption"],rentPerHour:values["machineRent"] ));
+              machineName: values['machineName'],
+              machineID: values['machineID'],
+              modelName: values['modelName'],
+              amountOfExcavation: values['amountOfExcavation'],
+              fuelConsumption: values["fuelConsumption"],
+              rentPerHour: values["machineRent"]));
         });
 //        debugPrint("in func"+ourMachines.toString());
-
       });
     });
   }
 
-
-
   sendToDb() {
+    final CollectionReference supervisor =
+        Firestore.instance.collection("supervisor");
 
-    final CollectionReference supervisor = Firestore.instance.collection("supervisor");
+    var uuid = Uuid();
+    String uniqueID = uuid.v1();
 
-      var uuid = Uuid();
-      String uniqueID = uuid.v1();
+    try {
+      databaseReference.child("projects").child(uniqueID).set({
+        'projectName': projectName,
+        'siteAddress': siteAddress,
+        'soilType': soilType,
+        'projectID': uniqueID,
+        'volumeToBeExcavated': volume.ceil().toString(),
+        'volumeExcavated': excavationDone.ceil().toString(),
+        'totalMachineRent': totalRent.ceil().toString(),
+        'totalFuelConsumption': totalfuel.ceil().toString(),
+        'projectDuration': days.toString(),
+        'projectStatus': status,
+        'progressPercent': progressPercent.floor().toString(),
+        'dimensions': {
+          'length': length.toString(),
+          'depth': depth.toString(),
+          'upperWidth': upwidth.toString(),
+          'lowerWidth': lowidth.toString(),
+        },
+        'machinesSelected': {
+          for (int i = 0; i < machinesCount; i++)
+            '$i': {
+              'machineID': machineTypeSelected[i].toString(),
+              'usagePerDay': usagePerDay[i].text.toString(),
+            },
+        },
+      });
 
-//      final DateTime now = DateTime.now();
-//      final DateFormat formatter = DateFormat('yyyy-MM-dd hh:mm');
-//      final String requestTime = formatter.format(now);
-
-      try {
-        databaseReference
+      selectedSupervisors.forEach((i) async {
+        debugPrint(supervisorList[i].uid);
+        await supervisor
+            .document(supervisorList[i].uid)
+            .updateData({"assignedProject": uniqueID});
+        await databaseReference
             .child("projects")
             .child(uniqueID)
+            .child("supervisors")
+            .child(supervisorList[i].uid)
             .set({
-          'projectName': projectName,
-          'siteAddress': siteAddress,
-          'soilType': soilType,
-          'projectID':uniqueID,
-          'volumeToBeExcavated': volume.ceil().toString() ,
-          'volumeExcavated': excavationDone.ceil().toString(),
-          'totalMachineRent': totalRent.ceil().toString(),
-          'totalFuelConsumption': totalfuel.ceil().toString(),
-          'projectDuration': days.toString(),
-          'projectStatus': status,
-          'progressPercent': progressPercent.floor().toString(),
-          'dimensions':
-            {
-              'length':length.toString(),
-              'depth':depth.toString(),
-              'upperWidth':upwidth.toString(),
-              'lowerWidth':lowidth.toString(),
-            },
-          'machinesSelected': {
-            for (int i = 0; i < machinesCount; i++)
-              '$i':{
-              'machineID':machineTypeSelected[i].toString(),
-                'usagePerDay':usagePerDay[i].text.toString(),
-              },
-          },
-
+          "name": supervisorList[i].name,
+          "mobile": supervisorList[i].mobile,
         });
-
-        selectedSupervisors.forEach((i) async {
-          debugPrint(supervisorList[i].uid);
-          await supervisor.document(supervisorList[i].uid)
-              .updateData({"assignedProject": uniqueID});
-          await databaseReference
-              .child("projects")
-              .child(uniqueID)
-              .child("supervisors")
-              .child(supervisorList[i].uid)
-              .set({
-            "name": supervisorList[i].name,
-            "mobile": supervisorList[i].mobile,
-          });
-        });
-        showToast("Project added Successfully");
-      } catch (e) {
-        showToast("Failed. check your internet!");
-      }
-
+      });
+      showToast("Project added Successfully");
+    } catch (e) {
+      showToast("Failed. check your internet!");
+    }
   }
 
   Future<void> getData() async {
@@ -232,8 +206,10 @@ class _TestState extends State<Test> {
             ),
           );
 
-          supervisorList.add(
-              SupervisorList(name:result['name'], mobile:result['mobile'], uid:result['uid']));
+          supervisorList.add(SupervisorList(
+              name: result['name'],
+              mobile: result['mobile'],
+              uid: result['uid']));
         });
       });
     });
@@ -241,413 +217,367 @@ class _TestState extends State<Test> {
 
   @override
   void initState() {
-
-
-    machinesCount=1;
-     machineTypeSelected = List.generate(24, (i) => null);
+    machinesCount = 1;
+    machineTypeSelected = List.generate(24, (i) => null);
     usagePerDay = List.generate(24, (i) => TextEditingController(text: '10'));
-    machinesFormKeys= List.generate(24, (i) =>GlobalKey<FormState>());
+    machinesFormKeys = List.generate(24, (i) => GlobalKey<FormState>());
     getData();
     loadMachines();
     super.initState();
-
   }
 
-
-
-
-
-
-  Widget workedStarted()
-  {
+  Widget workedStarted() {
     return Form(
-      key: workDoneAlready,
-       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        decoration: BoxDecoration(
-          border: Border.all(
-            width: 1,
-            color: Colors.grey,
-          ),
-          borderRadius: BorderRadius.all(
-              Radius.circular(5.0) //         <--- border radius here
-          ),
-        ),
-        child: Column(
-          // crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Completed Work',
-                style: TextStyle(
-                    fontSize: 15, fontStyle: FontStyle.italic)),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                new Flexible(
-                  child: new TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(10),
-                      labelText: "Length",
-                      fillColor: Colors.white,
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: Colors.blue, width: 2.0),
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(10),
-                            topLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(10)),
-                      ),
-                    ),
-                    controller: completedlenControl,
-                    validator: (val) =>
-                    val.isEmpty ? 'Enter length' : null,
-                    onChanged: (val) {
-                      setState(() => completedlength = val);
-                    },
+        key: workDoneAlready,
+        child: Container(
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            decoration: BoxDecoration(
+              border: Border.all(
+                width: 1,
+                color: Colors.grey,
+              ),
+              borderRadius: BorderRadius.all(
+                  Radius.circular(5.0) //         <--- border radius here
                   ),
-                ),
-                SizedBox(
-                  width: 20.0,
-                ),
-                new Flexible(
-                  child: new TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(10),
-                      labelText: "Depth",
-                      fillColor: Colors.white,
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: Colors.blue, width: 2.0),
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(10),
-                            topLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(10)),
-                      ),
-                    ),
-                    controller: completeddepControl,
-                    validator: (val) =>
-                    val.isEmpty ? 'Invalid' : null,
-                    onChanged: (val) {
-                      setState(() => completeddepth = val);
-                    },
-                  ),
-                ),
-              ],
             ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                new Flexible(
-                  child: new TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(10),
-                      labelText: "Upper Width",
-                      fillColor: Colors.white,
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: Colors.blue, width: 2.0),
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(10),
-                            topLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(10)),
+            child: Column(
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Completed Work',
+                    style:
+                        TextStyle(fontSize: 15, fontStyle: FontStyle.italic)),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Flexible(
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(10),
+                          labelText: "Length",
+                          fillColor: Colors.white,
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Colors.blue, width: 2.0),
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                topLeft: Radius.circular(10),
+                                bottomRight: Radius.circular(10),
+                                bottomLeft: Radius.circular(10)),
+                          ),
+                        ),
+                        controller: completedlenControl,
+                        validator: (val) => val.isEmpty ? 'Enter length' : null,
+                        onChanged: (val) {
+                          setState(() => completedlength = val);
+                        },
                       ),
                     ),
-                    controller: completedupwidthControl,
-                    validator: (val) =>
-                    val.isEmpty ? 'Invalid' : null,
-                    onChanged: (val) {
-                      setState(() => completedupwidth = val);
-                    },
-                  ),
-                ),
-                SizedBox(
-                  width: 20.0,
-                ),
-                new Flexible(
-                  child: new TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(10),
-                      labelText: "Lower Width",
-                      fillColor: Colors.white,
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: Colors.blue, width: 2.0),
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(10),
-                            topLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(10)),
+                    SizedBox(
+                      width: 20.0,
+                    ),
+                    Flexible(
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(10),
+                          labelText: "Depth",
+                          fillColor: Colors.white,
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Colors.blue, width: 2.0),
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                topLeft: Radius.circular(10),
+                                bottomRight: Radius.circular(10),
+                                bottomLeft: Radius.circular(10)),
+                          ),
+                        ),
+                        controller: completeddepControl,
+                        validator: (val) => val.isEmpty ? 'Invalid' : null,
+                        onChanged: (val) {
+                          setState(() => completeddepth = val);
+                        },
                       ),
                     ),
-                    controller: completedlowidthControl,
-                    validator: (val) =>
-                    val.isEmpty ? 'Invalid' : null,
-                    onChanged: (val) {
-                      setState(() => completedlowidth = val);
-                    },
-                  ),
+                  ],
                 ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Flexible(
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(10),
+                          labelText: "Upper Width",
+                          fillColor: Colors.white,
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Colors.blue, width: 2.0),
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                topLeft: Radius.circular(10),
+                                bottomRight: Radius.circular(10),
+                                bottomLeft: Radius.circular(10)),
+                          ),
+                        ),
+                        controller: completedupwidthControl,
+                        validator: (val) => val.isEmpty ? 'Invalid' : null,
+                        onChanged: (val) {
+                          setState(() => completedupwidth = val);
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20.0,
+                    ),
+                    Flexible(
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(10),
+                          labelText: "Lower Width",
+                          fillColor: Colors.white,
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Colors.blue, width: 2.0),
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                topLeft: Radius.circular(10),
+                                bottomRight: Radius.circular(10),
+                                bottomLeft: Radius.circular(10)),
+                          ),
+                        ),
+                        controller: completedlowidthControl,
+                        validator: (val) => val.isEmpty ? 'Invalid' : null,
+                        onChanged: (val) {
+                          setState(() => completedlowidth = val);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5),
               ],
-            ),
-            SizedBox(height: 5),
-          ],
-        ))
-    );
+            )));
   }
 
-  estimate2() async
-  {
+  estimate2() async {
+    volume = 0.5 *
+        double.parse(length) *
+        double.parse(depth) *
+        (double.parse(upwidth) + double.parse(lowidth)) *
+        0.8;
 
+    if (_termsChecked == true) {
+      double cvolume = 0.5 *
+          double.parse(completedlength) *
+          double.parse(completeddepth) *
+          (double.parse(completedupwidth) + double.parse(completedlowidth)) *
+          0.8;
+      ourExcavtn = cvolume;
+    } else
+      ourExcavtn = 0;
 
-     volume = 0.5 * double.parse(length) *double.parse(depth) * (double.parse(upwidth) + double.parse(lowidth))*0.8;
+    setState(() {
+      excavationDone = ourExcavtn;
 
-      if(_termsChecked==true)
-        {
-          double cvolume = 0.5 * double.parse(completedlength) * double.parse(completeddepth) * (double.parse(completedupwidth) + double.parse(completedlowidth))*0.8;
-          ourExcavtn=cvolume;
-        }
-      else ourExcavtn=0;
+      progressPercent = (excavationDone / volume) * 100;
+    });
 
+    if (ourExcavtn == 0.0) {
       setState(() {
-        excavationDone=ourExcavtn;
-
-        progressPercent=(excavationDone/volume)*100;
+        status = 'Not Started';
       });
+    } else if (ourExcavtn > 0.0) {
+      setState(() {
+        status = 'Ongoing';
+      });
+    } else if (ourExcavtn == volume) {
+      setState(() {
+        status = 'Completed';
+      });
+    }
 
-
-
-
-      if(ourExcavtn==0.0)
-        {
-          setState(() {
-            status='Not Started';
-          });
-        }
-      else if(ourExcavtn>0.0)
-        {
-          setState(() {
-            status='Ongoing';
-          });
-        }
-      else if(ourExcavtn==volume)
-      {
-        setState(() {
-          status='Completed';
-        });
-      }
-
-    debugPrint("our excavation"+ourExcavtn.toString());
+    debugPrint("our excavation" + ourExcavtn.toString());
     debugPrint(volume.toString());
 
-    List perhramountofExca=[];
-    List perhrFuelConsump=[];
-    List renthrday=[];
+    List perhramountofExca = [];
+    List perhrFuelConsump = [];
+    List renthrday = [];
 
+    double sumfuel = 0;
+    double sumRent = 0;
+    double sumExcavtn = 0;
+    double sumUsagePrDay = 0;
 
-   
-    double sumfuel=0;
-    double sumRent=0;
-    double sumExcavtn=0;
-    double sumUsagePrDay=0;
+    double beyondMeansumExcavtn = 0;
+    double beyondMeanExcasumRent = 0;
+    double beyondMeansumfuel = 0;
 
+    List actualperdayamountofExca = [];
+    List actualperdayFuelConsump = [];
+    List actualrentPerday = [];
 
-
-    double beyondMeansumExcavtn=0;
-    double beyondMeanExcasumRent=0;
-    double beyondMeansumfuel=0;
-
-    List actualperdayamountofExca=[];
-    List actualperdayFuelConsump=[];
-    List actualrentPerday=[];
-
-
-
-
-
-    for(int i=0;i<machinesCount;i++)
-    {
+    for (int i = 0; i < machinesCount; i++) {
       debugPrint(machineTypeSelected[i].toString());
       debugPrint(usagePerDay[i].text);
 
-      for(int j=0 ;j<machineDetailsList.length;j++)
-      {
-        if(machineTypeSelected[i]==machineDetailsList[j].machineID)
-        {
-          sumExcavtn= sumExcavtn+ double.parse(machineDetailsList[j].amountOfExcavation.toString());
-          sumUsagePrDay=sumUsagePrDay +double.parse(usagePerDay[i].text) ;
-          sumfuel= sumfuel+double.parse(machineDetailsList[j].fuelConsumption.toString());
-          sumRent= sumRent+double.parse(machineDetailsList[j].rentPerHour.toString());
+      for (int j = 0; j < machineDetailsList.length; j++) {
+        if (machineTypeSelected[i] == machineDetailsList[j].machineID) {
+          sumExcavtn = sumExcavtn +
+              double.parse(machineDetailsList[j].amountOfExcavation.toString());
+          sumUsagePrDay = sumUsagePrDay + double.parse(usagePerDay[i].text);
+          sumfuel = sumfuel +
+              double.parse(machineDetailsList[j].fuelConsumption.toString());
+          sumRent = sumRent +
+              double.parse(machineDetailsList[j].rentPerHour.toString());
 
-          perhramountofExca.add(double.parse(machineDetailsList[j].amountOfExcavation.toString()));
-          perhrFuelConsump.add(double.parse(machineDetailsList[j].fuelConsumption.toString()));
-          renthrday.add(double.parse(machineDetailsList[j].rentPerHour.toString()));
+          perhramountofExca.add(double.parse(
+              machineDetailsList[j].amountOfExcavation.toString()));
+          perhrFuelConsump.add(
+              double.parse(machineDetailsList[j].fuelConsumption.toString()));
+          renthrday
+              .add(double.parse(machineDetailsList[j].rentPerHour.toString()));
         }
       }
     }
 
     //excavation of machines whose usage time is greater than mean hours
 
-    for(int i=0;i<machinesCount;i++)
-    {
+    for (int i = 0; i < machinesCount; i++) {
       debugPrint(machineTypeSelected[i].toString());
       debugPrint(usagePerDay[i].text);
-      if((sumUsagePrDay/machinesCount)<perhramountofExca[i])
-        {
-          beyondMeansumExcavtn=beyondMeansumExcavtn+perhramountofExca[i];
-          beyondMeanExcasumRent=beyondMeanExcasumRent+renthrday[i];
-          beyondMeansumfuel=beyondMeansumfuel+perhrFuelConsump[i];
-
-        }
+      if ((sumUsagePrDay / machinesCount) < perhramountofExca[i]) {
+        beyondMeansumExcavtn = beyondMeansumExcavtn + perhramountofExca[i];
+        beyondMeanExcasumRent = beyondMeanExcasumRent + renthrday[i];
+        beyondMeansumfuel = beyondMeansumfuel + perhrFuelConsump[i];
+      }
     }
 
-    debugPrint("sum "+sumExcavtn.toString());
-    debugPrint((sumUsagePrDay/machinesCount).toString());
+    debugPrint("sum " + sumExcavtn.toString());
+    debugPrint((sumUsagePrDay / machinesCount).toString());
     debugPrint(beyondMeansumExcavtn.toString());
 
+    for (int i = 1; ourExcavtn < volume; i++) {
+      if (ourExcavtn + sumExcavtn > volume && ourExcavtn < volume) {
+        double temp = volume - ourExcavtn;
+        double percent = ((temp / sumExcavtn));
 
-    for(int i=1;ourExcavtn<volume;i++)
-      {
+        ourExcavtn = ourExcavtn + temp;
+        debugPrint("came here--------------");
+        totalfuel = sumfuel * percent + totalfuel;
+        totalRent = sumRent + totalRent;
 
-        if(ourExcavtn+sumExcavtn>volume && ourExcavtn<volume)
-          {
+        actualperdayamountofExca.add(temp);
+        actualperdayFuelConsump.add(sumfuel * percent);
+        actualrentPerday.add(sumRent);
 
-            double temp=volume-ourExcavtn;
-            double percent= ((temp/sumExcavtn));
+        debugPrint("here the exca--" + (sumExcavtn * percent).toString());
+        break;
+      } else if (ourExcavtn + sumExcavtn < volume && ourExcavtn < volume) {
+        ourExcavtn = ourExcavtn + sumExcavtn;
+        if (beyondMeansumExcavtn + ourExcavtn > volume && ourExcavtn < volume) {
+          debugPrint("ourExcavtn" + ourExcavtn.toString());
+          double temp = volume - ourExcavtn;
+          double percent = ((temp / sumExcavtn));
+          ourExcavtn = ourExcavtn + temp;
 
-            ourExcavtn=ourExcavtn+temp;
-            debugPrint("came here--------------");
-            totalfuel=sumfuel*percent+totalfuel ;
-            totalRent=sumRent+totalRent;
+          totalfuel = sumfuel + beyondMeansumfuel * percent + totalfuel;
+          totalRent = sumRent + beyondMeanExcasumRent + totalRent;
 
-            actualperdayamountofExca.add(temp);
-            actualperdayFuelConsump.add(sumfuel*percent);
-            actualrentPerday.add(sumRent);
+          debugPrint("temp" + temp.toString());
 
-            debugPrint("here the exca--"+(sumExcavtn*percent).toString());
-            break;
-          }
-        else  if(ourExcavtn+sumExcavtn<volume && ourExcavtn<volume)
-          {
-            ourExcavtn=ourExcavtn+sumExcavtn;
-            if(beyondMeansumExcavtn+ourExcavtn>volume && ourExcavtn<volume)
-            {
+          actualperdayamountofExca.add(temp + sumExcavtn);
+          actualperdayFuelConsump.add(sumfuel + beyondMeansumfuel * percent);
+          actualrentPerday.add(sumRent + beyondMeanExcasumRent);
+          break;
+        } else {
+          ourExcavtn = ourExcavtn + beyondMeansumExcavtn;
 
-              debugPrint("ourExcavtn"+ourExcavtn.toString());
-              double temp=volume-ourExcavtn;
-              double percent= ((temp/sumExcavtn));
-              ourExcavtn=ourExcavtn+temp;
+          totalfuel = sumfuel + beyondMeansumfuel + totalfuel;
+          totalRent = sumRent + beyondMeanExcasumRent + totalRent;
 
-              totalfuel=sumfuel+beyondMeansumfuel*percent +totalfuel ;
-              totalRent=sumRent+beyondMeanExcasumRent +totalRent;
-
-              debugPrint("temp"+temp.toString());
-
-              actualperdayamountofExca.add(temp+sumExcavtn);
-              actualperdayFuelConsump.add(sumfuel+beyondMeansumfuel*percent);
-              actualrentPerday.add(sumRent+beyondMeanExcasumRent);
-              break;
-            }
-            else
-            {
-              ourExcavtn=ourExcavtn+beyondMeansumExcavtn;
-
-              totalfuel=sumfuel+beyondMeansumfuel +totalfuel;
-              totalRent=sumRent+beyondMeanExcasumRent+ totalRent;
-
-              actualperdayamountofExca.add(beyondMeansumExcavtn+sumExcavtn);
-              actualperdayFuelConsump.add(sumfuel+beyondMeansumfuel);
-              actualrentPerday.add(sumRent+beyondMeanExcasumRent);
-            }
-
-
-          }
-
-        days=i;
+          actualperdayamountofExca.add(beyondMeansumExcavtn + sumExcavtn);
+          actualperdayFuelConsump.add(sumfuel + beyondMeansumfuel);
+          actualrentPerday.add(sumRent + beyondMeanExcasumRent);
+        }
       }
 
-    debugPrint("--------------------------------------"+ourExcavtn.toString());
+      days = i;
+    }
+
+    debugPrint(
+        "--------------------------------------" + ourExcavtn.toString());
     debugPrint(days.toString());
     debugPrint(actualperdayamountofExca.toString());
     debugPrint(actualperdayFuelConsump.toString());
     debugPrint(actualrentPerday.toString());
     debugPrint(totalRent.toString());
     debugPrint(totalfuel.toString());
-
-
-  
-
   }
 
   showAlertDialog(BuildContext context) async {
-
     await estimate2();
     // set up the buttons
-
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("AlertDialog"),
-      content:Builder(
-      builder: (context) {
-    // Get available height and width of the build area of this widget. Make a choice depending on the size.
+      content: Builder(builder: (context) {
+        // Get available height and width of the build area of this widget. Make a choice depending on the size.
         var height = MediaQuery.of(context).size.height;
         var width = MediaQuery.of(context).size.width;
-         return Container(
-           height: height/1.8,
-        child:Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-
-
-            SizedBox(
-              height: 10,
-            ),
-            Text("Total Volume: "+ourExcavtn.ceil().toString() +"m3"),
-
-            SizedBox(
-              height: 10,
-            ),
-            Text("No of Days: "+days.toString()),
-            SizedBox(
-              height: 10,
-            ),
-            Text("Total Rent of Machines Used: "+totalRent.ceil().toString()+" Rs"),
-            SizedBox(
-              height: 10,
-            ),
-            Text("Total Fuel requires: "+totalfuel.ceil().toString()+ " litre"),
-
-            SizedBox(
-              height: 30,
-            ),
-              Center(child: Text("Do you want to create this project?"),),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+        return Container(
+            height: height / 1.8,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                RaisedButton(
-                  onPressed: () {
-                    debugPrint('Create Project');
-                    showToast("Project Created");
-                    sendToDb();
-                  },
-                  child: Text("Create Project"),
+                SizedBox(
+                  height: 10,
                 ),
-
+                Text("Total Volume: " + ourExcavtn.ceil().toString() + "m3"),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("No of Days: " + days.toString()),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("Total Rent of Machines Used: " +
+                    totalRent.ceil().toString() +
+                    " Rs"),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("Total Fuel requires: " +
+                    totalfuel.ceil().toString() +
+                    " litre"),
+                SizedBox(
+                  height: 30,
+                ),
+                Center(
+                  child: Text("Do you want to create this project?"),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    RaisedButton(
+                      onPressed: () {
+                        debugPrint('Create Project');
+                        showToast("Project Created");
+                        sendToDb();
+                      },
+                      child: Text("Create Project"),
+                    ),
+                  ],
+                )
               ],
-            )
-
-          ],
-        )
-         );}),
-
+            ));
+      }),
     );
 
     // show the dialog
@@ -659,127 +589,111 @@ class _TestState extends State<Test> {
     );
   }
 
-
-
   Widget build(BuildContext context) {
-
-    pr = pr = new ProgressDialog(context,
+    pr = pr = ProgressDialog(context,
         type: ProgressDialogType.Normal, isDismissible: true, showLogs: true);
 
     return Scaffold(
-        appBar: new AppBar(
+        appBar: AppBar(
           iconTheme: IconThemeData(
             color: Colors.indigo[200],
           ),
-          title:  Text("Add New Project", style: TextStyle(
-            color: Colors.indigo,
-          )),
+          title: Text("Add  Project",
+              style: TextStyle(
+                color: Colors.indigo,
+              )),
           backgroundColor: Colors.white,
         ),
-        body: Form(
-          key: _formKeyValue,
-          //autovalidate: true,
-          child: new ListView(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-            children: <Widget>[
-              Center(
-              child: titleStyles('Create New Project', 24),
-              ),
-
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Center(
-                    child: SearchableDropdown.multiple(
-                      items: supervisorDropdwnItems,
-                      selectedItems: selectedSupervisors,
-                      hint: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Text("Select Supervisors"),
-                      ),
-                      searchHint: "Select any",
-                      onChanged: (value) {
-                        setState(() {
-                          selectedSupervisors = value;
-                          debugPrint("vvvvvvvvvvvvvvvvvvv  "+value.toString());
-                        });
-                        print(selectedSupervisors.toString());
-                      },
-                      closeButton: (selectedItems) {
-                        return (selectedItems.isNotEmpty
-                            ? "Save ${selectedItems.length == 1 ? '"' + supervisorDropdwnItems[selectedItems.first].value.toString() + '"' : '(' + selectedItems.length.toString() + ')'}"
-                            : "Save without selection");
-                      },
-                      isExpanded: true,
+        body: SingleChildScrollView(
+          child: Form(
+            key: _formKeyValue,
+            //autovalidate: true,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Column(
+                children: <Widget>[
+                  Center(
+                    child: titleStyles('Create  Project', 24),
+                  ),
+                  SizedBox(height: 20),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SearchableDropdown.multiple(
+                    items: supervisorDropdwnItems,
+                    selectedItems: selectedSupervisors,
+                    hint: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text("Select Supervisors"),
                     ),
+                    searchHint: "Select any",
+                    onChanged: (value) {
+                      setState(() {
+                        selectedSupervisors = value;
+                        debugPrint("vvvvvvvvvvvvvvvvvvv  " + value.toString());
+                      });
+                      print(selectedSupervisors.toString());
+                    },
+                    closeButton: (selectedItems) {
+                      return (selectedItems.isNotEmpty
+                          ? "Save ${selectedItems.length == 1 ? '"' + supervisorDropdwnItems[selectedItems.first].value.toString() + '"' : '(' + selectedItems.length.toString() + ')'}"
+                          : "Save without selection");
+                    },
+                    isExpanded: true,
                   ),
-                ),
-              ),
-              SizedBox(height: 20),
-
-              SizedBox(height: 20,),
-              TextFormField(
-                textInputAction: TextInputAction.newline,
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                decoration: InputDecoration(
-                  labelText: "Project Name",
-                  fillColor: Colors.white,
-                  focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: Colors.blue, width: 2.0),
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(10),
-                        topLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
-                        bottomLeft: Radius.circular(10)),
+                  TextFormField(
+                    textInputAction: TextInputAction.newline,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    decoration: InputDecoration(
+                      labelText: "Project Name",
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.blue, width: 2.0),
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            topLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10)),
+                      ),
+                    ),
+                    controller: projectNameControl,
+                    validator: (val) =>
+                        val.isEmpty ? 'Enter project name' : null,
+                    onChanged: (val) {
+                      setState(() => projectName = val);
+                    },
                   ),
-                ),
-                controller: projectNameControl,
-                validator: (val) => val.isEmpty ? 'Enter project name' : null,
-                onChanged: (val) {
-                  setState(() => projectName = val);
-                },
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                textInputAction: TextInputAction.newline,
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                decoration: InputDecoration(
-                  labelText: "Site Address",
-                  fillColor: Colors.white,
-                  focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: Colors.blue, width: 2.0),
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(10),
-                        topLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
-                        bottomLeft: Radius.circular(10)),
+                  SizedBox(height: 20),
+                  TextFormField(
+                    textInputAction: TextInputAction.newline,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    decoration: InputDecoration(
+                      labelText: "Site Address",
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.blue, width: 2.0),
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            topLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10)),
+                      ),
+                    ),
+                    controller: siteAddressControl,
+                    validator: (val) =>
+                        val.isEmpty ? 'Enter site address' : null,
+                    onChanged: (val) {
+                      setState(() => siteAddress = val);
+                    },
                   ),
-                ),
-                controller: siteAddressControl,
-                validator: (val) => val.isEmpty ? 'Enter site address' : null,
-                onChanged: (val) {
-                  setState(() => siteAddress = val);
-                },
-              ),
-              SizedBox(height: 20),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: new DropdownButtonFormField(
+                  SizedBox(height: 20),
+                  DropdownButtonFormField(
                     validator: (value) =>
-                    value == null ? 'Enter soil type' : null,
+                        value == null ? 'Enter soil type' : null,
                     items: _soilType
                         .map((value) => DropdownMenuItem(
                               child: Text(
@@ -802,309 +716,281 @@ class _TestState extends State<Test> {
                       style: TextStyle(color: Colors.black54, fontSize: 17),
                     ),
                   ),
-                ),
-              ),
-              SizedBox(height: 20),
-
-
-
-
-              Container(
-                padding: EdgeInsets.symmetric(
-                    vertical: 10, horizontal: 10),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 1,
-                    color: Colors.grey,
-                  ),
-                  borderRadius: BorderRadius.all(
-                      Radius.circular(
-                          5.0) //         <--- border radius here
-                  ),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
-                      mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween,
+                  SizedBox(height: 20),
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1,
+                        color: Colors.grey,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(
+                              5.0) //         <--- border radius here
+                          ),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text('Select Machines',
-                            style: TextStyle(
-                              fontSize: 16,
-                            )),
-
-                        IconButton(
-                          icon:
-                          Icon(Icons.remove, color: Colors.indigo[900]),
-                          onPressed: removeDynamic,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Select Machines',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                )),
+                            IconButton(
+                              icon:
+                                  Icon(Icons.remove, color: Colors.indigo[900]),
+                              onPressed: removeDynamic,
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.add, color: Colors.indigo[900]),
+                              onPressed: addDynamic,
+                            ),
+                          ],
                         ),
-                        IconButton(
-                          icon: Icon(Icons.add,
-                              color: Colors.indigo[900]),
-                          onPressed: addDynamic,
-                        ),
+                        Flexible(
+                          fit: FlexFit.loose,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            itemCount: machinesCount,
+                            itemBuilder: (context, index) {
+                              return SelectMachines(index: index);
+                            },
+                          ),
+                        )
                       ],
                     ),
-                    Flexible(
-                      fit: FlexFit.loose,
-                      child: new ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                        itemCount: machinesCount,
-                        itemBuilder: (context, index) {
-                          return SelectMachines(
-                              index: index);
-                        },
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1,
+                        color: Colors.grey,
                       ),
-                    )
-                  ],
-                ),
-              ),
-
-
-
-
-
-              SizedBox(height: 20),
-
-
-              Container(
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                  decoration: BoxDecoration(
-
-                    border: Border.all(
-                      width: 1,
-                      color: Colors.grey,
+                      borderRadius: BorderRadius.all(Radius.circular(
+                              5.0) //         <--- border radius here
+                          ),
                     ),
-                    borderRadius: BorderRadius.all(
-                        Radius.circular(5.0) //         <--- border radius here
+                    child: Column(
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('PROJECT GOALS',
+                            style: TextStyle(
+                                fontSize: 15, fontStyle: FontStyle.italic)),
+                        SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Flexible(
+                              child: TextFormField(
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(10),
+                                  labelText: "Length",
+                                  fillColor: Colors.white,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: Colors.blue, width: 2.0),
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(10),
+                                        topLeft: Radius.circular(10),
+                                        bottomRight: Radius.circular(10),
+                                        bottomLeft: Radius.circular(10)),
+                                  ),
+                                ),
+                                controller: lenControl,
+                                validator: (val) =>
+                                    val.isEmpty ? 'Enter length' : null,
+                                onChanged: (val) {
+                                  setState(() => length = val);
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20.0,
+                            ),
+                            Flexible(
+                              child: TextFormField(
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(10),
+                                  labelText: "Depth",
+                                  fillColor: Colors.white,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: Colors.blue, width: 2.0),
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(10),
+                                        topLeft: Radius.circular(10),
+                                        bottomRight: Radius.circular(10),
+                                        bottomLeft: Radius.circular(10)),
+                                  ),
+                                ),
+                                controller: depControl,
+                                validator: (val) =>
+                                    val.isEmpty ? 'Enter project name' : null,
+                                onChanged: (val) {
+                                  setState(() => depth = val);
+                                },
+                              ),
+                            ),
+                          ],
                         ),
-                  ),
-                  child: Column(
-                    // crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('PROJECT GOALS',
-                          style: TextStyle(
-                              fontSize: 15, fontStyle: FontStyle.italic)),
-                      SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          new Flexible(
-                            child: new TextFormField(
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(10),
-                                labelText: "Length",
-                                fillColor: Colors.white,
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: Colors.blue, width: 2.0),
-                                  borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(10),
-                                      topLeft: Radius.circular(10),
-                                      bottomRight: Radius.circular(10),
-                                      bottomLeft: Radius.circular(10)),
+                        SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Flexible(
+                              child: TextFormField(
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(10),
+                                  labelText: "Upper Width",
+                                  fillColor: Colors.white,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: Colors.blue, width: 2.0),
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(10),
+                                        topLeft: Radius.circular(10),
+                                        bottomRight: Radius.circular(10),
+                                        bottomLeft: Radius.circular(10)),
+                                  ),
                                 ),
+                                controller: upwidthControl,
+                                validator: (val) =>
+                                    val.isEmpty ? 'Enter project name' : null,
+                                onChanged: (val) {
+                                  setState(() => upwidth = val);
+                                },
                               ),
-                              controller: lenControl,
-                              validator: (val) =>
-                                  val.isEmpty ? 'Enter length' : null,
-                              onChanged: (val) {
-                                setState(() => length = val);
-                              },
                             ),
-                          ),
-                          SizedBox(
-                            width: 20.0,
-                          ),
-                          new Flexible(
-                            child: new TextFormField(
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(10),
-                                labelText: "Depth",
-                                fillColor: Colors.white,
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: Colors.blue, width: 2.0),
-                                  borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(10),
-                                      topLeft: Radius.circular(10),
-                                      bottomRight: Radius.circular(10),
-                                      bottomLeft: Radius.circular(10)),
+                            SizedBox(
+                              width: 20.0,
+                            ),
+                            Flexible(
+                              child: TextFormField(
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(10),
+                                  labelText: "Lower Width",
+                                  fillColor: Colors.white,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: Colors.blue, width: 2.0),
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(10),
+                                        topLeft: Radius.circular(10),
+                                        bottomRight: Radius.circular(10),
+                                        bottomLeft: Radius.circular(10)),
+                                  ),
                                 ),
+                                controller: lowidthControl,
+                                validator: (val) =>
+                                    val.isEmpty ? 'Enter project name' : null,
+                                onChanged: (val) {
+                                  setState(() => lowidth = val);
+                                },
                               ),
-                              controller: depControl,
-                              validator: (val) =>
-                                  val.isEmpty ? 'Enter project name' : null,
-                              onChanged: (val) {
-                                setState(() => depth = val);
-                              },
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          new Flexible(
-                            child: new TextFormField(
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(10),
-                                labelText: "Upper Width",
-                                fillColor: Colors.white,
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: Colors.blue, width: 2.0),
-                                  borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(10),
-                                      topLeft: Radius.circular(10),
-                                      bottomRight: Radius.circular(10),
-                                      bottomLeft: Radius.circular(10)),
-                                ),
-                              ),
-                              controller: upwidthControl,
-                              validator: (val) =>
-                                  val.isEmpty ? 'Enter project name' : null,
-                              onChanged: (val) {
-                                setState(() => upwidth = val);
-                              },
-                            ),
-                          ),
-                          SizedBox(
-                            width: 20.0,
-                          ),
-                          new Flexible(
-                            child: new TextFormField(
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(10),
-                                labelText: "Lower Width",
-                                fillColor: Colors.white,
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: Colors.blue, width: 2.0),
-                                  borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(10),
-                                      topLeft: Radius.circular(10),
-                                      bottomRight: Radius.circular(10),
-                                      bottomLeft: Radius.circular(10)),
-                                ),
-                              ),
-                              controller: lowidthControl,
-                              validator: (val) =>
-                                  val.isEmpty ? 'Enter project name' : null,
-                              onChanged: (val) {
-                                setState(() => lowidth = val);
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 5),
-                    ],
-                  )),
-              SizedBox(height: 20.0),
-
-
-
-              Padding(
-                padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    //borderRadius: BorderRadius.circular(30.0),
-                    borderRadius: BorderRadius.all(
-                        Radius.circular(5.0) //         <--- border radius here
-                    ),
-                    border: Border.all(
-                      width: 1.0,
-                      color: Colors.grey,
+                          ],
+                        ),
+                        SizedBox(height: 5),
+                      ],
                     ),
                   ),
-                  child: CheckboxListTile(
-                    value: _termsChecked,
-                    onChanged: (value) {
-                      setState(() {
-                        _termsChecked = value;
-                      });
-                    },
-                    subtitle: _termsChecked
-                        ? workedStarted()
-                        : null,
-                    title: new Text(
-                      'Worked Started?',
-                    ),
-                    controlAffinity: ListTileControlAffinity.leading,
-                  ),
-                ),
-              ),
-
-              SizedBox(height: 40.0),
-              FlatButton(
-                child: Container(
-                  height: 50,
-                  width: MediaQuery.of(context).size.width-40,
-                  decoration: BoxDecoration(
-                    gradient: gradients()
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Center(child:Text(
-                      'Estimate Project',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold
+                  SizedBox(height: 20.0),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        //borderRadius: BorderRadius.circular(30.0),
+                        borderRadius: BorderRadius.all(Radius.circular(
+                                5.0) //         <--- border radius here
+                            ),
+                        border: Border.all(
+                          width: 1.0,
+                          color: Colors.grey,
+                        ),
                       ),
-                    )),
+                      child: CheckboxListTile(
+                        value: _termsChecked,
+                        onChanged: (value) {
+                          setState(() {
+                            _termsChecked = value;
+                          });
+                        },
+                        subtitle: _termsChecked ? workedStarted() : null,
+                        title: Text(
+                          'Worked Started?',
+                        ),
+                        controlAffinity: ListTileControlAffinity.leading,
+                      ),
+                    ),
                   ),
-                ),
-                onPressed: () {
-                  bool isFormValid=false;
-                  if (_formKeyValue.currentState.validate() ) {
-
-                    if(_termsChecked==true)
-                      {
-                        workDoneAlready.currentState.validate();
-                      }
-
-                    for(int i=0;i<machinesCount;i++)
-                      {
-                        if(machinesFormKeys[i].currentState.validate())
-                          isFormValid=true;
-                        else
-                          {
-                            isFormValid=false;
+                  SizedBox(height: 40.0),
+                  RaisedButton(
+                    color: Colors.blue,
+                    child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                      child: Center(
+                          child: Text(
+                        'Estimate Project',
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      )),
+                    ),
+                    onPressed: () {
+                      bool isFormValid = false;
+                      if (_formKeyValue.currentState.validate()) {
+                        if (_termsChecked == true) {
+                          workDoneAlready.currentState.validate();
+                        }
+                        for (int i = 0; i < machinesCount; i++) {
+                          if (machinesFormKeys[i].currentState.validate())
+                            isFormValid = true;
+                          else {
+                            isFormValid = false;
                             break;
                           }
+                        }
+                        if (isFormValid)
+                          showAlertDialog(context);
+                        else
+                          showToast("Incomplete form");
                       }
-
-                    if(isFormValid)
-                      showAlertDialog(context);
-                    else showToast("Incomplete form");
-                  }
-                },
-
+                    },
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ));
   }
 }
 
 class SupervisorList {
-  SupervisorList({Key key,this.name, this.mobile, this.uid});
+  SupervisorList({Key key, this.name, this.mobile, this.uid});
   var name;
   var mobile;
   var uid;
 }
 
 class MachineDetails {
-  MachineDetails({Key key, this.machineName, this.machineID, this.modelName,this.amountOfExcavation,this.fuelConsumption,this.rentPerHour});
+  MachineDetails(
+      {Key key,
+      this.machineName,
+      this.machineID,
+      this.modelName,
+      this.amountOfExcavation,
+      this.fuelConsumption,
+      this.rentPerHour});
   var machineName;
   var machineID;
   var modelName;
@@ -1113,16 +999,18 @@ class MachineDetails {
   var rentPerHour;
 }
 
-
 class EstimationDetails {
-  EstimationDetails({Key key, this.noOfDays, this.totalRent, this.totalFuel,this.totalExcavation});
+  EstimationDetails(
+      {Key key,
+      this.noOfDays,
+      this.totalRent,
+      this.totalFuel,
+      this.totalExcavation});
   var noOfDays;
   var totalRent;
   var totalFuel;
   var totalExcavation;
 }
-
-
 
 class SelectMachines extends StatefulWidget {
   final int index;
@@ -1134,75 +1022,72 @@ class SelectMachines extends StatefulWidget {
 class _SelectMachinesState extends State<SelectMachines> {
   String dropdownValue = 'One';
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
         child: Form(
-          key: machinesFormKeys[widget.index],
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      key: machinesFormKeys[widget.index],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-
-                  Flexible(
-                    flex: 3,
-                    child: DropdownButtonFormField<String>(
-                      value: machineTypeSelected[widget.index],
-                      //icon: Icon(Icons.arrow_downward),
-                      hint: Text(
-                        'Select Machine',
-                        style: TextStyle(color: Colors.black54, fontSize: 17),
-                      ),
-                      //style: TextStyle(color: Colors.deepPurple),
-                      validator: (val) => val==null ? 'Select machine' : null,
-                      onChanged: (newValue) {
-                        setState(() {
-                          machineTypeSelected[widget.index] = newValue;
-                          debugPrint(newValue.toString());
-                        });
-                      },
-                      items: machineDetailsList.map<DropdownMenuItem<String>>((var value) {
-                        return DropdownMenuItem<String>(
-                          value: value.machineID,
-                          child:Text(value.machineName),
-                        );
-                      }).toList(),
-                    ),
+              Flexible(
+                flex: 3,
+                child: DropdownButtonFormField<String>(
+                  value: machineTypeSelected[widget.index],
+                  //icon: Icon(Icons.arrow_downward),
+                  hint: Text(
+                    'Select Machine',
+                    style: TextStyle(color: Colors.black54, fontSize: 17),
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      controller: usagePerDay[widget.index],
-                      validator: (val) => val.isEmpty ? 'Enter Hours' : null,
-                      decoration: InputDecoration(
-                        labelText: "Usage/Day",
-                        hintText: "Hours",
-                        fillColor: Colors.white,
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
+                  //style: TextStyle(color: Colors.deepPurple),
+                  validator: (val) => val == null ? 'Select machine' : null,
+                  onChanged: (Value) {
+                    setState(() {
+                      machineTypeSelected[widget.index] = Value;
+                      debugPrint(Value.toString());
+                    });
+                  },
+                  items: machineDetailsList
+                      .map<DropdownMenuItem<String>>((var value) {
+                    return DropdownMenuItem<String>(
+                      value: value.machineID,
+                      child: Text(value.machineName),
+                    );
+                  }).toList(),
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Flexible(
+                flex: 1,
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  controller: usagePerDay[widget.index],
+                  validator: (val) => val.isEmpty ? 'Enter Hours' : null,
+                  decoration: InputDecoration(
+                    labelText: "Usage/Day",
+                    hintText: "Hours",
+                    fillColor: Colors.white,
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
                           const BorderSide(color: Colors.blue, width: 2.0),
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              topLeft: Radius.circular(10),
-                              bottomRight: Radius.circular(10),
-                              bottomLeft: Radius.circular(10)),
-                        ),
-                      ),
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          topLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
+                          bottomLeft: Radius.circular(10)),
                     ),
                   ),
-                ],
+                ),
               ),
             ],
           ),
-        ));
+        ],
+      ),
+    ));
   }
 }

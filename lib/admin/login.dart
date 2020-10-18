@@ -235,7 +235,7 @@ class LoginPageState extends State<LoginPage> {
           });
         });
         if (flag == 0) showToast("Account is not Accepted");
-      } else if (_requestType == userType) {
+      } else if (_requestType == managerType) {
         print("manager");
         await manager.getDocuments().then((value) {
           value.documents.forEach((element) async {
@@ -274,6 +274,8 @@ class LoginPageState extends State<LoginPage> {
           });
         });
         if (flag == 0) showToast("Account is not Accepted");
+      } else {
+        print("error");
       }
     } catch (e) {
       print("```````````````````````````");
@@ -775,11 +777,11 @@ class LoginPageState extends State<LoginPage> {
                       DropdownButton(
                           hint: Text("Select User Type"),
                           value: _requestType,
-                          items: _type.map((String userType) {
+                          items: _type.map((String usertype) {
                             return DropdownMenuItem<String>(
-                              value: userType,
+                              value: usertype,
                               child: Text(
-                                userType,
+                                usertype,
                               ),
                             );
                           }).toList(),
