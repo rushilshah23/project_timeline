@@ -7,7 +7,7 @@ import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-import 'file:///D:/flutterProjects/project_timeline/lib/admin/CommonWidgets.dart';
+import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';

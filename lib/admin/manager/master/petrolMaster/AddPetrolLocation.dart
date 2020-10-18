@@ -1,9 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'file:///D:/flutterProjects/project_timeline/lib/admin/CommonWidgets.dart';
+import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:uuid/uuid.dart';
-
-
 
 class AddPetrolLocation extends StatefulWidget {
   @override
@@ -78,7 +76,7 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
           'petrolPumpAddress': petrolPumpAddress,
           'petrolPumpDistrict': petrolPumpDistrict,
           'petrolPumpTown': petrolPumpTown,
-          'petrolPumpID':uniqueID,
+          'petrolPumpID': uniqueID,
           'petrolPumpPinCode': petrolPumpPinCode,
           'petrolPumpPhoneNumber': petrolPumpPhoneNumber,
         });
@@ -99,15 +97,13 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
       width: MediaQuery.of(context).size.width / 1.2,
       // Center is a layout widget. It takes a single child and positions it
       // in the middle of the parent.
-      padding: EdgeInsets.only(top: 20,right: 20,left: 20),
-
+      padding: EdgeInsets.only(top: 20, right: 20, left: 20),
 
       child: Form(
         key: _formKey,
         child: ListView(
           children: <Widget>[
             Column(
-
               children: <Widget>[
                 titleStyles('Add Petrol Pump', 20),
                 SizedBox(
@@ -152,11 +148,10 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
                 SizedBox(
                   height: 20,
                 ),
-
                 Row(
                   children: [
                     Flexible(
-                      child:  TextFormField(
+                      child: TextFormField(
                         minLines: 1,
                         validator: (String content) {
                           if (content.length == 0) {
@@ -173,13 +168,11 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
                         ),
                       ),
                     ),
-
                     SizedBox(
                       width: 10,
                     ),
-
                     Flexible(
-                      child:  TextFormField(
+                      child: TextFormField(
                         minLines: 1,
                         validator: (String content) {
                           if (content.length == 0) {
@@ -196,21 +189,15 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
                         ),
                       ),
                     ),
-
-
                   ],
                 ),
-
-
-
                 SizedBox(
                   height: 20,
                 ),
-
                 Row(
                   children: [
                     Flexible(
-                      child:     TextFormField(
+                      child: TextFormField(
                         minLines: 1,
                         validator: (String content) {
                           if (content.length == 0) {
@@ -227,12 +214,11 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
                         ),
                       ),
                     ),
-
                     SizedBox(
                       width: 10,
                     ),
                     Flexible(
-                      child:    TextFormField(
+                      child: TextFormField(
                         minLines: 1,
                         validator: (String content) {
                           if (content.length == 0) {
@@ -249,13 +235,8 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
                         ),
                       ),
                     ),
-
-
                   ],
                 ),
-
-
-
                 SizedBox(
                   height: 20,
                 ),
@@ -265,28 +246,28 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
                     Flexible(
                       child: FlatButton(
                         child: Container(
-                            height: 45,
-                            width: 120,
+                          height: 45,
+                          width: 120,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            gradient: gradients()
-                          ),
-
-                              child: Center(child:Text(
-                                  "Add ",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold
-                                ),
-                              )),
-
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              gradient: gradients()),
+                          child: Center(
+                              child: Text(
+                            "Add ",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          )),
                         ),
                         onPressed: () {
                           addPetrolPump();
                         },
                       ),
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
 //                    Flexible(
 //                    child :FlatButton(
 //                      child: Container(
@@ -312,7 +293,6 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
 //                    ),
                   ],
                 ),
-
               ],
             ),
           ],
