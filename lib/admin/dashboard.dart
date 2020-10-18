@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:project_timeline/admin/reportGeneration/reportTest.dart';
 
 import 'CommonWidgets.dart';
 
@@ -277,7 +278,22 @@ class _DashBoardState extends State<DashBoard> {
               ],
             ),
             SizedBox(height: 70),
-            Center(
+
+          // RaisedButton(
+          //   child: Text("PDF testing"),
+          //   onPressed: () {
+          //     Navigator.pushReplacement(
+          //       context,
+          //       MaterialPageRoute(
+          //           builder: (context) => ReportGenerationTesting()),
+          //     );
+          //   },
+          // ),
+          //
+
+
+
+              widget.userType=="manager"? Center(
               child: FlatButton(
 //                child: Container(
 //                  height: 50,
@@ -301,10 +317,17 @@ class _DashBoardState extends State<DashBoard> {
 //                    ),
 //                  ),
 //                ),
-              child: buttonContainers(double.infinity, 20, 'Our Projects', 18),
-                onPressed: () {},
+              child: buttonContainers(double.infinity, 20, 'Get Report', 18),
+                onPressed: () {
+
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ReportGenerationTesting()),
+                  );
+                },
               ),
-            )
+            ):Container(),
           ],
         ),
       ),

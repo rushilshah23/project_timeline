@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../managerRequestList.dart';
 import 'SupervisorFormCreation.dart';
 import 'SupervisorRequestList.dart';
 
@@ -57,7 +58,7 @@ class _CreateAcceptSupervisorState extends State<CreateAcceptSupervisor> with Si
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 2, vsync: this);
+    tabController = TabController(length: 3, vsync: this);
   }
 
   @override
@@ -70,8 +71,9 @@ class _CreateAcceptSupervisorState extends State<CreateAcceptSupervisor> with Si
     return TabBar(
       labelColor: Colors.blue,
       tabs: <Widget>[
-        Tab(text: "Create",),
-        Tab(text: "Accept"),
+        Tab(text: "Create \nSupervisor",),
+        Tab(text: "Accept \nSupervisor"),
+        Tab(text: "Accept \nManager"),
       ],
       controller: tabController,
     );
@@ -98,6 +100,7 @@ class _CreateAcceptSupervisorState extends State<CreateAcceptSupervisor> with Si
                 <Widget>[
                   SupervisorFormCreation(),
                   SupervisorRequestList(),
+                  ManagerRequestList(),
                 ],
               ),
             )

@@ -7,19 +7,15 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:flutter/services.dart';
-import 'package:meta/meta.dart';
-import 'package:project_timeline/admin/CommonWidgets.dart';
 
+
+import '../CommonWidgets.dart';
 import 'reportPreviewTesting.dart';
 
 
-// import '../CommonWidgets.dart';
-//
 class ReportGenerationTesting extends StatefulWidget {
   @override
-  _ReportGenerationTestingState createState() =>
-      _ReportGenerationTestingState();
+  _ReportGenerationTestingState createState() => _ReportGenerationTestingState();
 }
 
 class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
@@ -29,26 +25,45 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
 
   final DateTime date = DateTime.now();
   final DateFormat formatter = DateFormat('dd-MM-yyyy');
-  String todaysDate = "12-09-2020";
+  String todaysDate="12-09-2020";
 
   final DateFormat formatterForTime = DateFormat('dd-MM-yyyy hh:mm:ss');
 
   Map allMachinesData;
-  List projects = [];
+  List projects=[];
   List<DropdownMenuItem> projectsDropdwnItems = [];
 
-  String uid = "8YiMHLBnBaNjmr3yPvk8NWvNPmm2";
+  String uid="8YiMHLBnBaNjmr3yPvk8NWvNPmm2";
+
 
   String selectedProject;
-  List todaysReport = List();
-  List supervisors = List();
+  List todaysReport=List() ;
+  List supervisors=List() ;
   Map projectData;
-  double approvedVol = 0;
+  double approvedVol=0;
 
-  List allDaysReport = List();
-  List allDates = List();
-  List allDatesApprovedVolume = [];
-  List perDayExcavation = List();
+  List allDaysReport=List();
+  List allDates=List();
+  List allDatesApprovedVolume= [];
+  List perDayExcavation=List();
+
+  List alldayMachines=List();
+
+  static const PdfColor tableHeaderColor = PdfColors.cyan100;
+  static const PdfColor headerColor = PdfColors.grey700;
+  static const double headerFontSize = 20;
+  static const PdfColor header2Color = PdfColors.grey600;
+  static const double header2FontSize = 18;
+  static const PdfColor textColor = PdfColors.grey600;
+  static const double textFontSize = 17;
+  static const PdfColor text2Color = PdfColors.cyan600;
+  static const double text2FontSize = 17;
+  // static const double text3Color = PdfColors.black;
+  static const double text3FontSize = 20;
+
+  static const _darkColor = PdfColors.blueGrey800;
+  static const _redColor = PdfColors.grey700;
+  static const white = PdfColors.white;
 
   static const tableHeaders = ['Category', 'Budget', 'Expense', 'Result'];
   static const pi = 22 / 7;
@@ -62,40 +77,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
     ['Insurance', 250, 310, -60],
   ];
 
-  static const PdfColor tableHeaderColor = PdfColors.blue300;
-  static const PdfColor headerColor = PdfColors.grey700;
-  static const double headerFontSize = 20;
-  static const PdfColor header2Color = PdfColors.grey600;
-  static const double header2FontSize = 18;
-  static const PdfColor textColor = PdfColors.grey600;
-  static const double textFontSize = 17;
-  static const PdfColor text2Color = PdfColors.black;
-  static const double text2FontSize = 17;
-  // static const double text3Color = PdfColors.black;
-  static const double text3FontSize = 20;
 
-  static const _darkColor = PdfColors.blueGrey800;
-  static const _redColor = PdfColors.grey700;
-  static const white = PdfColors.white;
-
-  static final tableHeadersTable = [
-    'Supervisor Name',
-    'Contact Number',
-  ];
-
-  static final tableHeadersTable2 = [
-    'Worker Name',
-    'Hours Worked',
-    'Machine used',
-    'Volume Excavated',
-    'Approval Status'
-  ];
-  // const PdfColor green = PdfColor.fromInt(0xff9ce5d0);
-  // const PdfColor lightGreen = PdfColor.fromInt(0xffcdf1e7);
-  // const sep = 120.0;
-
-  // Future
-  // final pw.PageTheme pageTheme = _myPageTheme(format);
 
   Future savePDF() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
@@ -111,7 +93,10 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
     file.writeAsBytesSync(pdf.save());
   }
 
-  createTodaysPdf() async {
+
+
+  createTodaysPdf() async{
+
     pdf.addPage(pw.MultiPage(
       pageFormat: PdfPageFormat.a4,
       margin: pw.EdgeInsets.all(32),
@@ -119,195 +104,84 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
         return <pw.Widget>[
           pw.Header(
             level: 0,
-            child: pw.Center(
-                child: pw.Text("Project name: " + projectData["projectName"],
-                    style: pw.TextStyle(
-                      color: headerColor,
-                      fontSize: 25,
-                      fontWeight: pw.FontWeight.bold,
-                    ))),
+            child: pw.Center(child:pw.Text("Project name: "+projectData["projectName"])),
           ),
-          pw.Center(
-              child: pw.Text('Site Address: ' + projectData["siteAddress"],
-                  style: pw.TextStyle(
-                    color: header2Color,
-                    fontSize: header2FontSize,
-                    fontWeight: pw.FontWeight.bold,
-                  ))),
+          pw.Center(child:pw.Text('Site Address: '+projectData["siteAddress"])),
+
           pw.SizedBox(height: 25),
-          pw.Center(
-              child: pw.Text('Report For: $todaysDate',
-                  style: pw.TextStyle(
-                    color: text2Color,
-                    fontSize: text2FontSize,
-                  ))),
-          pw.SizedBox(height: 25),
+          pw.Center(child:pw.Text('Report For: $todaysDate')),
           pw.Row(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
-                pw.Text('Approved Excavation: ' + approvedVol.toString(),
-                    style: pw.TextStyle(
-                      color: text2Color,
-                      fontSize: text2FontSize,
-                    )),
+                pw.Text('Approved Excavation: '+approvedVol.toString()),
                 // pw.Text('Total Excavation: '+totalVol.toString()),
-              ]),
+              ]
+          ),
+
           pw.SizedBox(height: 25),
-          pw.Table.fromTextArray(
-              context: context,
-              border: null,
-              cellAlignment: pw.Alignment.centerLeft,
-              headerDecoration: pw.BoxDecoration(
-                borderRadius: 2,
-                color: tableHeaderColor,
-              ),
-              headerHeight: 25,
-              cellHeight: 40,
-              cellAlignments: {
-                0: pw.Alignment.centerLeft,
-                1: pw.Alignment.centerLeft,
-                2: pw.Alignment.centerRight,
-                3: pw.Alignment.center,
-                4: pw.Alignment.centerRight,
-              },
-              headerStyle: pw.TextStyle(
-                color: white,
-                fontSize: textFontSize,
-                fontWeight: pw.FontWeight.bold,
-              ),
-              cellStyle: const pw.TextStyle(
-                color: _redColor,
-                fontSize: textFontSize,
-              ),
-              rowDecoration: pw.BoxDecoration(
-                border: pw.BoxBorder(
-                  bottom: true,
-                  color: _darkColor,
-                  width: 1,
-                ),
-              ),
-              headers: List<String>.generate(
-                tableHeadersTable.length,
-                (col) => tableHeadersTable[col],
-              ),
-              data: <List<String>>[
-                <String>[
-                  'Supervisor Name',
-                  'Contact No',
-                ],
-                ...supervisors.map((msg) => [msg["name"], msg["mobile"]])
-              ]),
+          pw.Table.fromTextArray(context: context, data: <List<String>>[
+            <String>['Supervisor Name', 'Contact No',],
+            ...supervisors.map(
+                    (msg) => [msg["name"], msg["mobile"]])
+          ]),
           pw.SizedBox(height: 25),
-          pw.Table.fromTextArray(
-              context: context,
-              border: null,
-              cellAlignment: pw.Alignment.centerLeft,
-              headerDecoration: pw.BoxDecoration(
-                borderRadius: 2,
-                color: tableHeaderColor,
-              ),
-              headerHeight: 25,
-              cellHeight: 40,
-              cellAlignments: {
-                0: pw.Alignment.centerLeft,
-                1: pw.Alignment.centerLeft,
-                2: pw.Alignment.centerRight,
-                3: pw.Alignment.center,
-                4: pw.Alignment.centerRight,
-              },
-              headerStyle: pw.TextStyle(
-                color: white,
-                fontSize: textFontSize,
-                fontWeight: pw.FontWeight.bold,
-              ),
-              cellStyle:
-                  const pw.TextStyle(color: _redColor, fontSize: textFontSize),
-              rowDecoration: pw.BoxDecoration(
-                border: pw.BoxBorder(
-                  bottom: true,
-                  color: _darkColor,
-                  width: 1,
-                ),
-              ),
-              headers: List<String>.generate(
-                tableHeadersTable2.length,
-                (col) => tableHeadersTable2[col],
-              ),
-              data: <List<String>>[
-                <String>[
-                  'Worker Name',
-                  'Hours Worked',
-                  'Machine used',
-                  'Volume Excavated',
-                  'Approval Status'
-                ],
-                ...todaysReport.map((msg) => [
-                      msg["workerName"],
-                      msg["hoursWorked"].toString(),
-                      msg["MachineUsed"],
-                      msg["volumeExcavated"].toString(),
-                      msg["status"]
-                    ])
-              ]),
+          pw.Table.fromTextArray(context: context, data: <List<String>>[
+            <String>['Worker Name', 'Hours Worked', 'Machine used', 'Volume Excavated','Approval Status'],
+            ...todaysReport.map(
+                    (msg) => [msg["workerName"], msg["hoursWorked"].toString(),msg["MachineUsed"], msg["volumeExcavated"].toString(), msg["status"]])
+          ]),
+
+
         ];
       },
     ));
+
+
+
+
   }
 
-  createOverallPdf() async {
+
+
+
+  createOverallPdf() async{
+
     pdf.addPage(pw.MultiPage(
       pageFormat: PdfPageFormat.a4,
       margin: pw.EdgeInsets.all(32),
       build: (pw.Context context) {
         return <pw.Widget>[
-          pw.Center(
-              child: pw.Text(
-                  'Report is generated on ' +
-                      formatterForTime.format(date).toString(),
-                  style: pw.TextStyle(
-                    color: headerColor,
-                    fontSize: headerFontSize,
-                    // fontWeight: pw.FontWeight.bold,
-                  ))),
+          pw.Center(child:pw.Text('Report is generated on '+formatterForTime.format(date).toString())),
           pw.SizedBox(height: 25),
           pw.Header(
             level: 0,
-            child: pw.Center(
-                child: pw.Text("Project name: " + projectData["projectName"],
-                    style: pw.TextStyle(
-                      color: headerColor,
-                      fontWeight: pw.FontWeight.bold,
-                      fontSize: 25,
-                    ))),
+            child: pw.Center(child:pw.Text("Project name: "+projectData["projectName"])),
           ),
-          pw.Center(
-              child: pw.Text('Site Address: ' + projectData["siteAddress"],
-                  style: pw.TextStyle(
-                    color: header2Color,
-                    fontSize: header2FontSize,
-                  ))),
+          pw.Center(child:pw.Text('Site Address: '+projectData["siteAddress"])),
+
           pw.SizedBox(height: 25),
+
           pw.Row(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
                 pw.Column(
-                    crossAxisAlignment: pw.CrossAxisAlignment.center,
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
                     children: [
-                      pw.Row(
-                          mainAxisAlignment: pw.MainAxisAlignment.end,
-                          children: [
-                            pw.Text('Soil Type: ',
-                                style: pw.TextStyle(
-                                  color: textColor,
-                                  fontSize: textFontSize,
-                                )),
-                            pw.Text(projectData["soilType"],
-                                style: pw.TextStyle(
-                                  color: text2Color,
-                                  fontSize: text2FontSize,
-                                )),
-                          ]),
-                      pw.SizedBox(height: 40),
+                      // pw.Row(
+                      //     mainAxisAlignment: pw.MainAxisAlignment.end,
+                      //     children: [
+                      //       pw.Text('Soil Type: ',
+                      //           style: pw.TextStyle(
+                      //             color: textColor,
+                      //             fontSize: textFontSize,
+                      //           )),
+                      //       pw.Text(projectData["soilType"],
+                      //           style: pw.TextStyle(
+                      //             color: text2Color,
+                      //             fontSize: text2FontSize,
+                      //           )),
+                      //     ]),
+                      // pw.SizedBox(height: 40),
                       pw.Row(children: [
                         pw.Column(children: [
                           pw.Text('Excavation Goals: ',
@@ -340,7 +214,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                       pw.SizedBox(height: 20),
                       // pw.SizedBox(height: 20),
                       pw.Row(
-                          // mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
+                        // mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
                           children: [
                             pw.Column(children: [
                               pw.Text('Estimated Rent: ',
@@ -356,106 +230,110 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                                   )),
                             ]),
                             pw.SizedBox(width: 50),
-                            pw.Column(children: [
-                              pw.Text('Approved Excavation: ',
+
+                            pw.Center(
+                              child: pw.Column(children: [
+                                pw.Text('Estimated Fuel: ',
+                                    style: pw.TextStyle(
+                                      color: textColor,
+                                      fontSize: textFontSize,
+                                    )),
+                                pw.SizedBox(height: 2),
+                                pw.Text(
+                                    projectData["totalFuelConsumption"] + " litre",
+                                    style: pw.TextStyle(
+                                      color: text2Color,
+                                      fontSize: text3FontSize,
+                                    )),
+                              ]),
+                            ),
+
+                          ]),
+                      pw.SizedBox(height: 20),
+                      pw.Row(
+                        children: [
+
+
+                       pw.Column(children: [
+                              pw.Text('Progress Percent: ',
                                   style: pw.TextStyle(
                                     color: textColor,
                                     fontSize: textFontSize,
                                   )),
-                              pw.Text(projectData["volumeExcavated"] + " m3",
+                              pw.SizedBox(height: 2),
+                              pw.Text(
+                                  projectData["progressPercent"] + " %",
                                   style: pw.TextStyle(
                                     color: text2Color,
                                     fontSize: text3FontSize,
                                   )),
                             ]),
+
+                          pw.SizedBox(width: 30),
+
+                          pw.Column(children: [
+                            pw.Text('Approved Excavation: ',
+                                style: pw.TextStyle(
+                                  color: textColor,
+                                  fontSize: textFontSize,
+                                )),
+                            pw.Text(projectData["volumeExcavated"] + " m3",
+                                style: pw.TextStyle(
+                                  color: text2Color,
+                                  fontSize: text3FontSize,
+                                )),
                           ]),
-                      pw.SizedBox(height: 20),
-                      pw.Column(children: [
-                        pw.Text('Completion Percent: ',
-                            style: pw.TextStyle(
-                              color: textColor,
-                              fontSize: textFontSize,
-                            )),
-                        pw.Text(projectData["progressPercent"] + " %",
-                            style: pw.TextStyle(
-                              color: text2Color,
-                              fontSize: text3FontSize,
-                            )),
-                      ]),
-                      pw.SizedBox(height: 10),
-                      pw.Center(
-                        child: pw.Column(children: [
-                          pw.Text('Estimated Fuel Consumption: ',
-                              style: pw.TextStyle(
-                                color: textColor,
-                                fontSize: textFontSize,
-                              )),
-                          pw.SizedBox(height: 2),
-                          pw.Text(
-                              projectData["totalFuelConsumption"] + " litre",
-                              style: pw.TextStyle(
-                                color: text2Color,
-                                fontSize: text3FontSize,
-                              )),
-                        ]),
+                        ],
                       ),
-                    ]),
+
+
+                    ]
+                ),
+
+
                 pw.Container(
-                  width: 130,
-                  height: 130,
+                  width: 150,
+                  height: 150,
                   child: pw.Stack(
                     alignment: pw.Alignment.center,
                     fit: pw.StackFit.expand,
                     children: <pw.Widget>[
                       pw.Center(
                         child: pw.Text(
-                          (double.parse(projectData["progressPercent"]))
-                                  .toString() +
-                              '%',
-                          style: pw.TextStyle(
-                            color: textColor,
-                            fontSize: textFontSize,
-                          ),
+                          (double.parse(projectData["progressPercent"])).toString()+'%',
                           textScaleFactor: 1.2,
                         ),
                       ),
                       pw.CircularProgressIndicator(
-                        value:
-                            double.parse(projectData["progressPercent"]) / 100,
+                        value: double.parse(projectData["progressPercent"])/100,
                         backgroundColor: PdfColors.grey400,
-                        color: PdfColors.blue,
-                        strokeWidth: 10,
+                        color: PdfColors.cyan600,
+                        strokeWidth: 13,
                       ),
                     ],
                   ),
                 )
-              ]),
+
+
+              ]
+          ),
+
+
           pw.SizedBox(height: 25),
+
           pw.Container(
             height: 300,
-            child: pw.Chart(
+
+            child:      pw.Chart(
               grid: pw.CartesianGrid(
-                xAxis: pw.FixedAxis.fromStrings(
-                  List<String>.generate(
-                      allDates.length, (index) => allDates[index]),
+                xAxis: pw.FixedAxis.fromStrings( List<String>.generate(
+                    allDates.length, (index) => allDates[index]),
                   marginStart: 30,
                   marginEnd: 30,
                   ticks: true,
                 ),
                 yAxis: pw.FixedAxis(
-                  [
-                    0,
-                    20,
-                    40,
-                    60,
-                    80,
-                    100,
-                    120,
-                    140,
-                    160,
-                    180,
-                    200,
-                  ],
+                  [0, 20, 40, 60, 80,100, 120,140, 160,180, 200,],
                   divisions: true,
                 ),
               ),
@@ -464,10 +342,10 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                   drawSurface: false,
                   isCurved: true,
                   drawPoints: true,
-                  color: PdfColors.cyan,
+                  color: PdfColors.teal,
                   data: List<pw.LineChartValue>.generate(
                     allDatesApprovedVolume.length,
-                    (i) {
+                        (i) {
                       final num v = allDatesApprovedVolume[i];
                       return pw.LineChartValue(i.toDouble(), v.toDouble());
                     },
@@ -475,154 +353,59 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                 ),
               ],
             ),
+
           ),
+
           pw.SizedBox(height: 25),
-          pw.Center(
-              child: pw.Text('Project Supervisors Details: ',
-                  style: pw.TextStyle(
-                    color: textColor,
-                    fontSize: textFontSize,
-                  ))),
+          pw.Center(child:pw.Text('Project Supervisors Details: ')),
           pw.SizedBox(height: 25),
           pw.Table.fromTextArray(
-            context: context,
-            border: null,
-            cellAlignment: pw.Alignment.centerLeft,
-            headerDecoration: pw.BoxDecoration(
-              borderRadius: 2,
-              color: tableHeaderColor,
-            ),
-            headerHeight: 25,
-            cellHeight: 40,
-            cellAlignments: {
-              0: pw.Alignment.centerLeft,
-              1: pw.Alignment.centerLeft,
-              2: pw.Alignment.centerRight,
-              3: pw.Alignment.center,
-              4: pw.Alignment.centerRight,
-            },
-            headerStyle: pw.TextStyle(
-              color: white,
-              fontSize: 18,
-              fontWeight: pw.FontWeight.bold,
-            ),
-            cellStyle: const pw.TextStyle(
-              color: _redColor,
-              fontSize: 18,
-            ),
-            rowDecoration: pw.BoxDecoration(
-              border: pw.BoxBorder(
-                bottom: true,
-                color: _darkColor,
-                width: 1,
+              headerDecoration: pw.BoxDecoration(
+                borderRadius: 2,
+                color: tableHeaderColor,
               ),
-            ),
-            headers: List<String>.generate(
-              tableHeadersTable.length,
-              (col) => tableHeadersTable[col],
-            ),
-            data: <List<String>>[
-              <String>[
-                '1',
-                '2',
-              ],
-              ...supervisors.map((msg) => [msg["name"], msg["mobile"]])
-            ],
-            // data: <List<dynamic>.generate(
-            //   supervisors.length,
-            //   (row) => supervisors[row],
-            // ),
-          ),
-          // ]),
+              context: context, data: <List<String>>[
+            <String>['Supervisor Name', 'Contact No',],
+            ...supervisors.map(
+                    (msg) => [msg["name"], msg["mobile"]])
+          ]),
           pw.SizedBox(height: 25),
+
           pw.ListView.builder(
               itemCount: allDates.length,
               itemBuilder: (context, index) {
-                //debugPrint(selectedProjectsAllDaysWorkersList[index][index2].toString());
+
+                ////debugPrint(selectedProjectsAllDaysWorkersList[index][index2].toString());
                 return pw.Column(
                     crossAxisAlignment: pw.CrossAxisAlignment.start,
                     children: [
-                      pw.SizedBox(
-                        height: 20,
-                      ),
-                      pw.Center(
-                          child: pw.Text('Work Details of ' + allDates[index],
-                              style: pw.TextStyle(
-                                color: textColor,
-                                fontSize: textFontSize,
-                              ))),
-                      pw.SizedBox(
-                        height: 10,
-                      ),
-                      pw.Text(
-                          'Approved Excavation: ' +
-                              allDatesApprovedVolume[index].toString(),
-                          style: pw.TextStyle(
-                            color: textColor,
-                            fontSize: textFontSize,
-                          )),
-                      pw.SizedBox(
-                        height: 10,
-                      ),
+                      pw.SizedBox(height: 20,),
+                      pw.Center(child:pw.Text('Work Details of '+allDates[index])),
+                      pw.SizedBox(height: 10,),
+                      pw.Text('Approved Excavation: '+allDatesApprovedVolume[index].toString()),
+                      pw.SizedBox(height: 10,),
                       pw.Table.fromTextArray(
-                          context: context,
-                          border: null,
-                          cellAlignment: pw.Alignment.centerLeft,
                           headerDecoration: pw.BoxDecoration(
                             borderRadius: 2,
                             color: tableHeaderColor,
                           ),
-                          headerHeight: 25,
-                          cellHeight: 40,
-                          cellAlignments: {
-                            0: pw.Alignment.centerLeft,
-                            1: pw.Alignment.centerLeft,
-                            2: pw.Alignment.centerRight,
-                            3: pw.Alignment.center,
-                            4: pw.Alignment.centerRight,
-                          },
-                          headerStyle: pw.TextStyle(
-                            color: white,
-                            fontSize: 18,
-                            fontWeight: pw.FontWeight.bold,
-                          ),
-                          cellStyle: const pw.TextStyle(
-                            color: _redColor,
-                            fontSize: 18,
-                          ),
-                          rowDecoration: pw.BoxDecoration(
-                            border: pw.BoxBorder(
-                              bottom: true,
-                              color: _darkColor,
-                              width: 1,
-                            ),
-                          ),
-                          headers: List<String>.generate(
-                            tableHeadersTable2.length,
-                            (col) => tableHeadersTable2[col],
-                          ),
-                          data: <List<dynamic>>[
-                            <String>[
-                              'Worker Name',
-                              'Hours Worked',
-                              'Machine used',
-                              'Volume Excavated',
-                              'Approval Status'
-                            ],
-                            ...allDaysReport[index].map((msg) => [
-                                  msg["workerName"],
-                                  msg["hoursWorked"].toString(),
-                                  msg["MachineUsed"],
-                                  msg["volumeExcavated"].toString(),
-                                  msg["status"]
-                                ])
-                          ]),
-                    ]);
-              }),
+                          context: context, data: <List<dynamic>>[
+                        <String>['Worker Name', 'Hours Worked', 'Machine used', 'Volume Excavated','Approval Status'],
+                        ...allDaysReport[index].map(
+                                (msg) => [msg["workerName"], msg["hoursWorked"].toString(),msg["MachineUsed"], msg["volumeExcavated"].toString(), msg["status"]])
+                      ]),
+                    ]
+
+                );}),
+
         ];
       },
     ));
+
   }
+
+
+
 
   void loadMachines() async {
     await databaseReference
@@ -630,89 +413,89 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
         .child("machineMaster")
         .once()
         .then((snapshot) {
-      allMachinesData = snapshot.value;
+      allMachinesData=snapshot.value;
     });
   }
 
-  Future<void> getProjectsData() async {
-    databaseReference
-        .child("projects")
-        .once()
-        .then((DataSnapshot dataSnapshot) {
-      Map projMap = dataSnapshot.value;
 
-      //debugPrint(projects.toString());
+  Future<void> getProjectsData() async {
+    databaseReference.child("projects").once().then((DataSnapshot dataSnapshot) {
+
+      Map projMap= dataSnapshot.value;
+
+      ////debugPrint(projects.toString());
       projMap.values.toList().forEach((result) {
         setState(() {
-          Map resultMap = result;
-          if (resultMap.containsKey("progress")) {
+          Map resultMap=result;
+          if(resultMap.containsKey("progress")){
             projectsDropdwnItems.add(
               DropdownMenuItem(
                 child: Container(
                     child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(result['projectName']),
-                    Text(
-                      result['siteAddress'],
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                  ],
-                )),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(result['projectName']),
+                        Text(
+                          result['siteAddress'],
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ],
+                    )),
                 value: result['projectID'],
               ),
             );
           }
+
         });
       });
+
     });
   }
 
-  void generatetodaysReport() async {
-    await databaseReference
-        .child("projects")
-        .child(selectedProject)
-        .once()
-        .then((DataSnapshot dataSnapshot) {
-      projectData = dataSnapshot.value;
+
+
+  void generatetodaysReport() async
+  {
+    await databaseReference.child("projects").child(selectedProject).once().then((DataSnapshot dataSnapshot) {
+
+      projectData= dataSnapshot.value;
 
       Map data = dataSnapshot.value["progress"][todaysDate];
-      //debugPrint(data.toString());
+      ////debugPrint(data.toString());
 
-      Map supMap = dataSnapshot.value["supervisors"];
-      supervisors = supMap.values.toList();
-
-      debugPrint(supervisors.toString());
+      Map supMap= dataSnapshot.value["supervisors"];
+      supervisors=supMap.values.toList();
 
       todaysReport = [];
       if (data != null) {
         data.forEach(
-          (index, data) => todaysReport.add({"workerID": index, ...data}),
+              (index, data) => todaysReport.add({"workerID": index, ...data}),
         );
-        debugPrint(todaysReport.toString());
+        //debugPrint(todaysReport.toString());
 
         for (int i = 0; i < todaysReport.length; i++) {
-          if (todaysReport[i]["status"].toString() == "Accepted")
-            approvedVol = approvedVol +
-                double.parse(todaysReport[i]["volumeExcavated"].toString());
+          if(todaysReport[i]["status"].toString()=="Accepted")
+            approvedVol = approvedVol + double.parse(todaysReport[i]["volumeExcavated"].toString());
 
-          if (allMachinesData.containsKey(todaysReport[i]["MachineUsed"])) {
-            String machineModel =
-                allMachinesData[todaysReport[i]["MachineUsed"]]["machineName"] +
-                    "\n" +
-                    allMachinesData[todaysReport[i]["MachineUsed"]]
-                        ["modelName"];
-            todaysReport[i]["MachineUsed"] = machineModel;
+          if(allMachinesData.containsKey(todaysReport[i]["MachineUsed"]))
+          {
+            String machineModel=allMachinesData[todaysReport[i]["MachineUsed"]]["machineName"]+"\n"+allMachinesData[todaysReport[i]["MachineUsed"]]["modelName"];
+            todaysReport[i]["MachineUsed"]=machineModel;
           }
         }
-      } else
+
+
+      }
+      else
         debugPrint("true");
-    });
+    }
+    );
 
     await createTodaysPdf();
     await savePDF();
 
-    Directory documentDirectory = await getApplicationDocumentsDirectory();
+    Directory documentDirectory =
+    await getApplicationDocumentsDirectory();
     String documentPath = documentDirectory.path;
     String fullPath = "$documentPath/todaysReport.pdf";
 
@@ -721,69 +504,81 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
         MaterialPageRoute(
           builder: (context) => ReportPreviewTesting(path: fullPath),
         ));
+
   }
 
-  void generateOverallReport() async {
+
+
+  void generateOverallReport() async
+  {
     allDaysReport.clear();
     allDates.clear();
-    approvedVol = 0;
+    approvedVol=0;
     allDatesApprovedVolume.clear();
-    await databaseReference
-        .child("projects")
-        .child(selectedProject)
-        .once()
-        .then((DataSnapshot dataSnapshot) {
-      projectData = dataSnapshot.value;
+    await databaseReference.child("projects").child(selectedProject).once().then((DataSnapshot dataSnapshot) {
+
+      projectData= dataSnapshot.value;
 
       Map data1 = dataSnapshot.value["progress"];
-      //debugPrint(data.toString());
+      ////debugPrint(data.toString());
 
-      Map supMap = dataSnapshot.value["supervisors"];
-      supervisors = supMap.values.toList();
+      Map supMap= dataSnapshot.value["supervisors"];
+      supervisors=supMap.values.toList();
 
-      // Supervisors data [{name: Shraddha, mobile: 989887877}, {name: Amit	, mobile: 987649821}]
-      debugPrint('Supervisors data ' + supervisors.toString());
+      allDates= data1.keys.toList();
+      List allDatesData= data1.values.toList();
 
-      allDates = data1.keys.toList();
-      List allDatesData = data1.values.toList();
+      allDatesApprovedVolume =List.generate(allDates.length, (i) =>0.0);
 
-      allDatesApprovedVolume = List.generate(allDates.length, (i) => 0.0);
+      //debugPrint(allDatesData.toString());
 
-      debugPrint(allDatesData.toString());
-
-      for (int i = 0; i < allDates.length; i++) {
-        Map todaysDataMap = allDatesData[i];
-        debugPrint(todaysDataMap.values.toList().toString());
+      for(int i=0;i<allDates.length;i++)
+      {
+        Map todaysDataMap= allDatesData[i];
+        //debugPrint(todaysDataMap.values.toList().toString());
         allDaysReport.add(todaysDataMap.values.toList());
       }
 
-      debugPrint(allDaysReport.toString());
+      //debugPrint(allDaysReport.toString());
 
       for (int i = 0; i < allDaysReport.length; i++) {
-        debugPrint(allDaysReport[i].toString());
+        //debugPrint(allDaysReport[i].toString());
 
         List todaysWorkersDataList = allDaysReport[i];
 
-        for (int j = 0; j < todaysWorkersDataList.length; j++) {
-          if (todaysWorkersDataList[j]["status"] == "Accepted") {
-            debugPrint(todaysWorkersDataList[j]["workerName"].toString());
-            allDatesApprovedVolume[i] = allDatesApprovedVolume[i] +
-                double.parse(
-                    todaysWorkersDataList[j]["volumeExcavated"].toString());
-            approvedVol = approvedVol +
-                double.parse(
-                    todaysWorkersDataList[j]["volumeExcavated"].toString());
+
+        for(int j=0;j<todaysWorkersDataList.length;j++)
+        {
+          if(todaysWorkersDataList[j]["status"]=="Accepted")
+          {
+            //debugPrint(todaysWorkersDataList[j]["workerName"].toString());
+            allDatesApprovedVolume[i]=allDatesApprovedVolume[i]+double.parse(todaysWorkersDataList[j]["volumeExcavated"].toString());
+            approvedVol= approvedVol+double.parse(todaysWorkersDataList[j]["volumeExcavated"].toString());
+
+            debugPrint("------------"+todaysWorkersDataList[j].toString());
+
+
+          }
+
+          if(allMachinesData.containsKey(todaysWorkersDataList[j]["MachineUsed"]))
+          {
+            debugPrint("sjhdaaaaaaaaaaaaaaaaaaaaaaaaaatr");
+            String machineModel=allMachinesData[todaysWorkersDataList[j]["MachineUsed"]]["machineName"]+"\n"+allMachinesData[todaysWorkersDataList[j]["MachineUsed"]]["modelName"];
+            debugPrint("------------"+machineModel);
+            allDaysReport[i][j]["MachineUsed"]=machineModel;
           }
         }
       }
 
-      debugPrint(allDatesApprovedVolume.toString());
-    });
+      //debugPrint(allDatesApprovedVolume.toString());
+    }
+    );
 
     await createOverallPdf();
     await savePDFOverall();
 
-    Directory documentDirectory = await getApplicationDocumentsDirectory();
+    Directory documentDirectory =
+    await getApplicationDocumentsDirectory();
     String documentPath = documentDirectory.path;
     String fullPath = "$documentPath/overallProgress.pdf";
 
@@ -792,7 +587,10 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
         MaterialPageRoute(
           builder: (context) => ReportPreviewTesting(path: fullPath),
         ));
+
   }
+
+
 
   @override
   void initState() {
@@ -804,6 +602,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: Container(
         padding: EdgeInsets.all(10),
         child: ListView(
@@ -825,15 +624,16 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                     child: Center(
                       child: new DropdownButtonFormField(
                         validator: (value) =>
-                            value == null ? 'Enter Start Date' : null,
-                        items: projectsDropdwnItems,
+                        value == null ? 'Enter Start Date' : null,
+                        items:projectsDropdwnItems,
                         onChanged: (selectedAccountType) {
                           setState(() {
-                            selectedProject = selectedAccountType;
-                            debugPrint(selectedProject);
+                            selectedProject=selectedAccountType;
+                            //debugPrint(selectedProject);
                           });
                         },
                         value: selectedProject,
+
                         isDense: false,
                         isExpanded: true,
                         hint: Text(
@@ -844,17 +644,20 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                     ),
                   ),
                 ),
+
                 SizedBox(height: 20),
+
                 SizedBox(
                   height: 10,
                 ),
+
                 Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
                       borderRadius: BorderRadius.circular(5),
                     ),
                     padding: EdgeInsets.all(10),
-                    child: Column(
+                    child:Column(
                       children: [
                         // Center(
                         //   child: titleStyles('Get Todays Report: ', 18),
@@ -865,20 +668,20 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                         ),
 
                         FlatButton(
-                          child: buttonContainers(
-                              double.infinity, 20, 'Todays Report', 18),
-                          onPressed: () async {
+                          child: buttonContainers(double.infinity, 20, 'Todays Report', 18),
+                          onPressed: () async{
+
                             // await selectedProjs();
                             generatetodaysReport();
+
                           },
                         ),
                         SizedBox(
                           height: 50,
                         ),
                         FlatButton(
-                          child: buttonContainers(double.infinity, 20,
-                              'Generate Overall Report', 18),
-                          onPressed: () async {
+                          child: buttonContainers(double.infinity, 20, 'Generate Overall Report', 18),
+                          onPressed: () async{
                             // await selectedProjs();
                             // await allDayReportPdf();
                             // await savePDF();
@@ -901,15 +704,21 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                           height: 20,
                         ),
                       ],
-                    )),
+                    )
+                ),
+
+
                 SizedBox(
                   height: 10,
                 ),
+
+
               ],
             )
           ],
         ),
       ),
+
     );
   }
 }

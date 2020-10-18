@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:project_timeline/admin/ProgressTimeLine/ProgressPage.dart';
 import 'package:project_timeline/admin/reportGeneration/ReportGeneration.dart';
+import 'package:project_timeline/admin/reportGeneration/reportTest.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../CommonWidgets.dart';
 import '../dashboard.dart';
@@ -76,7 +77,7 @@ class ManagerHomePageState extends State<ManagerHomePage> {
         return new CreateAcceptSupervisor();
 
       case 6:
-        return new ReportGeneration();
+        return new ReportGenerationTesting();
 
 
       default:
@@ -189,15 +190,15 @@ class ManagerHomePageState extends State<ManagerHomePage> {
                       appbartitle = "Create/Accept Supervisors";
                     }),
 
-                ListTile(
-                    title: Row(children: <Widget>[
-                      Icon(Icons.import_contacts),
-                      Text(" Report Generation")
-                    ]),
-                    onTap: () {
-                      _onSelectItem(6);
-                      appbartitle = " Report Generation";
-                    }),
+                // ListTile(
+                //     title: Row(children: <Widget>[
+                //       Icon(Icons.import_contacts),
+                //       Text(" Report Generation")
+                //     ]),
+                //     onTap: () {
+                //       _onSelectItem(6);
+                //       appbartitle = " Report Generation";
+                //     }),
 
                 ListTile(
                     title: Row(children: <Widget>[
