@@ -1,21 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:project_timeline/PDFTesting.dart';
-import 'package:project_timeline/dashboard.dart';
-import 'package:project_timeline/manager/createNewProject/EditProject.dart';
-import 'package:project_timeline/manager/createNewProject/projects.dart';
-
-import 'package:project_timeline/reportGeneration/reportTest.dart';
-
-import 'package:project_timeline/supervisor/approveWork/WorkApproveModule.dart';
-import 'package:project_timeline/supervisor/approveWork/workerSelectDailyForm.dart';
-
-import 'login.dart';
-
-import 'manager/createNewProject/test.dart';
-
-import 'supervisor/approveWork/WorkApproveModule.dart';
-
-import 'worker/workerForm.dart';
+import 'admin/dashboard.dart';
+import 'admin/login.dart';
+import 'admin/manager/createNewProject/projects.dart';
+import 'admin/manager/createNewProject/test.dart';
+import 'admin/reportGeneration/reportTest.dart';
+import 'admin/supervisor/approveWork/WorkApproveModule.dart';
+import 'admin/supervisor/approveWork/workerSelectDailyForm.dart';
+import 'admin/worker/workerForm.dart';
 
 void main() {
   runApp(MyApp());
@@ -57,15 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // in the middle of the parent.
         child: ListView(
           children: <Widget>[
-            RaisedButton(
-              child: Text("SMS"),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PDFTesting()),
-                );
-              },
-            ),
+
             RaisedButton(
               child: Text("PDF testing"),
               onPressed: () {
