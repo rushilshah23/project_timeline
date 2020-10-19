@@ -433,7 +433,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                                   borderRadius: BorderRadius.circular(30)),
                               child: Container(
                                 width: double.infinity,
-                                color: feedbackbuttonColor,
+                                // color: feedbackbuttonColor,
                                 decoration: const BoxDecoration(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10)),
