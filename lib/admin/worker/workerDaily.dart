@@ -2,13 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class WorkerDaily extends StatefulWidget {
+  String name, email, mobile, password, uid, userType, assignedProject;
+  WorkerDaily(
+      {Key key,
+      this.name,
+      this.email,
+      this.mobile,
+      this.assignedProject,
+      this.userType,
+      this.uid})
+      : super(key: key);
   @override
   _WorkerDailyState createState() => _WorkerDailyState();
 }
 
 class _WorkerDailyState extends State<WorkerDaily> {
-  var projectID = "b570da70-fa93-11ea-9561-89a3a74b28bb";
-  var workerID = "8YiMHLBnBaNjmr3yPvk8NWvNPmm2"; //not working
+  var projectID;
+  var workerID; //not working
+
+  @override
+  void initState() {
+    setState(() {
+      projectID = widget.assignedProject;
+      workerID = widget.uid;
+      print(projectID);
+      print(workerID);
+    });
+    super.initState();
+  }
+
   Widget getIcon(status) {
     switch (status) {
       case "Pending":
@@ -42,7 +64,11 @@ class _WorkerDailyState extends State<WorkerDaily> {
           child: StreamBuilder(
               stream: databaseReference.onValue,
               builder: (context, snap) {
-                if (snap.hasData &&
+                if (!snap.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snap.hasData &&
                     !snap.hasError &&
                     snap.data.snapshot.value != null) {
                   Map data = snap.data.snapshot.value;
@@ -50,11 +76,12 @@ class _WorkerDailyState extends State<WorkerDaily> {
                   data.forEach(
                     (index, data) => date.add({"key": index, ...data}),
                   );
+                  print(data);
                   return ListView.builder(
                     itemCount: date.length,
                     itemBuilder: (context, index) {
                       return Card(
-                        color: Colors.indigo[200],
+                        color: Color(0xff93e1ed),
                         elevation: 3,
                         child: ListTile(
                           leading: getIcon(date[index][workerID]["status"]),
@@ -67,15 +94,9 @@ class _WorkerDailyState extends State<WorkerDaily> {
                       );
                     },
                   );
-                } else if (!snap.hasData ||
-                    snap.hasError ||
-                    snap.data.snapshot.value == null) {
-                  return Center(
-                    child: Text("No Data Found"),
-                  );
                 } else
                   return Center(
-                    child: CircularProgressIndicator(),
+                    child: Text("No Data Found"),
                   );
               }),
         ),

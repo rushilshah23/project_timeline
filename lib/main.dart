@@ -7,22 +7,34 @@ import 'admin/reportGeneration/reportTest.dart';
 import 'admin/supervisor/approveWork/WorkApproveModule.dart';
 import 'admin/supervisor/approveWork/workerSelectDailyForm.dart';
 import 'admin/worker/workerForm.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:geocoder/services/base.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  Geocoding geocoding = Geocoder.local;
+
+  final Map<String, Geocoding> modes = {
+    "Local": Geocoder.local,
+    "Google (distant)": Geocoder.google("<API-KEY>"),
+  };
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return AppState(
+      mode: this.geocoding,
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: MyHomePage(title: 'Flutter Demo Home Page'),
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -48,7 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
         // in the middle of the parent.
         child: ListView(
           children: <Widget>[
-
             RaisedButton(
               child: Text("PDF testing"),
               onPressed: () {

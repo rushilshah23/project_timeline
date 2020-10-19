@@ -280,8 +280,10 @@ class LoginPageState extends State<LoginPage> {
     } catch (e) {
       print("```````````````````````````");
       print(e.toString());
+      await pr.hide();
       print("```````````````````````````");
     }
+    await pr.hide();
   }
 
   loginUsingOTP(credential, pr) async {
@@ -333,7 +335,7 @@ class LoginPageState extends State<LoginPage> {
         if (firstTimeLogin != 1) {
           await users.getDocuments().then((value) {
             value.documents.forEach((element) async {
-              if (element.data["mobile"] == _email) {
+              if (element.data["mobile"] == _email && _signInMethod == "otp") {
                 flag = 1;
                 AuthResult result =
                     await _auth.signInWithCredential(credential);
@@ -413,7 +415,7 @@ class LoginPageState extends State<LoginPage> {
         if (firstTimeLogin != 1) {
           await supervisor.getDocuments().then((value) {
             value.documents.forEach((element) async {
-              if (element.data["mobile"] == _email) {
+              if (element.data["mobile"] == _email && _signInMethod == "otp") {
                 flag = 1;
                 AuthResult result =
                     await _auth.signInWithCredential(credential);
@@ -494,14 +496,13 @@ class LoginPageState extends State<LoginPage> {
         if (firstTimeLogin != 1) {
           await workers.getDocuments().then((value) {
             value.documents.forEach((element) async {
-              if (element.data["mobile"] == _email) {
+              if (element.data["mobile"] == _email && _signInMethod == "otp") {
                 flag = 1;
                 AuthResult result =
                     await _auth.signInWithCredential(credential);
                 FirebaseUser user = result.user;
                 if (user.uid != null) {
                   await pr.hide();
-
                   print("```````````````````````````");
                   print(element.data["uid"]);
                   print(element.data["mobile"]);
@@ -515,7 +516,6 @@ class LoginPageState extends State<LoginPage> {
                       element.data["mobile"],
                       element.data["uid"],
                       element.data["assignedProject"]);
-
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => WorkerHomePage()),
@@ -575,7 +575,7 @@ class LoginPageState extends State<LoginPage> {
         if (firstTimeLogin != 1) {
           await manager.getDocuments().then((value) {
             value.documents.forEach((element) async {
-              if (element.data["mobile"] == _email) {
+              if (element.data["mobile"] == _email && _signInMethod == "otp") {
                 flag = 1;
                 AuthResult result =
                     await _auth.signInWithCredential(credential);
@@ -817,7 +817,7 @@ class LoginPageState extends State<LoginPage> {
                       width: double.infinity,
                       padding: EdgeInsets.all(15),
                       decoration: new BoxDecoration(
-                          gradient: gradients(),
+                          color: Color(0xff018abd),
                           borderRadius: BorderRadius.circular(12.0)),
                       child: Text(
                         "LOGIN",

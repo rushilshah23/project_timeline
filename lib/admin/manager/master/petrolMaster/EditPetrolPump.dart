@@ -264,7 +264,7 @@ class _EditPetrolPumpState extends State<EditPetrolPump> {
                   children: [
 
                     FlatButton(
-                      child: buttonContainers(100, 10, 'Save', 15),
+                      child: buttonContainers(100, 20, 'Save', 17),
                       onPressed: () {
                         updatePetrolPump();
                         // debugPrint(widget.data["key"].toString());
@@ -272,7 +272,7 @@ class _EditPetrolPumpState extends State<EditPetrolPump> {
                     ),
 
                     FlatButton(
-                      child: buttonContainers(100, 20, 'Delete', 18),
+                      child: buttonContainers(100, 20, 'Delete', 17),
                         onPressed: () {
                           updatePetrolPump();
                           // debugPrint(widget.data["key"].toString());

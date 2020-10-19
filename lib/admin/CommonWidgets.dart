@@ -19,11 +19,11 @@ showToast(String msg) {
 Widget ThemeAppbar(String title) {
   return new AppBar(
     iconTheme: IconThemeData(
-      color: Colors.indigo[300],
+      color: Color(0xff005c9d),
     ),
     title: Text(title,
         style: TextStyle(
-          color: Colors.blue[700],
+          color: Color(0xff005c9d),
         )),
     backgroundColor: Colors.white,
   );
@@ -45,7 +45,7 @@ cards() {
 
 Widget floats(context, files) {
   return FloatingActionButton(
-    backgroundColor: Colors.blue[900],
+    backgroundColor: Color(0xff005f89),
     onPressed: () {
       showDialog(
         context: context,
@@ -72,7 +72,9 @@ Widget buttonContainers(
     width: width,
     padding: EdgeInsets.all(padding),
     decoration: new BoxDecoration(
-        borderRadius: BorderRadius.circular(10), gradient: gradients()),
+        borderRadius: BorderRadius.circular(10),
+      color: Color(0xff018abd),
+    ),
     child: Text(
       text,
       style: TextStyle(

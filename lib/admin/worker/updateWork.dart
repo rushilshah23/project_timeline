@@ -77,7 +77,7 @@ class _UpdateWorkState extends State<UpdateWork>
 
   TabBar _getTabBar() {
     return TabBar(
-      labelColor: Colors.blue,
+      labelColor: Color(0xff005c9d),
       tabs: <Widget>[
         Tab(
           text: "Update",
@@ -114,7 +114,14 @@ class _UpdateWorkState extends State<UpdateWork>
                     mobile: widget.mobile,
                     userType: widget.userType,
                   ),
-                  WorkerDaily(),
+                  WorkerDaily(
+                    name: widget.name,
+                    email: widget.email,
+                    uid: widget.uid,
+                    assignedProject: widget.assignedProject,
+                    mobile: widget.mobile,
+                    userType: widget.userType,
+                  ),
                 ],
               ),
             )

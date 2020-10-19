@@ -167,11 +167,13 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
                         height: 50,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            gradient: gradients()),
+                            color: Color(0xff018abd),
+                        ),
                         child: Center(
                           child: Text(
                             'Save',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.white,
+                            fontSize: 16),
                           ),
                         ),
                       ),
