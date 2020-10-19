@@ -114,7 +114,14 @@ class _UpdateWorkState extends State<UpdateWork>
                     mobile: widget.mobile,
                     userType: widget.userType,
                   ),
-                  WorkerDaily(),
+                  WorkerDaily(
+                    name: widget.name,
+                    email: widget.email,
+                    uid: widget.uid,
+                    assignedProject: widget.assignedProject,
+                    mobile: widget.mobile,
+                    userType: widget.userType,
+                  ),
                 ],
               ),
             )

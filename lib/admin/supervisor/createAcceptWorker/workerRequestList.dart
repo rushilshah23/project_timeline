@@ -32,7 +32,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
         }).then((value) async {
           await databaseReference
               .child("request")
-              .child("worker")
+              .child("Worker")
               .child(worker["key"])
               .remove();
         }).then((value) {
@@ -53,7 +53,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
         }).then((value) async {
           await databaseReference
               .child("request")
-              .child("worker")
+              .child("Worker")
               .child(worker["key"])
               .remove();
         }).then((value) {
@@ -92,7 +92,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
   declineRequest(worker) async {
     await databaseReference
         .child("request")
-        .child("worker")
+        .child("Worker")
         .child(worker["key"])
         .remove()
         .then((value) {
@@ -142,7 +142,8 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
                               softWrap: false,
                               style: TextStyle(fontSize: 14),
                             ),
-                          if (allWorkerRequest[index]["signInMethod"] != null)
+                          if (allWorkerRequest[index]["signInMethod"] !=
+                              "email")
                             Text(
                               "Sign In method : OTP",
                               overflow: TextOverflow.clip,
@@ -228,7 +229,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
     return Scaffold(
       // appBar: ThemeAppbar("Worker Request List"),
       body: StreamBuilder(
-        stream: databaseReference.child("request").child("worker").onValue,
+        stream: databaseReference.child("request").child("Worker").onValue,
         builder: (context, snap) {
           if (snap.hasData &&
               !snap.hasError &&
@@ -237,7 +238,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
             allWorkerRequest = [];
 
             data.forEach(
-                  (index, data) => allWorkerRequest.add({"key": index, ...data}),
+              (index, data) => allWorkerRequest.add({"key": index, ...data}),
             );
 
             // debugPrint(data.toString());
