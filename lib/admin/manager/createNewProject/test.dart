@@ -4,7 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:uuid/uuid.dart';
-
+import 'package:geocoder/geocoder.dart';
+import 'package:geocoder/services/base.dart';
 import '../../CommonWidgets.dart';
 
 List<String> machineTypeSelected = [];
@@ -32,6 +33,7 @@ class _TestState extends State<Test> {
   String siteAddress = '';
   var siteAddressControl = TextEditingController();
 
+  List coordinates = [];
   //Soil Type
   var soilType;
   List<String> _soilType = <String>[
@@ -129,7 +131,7 @@ class _TestState extends State<Test> {
     });
   }
 
-  sendToDb() {
+  sendToDb() async {
     final CollectionReference supervisor =
         Firestore.instance.collection("supervisor");
 
@@ -137,6 +139,18 @@ class _TestState extends State<Test> {
     String uniqueID = uuid.v1();
 
     try {
+      var geocoding = AppState.of(context).mode;
+      var results = await geocoding.findAddressesFromQuery(siteAddress);
+      print("``````````````````````");
+      debugPrint(results[0].coordinates.toString());
+      this.setState(() {
+        coordinates.add(results[0].coordinates);
+      });
+      Firestore.instance.collection("markers").add({
+        'location':
+            new GeoPoint(coordinates[0].latitude, coordinates[0].longitude),
+        'place': siteAddress,
+      });
       databaseReference.child("projects").child(uniqueID).set({
         'projectName': projectName,
         'siteAddress': siteAddress,
@@ -181,6 +195,7 @@ class _TestState extends State<Test> {
       });
       showToast("Project added Successfully");
     } catch (e) {
+      print(e);
       showToast("Failed. check your internet!");
     }
   }
@@ -945,8 +960,7 @@ class _TestState extends State<Test> {
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                          fontSize: 17
-                        ),
+                            fontSize: 17),
                       )),
                     ),
                     onPressed: () {
@@ -1093,4 +1107,23 @@ class _SelectMachinesState extends State<SelectMachines> {
       ),
     ));
   }
+}
+
+class AppState extends InheritedWidget {
+  const AppState({
+    Key key,
+    this.mode,
+    Widget child,
+  })  : assert(mode != null),
+        assert(child != null),
+        super(key: key, child: child);
+
+  final Geocoding mode;
+
+  static AppState of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType();
+  }
+
+  @override
+  bool updateShouldNotify(AppState old) => mode != old.mode;
 }

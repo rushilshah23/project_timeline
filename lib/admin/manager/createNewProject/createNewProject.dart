@@ -3,19 +3,17 @@ import 'package:flutter/material.dart';
 
 import '../../CommonWidgets.dart';
 
-
 String machineType = 'Select Machine';
-List<String> machineTypeSelected=List.generate(74, (i) => 'Select Machine');
-List<TextEditingController> _machineQuantity = List.generate(74, (i) => TextEditingController());
+List<String> machineTypeSelected = List.generate(74, (i) => 'Select Machine');
+List<TextEditingController> _machineQuantity =
+    List.generate(74, (i) => TextEditingController());
 
 class CreateNewProject extends StatefulWidget {
-
   @override
   _CreateNewProjectState createState() => _CreateNewProjectState();
 }
 
 class _CreateNewProjectState extends State<CreateNewProject> {
-
   String pname = '';
   var pnameControl = new TextEditingController();
   String saddr = '';
@@ -29,24 +27,17 @@ class _CreateNewProjectState extends State<CreateNewProject> {
   String supervisor = 'Select';
   List<DynamicWidget> listDyn = [];
 
-
-  addDynamic(){
+  addDynamic() {
     listDyn.add(new DynamicWidget());
-    setState(() {
-
-    });
+    setState(() {});
   }
 
-
-
-
-
   @override
-
   Widget _buildAboutText() {
     return new RichText(
       text: new TextSpan(
-        text: 'Duration:\n\nMachinery:\n\nCost of Fuel:\n\nVolume to be excavated:\n\n\n\n',
+        text:
+            'Duration:\n\nMachinery:\n\nCost of Fuel:\n\nVolume to be excavated:\n\n\n\n',
         style: const TextStyle(color: Colors.black87),
         children: <TextSpan>[
           const TextSpan(text: 'Do you want to create project?'),
@@ -54,7 +45,6 @@ class _CreateNewProjectState extends State<CreateNewProject> {
       ),
     );
   }
-
 
   Widget _buildAboutDialog(BuildContext context) {
     return new AlertDialog(
@@ -78,38 +68,41 @@ class _CreateNewProjectState extends State<CreateNewProject> {
     );
   }
 
-
-
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: ThemeAppbar("Add New Project"),
       body: ListView(
         children: [
-
-          SizedBox(height: 20,),
-
-          Center(child:
-          Text(
-            'Add New Project',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-          ),),
-
+          SizedBox(
+            height: 20,
+          ),
+          Center(
+            child: Text(
+              'Add New Project',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+            ),
+          ),
           Container(
-            padding: EdgeInsets.symmetric(vertical: 20,horizontal: 25),
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 25),
             child: Column(
               children: <Widget>[
                 TextFormField(
                   decoration: InputDecoration(
                     labelText: "Project Name",
                     fillColor: Colors.white,
-                    focusedBorder:OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-                      borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: Colors.blue, width: 2.0),
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          topLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
+                          bottomLeft: Radius.circular(10)),
                     ),
                   ),
                   controller: pnameControl,
                   validator: (val) => val.isEmpty ? 'Enter project name' : null,
-                  onChanged: (val){
+                  onChanged: (val) {
                     setState(() => pname = val);
                   },
                 ),
@@ -118,14 +111,19 @@ class _CreateNewProjectState extends State<CreateNewProject> {
                   decoration: InputDecoration(
                     labelText: "Site Address",
                     fillColor: Colors.white,
-                    focusedBorder:OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-                      borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: Colors.blue, width: 2.0),
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          topLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
+                          bottomLeft: Radius.circular(10)),
                     ),
                   ),
                   controller: saddrControl,
                   validator: (val) => val.isEmpty ? 'Enter site address' : null,
-                  onChanged: (val){
+                  onChanged: (val) {
                     setState(() => saddr = val);
                   },
                 ),
@@ -149,9 +147,9 @@ class _CreateNewProjectState extends State<CreateNewProject> {
                     inkwellRadius: !isExpanded
                         ? BorderRadius.all(Radius.circular(8.0))
                         : BorderRadius.only(
-                      topRight: Radius.circular(8.0),
-                      topLeft: Radius.circular(8.0),
-                    ),
+                            topRight: Radius.circular(8.0),
+                            topLeft: Radius.circular(8.0),
+                          ),
                     children: <Widget>[
                       ClipRRect(
                         borderRadius: BorderRadius.only(
@@ -162,31 +160,27 @@ class _CreateNewProjectState extends State<CreateNewProject> {
                           children: <Widget>[
                             Padding(
                               padding:
-                              const EdgeInsets.only(left: 4.0, right: 4.0),
+                                  const EdgeInsets.only(left: 4.0, right: 4.0),
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-
-
                                   ListTile(
-                                    onTap: (){
-                                      dropdownValue='Soft';
+                                    onTap: () {
+                                      dropdownValue = 'Soft';
                                     },
                                     title: Text('Soft'),
                                   ),
-
                                   ListTile(
-                                    onTap: (){
-                                      dropdownValue='Rough';
+                                    onTap: () {
+                                      dropdownValue = 'Rough';
                                     },
                                     title: Text('Rough'),
                                   ),
-
                                   ListTile(
-                                    onTap: (){},
+                                    onTap: () {},
                                     title: Text('Hard'),
                                   ),
-
                                 ],
                               ),
                             ),
@@ -198,30 +192,30 @@ class _CreateNewProjectState extends State<CreateNewProject> {
                 ),
                 SizedBox(height: 20),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   decoration: BoxDecoration(
                     border: Border.all(
                       width: 1,
                     ),
                     borderRadius: BorderRadius.all(
                         Radius.circular(5.0) //         <--- border radius here
-                    ),
+                        ),
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('SELECT MACHINE TYPE',style: TextStyle(fontSize: 15,fontStyle: FontStyle.italic)),
+                          Text('SELECT MACHINE TYPE',
+                              style: TextStyle(
+                                  fontSize: 15, fontStyle: FontStyle.italic)),
                           IconButton(
-                            icon: Icon(Icons.add,color: Colors.indigo),
+                            icon: Icon(Icons.add, color: Colors.indigo),
                             onPressed: addDynamic,
                           ),
                         ],
                       ),
-
                       Flexible(
                         fit: FlexFit.loose,
                         child: new ListView.builder(
@@ -230,7 +224,7 @@ class _CreateNewProjectState extends State<CreateNewProject> {
                           scrollDirection: Axis.vertical,
                           itemCount: listDyn.length,
                           itemBuilder: (context, index) {
-                            return DynamicWidget(index:index);
+                            return DynamicWidget(index: index);
                           },
                         ),
                       )
@@ -239,18 +233,20 @@ class _CreateNewProjectState extends State<CreateNewProject> {
                 ),
                 SizedBox(height: 20),
                 Container(
-                    padding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     decoration: BoxDecoration(
                       border: Border.all(
                         width: 1,
                       ),
-                      borderRadius: BorderRadius.all(
-                          Radius.circular(5.0) //         <--- border radius here
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(
+                              5.0) //         <--- border radius here
+                          ),
                     ),
                     child: Column(
                       children: [
-                        Text('PROJECT GOALS',style: TextStyle(fontSize: 15,fontStyle: FontStyle.italic)),
+                        Text('PROJECT GOALS',
+                            style: TextStyle(
+                                fontSize: 15, fontStyle: FontStyle.italic)),
                         SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -262,14 +258,20 @@ class _CreateNewProjectState extends State<CreateNewProject> {
                                     contentPadding: EdgeInsets.all(10),
                                     labelText: "Length",
                                     fillColor: Colors.white,
-                                    focusedBorder:OutlineInputBorder(
-                                      borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-                                      borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.blue, width: 2.0),
+                                      borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(10),
+                                          topLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10)),
                                     ),
-                                  )
-                              ),
+                                  )),
                             ),
-                            SizedBox(width: 20.0,),
+                            SizedBox(
+                              width: 20.0,
+                            ),
                             new Flexible(
                               child: new TextFormField(
                                   keyboardType: TextInputType.number,
@@ -277,12 +279,16 @@ class _CreateNewProjectState extends State<CreateNewProject> {
                                     contentPadding: EdgeInsets.all(10),
                                     labelText: "Depth",
                                     fillColor: Colors.white,
-                                    focusedBorder:OutlineInputBorder(
-                                      borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-                                      borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.blue, width: 2.0),
+                                      borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(10),
+                                          topLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10)),
                                     ),
-                                  )
-                              ),
+                                  )),
                             ),
                           ],
                         ),
@@ -297,14 +303,20 @@ class _CreateNewProjectState extends State<CreateNewProject> {
                                     contentPadding: EdgeInsets.all(10),
                                     labelText: "Upper Width",
                                     fillColor: Colors.white,
-                                    focusedBorder:OutlineInputBorder(
-                                      borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-                                      borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.blue, width: 2.0),
+                                      borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(10),
+                                          topLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10)),
                                     ),
-                                  )
-                              ),
+                                  )),
                             ),
-                            SizedBox(width: 20.0,),
+                            SizedBox(
+                              width: 20.0,
+                            ),
                             new Flexible(
                               child: new TextFormField(
                                   keyboardType: TextInputType.number,
@@ -312,19 +324,22 @@ class _CreateNewProjectState extends State<CreateNewProject> {
                                     contentPadding: EdgeInsets.all(10),
                                     labelText: "Lower Width",
                                     fillColor: Colors.white,
-                                    focusedBorder:OutlineInputBorder(
-                                      borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-                                      borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.blue, width: 2.0),
+                                      borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(10),
+                                          topLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10)),
                                     ),
-                                  )
-                              ),
+                                  )),
                             ),
                           ],
                         ),
                         SizedBox(height: 5),
                       ],
-                    )
-                ),
+                    )),
                 SizedBox(height: 10),
                 Material(
                   elevation: 2.0,
@@ -345,9 +360,9 @@ class _CreateNewProjectState extends State<CreateNewProject> {
                     inkwellRadius: !isExpanded
                         ? BorderRadius.all(Radius.circular(8.0))
                         : BorderRadius.only(
-                      topRight: Radius.circular(8.0),
-                      topLeft: Radius.circular(8.0),
-                    ),
+                            topRight: Radius.circular(8.0),
+                            topLeft: Radius.circular(8.0),
+                          ),
                     children: <Widget>[
                       ClipRRect(
                         borderRadius: BorderRadius.only(
@@ -358,33 +373,29 @@ class _CreateNewProjectState extends State<CreateNewProject> {
                           children: <Widget>[
                             Padding(
                               padding:
-                              const EdgeInsets.only(left: 4.0, right: 4.0),
+                                  const EdgeInsets.only(left: 4.0, right: 4.0),
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-
                                   ListTile(
-                                    onTap: (){
-                                      supervisor='Rajesh Kumar';
+                                    onTap: () {
+                                      supervisor = 'Rajesh Kumar';
                                     },
                                     title: Text('Rajesh Kumar'),
                                   ),
-
                                   ListTile(
-                                    onTap: (){
-                                      supervisor='Rahul Jain';
+                                    onTap: () {
+                                      supervisor = 'Rahul Jain';
                                     },
                                     title: Text('Rahul Jain'),
                                   ),
-
                                   ListTile(
-                                    onTap: (){
-                                      supervisor='Shakti Lokhande';
+                                    onTap: () {
+                                      supervisor = 'Shakti Lokhande';
                                     },
                                     title: Text('Shakti Lokhande'),
                                   ),
-
-
                                 ],
                               ),
                             ),
@@ -414,9 +425,9 @@ class _CreateNewProjectState extends State<CreateNewProject> {
                     inkwellRadius: !isExpanded
                         ? BorderRadius.all(Radius.circular(8.0))
                         : BorderRadius.only(
-                      topRight: Radius.circular(8.0),
-                      topLeft: Radius.circular(8.0),
-                    ),
+                            topRight: Radius.circular(8.0),
+                            topLeft: Radius.circular(8.0),
+                          ),
                     children: <Widget>[
                       ClipRRect(
                         borderRadius: BorderRadius.only(
@@ -427,33 +438,29 @@ class _CreateNewProjectState extends State<CreateNewProject> {
                           children: <Widget>[
                             Padding(
                               padding:
-                              const EdgeInsets.only(left: 4.0, right: 4.0),
+                                  const EdgeInsets.only(left: 4.0, right: 4.0),
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-
                                   ListTile(
-                                    onTap: (){
-                                      pump='HP Petrol Pump';
+                                    onTap: () {
+                                      pump = 'HP Petrol Pump';
                                     },
                                     title: Text('RHP Petrol Pump'),
                                   ),
-
                                   ListTile(
-                                    onTap: (){
-                                      pump='Hement Karkare Cng Station';
+                                    onTap: () {
+                                      pump = 'Hement Karkare Cng Station';
                                     },
                                     title: Text('Hement Karkare Cng Station'),
                                   ),
-
                                   ListTile(
-                                    onTap: (){
-                                      pump='Bharat Petroleum';
+                                    onTap: () {
+                                      pump = 'Bharat Petroleum';
                                     },
                                     title: Text('Bharat Petroleum'),
                                   ),
-
-
                                 ],
                               ),
                             ),
@@ -467,20 +474,18 @@ class _CreateNewProjectState extends State<CreateNewProject> {
                 FlatButton(
                   child: Text(
                     'Estimate Project',
-                    style: TextStyle(
-                        color: Colors.white,
-                      fontSize: 17
-                    ),
+                    style: TextStyle(color: Colors.white, fontSize: 17),
                   ),
                   color: Color(0xff018abd),
                   onPressed: () {
                     for (int i = 0; i < listDyn.length; i++) {
-                      debugPrint( _machineQuantity[i].text.toString());
-                      debugPrint( machineTypeSelected[i].toString());
+                      debugPrint(_machineQuantity[i].text.toString());
+                      debugPrint(machineTypeSelected[i].toString());
                     }
                     showDialog(
                       context: context,
-                      builder: (BuildContext context) => _buildAboutDialog(context),
+                      builder: (BuildContext context) =>
+                          _buildAboutDialog(context),
                     );
                   },
                 ),
@@ -493,10 +498,7 @@ class _CreateNewProjectState extends State<CreateNewProject> {
   }
 }
 
-
 class DynamicWidget extends StatefulWidget {
-
-
   final int index;
   DynamicWidget({Key key, this.index}) : super(key: key);
   @override
@@ -510,52 +512,59 @@ class _DynamicWidgetState extends State<DynamicWidget> {
   Widget build(BuildContext context) {
     return Container(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(
-              child: DropdownButton<String>(
-                value: machineTypeSelected[widget.index],
-                //icon: Icon(Icons.arrow_downward),
-                iconSize: 24,
-                elevation: 16,
-                //style: TextStyle(color: Colors.deepPurple),
-                underline: Container(
-                  height: 2,
-                  color: Colors.grey,
-                ),
-                onChanged: (String newValue) {
-                  setState(() {
-                    machineTypeSelected[widget.index] = newValue;
-                    debugPrint(widget.index.toString());
-
-                  });
-                },
-                items: <String>['Select Machine','Crawler Excavators', 'Dragline Excavators', 'Suction Excavators', 'Skid Steer Excavators']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(
+          child: DropdownButton<String>(
+            value: machineTypeSelected[widget.index],
+            //icon: Icon(Icons.arrow_downward),
+            iconSize: 24,
+            elevation: 16,
+            //style: TextStyle(color: Colors.deepPurple),
+            underline: Container(
+              height: 2,
+              color: Colors.grey,
+            ),
+            onChanged: (String newValue) {
+              setState(() {
+                machineTypeSelected[widget.index] = newValue;
+                debugPrint(widget.index.toString());
+              });
+            },
+            items: <String>[
+              'Select Machine',
+              'Crawler Excavators',
+              'Dragline Excavators',
+              'Suction Excavators',
+              'Skid Steer Excavators'
+            ].map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width / 4,
+          child: TextFormField(
+            controller: _machineQuantity[widget.index],
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              labelText: "Quantity",
+              fillColor: Colors.white,
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.blue, width: 2.0),
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(10),
+                    topLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10)),
               ),
             ),
-            Container(
-              width: MediaQuery.of(context).size.width/4,
-              child:TextFormField(
-                controller: _machineQuantity[widget.index],
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: "Quantity",
-                  fillColor: Colors.white,
-                  focusedBorder:OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-                    borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10),bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        )
-    );
+          ),
+        ),
+      ],
+    ));
   }
 }
