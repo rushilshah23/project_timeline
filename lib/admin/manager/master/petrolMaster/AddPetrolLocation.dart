@@ -251,13 +251,16 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
                           decoration: BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5.0)),
-                              gradient: gradients()),
+                                  color: Color(0xff018abd),
+                              ),
                           child: Center(
                               child: Text(
                             "Add ",
                             style: TextStyle(
                                 color: Colors.white,
-                                fontWeight: FontWeight.bold),
+                                fontWeight: FontWeight.bold,
+                              fontSize: 17
+                            ),
                           )),
                         ),
                         onPressed: () {

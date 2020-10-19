@@ -211,7 +211,7 @@ class _DashBoardState extends State<DashBoard> {
                         style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
                       ),
                       circularStrokeCap: CircularStrokeCap.round,
-                      progressColor: Colors.blue[800],
+                      progressColor: Color(0xff02b9f3),
                     ),
                     SizedBox(height: 10),
                     Text(
@@ -236,7 +236,7 @@ class _DashBoardState extends State<DashBoard> {
                         style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
                       ),
                       circularStrokeCap: CircularStrokeCap.round,
-                      progressColor: Colors.blue[600],
+                      progressColor: Color(0xff018abd),
                     ),
                     SizedBox(height: 10),
                     Text(
@@ -261,7 +261,7 @@ class _DashBoardState extends State<DashBoard> {
                         style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
                       ),
                       circularStrokeCap: CircularStrokeCap.round,
-                      progressColor: Colors.blue[300],
+                      progressColor: Color(0xff005c9d),
                     ),
                     SizedBox(height: 10),
                     Text(

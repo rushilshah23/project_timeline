@@ -983,14 +983,17 @@ class _EditProjectState extends State<EditProject> {
                 child: Container(
                   height: 50,
                   width: MediaQuery.of(context).size.width - 40,
-                  decoration: BoxDecoration(gradient: gradients()),
+                  color: Color(0xff018abd),
                   child: Padding(
                     padding: const EdgeInsets.all(15),
                     child: Center(
                         child: Text(
                       'Estimate Project',
                       style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17
+                      ),
                     )),
                   ),
                 ),

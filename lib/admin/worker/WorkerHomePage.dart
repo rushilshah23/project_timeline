@@ -96,11 +96,11 @@ class WorkerHomePageState extends State<WorkerHomePage> {
     return Scaffold(
       appBar: new AppBar(
         iconTheme: IconThemeData(
-          color: Colors.indigo[200],
+          color: Color(0xff005c9d),
         ),
         title: Text(appbartitle,
             style: TextStyle(
-              color: Colors.indigo,
+              color: Color(0xff005c9d),
             )),
         backgroundColor: Colors.white,
       ),

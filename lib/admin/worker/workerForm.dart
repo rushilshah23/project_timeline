@@ -382,11 +382,11 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                             ),
                             IconButton(
                               icon:
-                                  Icon(Icons.remove, color: Colors.deepOrange),
+                                  Icon(Icons.remove, color: Color(0xff005c9d)),
                               onPressed: removeDynamic,
                             ),
                             IconButton(
-                              icon: Icon(Icons.add, color: Colors.deepOrange),
+                              icon: Icon(Icons.add, color: Color(0xff005c9d)),
                               onPressed: addDynamic,
                             ),
                           ],
@@ -641,7 +641,7 @@ class _WorkIntervalsState extends State<WorkIntervals> {
                     ),
                     highlightedTextStyle: TextStyle(
                       fontSize: 15,
-                      color: Colors.deepOrange,
+                      color: Color(0xff005c9d)
                     ),
                     itemHeight: 30,
                     spacing: 0,
@@ -675,7 +675,7 @@ class _WorkIntervalsState extends State<WorkIntervals> {
                     ),
                     highlightedTextStyle: TextStyle(
                       fontSize: 15,
-                      color: Colors.deepOrange,
+                      color: Color(0xff005c9d),
                     ),
                     itemHeight: 30,
                     spacing: 0,

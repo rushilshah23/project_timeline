@@ -178,7 +178,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                                     fontWeight: FontWeight.bold, fontSize: 20.0),
                               ),
                               circularStrokeCap: CircularStrokeCap.round,
-                              progressColor: Colors.indigo[400],
+                              progressColor: Color(0xff93e1ed),
                             ),
                             Text(
                               'Project Completion',

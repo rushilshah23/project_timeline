@@ -575,7 +575,7 @@ class _EditMachineDataState extends State<EditMachineData> {
 //                                      color: Colors.blue,
 //                                    ),
                                   FlatButton(
-                                    child: buttonContainers(50, 10, 'Save Changes', 15),
+                                    child: buttonContainers(130, 16, 'Save Changes', 17),
                                     onPressed: () {
                                       if (_formKey.currentState.validate()) {
                                         debugPrint("true");
@@ -586,7 +586,7 @@ class _EditMachineDataState extends State<EditMachineData> {
                                   ),
                                   SizedBox(width: 10,),
                                   FlatButton(
-                                    child: buttonContainers(50, 10, 'Delete Machine', 15),
+                                    child: buttonContainers(130, 16, 'Delete Machine', 17),
                                     onPressed: () {
                                       deleteMachine();
                                     },

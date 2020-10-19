@@ -501,14 +501,16 @@ class _AddNewMachineState extends State<AddNewMachine> {
                                   child: Container(
                                     height: 50,
                                     width: 400,
-                                    decoration:
-                                        BoxDecoration(gradient: gradients()),
+                                    color: Color(0xff018abd),
                                     child: Padding(
                                       padding: const EdgeInsets.only(
                                           left: 130, top: 15),
                                       child: Text(
                                         'Add Machine',
-                                        style: TextStyle(color: Colors.white),
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                          fontSize: 17
+                                        ),
                                       ),
                                     ),
                                   ),

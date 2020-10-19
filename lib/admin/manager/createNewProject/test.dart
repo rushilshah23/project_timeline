@@ -600,7 +600,7 @@ class _TestState extends State<Test> {
           ),
           title: Text("Add  Project",
               style: TextStyle(
-                color: Colors.indigo,
+                color: Color(0xff02b9f3),
               )),
           backgroundColor: Colors.white,
         ),
@@ -935,7 +935,7 @@ class _TestState extends State<Test> {
                   ),
                   SizedBox(height: 40.0),
                   RaisedButton(
-                    color: Colors.blue,
+                    color: Color(0xff018abd),
                     child: Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: 15, vertical: 20),
@@ -943,7 +943,10 @@ class _TestState extends State<Test> {
                           child: Text(
                         'Estimate Project',
                         style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          fontSize: 17
+                        ),
                       )),
                     ),
                     onPressed: () {

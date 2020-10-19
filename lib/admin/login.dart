@@ -817,7 +817,7 @@ class LoginPageState extends State<LoginPage> {
                       width: double.infinity,
                       padding: EdgeInsets.all(15),
                       decoration: new BoxDecoration(
-                          gradient: gradients(),
+                          color: Color(0xff018abd),
                           borderRadius: BorderRadius.circular(12.0)),
                       child: Text(
                         "LOGIN",

@@ -77,7 +77,7 @@ class _UpdateWorkState extends State<UpdateWork>
 
   TabBar _getTabBar() {
     return TabBar(
-      labelColor: Colors.blue,
+      labelColor: Color(0xff005c9d),
       tabs: <Widget>[
         Tab(
           text: "Update",

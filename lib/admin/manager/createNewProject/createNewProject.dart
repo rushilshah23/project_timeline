@@ -468,22 +468,21 @@ class _CreateNewProjectState extends State<CreateNewProject> {
                   child: Text(
                     'Estimate Project',
                     style: TextStyle(
-                        color: Colors.white
+                        color: Colors.white,
+                      fontSize: 17
                     ),
                   ),
+                  color: Color(0xff018abd),
                   onPressed: () {
-
                     for (int i = 0; i < listDyn.length; i++) {
                       debugPrint( _machineQuantity[i].text.toString());
                       debugPrint( machineTypeSelected[i].toString());
                     }
-
                     showDialog(
                       context: context,
                       builder: (BuildContext context) => _buildAboutDialog(context),
                     );
                   },
-                  color: Colors.indigo,
                 ),
               ],
             ),
