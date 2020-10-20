@@ -17,3 +17,4 @@ Color popupthankutextColor = Color(0xff005c9d); //first color
 Color radioselectColor = Color(0xff018abd);
 Color cardiconColor = Colors.black;
 Color readMoreColor = Color(0xff02b9f3);
+Color darkestColor = Color(0xff005c9d);

@@ -340,7 +340,7 @@ class _AOLPageState extends State<AOLPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('About AOL'),
+        title: Text('About AOL', style: TextStyle(color: darkestColor)),
         centerTitle: true,
         backgroundColor: appbarColor,
       ),

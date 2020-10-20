@@ -15,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 class HomeWidgetState extends State with SingleTickerProviderStateMixin {
   final List<Widget> tabs = [
     new Tab(
-      text: "About AOL",
+      text: "About AOL,",
     ),
     new Tab(
       text: "About IAHV",

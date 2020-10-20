@@ -25,17 +25,13 @@ class _DevelopersPageState extends State<DevelopersPage> {
     slides.add(
       new Slide(
         centerWidget: Container(
-          width: 250.0,
-          height: 200.0,
-          decoration: new BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            shape: BoxShape.circle,
-            image: new DecorationImage(
-              fit: BoxFit.fill,
-              image: AssetImage('assets/sakeclogo.jpg'),
-            ),
-          ),
-        ),
+            width: 250.0,
+            height: 200.0,
+            decoration: new BoxDecoration(
+                shape: BoxShape.circle,
+                image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: AssetImage('assets/sakeclogo.jpg')))),
         widgetDescription: Center(
           child: Padding(
             padding: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -194,6 +190,12 @@ class _DevelopersPageState extends State<DevelopersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'About Developers',
+          style: TextStyle(color: darkestColor),
+        ),
+      ),
       body: IntroSlider(
         isShowSkipBtn: false,
         isShowPrevBtn: true,

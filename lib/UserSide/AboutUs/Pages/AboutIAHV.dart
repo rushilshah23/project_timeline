@@ -270,6 +270,7 @@ class _AboutIAHVState extends State<AboutIAHV> {
       appBar: AppBar(
         title: Text(
           'About IAHV',
+          style: TextStyle(color: darkestColor),
         ),
         centerTitle: true,
         backgroundColor: appbarColor,
