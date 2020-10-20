@@ -32,7 +32,7 @@ class _SupervisorRequestListState extends State<SupervisorRequestList> {
         }).then((value) async {
           await databaseReference
               .child("request")
-              .child("supervisor")
+              .child(supervisorType)
               .child(worker["key"])
               .remove();
         }).then((value) {
@@ -53,7 +53,7 @@ class _SupervisorRequestListState extends State<SupervisorRequestList> {
         }).then((value) async {
           await databaseReference
               .child("request")
-              .child("supervisor")
+              .child(supervisorType)
               .child(worker["key"])
               .remove();
         }).then((value) {

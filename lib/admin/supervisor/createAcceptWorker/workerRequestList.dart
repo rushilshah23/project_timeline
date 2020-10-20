@@ -32,7 +32,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
         }).then((value) async {
           await databaseReference
               .child("request")
-              .child("Worker")
+              .child(workerType)
               .child(worker["key"])
               .remove();
         }).then((value) {
@@ -53,7 +53,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
         }).then((value) async {
           await databaseReference
               .child("request")
-              .child("Worker")
+              .child(workerType)
               .child(worker["key"])
               .remove();
         }).then((value) {

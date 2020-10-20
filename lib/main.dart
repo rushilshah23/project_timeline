@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'UserSide/AboutUs/MainPage/HomeScreen.dart';
+import 'UserSide/Dashboard/Pages/myHomePage.dart';
+import 'UserSide/Dashboard/Widgets/BottomNav.dart';
 import 'admin/dashboard.dart';
 import 'admin/login.dart';
 import 'admin/manager/createNewProject/projects.dart';
@@ -33,7 +36,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: MyHomePage(title: 'Flutter Demo Home Page'),
+        home: BottomNav(),
       ),
     );
   }

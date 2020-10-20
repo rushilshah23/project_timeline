@@ -760,6 +760,8 @@ class LoginPageState extends State<LoginPage> {
                               onChanged: (value) {
                                 setState(() {
                                   _signInMethod = value;
+                                  userController.clear();
+
                                 });
                               }),
                           Text("OTP")

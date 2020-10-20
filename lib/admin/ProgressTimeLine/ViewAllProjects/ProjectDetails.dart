@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:project_timeline/admin/ProgressTimeLine/theme.dart';
 
 class ProjectDetails extends StatefulWidget {
@@ -95,6 +96,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: ThemeAppbar("Our Project"),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ListView(
@@ -384,6 +386,15 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                 ),
 
                 buildGridView(),
+
+                SizedBox(height: 20,),
+
+               FlatButton(
+                  child: buttonContainers(double.infinity, 20, 'Donate', 18),
+                  onPressed: () {
+
+                  },
+                ),
 
               ],
             ),

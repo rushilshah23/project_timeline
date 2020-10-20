@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:project_timeline/UserSide/AboutUs/MainPage/HomeScreen.dart';
 import 'package:project_timeline/UserSide/Dashboard/Pages/myHomePage.dart';
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
+import 'package:project_timeline/admin/CommonWidgets.dart';
+import 'package:project_timeline/admin/ProgressTimeLine/ProgressPage.dart';
+import 'package:project_timeline/admin/ProgressTimeLine/ViewAllProjects/ViewAllProjects.dart';
+import 'package:project_timeline/admin/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BottomNav extends StatefulWidget {
@@ -25,6 +29,31 @@ class _BottomNavState extends State<BottomNav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar:  AppBar(
+          iconTheme: IconThemeData(
+            color: Color(0xff005c9d),
+          ),
+          title: Text("aol",
+              style: TextStyle(
+                color: Color(0xff005c9d),
+              )),
+          backgroundColor: Colors.white,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.person,
+              ),
+              onPressed: () {
+                // do something
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => LoginPage()),
+                );
+              },
+            )
+          ],
+        ),
         body: getPage(currentPage),
         bottomNavigationBar: FancyBottomNavigation(
           circleColor: bottomnavColor,
@@ -72,7 +101,7 @@ getPage(int page) {
     case 0:
       return MyHome(); //HomePage
     case 1:
-      return HomeScreen(); //Add Project Page here
+      return ProgressPage(); //Add Project Page here
     case 2:
       return HomeScreen(); //Add donation Page here
     default:

@@ -32,7 +32,7 @@ class _ManagerRequestListState extends State<ManagerRequestList> {
         }).then((value) async {
           await databaseReference
               .child("request")
-              .child("manager")
+              .child(managerType)
               .child(worker["key"])
               .remove();
         }).then((value) {
@@ -53,7 +53,7 @@ class _ManagerRequestListState extends State<ManagerRequestList> {
         }).then((value) async {
           await databaseReference
               .child("request")
-              .child("manager")
+              .child(managerType)
               .child(worker["key"])
               .remove();
         }).then((value) {

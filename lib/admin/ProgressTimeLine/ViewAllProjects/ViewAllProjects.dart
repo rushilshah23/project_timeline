@@ -135,9 +135,7 @@ class _AllProjectsState extends State<AllProjects> {
                 ],
               ),
             );
-          } else if (!snap.hasData ||
-              snap.hasError ||
-              snap.data.snapshot.value == null) {
+          } else if (!snap.hasData || snap.hasError || snap.data.snapshot.value == null) {
             return Center(
               child: Text("No Data Found"),
             );

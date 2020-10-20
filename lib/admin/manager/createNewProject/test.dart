@@ -150,6 +150,7 @@ class _TestState extends State<Test> {
         'location':
             new GeoPoint(coordinates[0].latitude, coordinates[0].longitude),
         'place': siteAddress,
+        'projectID':uniqueID,
       });
       databaseReference.child("projects").child(uniqueID).set({
         'projectName': projectName,

@@ -69,8 +69,8 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
   final DateTime now = DateTime.now();
   final DateFormat formatter = DateFormat('dd-MM-yyyy');
   var projectID;
-  var workerID = '8YiMHLBnBaNjmr3yPvk8NWvNPmm2';
-  var workerName = 'rajesh kumar';
+  var workerID;
+  var workerName ;
   List<Asset> images = List<Asset>();
   String _error = 'No Error Dectected';
 

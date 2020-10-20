@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'ViewAllProjects/ViewAllProjects.dart';
@@ -18,6 +19,51 @@ class _ProgressPageState extends State<ProgressPage> {
   double percent = 10;
   double percent1 = 10;
   double percent2 = 80;
+  final databaseReference = FirebaseDatabase.instance.reference();
+  List allProjects = List();
+  int noOfProjects=0;
+  int completed=0;
+  int notStarted=0;
+  int ongoing=0;
+  double completedPercent=0.0;
+  double notStartedPercent=0.0;
+  double ongoingPercent=0.0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    databaseReference.child("projects").once().then((DataSnapshot dataSnapshot) {
+      Map data = dataSnapshot.value;
+      allProjects = [];
+      allProjects= data.values.toList();
+
+      noOfProjects= allProjects.length;
+      for(int i=0; i<allProjects.length;i++)
+        {
+          var progPercent=double.parse(allProjects[i]["progressPercent"]);
+          if(progPercent>0 && progPercent<100)
+            ongoing++;
+          if(progPercent<=0)
+            notStarted++;
+          if(progPercent>=100)
+            completed++;
+        }
+
+      setState(() {
+        ongoingPercent= (ongoing/noOfProjects)*100;
+        notStartedPercent= (notStarted/noOfProjects)*100;
+        completedPercent= (completed/noOfProjects)*100;
+
+        debugPrint(ongoingPercent.toString());
+      });
+
+
+    });
+
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +83,9 @@ class _ProgressPageState extends State<ProgressPage> {
                         radius: 60.0,
                         lineWidth: 6.0,
                         animation: true,
-                        percent: double.parse(percent.toString()) / 100,
+                        percent: completedPercent / 100,
                         center: new Text(
-                          percent.toString() + "%",
+                          completedPercent.toString() + "%",
                           style: new TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 15.0),
                         ),
@@ -60,9 +106,9 @@ class _ProgressPageState extends State<ProgressPage> {
                         radius: 60.0,
                         lineWidth: 6.0,
                         animation: true,
-                        percent: double.parse(percent1.toString()) / 100,
+                        percent: ongoingPercent / 100,
                         center: new Text(
-                          percent1.toString() + "%",
+                          ongoingPercent.toString() + "%",
                           style: new TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 15.0),
                         ),
@@ -83,9 +129,9 @@ class _ProgressPageState extends State<ProgressPage> {
                         radius: 60.0,
                         lineWidth: 6.0,
                         animation: true,
-                        percent: double.parse(percent2.toString()) / 100,
+                        percent: notStartedPercent/ 100,
                         center: new Text(
-                          percent2.toString() + "%",
+                          notStartedPercent.toString() + "%",
                           style: new TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 15.0),
                         ),
