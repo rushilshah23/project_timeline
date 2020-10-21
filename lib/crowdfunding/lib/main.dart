@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:AOL_localfeedback/widgets.dart';
+import 'package:project_timeline/crowdfunding/lib/widgets.dart';
 import 'leaderBoard.dart';
 
 void main() {

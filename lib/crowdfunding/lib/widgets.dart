@@ -1,6 +1,8 @@
-import 'package:AOL_localfeedback/main.dart';
+
 import 'package:flutter/material.dart';
-import 'package:AOL_localfeedback/ApiRazorPay.dart';
+
+import '../../main.dart';
+import 'ApiRazorPay.dart';
 
 Drawer myDrawer(BuildContext context) {
   return Drawer(
