@@ -4,6 +4,7 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:project_timeline/admin/ProgressTimeLine/theme.dart';
+import 'file:///D:/Users/Harshit%20Parkar/Documents/Project/project_timeline/lib/crowdfunding/ApiRazorPay.dart';
 
 class ProjectDetails extends StatefulWidget {
   Map projectDetails;
@@ -392,6 +393,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                FlatButton(
                   child: buttonContainers(double.infinity, 20, 'Donate', 18),
                   onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ApiRazorPay(widget.projectDetails["projectName"].toString())));
 
                   },
                 ),

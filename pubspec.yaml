@@ -101,7 +101,7 @@ flutter:
   fonts:
     - family: DancingScript
       fonts:
-        - asset: fonts/DancingScript-VariableFont_wght.tff
+        - asset: fonts/DancingScript-VariableFont_wght.ttf
           weight: 700
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
