@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
+import 'package:project_timeline/admin/DocumentManager/core/services/database.dart';
+import 'package:project_timeline/admin/DocumentManager/wrapper.dart';
 import 'Register.dart';
 import 'colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,19 +34,26 @@ class LoginPageState extends State<LoginPage> {
   final controllerOTP = TextEditingController();
 
   FirebaseAuth _auth = FirebaseAuth.instance;
-  final CollectionReference workers = Firestore.instance.collection("workers");
-  final CollectionReference users = Firestore.instance.collection("user");
+  final CollectionReference workers =
+      FirebaseFirestore.instance.collection("workers");
+  final CollectionReference users =
+      FirebaseFirestore.instance.collection("user");
   final CollectionReference supervisor =
-      Firestore.instance.collection("supervisor");
-  final CollectionReference manager = Firestore.instance.collection("manager");
+      FirebaseFirestore.instance.collection("supervisor");
+  final CollectionReference manager =
+      FirebaseFirestore.instance.collection("manager");
   final CollectionReference newPhoneUser =
-      Firestore.instance.collection("newPhoneUser");
+      FirebaseFirestore.instance.collection("newPhoneUser");
 
-  signOut() async {
-    await _auth.signOut().then((value) {
-      showToast("Logout Successful");
-    });
-  }
+  // signOut() async {
+  //   await _auth.signOut().then((value) {
+  //     return Navigator.pushReplacement(context,
+  //         MaterialPageRoute(builder: (context) {
+  //       showToast("Logout Successful");
+  //       return Wrapper();
+  //     }));
+  //   });
+  // }
 
   _setData(String name, String email, String mobile, String uid,
       String assignedProject) async {
@@ -72,7 +82,7 @@ class LoginPageState extends State<LoginPage> {
           print("`````````````````````````````````````````");
           loginUsingOTP(credential, pr);
         },
-        verificationFailed: (AuthException exception) {
+        verificationFailed: (FirebaseAuthException exception) {
           print("`````````````````````````````````````````");
           print("Verification Failed");
           print("`````````````````````````````````````````");
@@ -103,7 +113,7 @@ class LoginPageState extends State<LoginPage> {
                         await pr.show();
                         final code = controllerOTP.text.trim();
                         AuthCredential credential =
-                            PhoneAuthProvider.getCredential(
+                            PhoneAuthProvider.credential(
                                 verificationId: verificationId, smsCode: code);
                         print(credential);
                         print("`````````````````````````````````````````");
@@ -126,26 +136,41 @@ class LoginPageState extends State<LoginPage> {
     try {
       if (_requestType == userType) {
         print("user");
-        await users.getDocuments().then((value) {
-          value.documents.forEach((element) async {
-            if (element.data["email"] == _email) {
+        await users.get().then((value) {
+          value.docs.forEach((element) async {
+            if (element.data()["email"] == _email) {
               flag = 1;
-              AuthResult result = await _auth
+              UserCredential result = await _auth
                   .signInWithEmailAndPassword(
                       email: _email, password: _password)
                   .catchError((e) {
                 showToast(e.toString());
               });
-              FirebaseUser user = result.user;
+              User user = result.user;
+
+              // rushil part
+
+              try {
+                DatabaseService(
+                  userID: user.uid,
+                );
+
+                AuthenticationService().userfromAuthentication(user);
+              } catch (e) {
+                debugPrint(e.toString());
+                return null;
+              }
+
+              //
               if (user.uid != null) {
                 await pr.hide();
                 print("```````````````````````````");
                 print("account login successful");
                 print(user.uid);
-                print(element.data["email"]);
-                print(element.data["mobile"]);
-                print(element.data["name"]);
-                print(element.data["assignedProject"]);
+                print(element.data()["email"]);
+                print(element.data()["mobile"]);
+                print(element.data()["name"]);
+                print(element.data()["assignedProject"]);
                 showToast("Login Successful");
                 print("```````````````````````````");
                 Navigator.push(
@@ -159,34 +184,34 @@ class LoginPageState extends State<LoginPage> {
         if (flag == 0) showToast("Account is not Accepted");
       } else if (_requestType == supervisorType) {
         print("supervisor");
-        await supervisor.getDocuments().then((value) {
-          value.documents.forEach((element) async {
-            if (element.data["email"] == _email) {
+        await supervisor.get().then((value) {
+          value.docs.forEach((element) async {
+            if (element.data()["email"] == _email) {
               flag = 1;
-              AuthResult result = await _auth
+              UserCredential result = await _auth
                   .signInWithEmailAndPassword(
                       email: _email, password: _password)
                   .catchError((e) {
                 showToast(e.toString());
               });
 
-              FirebaseUser user = result.user;
+              User user = result.user;
               if (user.uid != null) {
                 print("```````````````````````````");
                 print("account login successful");
                 print(user.uid);
-                print(element.data["email"]);
-                print(element.data["mobile"]);
-                print(element.data["name"]);
-                print(element.data["assignedProject"]);
+                print(element.data()["email"]);
+                print(element.data()["mobile"]);
+                print(element.data()["name"]);
+                print(element.data()["assignedProject"]);
                 showToast("Login Successful");
                 print("```````````````````````````");
                 _setData(
-                    element.data["name"],
-                    element.data["email"],
-                    element.data["mobile"],
-                    element.data["uid"],
-                    element.data["assignedProject"]);
+                    element.data()["name"],
+                    element.data()["email"],
+                    element.data()["mobile"],
+                    element.data()["uid"],
+                    element.data()["assignedProject"]);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => SupervisorHomePage()),
@@ -198,34 +223,34 @@ class LoginPageState extends State<LoginPage> {
         if (flag == 0) showToast("Account is not Accepted");
       } else if (_requestType == workerType) {
         print("worker");
-        await workers.getDocuments().then((value) {
-          value.documents.forEach((element) async {
-            if (element.data["email"] == _email) {
+        await workers.get().then((value) {
+          value.docs.forEach((element) async {
+            if (element.data()["email"] == _email) {
               flag = 1;
-              print(element.data);
-              AuthResult result = await _auth
+              print(element.data());
+              UserCredential result = await _auth
                   .signInWithEmailAndPassword(
                       email: _email, password: _password)
                   .catchError((e) {
                 showToast(e.toString());
               });
-              FirebaseUser user = result.user;
+              User user = result.user;
               if (user.uid != null) {
                 print("```````````````````````````");
                 print("account login successful");
                 print(user.uid);
-                print(element.data["email"]);
-                print(element.data["mobile"]);
-                print(element.data["name"]);
-                print(element.data["assignedProject"]);
+                print(element.data()["email"]);
+                print(element.data()["mobile"]);
+                print(element.data()["name"]);
+                print(element.data()["assignedProject"]);
                 showToast("Login Successful");
                 print("```````````````````````````");
                 _setData(
-                    element.data["name"],
-                    element.data["email"],
-                    element.data["mobile"],
-                    element.data["uid"],
-                    element.data["assignedProject"]);
+                    element.data()["name"],
+                    element.data()["email"],
+                    element.data()["mobile"],
+                    element.data()["uid"],
+                    element.data()["assignedProject"]);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => WorkerHomePage()),
@@ -237,34 +262,34 @@ class LoginPageState extends State<LoginPage> {
         if (flag == 0) showToast("Account is not Accepted");
       } else if (_requestType == managerType) {
         print("manager");
-        await manager.getDocuments().then((value) {
-          value.documents.forEach((element) async {
-            if (element.data["email"] == _email) {
+        await manager.get().then((value) {
+          value.docs.forEach((element) async {
+            if (element.data()["email"] == _email) {
               flag = 1;
-              print(element.data);
-              AuthResult result = await _auth
+              print(element.data());
+              UserCredential result = await _auth
                   .signInWithEmailAndPassword(
                       email: _email, password: _password)
                   .catchError((e) {
                 showToast(e.toString());
               });
-              FirebaseUser user = result.user;
+              User user = result.user;
               if (user.uid != null) {
                 print("```````````````````````````");
                 print("account login successful");
                 print(user.uid);
-                print(element.data["email"]);
-                print(element.data["mobile"]);
-                print(element.data["name"]);
-                print(element.data["assignedProject"]);
+                print(element.data()["email"]);
+                print(element.data()["mobile"]);
+                print(element.data()["name"]);
+                print(element.data()["assignedProject"]);
                 showToast("Login Successful");
                 print("```````````````````````````");
                 _setData(
-                    element.data["name"],
-                    element.data["email"],
-                    element.data["mobile"],
-                    element.data["uid"],
-                    element.data["assignedProject"]);
+                    element.data()["name"],
+                    element.data()["email"],
+                    element.data()["mobile"],
+                    element.data()["uid"],
+                    element.data()["assignedProject"]);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => ManagerHomePage()),
@@ -292,24 +317,25 @@ class LoginPageState extends State<LoginPage> {
     print("```````````````````````````");
     try {
       if (_requestType == userType) {
-        await newPhoneUser.getDocuments().then((value) {
-          value.documents.forEach((element) async {
-            if (element.documentID == _email &&
-                element.data["userType"] == userType) {
+        await newPhoneUser.get().then((value) {
+          value.docs.forEach((element) async {
+            if (element.id == _email &&
+                element.data()["userType"] == userType) {
               firstTimeLogin = 1;
-              AuthResult result = await _auth.signInWithCredential(credential);
-              FirebaseUser user = result.user;
+              UserCredential result =
+                  await _auth.signInWithCredential(credential);
+              User user = result.user;
               if (user.uid != null) {
                 await pr.hide();
                 print("```````````````````````````");
                 print("account creation successful");
                 print(user.uid);
-                print(element.data["mobile"]);
-                print(element.data["name"]);
-                print(element.data["assignedProject"]);
+                print(element.data()["mobile"]);
+                print(element.data()["name"]);
+                print(element.data()["assignedProject"]);
                 showToast("Login Successful");
                 print("```````````````````````````");
-                users.document(user.uid).setData({
+                users.doc(user.uid).set({
                   "assignedProject": "No project assigned",
                   "mobile": element["mobile"],
                   "name": element["name"],
@@ -318,7 +344,7 @@ class LoginPageState extends State<LoginPage> {
                   "uid": user.uid,
                   'signInMethod': "otp"
                 }).then((value) async {
-                  await newPhoneUser.document(_email).delete().then((value) {
+                  await newPhoneUser.doc(_email).delete().then((value) {
                     _setData(element["name"], element["email"],
                         element["mobile"], user.uid, "No project assigned");
                     Navigator.push(
@@ -333,28 +359,29 @@ class LoginPageState extends State<LoginPage> {
           });
         });
         if (firstTimeLogin != 1) {
-          await users.getDocuments().then((value) {
-            value.documents.forEach((element) async {
-              if (element.data["mobile"] == _email && _signInMethod == "otp") {
+          await users.get().then((value) {
+            value.docs.forEach((element) async {
+              if (element.data()["mobile"] == _email &&
+                  _signInMethod == "otp") {
                 flag = 1;
-                AuthResult result =
+                UserCredential result =
                     await _auth.signInWithCredential(credential);
-                FirebaseUser user = result.user;
+                User user = result.user;
                 if (user.uid != null) {
                   await pr.hide();
                   print("```````````````````````````");
-                  print(element.data["uid"]);
-                  print(element.data["mobile"]);
-                  print(element.data["name"]);
-                  print(element.data["assignedProject"]);
+                  print(element.data()["uid"]);
+                  print(element.data()["mobile"]);
+                  print(element.data()["name"]);
+                  print(element.data()["assignedProject"]);
                   showToast("Login Successful");
                   print("```````````````````````````");
                   _setData(
-                      element.data["name"],
-                      element.data["email"],
-                      element.data["mobile"],
-                      element.data["uid"],
-                      element.data["assignedProject"]);
+                      element.data()["name"],
+                      element.data()["email"],
+                      element.data()["mobile"],
+                      element.data()["uid"],
+                      element.data()["assignedProject"]);
 
                   Navigator.push(
                     context,
@@ -368,28 +395,29 @@ class LoginPageState extends State<LoginPage> {
             showToast("Please register first");
           }
         } else {
-          await newPhoneUser.document(_email).delete();
+          await newPhoneUser.doc(_email).delete();
         }
       } else if (_requestType == supervisorType) {
-        await newPhoneUser.getDocuments().then((value) {
-          value.documents.forEach((element) async {
-            if (element.documentID == _email &&
-                element.data["userType"] == supervisorType) {
+        await newPhoneUser.get().then((value) {
+          value.docs.forEach((element) async {
+            if (element.id == _email &&
+                element.data()["userType"] == supervisorType) {
               firstTimeLogin = 1;
-              AuthResult result = await _auth.signInWithCredential(credential);
-              FirebaseUser user = result.user;
+              UserCredential result =
+                  await _auth.signInWithCredential(credential);
+              User user = result.user;
               if (user.uid != null) {
                 await pr.hide();
 
                 print("```````````````````````````");
                 print("account creation successful");
                 print(user.uid);
-                print(element.data["mobile"]);
-                print(element.data["name"]);
-                print(element.data["assignedProject"]);
+                print(element.data()["mobile"]);
+                print(element.data()["name"]);
+                print(element.data()["assignedProject"]);
                 showToast("Login Successful");
                 print("```````````````````````````");
-                supervisor.document(user.uid).setData({
+                supervisor.doc(user.uid).set({
                   "assignedProject": "No project assigned",
                   "mobile": element["mobile"],
                   "name": element["name"],
@@ -398,7 +426,7 @@ class LoginPageState extends State<LoginPage> {
                   "uid": user.uid,
                   'signInMethod': "otp"
                 }).then((value) async {
-                  await newPhoneUser.document(_email).delete().then((value) {
+                  await newPhoneUser.doc(_email).delete().then((value) {
                     _setData(element["name"], element["email"],
                         element["mobile"], user.uid, "No project assigned");
                     Navigator.push(
@@ -413,29 +441,30 @@ class LoginPageState extends State<LoginPage> {
           });
         });
         if (firstTimeLogin != 1) {
-          await supervisor.getDocuments().then((value) {
-            value.documents.forEach((element) async {
-              if (element.data["mobile"] == _email && _signInMethod == "otp") {
+          await supervisor.get().then((value) {
+            value.docs.forEach((element) async {
+              if (element.data()["mobile"] == _email &&
+                  _signInMethod == "otp") {
                 flag = 1;
-                AuthResult result =
+                UserCredential result =
                     await _auth.signInWithCredential(credential);
-                FirebaseUser user = result.user;
+                User user = result.user;
                 if (user.uid != null) {
                   await pr.hide();
 
                   print("```````````````````````````");
-                  print(element.data["uid"]);
-                  print(element.data["mobile"]);
-                  print(element.data["name"]);
-                  print(element.data["assignedProject"]);
+                  print(element.data()["uid"]);
+                  print(element.data()["mobile"]);
+                  print(element.data()["name"]);
+                  print(element.data()["assignedProject"]);
                   showToast("Login Successful");
                   print("```````````````````````````");
                   _setData(
-                      element.data["name"],
-                      element.data["email"],
-                      element.data["mobile"],
-                      element.data["uid"],
-                      element.data["assignedProject"]);
+                      element.data()["name"],
+                      element.data()["email"],
+                      element.data()["mobile"],
+                      element.data()["uid"],
+                      element.data()["assignedProject"]);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -449,28 +478,29 @@ class LoginPageState extends State<LoginPage> {
             showToast("Please register first");
           }
         } else {
-          await newPhoneUser.document(_email).delete();
+          await newPhoneUser.doc(_email).delete();
         }
       } else if (_requestType == workerType) {
-        await newPhoneUser.getDocuments().then((value) {
-          value.documents.forEach((element) async {
-            if (element.documentID == _email &&
-                element.data["userType"] == workerType) {
+        await newPhoneUser.get().then((value) {
+          value.docs.forEach((element) async {
+            if (element.id == _email &&
+                element.data()["userType"] == workerType) {
               firstTimeLogin = 1;
-              AuthResult result = await _auth.signInWithCredential(credential);
-              FirebaseUser user = result.user;
+              UserCredential result =
+                  await _auth.signInWithCredential(credential);
+              User user = result.user;
               if (user.uid != null) {
                 await pr.hide();
 
                 print("```````````````````````````");
                 print("account creation successful");
                 print(user.uid);
-                print(element.data["mobile"]);
-                print(element.data["name"]);
-                print(element.data["assignedProject"]);
+                print(element.data()["mobile"]);
+                print(element.data()["name"]);
+                print(element.data()["assignedProject"]);
                 showToast("Login Successful");
                 print("```````````````````````````");
-                workers.document(user.uid).setData({
+                workers.doc(user.uid).set({
                   "assignedProject": "No project assigned",
                   "mobile": element["mobile"],
                   "name": element["name"],
@@ -481,7 +511,7 @@ class LoginPageState extends State<LoginPage> {
                 }).then((value) async {
                   _setData(element["name"], element["email"], element["mobile"],
                       user.uid, "No project assigned");
-                  await newPhoneUser.document(_email).delete().then((value) {
+                  await newPhoneUser.doc(_email).delete().then((value) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -494,28 +524,29 @@ class LoginPageState extends State<LoginPage> {
           });
         });
         if (firstTimeLogin != 1) {
-          await workers.getDocuments().then((value) {
-            value.documents.forEach((element) async {
-              if (element.data["mobile"] == _email && _signInMethod == "otp") {
+          await workers.get().then((value) {
+            value.docs.forEach((element) async {
+              if (element.data()["mobile"] == _email &&
+                  _signInMethod == "otp") {
                 flag = 1;
-                AuthResult result =
+                UserCredential result =
                     await _auth.signInWithCredential(credential);
-                FirebaseUser user = result.user;
+                User user = result.user;
                 if (user.uid != null) {
                   await pr.hide();
                   print("```````````````````````````");
-                  print(element.data["uid"]);
-                  print(element.data["mobile"]);
-                  print(element.data["name"]);
-                  print(element.data["assignedProject"]);
+                  print(element.data()["uid"]);
+                  print(element.data()["mobile"]);
+                  print(element.data()["name"]);
+                  print(element.data()["assignedProject"]);
                   showToast("Login Successful");
                   print("```````````````````````````");
                   _setData(
-                      element.data["name"],
-                      element.data["email"],
-                      element.data["mobile"],
-                      element.data["uid"],
-                      element.data["assignedProject"]);
+                      element.data()["name"],
+                      element.data()["email"],
+                      element.data()["mobile"],
+                      element.data()["uid"],
+                      element.data()["assignedProject"]);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => WorkerHomePage()),
@@ -528,28 +559,29 @@ class LoginPageState extends State<LoginPage> {
             showToast("Please register first");
           }
         } else {
-          await newPhoneUser.document(_email).delete();
+          await newPhoneUser.doc(_email).delete();
         }
       } else if (_requestType == managerType) {
-        await newPhoneUser.getDocuments().then((value) {
-          value.documents.forEach((element) async {
-            if (element.documentID == _email &&
-                element.data["userType"] == managerType) {
+        await newPhoneUser.get().then((value) {
+          value.docs.forEach((element) async {
+            if (element.id == _email &&
+                element.data()["userType"] == managerType) {
               firstTimeLogin = 1;
-              AuthResult result = await _auth.signInWithCredential(credential);
-              FirebaseUser user = result.user;
+              UserCredential result =
+                  await _auth.signInWithCredential(credential);
+              User user = result.user;
               if (user.uid != null) {
                 await pr.hide();
 
                 print("```````````````````````````");
                 print("account creation successful");
                 print(user.uid);
-                print(element.data["mobile"]);
-                print(element.data["name"]);
-                print(element.data["assignedProject"]);
+                print(element.data()["mobile"]);
+                print(element.data()["name"]);
+                print(element.data()["assignedProject"]);
                 showToast("Login Successful");
                 print("```````````````````````````");
-                manager.document(user.uid).setData({
+                manager.doc(user.uid).set({
                   "assignedProject": "No project assigned",
                   "mobile": element["mobile"],
                   "name": element["name"],
@@ -558,7 +590,7 @@ class LoginPageState extends State<LoginPage> {
                   "uid": user.uid,
                   'signInMethod': "otp"
                 }).then((value) async {
-                  await newPhoneUser.document(_email).delete().then((value) {
+                  await newPhoneUser.doc(_email).delete().then((value) {
                     _setData(element["name"], element["email"],
                         element["mobile"], user.uid, "No project assigned");
                     Navigator.push(
@@ -573,29 +605,30 @@ class LoginPageState extends State<LoginPage> {
           });
         });
         if (firstTimeLogin != 1) {
-          await manager.getDocuments().then((value) {
-            value.documents.forEach((element) async {
-              if (element.data["mobile"] == _email && _signInMethod == "otp") {
+          await manager.get().then((value) {
+            value.docs.forEach((element) async {
+              if (element.data()["mobile"] == _email &&
+                  _signInMethod == "otp") {
                 flag = 1;
-                AuthResult result =
+                UserCredential result =
                     await _auth.signInWithCredential(credential);
-                FirebaseUser user = result.user;
+                User user = result.user;
                 if (user.uid != null) {
                   await pr.hide();
 
                   print("```````````````````````````");
-                  print(element.data["uid"]);
-                  print(element.data["mobile"]);
-                  print(element.data["name"]);
-                  print(element.data["assignedProject"]);
+                  print(element.data()["uid"]);
+                  print(element.data()["mobile"]);
+                  print(element.data()["name"]);
+                  print(element.data()["assignedProject"]);
                   showToast("Login Successful");
                   print("```````````````````````````");
                   _setData(
-                      element.data["name"],
-                      element.data["email"],
-                      element.data["mobile"],
-                      element.data["uid"],
-                      element.data["assignedProject"]);
+                      element.data()["name"],
+                      element.data()["email"],
+                      element.data()["mobile"],
+                      element.data()["uid"],
+                      element.data()["assignedProject"]);
 
                   Navigator.push(
                     context,
@@ -609,7 +642,7 @@ class LoginPageState extends State<LoginPage> {
             showToast("Please register first");
           }
         } else {
-          await newPhoneUser.document(_email).delete();
+          await newPhoneUser.doc(_email).delete();
         }
       }
     } catch (e) {
@@ -761,7 +794,6 @@ class LoginPageState extends State<LoginPage> {
                                 setState(() {
                                   _signInMethod = value;
                                   userController.clear();
-
                                 });
                               }),
                           Text("OTP")

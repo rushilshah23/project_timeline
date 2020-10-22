@@ -12,16 +12,18 @@ class WorkerRequestList extends StatefulWidget {
 
 class _WorkerRequestListState extends State<WorkerRequestList> {
   final databaseReference = FirebaseDatabase.instance.reference();
-  final CollectionReference workers = Firestore.instance.collection("workers");
-  final CollectionReference user = Firestore.instance.collection("user");
+  final CollectionReference workers =
+      FirebaseFirestore.instance.collection("workers");
+  final CollectionReference user =
+      FirebaseFirestore.instance.collection("user");
   FirebaseAuth auth = FirebaseAuth.instance;
   List allWorkerRequest = List();
 
   acceptRequest(worker) async {
     try {
       if (worker["signInMethod"] != "email") {
-        await user.document(worker["key"]).delete();
-        await workers.document(worker["key"]).setData({
+        await user.doc(worker["key"]).delete();
+        await workers.doc(worker["key"]).set({
           "assignedProject": "No project assigned",
           "mobile": worker["phoneNo"],
           "name": worker["name"],
@@ -39,8 +41,8 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
           showToast("Added successfully");
         });
       } else {
-        await user.document(worker["key"]).delete();
-        await workers.document(worker["key"]).setData({
+        await user.doc(worker["key"]).delete();
+        await workers.doc(worker["key"]).set({
           "assignedProject": "No project assigned",
           "email": worker["email"],
           "password": worker["password"],
@@ -68,7 +70,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
       //     .createUserWithEmailAndPassword(
       //         email: worker["email"], password: worker["password"])
       //     .then((AuthResult result) async {
-      //   await workers.document(result.user.uid).setData({
+      //   await workers.doc(result.user.uid).set({
       //     "assignedProject": "No project assigned",
       //     "email": worker["email"],
       //     "mobile": worker["phoneNo"],
@@ -229,7 +231,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
     return Scaffold(
       // appBar: ThemeAppbar("Worker Request List"),
       body: StreamBuilder(
-        stream: databaseReference.child("request").child("Worker").onValue,
+        stream: databaseReference.child("request").child(workerType).onValue,
         builder: (context, snap) {
           if (snap.hasData &&
               !snap.hasError &&

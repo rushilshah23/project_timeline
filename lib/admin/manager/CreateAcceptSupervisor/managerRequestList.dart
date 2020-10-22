@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 
-
 class ManagerRequestList extends StatefulWidget {
   @override
   _ManagerRequestListState createState() => _ManagerRequestListState();
@@ -12,16 +11,18 @@ class ManagerRequestList extends StatefulWidget {
 
 class _ManagerRequestListState extends State<ManagerRequestList> {
   final databaseReference = FirebaseDatabase.instance.reference();
-  final CollectionReference workers = Firestore.instance.collection("manager");
-  final CollectionReference user = Firestore.instance.collection("user");
+  final CollectionReference workers =
+      FirebaseFirestore.instance.collection("manager");
+  final CollectionReference user =
+      FirebaseFirestore.instance.collection("user");
   FirebaseAuth auth = FirebaseAuth.instance;
   List allWorkerRequest = List();
 
   acceptRequest(worker) async {
     try {
       if (worker["signInMethod"] != "email") {
-        await user.document(worker["key"]).delete();
-        await workers.document(worker["key"]).setData({
+        await user.doc(worker["key"]).delete();
+        await workers.doc(worker["key"]).set({
           "assignedProject": "No project assigned",
           "mobile": worker["phoneNo"],
           "name": worker["name"],
@@ -39,8 +40,8 @@ class _ManagerRequestListState extends State<ManagerRequestList> {
           showToast("Added successfully");
         });
       } else {
-        await user.document(worker["key"]).delete();
-        await workers.document(worker["key"]).setData({
+        await user.doc(worker["key"]).delete();
+        await workers.doc(worker["key"]).set({
           "assignedProject": "No project assigned",
           "email": worker["email"],
           "password": worker["password"],
@@ -201,7 +202,7 @@ class _ManagerRequestListState extends State<ManagerRequestList> {
     return Scaffold(
       // appBar: ThemeAppbar("Supervisor Request List"),
       body: StreamBuilder(
-        stream: databaseReference.child("request").child("manager").onValue,
+        stream: databaseReference.child("request").child(managerType).onValue,
         builder: (context, snap) {
           if (snap.hasData &&
               !snap.hasError &&

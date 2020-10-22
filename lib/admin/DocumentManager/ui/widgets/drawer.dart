@@ -32,31 +32,32 @@ Widget homeDrawer(BuildContext context) {
                     ],
                   ),
                   decoration: colorBox),
-              ListTile(
-                title: Row(
-                  children: [
-                    Icon(Icons.cloud_off),
-                    SizedBox(
-                      width: 50,
-                    ),
-                    Text('SignOut'),
-                  ],
-                ),
-                onTap: () async {
-                  isLoading = true;
 
-                  AuthenticationService().signoutEmailId().then((value) {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) {
-                      return Wrapper();
-                    }));
-                  });
+              // ListTile(
+              //   title: Row(
+              //     children: [
+              //       Icon(Icons.cloud_off),
+              //       SizedBox(
+              //         width: 50,
+              //       ),
+              //       Text('SignOut'),
+              //     ],
+              //   ),
+              //   onTap: () async {
+              //     isLoading = true;
 
-                  isLoading = false;
-                  // Navigator.pop(context);
-                  // _auth.signoutEmailId();
-                },
-              ),
+              //     AuthenticationService().signoutEmailId().then((value) {
+              //       Navigator.pushReplacement(context,
+              //           MaterialPageRoute(builder: (context) {
+              //         return Wrapper();
+              //       }));
+              //     });
+
+              //     isLoading = false;
+              //     // Navigator.pop(context);
+              //     // _auth.signoutEmailId();
+              //   },
+              // ),
               ListTile(
                 title: Row(
                   children: [

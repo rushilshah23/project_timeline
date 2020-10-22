@@ -14,7 +14,8 @@ class HexColor extends Color {
 
 const Color appColor = Color(0xFF02DEED);
 
-const BoxDecoration colorBox = BoxDecoration(color: Color(0xFF02DEED));
+// const BoxDecoration colorBox = BoxDecoration(color: Color(0xFF02DEED));
+const BoxDecoration colorBox = BoxDecoration(color: Colors.transparent);
 
 Color appBarColor = HexColor("#e2f3fb");
 Color backgroundColor = HexColor("#e2f3fb");

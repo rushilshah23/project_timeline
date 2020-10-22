@@ -15,9 +15,9 @@ class SupervisorFormCreation extends StatefulWidget {
 class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
   final databaseReference = FirebaseDatabase.instance.reference();
   final CollectionReference workers =
-  Firestore.instance.collection("supervisor");
+      FirebaseFirestore.instance.collection("supervisor");
   final CollectionReference newPhoneUser =
-  Firestore.instance.collection("newPhoneUser");
+      FirebaseFirestore.instance.collection("newPhoneUser");
   FirebaseAuth auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
 
@@ -56,8 +56,8 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
       try {
         await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password)
-            .then((AuthResult result) async {
-          await workers.document(result.user.uid).setData({
+            .then((UserCredential result) async {
+          await workers.doc(result.user.uid).set({
             "email": email,
             "mobile": phoneNo,
             "name": name,
@@ -88,7 +88,7 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
   addUserUsingPhone() async {
     if (_formKey.currentState.validate()) {
       try {
-        await newPhoneUser.document(phoneNo).setData({
+        await newPhoneUser.doc(phoneNo).set({
           "userType": "supervisor",
           "mobile": phoneNo,
           "name": name,
@@ -194,7 +194,7 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                     ),
                     Column(
                       children:
-                      _signInMethod == "email" ? emailForm() : mobileForm(),
+                          _signInMethod == "email" ? emailForm() : mobileForm(),
                     ),
                     TextFormField(
                       decoration: InputDecoration(
@@ -202,7 +202,7 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                          const BorderSide(color: Colors.blue, width: 2.0),
+                              const BorderSide(color: Colors.blue, width: 2.0),
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(10),
                               topLeft: Radius.circular(10),
@@ -212,7 +212,7 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                       ),
                       controller: controllerName,
                       validator: (val) =>
-                      val.isEmpty ? 'Enter your Name' : null,
+                          val.isEmpty ? 'Enter your Name' : null,
                       onChanged: (val) {
                         setState(() => name = val);
                       },
@@ -224,7 +224,7 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                          const BorderSide(color: Colors.blue, width: 2.0),
+                              const BorderSide(color: Colors.blue, width: 2.0),
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(10),
                               topLeft: Radius.circular(10),
@@ -234,7 +234,7 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                       ),
                       controller: controllerPhoneNo,
                       validator: (val) =>
-                      val.isEmpty ? 'Enter Phone Number' : null,
+                          val.isEmpty ? 'Enter Phone Number' : null,
                       onChanged: (val) {
                         setState(() => phoneNo = val);
                       },
@@ -246,7 +246,7 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                          const BorderSide(color: Colors.blue, width: 2.0),
+                              const BorderSide(color: Colors.blue, width: 2.0),
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(10),
                               topLeft: Radius.circular(10),
@@ -256,7 +256,7 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                       ),
                       controller: controllerAddress,
                       validator: (val) =>
-                      val.isEmpty ? 'Enter your Address' : null,
+                          val.isEmpty ? 'Enter your Address' : null,
                       onChanged: (val) {
                         setState(() => address = val);
                       },
@@ -268,7 +268,7 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                          const BorderSide(color: Colors.blue, width: 2.0),
+                              const BorderSide(color: Colors.blue, width: 2.0),
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(10),
                               topLeft: Radius.circular(10),
@@ -320,7 +320,7 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
 //                          ),
 //                        ),
                         child:
-                        buttonContainers(400, 20, 'Create Supervisor', 18),
+                            buttonContainers(400, 20, 'Create Supervisor', 18),
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
                             setState(() {

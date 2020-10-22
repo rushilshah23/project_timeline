@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:project_timeline/admin/DocumentManager/core/models/usermodel.dart';
+import 'package:project_timeline/admin/DocumentManager/core/services/pathnavigator.dart';
+import 'package:project_timeline/admin/DocumentManager/ui/screens/home/drive.dart';
 
 import 'package:project_timeline/admin/ProgressTimeLine/ProgressPage.dart';
 import 'package:project_timeline/admin/reportGeneration/ReportGeneration.dart';
 import 'package:project_timeline/admin/reportGeneration/reportTest.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../CommonWidgets.dart';
 import '../dashboard.dart';
@@ -11,19 +15,23 @@ import 'createNewProject/projects.dart';
 import 'master/machineMaster/machineMaster.dart';
 import 'master/petrolMaster/petrolMaster.dart';
 
-
-
 class ManagerHomePage extends StatefulWidget {
   @override
   State createState() => ManagerHomePageState();
 }
 
 class ManagerHomePageState extends State<ManagerHomePage> {
-
   int _selectedDrawerIndex = 0;
   String appbartitle = "Dashboard";
 
-  String name = '', lname = '', email = '', mobile = '', password = '',uid='', userType,assignedProject;
+  String name = '',
+      lname = '',
+      email = '',
+      mobile = '',
+      password = '',
+      uid = '',
+      userType,
+      assignedProject;
   _loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -35,17 +43,16 @@ class ManagerHomePageState extends State<ManagerHomePage> {
       userType = (prefs.getString('userType') ?? '');
       assignedProject = (prefs.getString('assignedProject') ?? '');
 
-      print("inside profile="+email + name + mobile + lname+ assignedProject);
-
-
+      print(
+          "inside profile=" + email + name + mobile + lname + assignedProject);
     });
   }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _loadData();
-
   }
 
   _onSelectItem(int index) {
@@ -55,12 +62,17 @@ class ManagerHomePageState extends State<ManagerHomePage> {
     // Navigator.pop(context);
   }
 
-
-  _getDrawerItemWidget(int pos) {
+  _getDrawerItemWidget(int pos, UserModel user) {
     switch (pos) {
       case 0:
-        return new DashBoard(name: name,email: email, uid: uid, assignedProject: assignedProject,mobile: mobile,userType: userType,);
-
+        return new DashBoard(
+          name: name,
+          email: email,
+          uid: uid,
+          assignedProject: assignedProject,
+          mobile: mobile,
+          userType: userType,
+        );
 
       case 1:
         return new PetrolMaster();
@@ -79,6 +91,20 @@ class ManagerHomePageState extends State<ManagerHomePage> {
       case 6:
         return new ReportGenerationTesting();
 
+      case 7:
+        return DrivePage(
+          uid: user.uid,
+          pid: user.uid,
+          folderId: user.uid,
+          ref: globalRef
+              .reference()
+              .child('users')
+              .child(user.uid)
+              .child('documentManager')
+              .reference()
+              .path,
+          folderName: user.userEmail ?? user.userPhoneNo ?? null,
+        );
 
       default:
         return new Text("Error");
@@ -87,8 +113,9 @@ class ManagerHomePageState extends State<ManagerHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserModel>(context);
     return Scaffold(
-      appBar: ThemeAppbar(appbartitle),
+      appBar: ThemeAppbar(appbartitle, context),
 
       drawer: ClipRRect(
         borderRadius: BorderRadius.circular(20),
@@ -96,7 +123,6 @@ class ManagerHomePageState extends State<ManagerHomePage> {
           context: context,
           removeTop: true,
           child: new Drawer(
-
             child: ListView(
               children: <Widget>[
                 UserAccountsDrawerHeader(
@@ -106,8 +132,7 @@ class ManagerHomePageState extends State<ManagerHomePage> {
 //                        begin: Alignment.centerRight,
 //                        end: Alignment(-1.0,-2.0)
 //                    ), //Gradient
-                  gradient: gradients()
-                  ),
+                      gradient: gradients()),
                   accountName: Text("Manager"),
                   accountEmail: Text(email),
                   currentAccountPicture: InkWell(
@@ -115,7 +140,7 @@ class ManagerHomePageState extends State<ManagerHomePage> {
                       print("image clicked");
                     },
                     child: CircleAvatar(
-                      backgroundColor:Colors.white,
+                      backgroundColor: Colors.white,
                       child: Text(
                         "M",
                         style: TextStyle(fontSize: 40.0),
@@ -133,8 +158,10 @@ class ManagerHomePageState extends State<ManagerHomePage> {
                       appbartitle = "Dashboard";
                     }),
                 ExpansionTile(
-                  title:
-                  Row(children: <Widget>[Icon(Icons.add_box), Text(" Masters")]),
+                  title: Row(children: <Widget>[
+                    Icon(Icons.add_box),
+                    Text(" Masters")
+                  ]),
                   children: <Widget>[
                     ListTile(
                         title: Row(children: <Widget>[
@@ -146,7 +173,6 @@ class ManagerHomePageState extends State<ManagerHomePage> {
 
                           appbartitle = "Petrol Pump Master";
                         }),
-
                     ListTile(
                         title: Row(children: <Widget>[
                           Icon(Icons.arrow_right),
@@ -157,8 +183,6 @@ class ManagerHomePageState extends State<ManagerHomePage> {
 
                           appbartitle = "Machine Master";
                         }),
-
-
                   ],
                 ),
                 ListTile(
@@ -206,15 +230,15 @@ class ManagerHomePageState extends State<ManagerHomePage> {
                       Text(" Document Manager")
                     ]),
                     onTap: () {
-                      _onSelectItem(5);
-                      appbartitle = "Create/Accept Supervisors";
+                      _onSelectItem(7);
+                      appbartitle = "Document Manager";
                     }),
               ],
             ),
           ),
         ),
       ),
-      body: _getDrawerItemWidget(_selectedDrawerIndex),
+      body: _getDrawerItemWidget(_selectedDrawerIndex, user),
 //      body: Center(
 //
 //        child: Column(

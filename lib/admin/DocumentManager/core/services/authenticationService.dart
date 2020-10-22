@@ -11,7 +11,7 @@ class AuthenticationService {
 
   // create User object
 
-  UserModel _userfromAuthentication(User user) {
+  UserModel userfromAuthentication(User user) {
     return user != null
         ? UserModel(
             uid: user.uid,
@@ -22,7 +22,7 @@ class AuthenticationService {
 
   // Stream if user is Signed in or Signed out
   Stream<UserModel> get user {
-    return _auth.authStateChanges().map(_userfromAuthentication);
+    return _auth.authStateChanges().map(userfromAuthentication);
   }
 
   // Sign up using email password
@@ -37,7 +37,7 @@ class AuthenticationService {
       ).updateUserData(
         folderName: user.email,
       );
-      return _userfromAuthentication(user);
+      return userfromAuthentication(user);
     } catch (e) {
       debugPrint(e.toString());
       return null;
@@ -55,7 +55,7 @@ class AuthenticationService {
         userID: user.uid,
       );
 
-      return _userfromAuthentication(user);
+      return userfromAuthentication(user);
     } catch (e) {
       debugPrint(e.toString());
       return null;
@@ -67,7 +67,7 @@ class AuthenticationService {
   Future signoutEmailId() async {
     try {
       await _auth.signOut();
-      return _userfromAuthentication(null);
+      return userfromAuthentication(null);
     } catch (error) {
       debugPrint(error.toString());
     }
@@ -91,7 +91,7 @@ class AuthenticationService {
           ).updateUserData(
             folderName: user.phoneNumber,
           );
-          return _userfromAuthentication(user);
+          return userfromAuthentication(user);
         },
         verificationFailed: (FirebaseAuthException exception) {
           print(exception);
@@ -129,7 +129,7 @@ class AuthenticationService {
                             folderName: user.phoneNumber,
                           );
                           Navigator.pop(context);
-                          return _userfromAuthentication(user);
+                          return userfromAuthentication(user);
                         },
                         child: Text("confirm"))
                   ],

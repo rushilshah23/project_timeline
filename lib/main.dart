@@ -1,4 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:project_timeline/admin/DocumentManager/core/models/usermodel.dart';
+import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
+import 'package:provider/provider.dart';
 import 'UserSide/AboutUs/MainPage/HomeScreen.dart';
 import 'UserSide/Dashboard/Pages/myHomePage.dart';
 import 'UserSide/Dashboard/Widgets/BottomNav.dart';
@@ -30,13 +34,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppState(
       mode: this.geocoding,
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: BottomNav(),
+      child: FutureBuilder(
+        future: Firebase.initializeApp(),
+        builder: (context, snapshot) {
+          return StreamProvider<UserModel>.value(
+            value: AuthenticationService().user,
+            child: MaterialApp(
+              title: 'Flutter Demo',
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+                visualDensity: VisualDensity.adaptivePlatformDensity,
+              ),
+              home: BottomNav(),
+            ),
+          );
+        },
       ),
     );
   }

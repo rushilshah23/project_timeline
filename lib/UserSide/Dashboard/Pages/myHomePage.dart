@@ -10,7 +10,7 @@ import 'package:project_timeline/UserSide/MultiLingual/mainPages/language.dart';
 import 'package:project_timeline/UserSide/MultiLingual/pageTranslations/feedbackText.dart';
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
 import 'package:project_timeline/UserSide/UI/Widgets/cards.dart';
-import 'file:///D:/Users/Harshit%20Parkar/Documents/Project/project_timeline/lib/crowdfunding/leaderBoard.dart';
+import 'package:project_timeline/crowdfunding/leaderBoard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyHome extends StatefulWidget {

@@ -12,9 +12,10 @@ class WorkerCreationForm extends StatefulWidget {
 
 class _WorkerCreationFormState extends State<WorkerCreationForm> {
   final databaseReference = FirebaseDatabase.instance.reference();
-  final CollectionReference workers = Firestore.instance.collection("workers");
+  final CollectionReference workers =
+      FirebaseFirestore.instance.collection("workers");
   final CollectionReference newPhoneUser =
-      Firestore.instance.collection("newPhoneUser");
+      FirebaseFirestore.instance.collection("newPhoneUser");
   FirebaseAuth auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
 
@@ -50,8 +51,8 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
       try {
         await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password)
-            .then((AuthResult result) async {
-          await workers.document(result.user.uid).setData({
+            .then((UserCredential result) async {
+          await workers.doc(result.user.uid).set({
             "assignedProject": "No project assigned",
             "email": email,
             "mobile": phoneNo,
@@ -83,7 +84,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
   addUserUsingPhone() async {
     if (_formKey.currentState.validate()) {
       try {
-        await newPhoneUser.document(phoneNo).setData({
+        await newPhoneUser.doc(phoneNo).set({
           "userType": "worker",
           "mobile": phoneNo,
           "name": name,

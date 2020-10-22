@@ -1,5 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+import 'package:project_timeline/UserSide/UI/Widgets/cards.dart';
 import 'package:project_timeline/admin/DocumentManager/core/models/filemodel.dart';
 import 'package:project_timeline/admin/DocumentManager/core/models/foldermodel.dart';
 import 'package:project_timeline/admin/DocumentManager/core/models/usermodel.dart';
@@ -367,11 +369,17 @@ class _DrivePageState extends State<DrivePage> {
           return snapshot.hasData && !snapshot.hasError
               ? Scaffold(
                   appBar: AppBar(
-                      backgroundColor: appBarColor,
-                      title: AutoSizeText(
+                      backgroundColor: Colors.white,
+                      title: Text(
                         widget.folderName ?? 'null',
                         overflow: TextOverflow.visible,
+                        style: TextStyle(color: Colors.black),
                       ),
+
+                      // title: (
+                      //   widget.folderName ?? 'null',
+                      //   overflow: TextOverflow.visible,
+                      // ),
                       centerTitle: true,
                       flexibleSpace: Container(
                         decoration: colorBox,
