@@ -148,7 +148,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                 ...supervisors.map((msg) => [msg["name"], msg["mobile"]])
               ]),
           pw.SizedBox(height: 25),
-          pw.Table.fromTextArray(
+          todaysReport.length!=0?pw.Table.fromTextArray(
               context: context,
               border: pw.TableBorder(color: PdfColors.grey400),
               cellAlignment: pw.Alignment.centerLeft,
@@ -174,7 +174,13 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                   msg["volumeExcavated"].toString(),
                   msg["status"]
                 ])
-              ]),
+              ]):pw.Center(child:pw.Text('No work recorded today' ,
+                  style: pw.TextStyle(
+                  color: text2Color,
+                  fontSize: text2FontSize,
+                  )
+          ),
+          ),
         ];
       },
     ));
@@ -684,6 +690,9 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
   @override
   void initState() {
     super.initState();
+    setState(() {
+      todaysDate= formatter.format(date);
+    });
     getProjectsData();
     loadMachines();
   }
@@ -691,6 +700,8 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
+      appBar: ThemeAppbar("Reports", context),
 
       body: Container(
         padding: EdgeInsets.all(10),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/DocumentManager/core/models/usermodel.dart';
+import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
 import 'package:project_timeline/admin/DocumentManager/core/services/pathnavigator.dart';
 import 'package:project_timeline/admin/DocumentManager/ui/screens/home/drive.dart';
+import 'package:project_timeline/admin/DocumentManager/wrapper.dart';
 
 import 'package:project_timeline/admin/ProgressTimeLine/ProgressPage.dart';
 import 'package:project_timeline/admin/reportGeneration/ReportGeneration.dart';
@@ -77,7 +79,17 @@ class ManagerHomePageState extends State<ManagerHomePage> {
           ),
           SizedBox(height: 16),
           new GestureDetector(
-            onTap: () => Navigator.of(context).pop(true),
+            onTap: () async{
+              await AuthenticationService().signoutEmailId();
+              SharedPreferences _sharedpreferences =
+                  await SharedPreferences.getInstance();
+              _sharedpreferences.clear();
+              return Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
+                    showToast("Logout Successful");
+                    return Wrapper();
+                  }));
+            },
             child: Text("YES"),
           ),
         ],

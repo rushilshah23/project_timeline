@@ -663,6 +663,7 @@ class LoginPageState extends State<LoginPage> {
             });
           },
           validator: (val) => val.isEmpty ? 'Enter email' : null,
+          keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.email),
             hintText: 'Email',
@@ -677,6 +678,7 @@ class LoginPageState extends State<LoginPage> {
       ),
       Container(
         child: TextFormField(
+          obscureText: true,
           controller: passController,
           onChanged: (value) {
             setState(() {
@@ -687,6 +689,7 @@ class LoginPageState extends State<LoginPage> {
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.vpn_key),
             hintText: 'Password',
+
             contentPadding: EdgeInsets.all(20.0),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
@@ -710,9 +713,11 @@ class LoginPageState extends State<LoginPage> {
             });
           },
           validator: (val) => val.isEmpty ? 'Enter mobile number' : null,
+          keyboardType: TextInputType.phone,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.phone),
             hintText: 'Mobile Number',
+
             contentPadding: EdgeInsets.all(20.0),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
@@ -749,8 +754,8 @@ class LoginPageState extends State<LoginPage> {
                         fontSize: 30),
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(width: 55),
                       Image.asset(
                         "assets/3293465.jpg",
                         height: 180,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
+import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
+import 'package:project_timeline/admin/DocumentManager/wrapper.dart';
 import 'package:project_timeline/admin/MasterDataSet/ourMachines.dart';
 import 'package:project_timeline/admin/MasterDataSet/ourPetrolPump.dart';
 import 'package:project_timeline/admin/ProgressTimeLine/ProgressPage.dart';
@@ -55,6 +57,38 @@ class WorkerHomePageState extends State<WorkerHomePage> {
     // Navigator.pop(context);
   }
 
+  Future<bool> _onBackPressed() {
+    return showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text('Are you sure?'),
+        content: new Text('Do you want to exit an App'),
+        actions: <Widget>[
+          new GestureDetector(
+            onTap: () => Navigator.of(context).pop(false),
+            child: Text("NO"),
+          ),
+          SizedBox(height: 16),
+          new GestureDetector(
+            onTap: () async{
+              await AuthenticationService().signoutEmailId();
+              SharedPreferences _sharedpreferences =
+              await SharedPreferences.getInstance();
+              _sharedpreferences.clear();
+              return Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
+                    showToast("Logout Successful");
+                    return Wrapper();
+                  }));
+            },
+            child: Text("YES"),
+          ),
+        ],
+      ),
+    ) ??
+        false;
+  }
+
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
@@ -93,7 +127,9 @@ class WorkerHomePageState extends State<WorkerHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: _onBackPressed,
+        child: Scaffold(
       appBar: new AppBar(
         iconTheme: IconThemeData(
           color: Color(0xff005c9d),
@@ -217,6 +253,6 @@ class WorkerHomePageState extends State<WorkerHomePage> {
 //          ],
 //        ),
 //      ),
-    );
+    ));
   }
 }
