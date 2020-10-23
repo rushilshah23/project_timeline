@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/DocumentManager/core/models/usermodel.dart';
 import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
+import 'package:project_timeline/admin/DocumentManager/ui/widgets/loading.dart';
 import 'package:provider/provider.dart';
 import 'UserSide/AboutUs/MainPage/HomeScreen.dart';
 import 'UserSide/Dashboard/Pages/myHomePage.dart';
@@ -37,6 +38,9 @@ class MyApp extends StatelessWidget {
       child: FutureBuilder(
         future: Firebase.initializeApp(),
         builder: (context, snapshot) {
+          // if (snapshot.hasError) {
+          //   Text("Error");
+          // } else if (snapshot.connectionState == ConnectionState.done) {
           return StreamProvider<UserModel>.value(
             value: AuthenticationService().user,
             child: MaterialApp(
@@ -48,6 +52,8 @@ class MyApp extends StatelessWidget {
               home: BottomNav(),
             ),
           );
+          // } else
+          //   return Text("loading");
         },
       ),
     );

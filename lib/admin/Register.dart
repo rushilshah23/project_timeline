@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
 import 'package:project_timeline/admin/DocumentManager/core/services/database.dart';
+import 'package:project_timeline/admin/DocumentManager/wrapper.dart';
+import 'package:project_timeline/admin/login.dart';
 
 import 'CommonWidgets.dart';
 
@@ -97,6 +99,10 @@ class _RegisterState extends State<Register> {
           controllerPassword = null;
         });
         Navigator.pop(context);
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return LoginPage();
+        }));
       } catch (e) {
         showToast("Failed. Check your Internet !");
       }

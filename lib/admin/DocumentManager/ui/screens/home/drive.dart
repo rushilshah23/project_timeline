@@ -369,7 +369,7 @@ class _DrivePageState extends State<DrivePage> {
           return snapshot.hasData && !snapshot.hasError
               ? Scaffold(
                   appBar: AppBar(
-                      backgroundColor: Colors.white,
+                      backgroundColor: appBarColor,
                       title: Text(
                         widget.folderName ?? 'null',
                         overflow: TextOverflow.visible,

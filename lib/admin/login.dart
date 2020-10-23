@@ -158,7 +158,7 @@ class LoginPageState extends State<LoginPage> {
                 AuthenticationService().userfromAuthentication(user);
               } catch (e) {
                 debugPrint(e.toString());
-                return null;
+                // return null;
               }
 
               //

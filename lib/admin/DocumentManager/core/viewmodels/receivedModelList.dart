@@ -23,7 +23,9 @@ class _ReceivedModelListTileState extends State<ReceivedModelListTile> {
           SizedBox(
             width: 50,
           ),
-          Text(widget.receivedUserModel.receivedUserEmailId),
+          Text(widget.receivedUserModel.receivedUserEmailId ??
+              widget.receivedUserModel.receivedUserUid ??
+              'null'),
         ],
       ),
       onTap: () async {
