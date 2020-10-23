@@ -70,7 +70,7 @@ class _CreateNewProjectState extends State<CreateNewProject> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ThemeAppbar("Add New Project"),
+      appBar: ThemeAppbar("Add New Project", context),
       body: ListView(
         children: [
           SizedBox(

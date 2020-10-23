@@ -293,7 +293,7 @@ class _DashBoardState extends State<DashBoard> {
 
 
 
-              widget.userType=="manager"? Center(
+              widget.userType.contains("manager")? Center(
               child: FlatButton(
 //                child: Container(
 //                  height: 50,
@@ -320,7 +320,7 @@ class _DashBoardState extends State<DashBoard> {
               child: buttonContainers(double.infinity, 20, 'Get Report', 18),
                 onPressed: () {
 
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => ReportGenerationTesting()),

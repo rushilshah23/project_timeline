@@ -23,7 +23,7 @@ class _TestState extends State<Test> {
   final GlobalKey<FormState> _formKeyValue = GlobalKey<FormState>();
   final GlobalKey<FormState> workDoneAlready = GlobalKey<FormState>();
   final CollectionReference supervisors =
-      Firestore.instance.collection("supervisor");
+      FirebaseFirestore.instance.collection("supervisor");
 
   //Project Name
   String projectName = '';
@@ -133,7 +133,7 @@ class _TestState extends State<Test> {
 
   sendToDb() async {
     final CollectionReference supervisor =
-        Firestore.instance.collection("supervisor");
+        FirebaseFirestore.instance.collection("supervisor");
 
     var uuid = Uuid();
     String uniqueID = uuid.v1();
@@ -146,10 +146,11 @@ class _TestState extends State<Test> {
       this.setState(() {
         coordinates.add(results[0].coordinates);
       });
-      Firestore.instance.collection("markers").add({
+      FirebaseFirestore.instance.collection("markers").add({
         'location':
             new GeoPoint(coordinates[0].latitude, coordinates[0].longitude),
         'place': siteAddress,
+        'projectID': uniqueID,
       });
       databaseReference.child("projects").child(uniqueID).set({
         'projectName': projectName,
@@ -181,7 +182,7 @@ class _TestState extends State<Test> {
       selectedSupervisors.forEach((i) async {
         debugPrint(supervisorList[i].uid);
         await supervisor
-            .document(supervisorList[i].uid)
+            .doc(supervisorList[i].uid)
             .updateData({"assignedProject": uniqueID});
         await databaseReference
             .child("projects")
@@ -201,8 +202,8 @@ class _TestState extends State<Test> {
   }
 
   Future<void> getData() async {
-    await supervisors.getDocuments().then((querySnapshot) {
-      querySnapshot.documents.forEach((result) {
+    await supervisors.get().then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
         setState(() {
           supervisorDropdwnItems.add(
             DropdownMenuItem(

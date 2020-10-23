@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:project_timeline/admin/DocumentManager/core/models/usermodel.dart';
+import 'package:project_timeline/admin/DocumentManager/core/services/pathnavigator.dart';
+import 'package:project_timeline/admin/DocumentManager/ui/screens/home/drive.dart';
+import 'package:provider/provider.dart';
 
 import '../CommonWidgets.dart';
 import 'createAcceptWorker/createAcceptWorker.dart';
@@ -13,21 +17,23 @@ import '../dashboard.dart';
 import 'AllocatedProjects.dart';
 import 'approveWork/WorkApproveModule.dart';
 
-
-
 class SupervisorHomePage extends StatefulWidget {
   @override
   State createState() => SupervisorHomePageState();
 }
 
 class SupervisorHomePageState extends State<SupervisorHomePage> {
-
   int _selectedDrawerIndex = 0;
   String appbartitle = "Dashboard";
 
-
-
-  String name = '', lname = '', email = '', mobile = '', password = '',uid='', userType,assignedProject;
+  String name = '',
+      lname = '',
+      email = '',
+      mobile = '',
+      password = '',
+      uid = '',
+      userType,
+      assignedProject;
   _loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -39,19 +45,17 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
       userType = (prefs.getString('userType') ?? '');
       assignedProject = (prefs.getString('assignedProject') ?? '');
 
-      print("inside profile="+email + name + mobile + lname+ assignedProject);
-
-
+      print(
+          "inside profile=" + email + name + mobile + lname + assignedProject);
     });
   }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _loadData();
-
   }
-
 
   _onSelectItem(int index) {
     setState(() => _selectedDrawerIndex = index);
@@ -60,13 +64,17 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
     // Navigator.pop(context);
   }
 
-
-
-
-  _getDrawerItemWidget(int pos) {
+  _getDrawerItemWidget(int pos, UserModel user) {
     switch (pos) {
       case 0:
-        return new DashBoard(name: name,email: email, uid: uid, assignedProject: assignedProject,mobile: mobile,userType: userType,);
+        return new DashBoard(
+          name: name,
+          email: email,
+          uid: uid,
+          assignedProject: assignedProject,
+          mobile: mobile,
+          userType: userType,
+        );
 
       case 1:
         return new OurPetrolPumps();
@@ -78,32 +86,53 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
         return new ProgressPage();
 
       case 4:
-        return new YourAllocatedProjects(name: name,email: email, uid: uid, assignedProject: assignedProject,mobile: mobile,userType: userType,);
-
+        return new YourAllocatedProjects(
+          name: name,
+          email: email,
+          uid: uid,
+          assignedProject: assignedProject,
+          mobile: mobile,
+          userType: userType,
+        );
 
       case 5:
         return new CreateAcceptWorker();
 
-
+      case 6:
+        return DrivePage(
+          uid: user.uid,
+          pid: user.uid,
+          folderId: user.uid,
+          ref: globalRef
+              .reference()
+              .child('users')
+              .child(user.uid)
+              .child('documentManager')
+              .reference()
+              .path,
+          folderName: user.userEmail ?? user.userPhoneNo ?? null,
+        );
 
       default:
         return new Text("Error");
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserModel>(context);
     return Scaffold(
-      appBar: new AppBar(
-        iconTheme: IconThemeData(
-          color: Color(0xff005c9d),
-        ),
-        title:  Text(appbartitle, style: TextStyle(
-          color: Color(0xff005c9d),
-        )),
-        backgroundColor: Colors.white,
-      ),
+      appBar: ThemeAppbar(appbartitle, context),
+      // appBar: new AppBar(
+      //   iconTheme: IconThemeData(
+      //     color: Color(0xff005c9d),
+      //   ),
+      //   title: Text(appbartitle,
+      //       style: TextStyle(
+      //         color: Color(0xff005c9d),
+      //       )),
+      //   backgroundColor: Colors.white,
+      // ),
 
       drawer: ClipRRect(
         borderRadius: BorderRadius.circular(20),
@@ -111,13 +140,10 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
           context: context,
           removeTop: true,
           child: new Drawer(
-
             child: ListView(
               children: <Widget>[
                 UserAccountsDrawerHeader(
-                  decoration: BoxDecoration(
-                    gradient: gradients()
-                  ),
+                  decoration: BoxDecoration(gradient: gradients()),
                   accountName: Text("Supervisor"),
                   accountEmail: Text(email),
                   currentAccountPicture: InkWell(
@@ -125,7 +151,7 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
                       print("image clicked");
                     },
                     child: CircleAvatar(
-                      backgroundColor:Colors.white,
+                      backgroundColor: Colors.white,
                       child: Text(
                         "M",
                         style: TextStyle(fontSize: 40.0),
@@ -143,8 +169,10 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
                       appbartitle = "Dashboard";
                     }),
                 ExpansionTile(
-                  title:
-                  Row(children: <Widget>[Icon(Icons.add_box), Text("Our Resources")]),
+                  title: Row(children: <Widget>[
+                    Icon(Icons.add_box),
+                    Text("Our Resources")
+                  ]),
                   children: <Widget>[
                     ListTile(
                         title: Row(children: <Widget>[
@@ -156,7 +184,6 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
 
                           appbartitle = "Our Petrol Pumps";
                         }),
-
                     ListTile(
                         title: Row(children: <Widget>[
                           Icon(Icons.arrow_right),
@@ -167,8 +194,6 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
 
                           appbartitle = "Our Machines";
                         }),
-
-
                   ],
                 ),
                 ListTile(
@@ -180,8 +205,6 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
                       _onSelectItem(3);
                       appbartitle = "Our Projects";
                     }),
-
-
                 ListTile(
                     title: Row(children: <Widget>[
                       Icon(Icons.work),
@@ -191,7 +214,6 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
                       _onSelectItem(4);
                       appbartitle = "Your Allocated Projects";
                     }),
-
                 ListTile(
                     title: Row(children: <Widget>[
                       Icon(Icons.people),
@@ -201,12 +223,21 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
                       _onSelectItem(5);
                       appbartitle = "Create/Accept Workers";
                     }),
+                ListTile(
+                    title: Row(children: <Widget>[
+                      Icon(Icons.description),
+                      Text(" Document Manager")
+                    ]),
+                    onTap: () {
+                      _onSelectItem(6);
+                      appbartitle = "Document Manager";
+                    }),
               ],
             ),
           ),
         ),
       ),
-      body: _getDrawerItemWidget(_selectedDrawerIndex),
+      body: _getDrawerItemWidget(_selectedDrawerIndex, user),
 //      body: Center(
 //
 //        child: Column(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../managerRequestList.dart';
+import 'managerRequestList.dart';
 import 'SupervisorFormCreation.dart';
 import 'SupervisorRequestList.dart';
 

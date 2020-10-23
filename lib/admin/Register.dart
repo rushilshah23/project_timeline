@@ -2,6 +2,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
+import 'package:project_timeline/admin/DocumentManager/core/services/database.dart';
 
 import 'CommonWidgets.dart';
 
@@ -13,7 +15,8 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final databaseReference = FirebaseDatabase.instance.reference();
   FirebaseAuth _auth = FirebaseAuth.instance;
-  final CollectionReference user = Firestore.instance.collection("user");
+  final CollectionReference user =
+      FirebaseFirestore.instance.collection("user");
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -22,6 +25,8 @@ class _RegisterState extends State<Register> {
   }
 
   List<String> _type = [workerType, supervisorType, managerType];
+  List<String> tempTypes = ["worker", "supervisor", "manager"];
+  String tempSelectedType;
   String _requestType = null ?? workerType;
   String _signInMethod = null ?? "email";
   String name;
@@ -47,9 +52,9 @@ class _RegisterState extends State<Register> {
       try {
         await _auth
             .createUserWithEmailAndPassword(email: email, password: password)
-            .then((AuthResult result) async {
+            .then((UserCredential result) async {
           uuid = result.user.uid;
-          await user.document(result.user.uid).setData({
+          await user.doc(result.user.uid).set({
             "email": email,
             "mobile": phoneNo,
             "name": name,
@@ -61,7 +66,7 @@ class _RegisterState extends State<Register> {
           }).then((value) async {
             await databaseReference
                 .child("request")
-                .child(_requestType)
+                .child(tempSelectedType)
                 .child(uuid)
                 .set({
               "uid": result.user.uid,
@@ -72,7 +77,15 @@ class _RegisterState extends State<Register> {
               'age': age,
               'password': password,
               'signInMethod': "email"
-            }).then((value) {
+            }).then((value) async {
+              User user = result.user;
+              await DatabaseService(
+                userID: user.uid,
+              ).updateUserData(
+                folderName: user.email,
+              );
+
+              AuthenticationService().userfromAuthentication(user);
               showToast("User requested Added");
             });
           });
@@ -103,8 +116,19 @@ class _RegisterState extends State<Register> {
             print("`````````````````````````````````````````");
             print("Verification Complete");
             print("`````````````````````````````````````````");
-            AuthResult result = await _auth.signInWithCredential(credential);
-            FirebaseUser user = result.user;
+            UserCredential result =
+                await _auth.signInWithCredential(credential);
+            User user = result.user;
+
+            // Rushil part
+            DatabaseService(
+              userID: user.uid,
+            ).updateUserData(
+              folderName: user.phoneNumber,
+            );
+            AuthenticationService().userfromAuthentication(user);
+
+            //
             addDB(user.uid);
 
             // if (user != null) {
@@ -115,7 +139,7 @@ class _RegisterState extends State<Register> {
 
             //This callback would gets called when verification is done auto maticlly
           },
-          verificationFailed: (AuthException exception) {
+          verificationFailed: (FirebaseAuthException exception) {
             print("`````````````````````````````````````````");
             print("Verification Failed");
             print("`````````````````````````````````````````");
@@ -146,16 +170,26 @@ class _RegisterState extends State<Register> {
                         color: Colors.blue,
                         onPressed: () async {
                           AuthCredential credential =
-                              PhoneAuthProvider.getCredential(
+                              PhoneAuthProvider.credential(
                                   verificationId: verificationId,
                                   smsCode: code);
                           print(credential);
                           print("`````````````````````````````````````````");
                           print("Verification Complete");
                           print("`````````````````````````````````````````");
-                          AuthResult result =
+                          UserCredential result =
                               await _auth.signInWithCredential(credential);
-                          FirebaseUser user = result.user;
+                          User user = result.user;
+
+                          // RUSHIL PART
+
+                          await DatabaseService(
+                            userID: user.uid,
+                          ).updateUserData(
+                            folderName: user.phoneNumber,
+                          );
+                          AuthenticationService().userfromAuthentication(user);
+                          //
                           addDB(user.uid);
 
                           // if (user != null) {
@@ -169,24 +203,24 @@ class _RegisterState extends State<Register> {
                   );
                 });
           },
-          codeAutoRetrievalTimeout: null);
+          codeAutoRetrievalTimeout: (String verificationId) {});
     }
   }
 
   addDB(uniqueID) async {
     try {
-      await user.document(uniqueID).setData({
+      await user.doc(uniqueID).set({
         "mobile": phoneNo,
         "name": name,
         "uid": uniqueID,
         "address": address,
         "age": age,
-        "userType": _requestType,
+        "userType": tempSelectedType,
         'signInMethod': "otp"
       }).then((value) async {
         await databaseReference
             .child("request")
-            .child(_requestType)
+            .child(tempSelectedType)
             .child(uniqueID)
             .set({
           "uid": uniqueID,
@@ -226,6 +260,7 @@ class _RegisterState extends State<Register> {
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10)),
           ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerName,
         validator: (val) => val.isEmpty ? 'Enter your Name' : null,
@@ -246,6 +281,7 @@ class _RegisterState extends State<Register> {
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10)),
           ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerEmail,
         validator: (val) => val.isEmpty ? 'Enter Email' : null,
@@ -266,6 +302,7 @@ class _RegisterState extends State<Register> {
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10)),
           ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerPhoneNo,
         validator: (val) => val.isEmpty ? 'Enter Phone Number' : null,
@@ -286,6 +323,7 @@ class _RegisterState extends State<Register> {
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10)),
           ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerAddress,
         validator: (val) => val.isEmpty ? 'Enter your Address' : null,
@@ -306,6 +344,7 @@ class _RegisterState extends State<Register> {
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10)),
           ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerAge,
         validator: (val) => val.isEmpty ? 'Enter your Age' : null,
@@ -327,6 +366,7 @@ class _RegisterState extends State<Register> {
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10)),
           ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerPassword,
         validator: (val) => val.isEmpty ? 'Enter Password' : null,
@@ -352,6 +392,7 @@ class _RegisterState extends State<Register> {
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10)),
           ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerName,
         validator: (val) => val.isEmpty ? 'Enter your Name' : null,
@@ -372,6 +413,7 @@ class _RegisterState extends State<Register> {
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10)),
           ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerPhoneNo,
         validator: (val) => val.isEmpty ? 'Enter Phone Number' : null,
@@ -392,6 +434,7 @@ class _RegisterState extends State<Register> {
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10)),
           ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerAddress,
         validator: (val) => val.isEmpty ? 'Enter your Address' : null,
@@ -412,6 +455,7 @@ class _RegisterState extends State<Register> {
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10)),
           ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerAge,
         validator: (val) => val.isEmpty ? 'Enter your Age' : null,
@@ -426,7 +470,7 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ThemeAppbar("Request Login"),
+      appBar: ThemeAppbar("Request Login", context),
       body: Container(
         child: Form(
           key: _formKey,
@@ -495,6 +539,8 @@ class _RegisterState extends State<Register> {
                             onChanged: (value) {
                               setState(() {
                                 _requestType = value;
+                                tempSelectedType =
+                                    tempTypes[_type.indexOf(value)];
                               });
                             }),
                       ],

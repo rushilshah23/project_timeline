@@ -7,7 +7,6 @@ import 'package:uuid/uuid.dart';
 
 import '../../CommonWidgets.dart';
 
-
 List<String> machineTypeSelected = [];
 List<TextEditingController> usagePerDay = [];
 List<GlobalKey<FormState>> machinesFormKeys = [];
@@ -28,7 +27,7 @@ class _EditProjectState extends State<EditProject> {
   final GlobalKey<FormState> _formKeyValue = new GlobalKey<FormState>();
   final GlobalKey<FormState> workDoneAlready = new GlobalKey<FormState>();
   final CollectionReference supervisors =
-      Firestore.instance.collection("supervisor");
+      FirebaseFirestore.instance.collection("supervisor");
 
   final databaseReference = FirebaseDatabase.instance.reference();
 
@@ -139,7 +138,7 @@ class _EditProjectState extends State<EditProject> {
 
   sendToDb() {
     final CollectionReference supervisor =
-        Firestore.instance.collection("supervisor");
+        FirebaseFirestore.instance.collection("supervisor");
 
     var uuid = Uuid();
     String uniqueID = uuid.v1();
@@ -179,8 +178,8 @@ class _EditProjectState extends State<EditProject> {
       selectedSupervisors.forEach((i) async {
         debugPrint(supervisorList[i].uid);
         await supervisor
-            .document(supervisorList[i].uid)
-            .updateData({"assignedProject": uniqueID});
+            .doc(supervisorList[i].uid)
+            .update({"assignedProject": uniqueID});
         await databaseReference
             .child("projects")
             .child(uniqueID)
@@ -198,8 +197,8 @@ class _EditProjectState extends State<EditProject> {
   }
 
   Future<void> getData() async {
-    await supervisors.getDocuments().then((querySnapshot) {
-      querySnapshot.documents.forEach((result) {
+    await supervisors.get().then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
         setState(() {
           supervisorDropdwnItems.add(
             DropdownMenuItem(
@@ -992,8 +991,7 @@ class _EditProjectState extends State<EditProject> {
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 17
-                      ),
+                          fontSize: 17),
                     )),
                   ),
                 ),

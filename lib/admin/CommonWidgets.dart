@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
+import 'package:project_timeline/admin/DocumentManager/wrapper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 String workerType = "Worker";
 String managerType = "Manager";
@@ -16,8 +19,23 @@ showToast(String msg) {
       fontSize: 18.0);
 }
 
-Widget ThemeAppbar(String title) {
+Widget ThemeAppbar(String title, BuildContext context) {
   return new AppBar(
+    actions: <Widget>[
+      IconButton(
+          icon: Icon(Icons.exit_to_app),
+          onPressed: () async {
+            await AuthenticationService().signoutEmailId();
+            SharedPreferences _sharedpreferences =
+                await SharedPreferences.getInstance();
+            _sharedpreferences.clear();
+            return Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) {
+              showToast("Logout Successful");
+              return Wrapper();
+            }));
+          })
+    ],
     iconTheme: IconThemeData(
       color: Color(0xff005c9d),
     ),
@@ -72,7 +90,7 @@ Widget buttonContainers(
     width: width,
     padding: EdgeInsets.all(padding),
     decoration: new BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(10),
       color: Color(0xff018abd),
     ),
     child: Text(

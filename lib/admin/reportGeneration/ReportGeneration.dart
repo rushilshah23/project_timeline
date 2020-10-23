@@ -25,31 +25,27 @@ class _ReportGenerationState extends State<ReportGeneration> {
 
   final DateTime date = DateTime.now();
   final DateFormat formatter = DateFormat('dd-MM-yyyy');
-  String todaysDate="12-09-2020";
-
+  String todaysDate = "12-09-2020";
 
   final DateTime now = DateTime.now();
   final DateFormat formatterForTime = DateFormat('dd-MM-yyyy hh:mm:ss');
 
   Map allMachinesData;
-  String uid="8YiMHLBnBaNjmr3yPvk8NWvNPmm2";
-
+  String uid = "8YiMHLBnBaNjmr3yPvk8NWvNPmm2";
 
   // List<ProjectsList> projectsList=List() ;
-  List projects=[];
+  List projects = [];
 
   List<int> selectedProjectsIndex = [];
-  List selectedProjects= [];
+  List selectedProjects = [];
 
-  List selectedProjectsSupervisors= [];
-  List selectedProjectsTodaysWorkersList= [];
+  List selectedProjectsSupervisors = [];
+  List selectedProjectsTodaysWorkersList = [];
 
-
-  List selectedProjectsAllDaysWorkersList= [];
-  List selectedProjectsAllDates= [];
+  List selectedProjectsAllDaysWorkersList = [];
+  List selectedProjectsAllDates = [];
 
   List<DropdownMenuItem> projectsDropdwnItems = [];
-
 
   List<String> _soilType = <String>[
     'Type A',
@@ -57,10 +53,9 @@ class _ReportGenerationState extends State<ReportGeneration> {
     'Type C',
   ];
 
-  String start,end;
+  String start, end;
 
-  allDayReportPdf() async{
-
+  allDayReportPdf() async {
     pdf.addPage(pw.MultiPage(
       pageFormat: PdfPageFormat.a4,
       margin: pw.EdgeInsets.all(32),
@@ -69,80 +64,82 @@ class _ReportGenerationState extends State<ReportGeneration> {
           pw.ListView.builder(
             itemCount: selectedProjects.length,
             itemBuilder: (context, index) {
-
               //debugPrint(selectedProjectsTodaysWorkersList[index].toString());
               return pw.Container(
-
-                  child:pw.Column(
-                    children: [
-
-                      pw.Header(
-                        level: 0,
-                        child: pw.Center(child:pw.Text(selectedProjects[index]["projectName"])),
-                      ),
-                      pw.Center(child:pw.Text('Site Address: '+selectedProjects[index]["siteAddress"])),
-
-                      pw.SizedBox(height: 25),
-
-                      pw.Row(
-                          mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                          children: [
-                            pw.Text('Approved Excavation: '),
-                            pw.Text('Total Excavation: '),
-                          ]
-                      ),
-
-                      pw.SizedBox(height: 25),
-                      pw.Table.fromTextArray(context: context, data: <List<dynamic>>[
-                        <String>['Supervisor Name', 'Contact No',],
-                        ...selectedProjectsSupervisors[index].map(
-                                (msg) => [msg["name"], msg["mobile"]])
-                      ]),
-                      pw.SizedBox(height: 25),
-
-
-                    pw.ListView.builder(
-                    itemCount: selectedProjectsAllDaysWorkersList[index].length,
-                    itemBuilder: (context, index2) {
-
-                    //debugPrint(selectedProjectsAllDaysWorkersList[index][index2].toString());
-                    return pw.Column(
+                  child: pw.Column(
+                children: [
+                  pw.Header(
+                    level: 0,
+                    child: pw.Center(
+                        child: pw.Text(selectedProjects[index]["projectName"])),
+                  ),
+                  pw.Center(
+                      child: pw.Text('Site Address: ' +
+                          selectedProjects[index]["siteAddress"])),
+                  pw.SizedBox(height: 25),
+                  pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                       children: [
-                        pw.SizedBox(height: 20),
-                        pw.Center(child:pw.Text('Report For: '+selectedProjectsAllDates[index][index2])),
-                        pw.SizedBox(height: 10),
-                    pw.Container(
-                    child:pw.Table.fromTextArray(context: context, data: <List<dynamic>>[
-                      <String>['Worker Name', 'Hours Worked', 'Machine used', 'Volume Excavated','Approval Status'],
-                      ...selectedProjectsAllDaysWorkersList[index][index2].map(
-                              (msg) => [msg["workerName"], msg["hoursWorked"].toString(),msg["MachineUsed"], msg["volumeExcavated"].toString(), msg["status"]])
-                    ])
-                    )]
-
-                    );}),
-
-
-
-                      pw.SizedBox(height: 50),
-
-                    ],
-                  )
-              );
+                        pw.Text('Approved Excavation: '),
+                        pw.Text('Total Excavation: '),
+                      ]),
+                  pw.SizedBox(height: 25),
+                  pw.Table.fromTextArray(
+                      context: context,
+                      data: <List<dynamic>>[
+                        <String>[
+                          'Supervisor Name',
+                          'Contact No',
+                        ],
+                        ...selectedProjectsSupervisors[index]
+                            .map((msg) => [msg["name"], msg["mobile"]])
+                      ]),
+                  pw.SizedBox(height: 25),
+                  pw.ListView.builder(
+                      itemCount:
+                          selectedProjectsAllDaysWorkersList[index].length,
+                      itemBuilder: (context, index2) {
+                        //debugPrint(selectedProjectsAllDaysWorkersList[index][index2].toString());
+                        return pw.Column(children: [
+                          pw.SizedBox(height: 20),
+                          pw.Center(
+                              child: pw.Text('Report For: ' +
+                                  selectedProjectsAllDates[index][index2])),
+                          pw.SizedBox(height: 10),
+                          pw.Container(
+                              child: pw.Table.fromTextArray(
+                                  context: context,
+                                  data: <List<dynamic>>[
+                                <String>[
+                                  'Worker Name',
+                                  'Hours Worked',
+                                  'Machine used',
+                                  'Volume Excavated',
+                                  'Approval Status'
+                                ],
+                                ...selectedProjectsAllDaysWorkersList[index]
+                                        [index2]
+                                    .map((msg) => [
+                                          msg["workerName"],
+                                          msg["hoursWorked"].toString(),
+                                          msg["MachineUsed"],
+                                          msg["volumeExcavated"].toString(),
+                                          msg["status"]
+                                        ])
+                              ]))
+                        ]);
+                      }),
+                  pw.SizedBox(height: 50),
+                ],
+              ));
             },
           ),
-
         ];
       },
     ));
-
   }
 
-
-
-  todaysReportPdf() async{
-
-
-
+  todaysReportPdf() async {
     pdf.addPage(pw.MultiPage(
       pageFormat: PdfPageFormat.a4,
       margin: pw.EdgeInsets.all(32),
@@ -151,57 +148,67 @@ class _ReportGenerationState extends State<ReportGeneration> {
           pw.ListView.builder(
             itemCount: selectedProjects.length,
             itemBuilder: (context, index) {
-
               //debugPrint(selectedProjectsTodaysWorkersList[index].toString());
               return pw.Container(
-
-                  child:pw.Column(
-                    children: [
-
-                      pw.Header(
-                        level: 0,
-                        child: pw.Center(child:pw.Text(selectedProjects[index]["projectName"])),
-                      ),
-                      pw.Center(child:pw.Text('Site Address: '+selectedProjects[index]["siteAddress"])),
-
-                      pw.SizedBox(height: 25),
-                      pw.Center(child:pw.Text('Report For: $todaysDate')),
-                      pw.Row(
-                          mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                          children: [
-                            pw.Text('Approved Excavation: '),
-                            pw.Text('Total Excavation: '),
-                          ]
-                      ),
-
-                      pw.SizedBox(height: 25),
-                      pw.Table.fromTextArray(context: context, data: <List<dynamic>>[
-                        <String>['Supervisor Name', 'Contact No',],
-                        ...selectedProjectsSupervisors[index].map(
-                                (msg) => [msg["name"], msg["mobile"]])
+                  child: pw.Column(
+                children: [
+                  pw.Header(
+                    level: 0,
+                    child: pw.Center(
+                        child: pw.Text(selectedProjects[index]["projectName"])),
+                  ),
+                  pw.Center(
+                      child: pw.Text('Site Address: ' +
+                          selectedProjects[index]["siteAddress"])),
+                  pw.SizedBox(height: 25),
+                  pw.Center(child: pw.Text('Report For: $todaysDate')),
+                  pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                      children: [
+                        pw.Text('Approved Excavation: '),
+                        pw.Text('Total Excavation: '),
                       ]),
-                      pw.SizedBox(height: 25),
-
-
-
-                      selectedProjectsTodaysWorkersList[index]!=[]?pw.Table.fromTextArray(context: context, data: <List<dynamic>>[
-                        <String>['Worker Name', 'Hours Worked', 'Machine used', 'Volume Excavated','Approval Status'],
-                        ...selectedProjectsTodaysWorkersList[index].map(
-                                (msg) => [msg["workerName"], msg["hoursWorked"].toString(),msg["MachineUsed"], msg["volumeExcavated"].toString(), msg["status"]])
-                      ]):pw.Container(),
-
-                      pw.SizedBox(height: 50),
-
-                    ],
-                  )
-              );
+                  pw.SizedBox(height: 25),
+                  pw.Table.fromTextArray(
+                      context: context,
+                      data: <List<dynamic>>[
+                        <String>[
+                          'Supervisor Name',
+                          'Contact No',
+                        ],
+                        ...selectedProjectsSupervisors[index]
+                            .map((msg) => [msg["name"], msg["mobile"]])
+                      ]),
+                  pw.SizedBox(height: 25),
+                  selectedProjectsTodaysWorkersList[index] != []
+                      ? pw.Table.fromTextArray(
+                          context: context,
+                          data: <List<dynamic>>[
+                              <String>[
+                                'Worker Name',
+                                'Hours Worked',
+                                'Machine used',
+                                'Volume Excavated',
+                                'Approval Status'
+                              ],
+                              ...selectedProjectsTodaysWorkersList[index]
+                                  .map((msg) => [
+                                        msg["workerName"],
+                                        msg["hoursWorked"].toString(),
+                                        msg["MachineUsed"],
+                                        msg["volumeExcavated"].toString(),
+                                        msg["status"]
+                                      ])
+                            ])
+                      : pw.Container(),
+                  pw.SizedBox(height: 50),
+                ],
+              ));
             },
           ),
-
         ];
       },
     ));
-
   }
 
   Future savePDF() async {
@@ -211,64 +218,47 @@ class _ReportGenerationState extends State<ReportGeneration> {
     file.writeAsBytesSync(pdf.save());
   }
 
-
-  void selectedProjs()
-  {
+  Future<void> selectedProjs() {
     setState(() {
       selectedProjects.clear();
       selectedProjectsIndex.forEach((element) {
-
         //debugPrint(element.toString());
-        Map selProjMap= projects[element];
+        Map selProjMap = projects[element];
         selectedProjects.add(selProjMap);
 
-        Map supervisorMap= selProjMap["supervisors"];
+        Map supervisorMap = selProjMap["supervisors"];
         selectedProjectsSupervisors.add(supervisorMap.values.toList());
         //debugPrint(selectedProjectsSupervisors.toString());
 
-        if(selProjMap.containsKey("progress"))
-          {
-            Map workerMap= selProjMap["progress"];
-            if(workerMap.containsKey(todaysDate))
-              {
-                selectedProjectsTodaysWorkersList.add(workerMap[todaysDate].values.toList());
-              }
-            else
-              {
-                selectedProjectsTodaysWorkersList.add([]);
-              }
-
-            List finalAllDays=[];
-            selectedProjectsAllDates.add(workerMap.keys.toList());
-
-            for(int i=0;i<workerMap.values.toList().length;i++)
-              {
-                Map thisDayWorkersMap= workerMap.values.toList()[i];
-                finalAllDays.add( thisDayWorkersMap.values.toList());
-              }
-
-            selectedProjectsAllDaysWorkersList.add(finalAllDays);
-            //debugPrint("all days--------------"+selectedProjectsAllDaysWorkersList.toString());
-
-
+        if (selProjMap.containsKey("progress")) {
+          Map workerMap = selProjMap["progress"];
+          if (workerMap.containsKey(todaysDate)) {
+            selectedProjectsTodaysWorkersList
+                .add(workerMap[todaysDate].values.toList());
+          } else {
+            selectedProjectsTodaysWorkersList.add([]);
           }
-          else
-            {
-              selectedProjectsTodaysWorkersList.add([]);
-              selectedProjectsAllDaysWorkersList.add([]);
-              selectedProjectsAllDates.add([]);
-            }
+
+          List finalAllDays = [];
+          selectedProjectsAllDates.add(workerMap.keys.toList());
+
+          for (int i = 0; i < workerMap.values.toList().length; i++) {
+            Map thisDayWorkersMap = workerMap.values.toList()[i];
+            finalAllDays.add(thisDayWorkersMap.values.toList());
+          }
+
+          selectedProjectsAllDaysWorkersList.add(finalAllDays);
+          //debugPrint("all days--------------"+selectedProjectsAllDaysWorkersList.toString());
+
+        } else {
+          selectedProjectsTodaysWorkersList.add([]);
+          selectedProjectsAllDaysWorkersList.add([]);
+          selectedProjectsAllDates.add([]);
+        }
         //debugPrint(selectedProjectsTodaysWorkersList.toString());
-
-
       });
-
     });
-
   }
-
-
-
 
   void loadMachines() async {
     await databaseReference
@@ -276,16 +266,17 @@ class _ReportGenerationState extends State<ReportGeneration> {
         .child("machineMaster")
         .once()
         .then((snapshot) {
-          allMachinesData=snapshot.value;
+      allMachinesData = snapshot.value;
     });
   }
 
-
   Future<void> getProjectsData() async {
-    databaseReference.child("projects").once().then((DataSnapshot dataSnapshot) {
-
-      Map projMap= dataSnapshot.value;
-      projects=projMap.values.toList();
+    databaseReference
+        .child("projects")
+        .once()
+        .then((DataSnapshot dataSnapshot) {
+      Map projMap = dataSnapshot.value;
+      projects = projMap.values.toList();
 
       //debugPrint(projects.toString());
       projects.forEach((result) {
@@ -294,41 +285,32 @@ class _ReportGenerationState extends State<ReportGeneration> {
             DropdownMenuItem(
               child: Container(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(result['projectName']),
-                      Text(
-                        result['siteAddress'],
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ],
-                  )),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(result['projectName']),
+                  Text(
+                    result['siteAddress'],
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ],
+              )),
               value: result['projectID'],
             ),
           );
         });
       });
-
     });
   }
-
-
-
-
-
-
 
   @override
   void initState() {
     super.initState();
     getProjectsData();
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Container(
         padding: EdgeInsets.all(10),
         child: ListView(
@@ -374,88 +356,85 @@ class _ReportGenerationState extends State<ReportGeneration> {
                   ),
                 ),
                 SizedBox(height: 20),
-
                 SizedBox(
                   height: 10,
                 ),
-
                 Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
                       borderRadius: BorderRadius.circular(5),
                     ),
                     padding: EdgeInsets.all(10),
-                  child:Column(
-                    children: [
-                      // Center(
-                      //   child: titleStyles('Get Todays Report: ', 18),
-                      // ),
+                    child: Column(
+                      children: [
+                        // Center(
+                        //   child: titleStyles('Get Todays Report: ', 18),
+                        // ),
 
-                      SizedBox(
-                        height: 20,
-                      ),
+                        SizedBox(
+                          height: 20,
+                        ),
 
-                      FlatButton(
-                        child: buttonContainers(double.infinity, 20, 'Todays Report', 18),
-                        onPressed: () async{
+                        FlatButton(
+                          child: buttonContainers(
+                              double.infinity, 20, 'Todays Report', 18),
+                          onPressed: () async {
+                            await selectedProjs();
+                            await todaysReportPdf();
+                            await savePDF();
 
-                          await selectedProjs();
-                          await todaysReportPdf();
-                          await savePDF();
+                            Directory documentDirectory =
+                                await getApplicationDocumentsDirectory();
+                            String documentPath = documentDirectory.path;
+                            String fullPath = "$documentPath/example.pdf";
 
-                          Directory documentDirectory =
-                              await getApplicationDocumentsDirectory();
-                          String documentPath = documentDirectory.path;
-                          String fullPath = "$documentPath/example.pdf";
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ReportPreview(path: fullPath),
+                                ));
+                          },
+                        ),
+                        SizedBox(
+                          height: 50,
+                        ),
+                        FlatButton(
+                          child: buttonContainers(double.infinity, 20,
+                              'Generate Overall Report', 18),
+                          onPressed: () async {
+                            await selectedProjs();
+                            await allDayReportPdf();
+                            await savePDF();
+                            Directory documentDirectory =
+                                await getApplicationDocumentsDirectory();
+                            String documentPath = documentDirectory.path;
+                            String fullPath = "$documentPath/example.pdf";
 
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ReportPreview(path: fullPath),
-                              ));
-                        },
-                      ),
-                      SizedBox(
-                        height: 50,
-                      ),
-                      FlatButton(
-                        child: buttonContainers(double.infinity, 20, 'Generate Overall Report', 18),
-                        onPressed: () async{
-                          await selectedProjs();
-                          await allDayReportPdf();
-                          await savePDF();
-                          Directory documentDirectory =
-                          await getApplicationDocumentsDirectory();
-                          String documentPath = documentDirectory.path;
-                          String fullPath = "$documentPath/example.pdf";
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ReportPreview(path: fullPath),
+                                ));
+                          },
+                        ),
 
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ReportPreview(path: fullPath),
-                              ));
-                        },
-                      ),
-
-                      SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  )
-                ),
-
-
+                        SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    )),
                 SizedBox(
                   height: 10,
                 ),
-
                 Container(
                     // decoration: BoxDecoration(
                     //   border: Border.all(color: Colors.grey),
                     //   borderRadius: BorderRadius.circular(5),
                     // ),
                     padding: EdgeInsets.all(15),
-                    child:Column(
+                    child: Column(
                       children: [
                         // Center(
                         //   child: titleStyles('Generate Report: ', 18),
@@ -556,15 +535,12 @@ class _ReportGenerationState extends State<ReportGeneration> {
                         //   },
                         // ),
                       ],
-                    )
-                ),
-
+                    )),
               ],
             )
           ],
         ),
       ),
-
     );
   }
 }

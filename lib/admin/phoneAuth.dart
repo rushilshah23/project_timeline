@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'CommonWidgets.dart';
 
-
 class PhoneAuth extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -48,7 +47,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
 
           //This callback would gets called when verification is done auto maticlly
         },
-        verificationFailed: (AuthException exception) {
+        verificationFailed: (FirebaseAuthException exception) {
           print("`````````````````````````````````````````");
           print("Verification Failed");
           print("`````````````````````````````````````````");
@@ -77,7 +76,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                       onPressed: () async {
                         final code = _codeController.text.trim();
                         AuthCredential credential =
-                            PhoneAuthProvider.getCredential(
+                            PhoneAuthProvider.credential(
                                 verificationId: verificationId, smsCode: code);
                         print(credential);
                         print("`````````````````````````````````````````");
@@ -97,7 +96,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                 );
               });
         },
-        codeAutoRetrievalTimeout: null);
+        codeAutoRetrievalTimeout: (String verificationId) {});
   }
 
   @override

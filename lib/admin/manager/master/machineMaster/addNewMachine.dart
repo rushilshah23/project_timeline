@@ -90,7 +90,7 @@ class _AddNewMachineState extends State<AddNewMachine> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: ThemeAppbar("Add New Machine"),
+        appBar: ThemeAppbar("Add New Machine", context),
         body: Container(
             child: Form(
                 key: _formKey,
@@ -105,7 +105,7 @@ class _AddNewMachineState extends State<AddNewMachine> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Center(
-                              child: titleStyles('Add a new machine', 18),
+                                child: titleStyles('Add a new machine', 18),
                               ),
 
                               SizedBox(height: 15),
@@ -508,9 +508,7 @@ class _AddNewMachineState extends State<AddNewMachine> {
                                       child: Text(
                                         'Add Machine',
                                         style: TextStyle(
-                                            color: Colors.white,
-                                          fontSize: 17
-                                        ),
+                                            color: Colors.white, fontSize: 17),
                                       ),
                                     ),
                                   ),

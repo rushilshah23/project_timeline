@@ -7,15 +7,13 @@ import 'package:project_timeline/admin/CommonWidgets.dart';
 
 import 'machineMaster.dart';
 
-
 String machineType = 'One';
 List<String> soilTypeSelected = List.generate(74, (i) => 'None');
 List<TextEditingController> excavationAmount =
-List.generate(74, (i) => TextEditingController());
+    List.generate(74, (i) => TextEditingController());
 int amountOfExavationCount;
 
 class EditMachineData extends StatefulWidget {
-
   final Map machineDetails;
   EditMachineData({Key key, this.machineDetails}) : super(key: key);
 
@@ -39,27 +37,25 @@ class _EditMachineDataState extends State<EditMachineData> {
 
   final databaseReference = FirebaseDatabase.instance.reference();
 
-  deleteMachine()
-  {
+  deleteMachine() {
 //    try {
-      databaseReference
-          .child("masters")
-          .child("machineMaster")
-          .child(machineID).remove();
+    databaseReference
+        .child("masters")
+        .child("machineMaster")
+        .child(machineID)
+        .remove();
 
-
-      showToast("Removed Sucessfully");
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => MachineMaster()),
-      );
+    showToast("Removed Sucessfully");
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MachineMaster()),
+    );
 
 //    catch(e){
 //      debugPrint(e.toString());
 //      showToast("Check your internet");
 //    }
   }
-
 
   addDynamic() {
     amountOfExavationCount = amountOfExavationCount + 1;
@@ -68,9 +64,6 @@ class _EditMachineDataState extends State<EditMachineData> {
 
   addMachine() {
     if (_formKey.currentState.validate()) {
-
-
-
       try {
         databaseReference
             .child("masters")
@@ -107,45 +100,42 @@ class _EditMachineDataState extends State<EditMachineData> {
   @override
   void initState() {
     super.initState();
-   // amountOfExavationCount = 1;
+    // amountOfExavationCount = 1;
 
     setState(() {
-      machineName=widget.machineDetails["machineName"];
-      modelName=widget.machineDetails["modelName"];
-      tankCapacity=widget.machineDetails["tankCapacity"];
-      bucketCapacity=widget.machineDetails["bucketCapacity"];
-      enginePower=widget.machineDetails["enginePower"];
-      operatingWeight=widget.machineDetails["operatingWeight"];
-      fuelConsumption=widget.machineDetails["fuelConsumption"];
-      machineRent=widget.machineDetails["machineRent"];
+      machineName = widget.machineDetails["machineName"];
+      modelName = widget.machineDetails["modelName"];
+      tankCapacity = widget.machineDetails["tankCapacity"];
+      bucketCapacity = widget.machineDetails["bucketCapacity"];
+      enginePower = widget.machineDetails["enginePower"];
+      operatingWeight = widget.machineDetails["operatingWeight"];
+      fuelConsumption = widget.machineDetails["fuelConsumption"];
+      machineRent = widget.machineDetails["machineRent"];
       machineID = widget.machineDetails["machineID"];
-      vendorName=widget.machineDetails["vendor"]["name"];
-      vendorContact=widget.machineDetails["vendor"]["contactNo"];
+      vendorName = widget.machineDetails["vendor"]["name"];
+      vendorContact = widget.machineDetails["vendor"]["contactNo"];
 
-      List temp= widget.machineDetails["excavation"];
-      amountOfExavationCount=temp.length;
+      List temp = widget.machineDetails["excavation"];
+      amountOfExavationCount = temp.length;
 
-      for(int i=0 ;i<temp.length;i++)
-        {
-          excavationAmount[i].text=temp[i]["amountOfExcavation"];
-          soilTypeSelected[i]=temp[i]["soilType"];
-        }
+      for (int i = 0; i < temp.length; i++) {
+        excavationAmount[i].text = temp[i]["amountOfExcavation"];
+        soilTypeSelected[i] = temp[i]["soilType"];
+      }
       debugPrint(temp.toString());
-
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: ThemeAppbar("Edit Machine Details"),
+        appBar: ThemeAppbar("Edit Machine Details", context),
         body: Container(
             child: Form(
                 key: _formKey,
                 child: ListView(
-                  // Center is a layout widget. It takes a single child and positions it
-                  // in the middle of the parent.
+                    // Center is a layout widget. It takes a single child and positions it
+                    // in the middle of the parent.
                     children: [
                       Container(
                           padding: EdgeInsets.symmetric(
@@ -178,7 +168,7 @@ class _EditMachineDataState extends State<EditMachineData> {
                                   ),
                                 ),
                                 validator: (val) =>
-                                val.isEmpty ? 'Enter machine name' : null,
+                                    val.isEmpty ? 'Enter machine name' : null,
                                 onChanged: (val) {
                                   setState(() => machineName = val);
                                 },
@@ -200,7 +190,7 @@ class _EditMachineDataState extends State<EditMachineData> {
                                   ),
                                 ),
                                 validator: (val) =>
-                                val.isEmpty ? 'Enter Model name' : null,
+                                    val.isEmpty ? 'Enter Model name' : null,
                                 onChanged: (val) {
                                   setState(() => modelName = val);
                                 },
@@ -346,8 +336,9 @@ class _EditMachineDataState extends State<EditMachineData> {
                                               bottomLeft: Radius.circular(10)),
                                         ),
                                       ),
-                                      validator: (val) =>
-                                      val.isEmpty ? 'Enter fuel used' : null,
+                                      validator: (val) => val.isEmpty
+                                          ? 'Enter fuel used'
+                                          : null,
                                       onChanged: (val) {
                                         setState(() => fuelConsumption = val);
                                       },
@@ -373,7 +364,7 @@ class _EditMachineDataState extends State<EditMachineData> {
                                         ),
                                       ),
                                       validator: (val) =>
-                                      val.isEmpty ? 'Enter rent' : null,
+                                          val.isEmpty ? 'Enter rent' : null,
                                       onChanged: (val) {
                                         setState(() => machineRent = val);
                                       },
@@ -468,14 +459,14 @@ class _EditMachineDataState extends State<EditMachineData> {
                                   borderRadius: BorderRadius.all(
                                       Radius.circular(
                                           5.0) //         <--- border radius here
-                                  ),
+                                      ),
                                 ),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text('Amount of Excavation (m3/hr)',
                                             style: TextStyle(
@@ -528,7 +519,7 @@ class _EditMachineDataState extends State<EditMachineData> {
                                   ),
                                 ),
                                 validator: (val) =>
-                                val.isEmpty ? 'Enter Name' : null,
+                                    val.isEmpty ? 'Enter Name' : null,
                                 onChanged: (val) {
                                   setState(() => vendorName = val);
                                 },
@@ -550,7 +541,7 @@ class _EditMachineDataState extends State<EditMachineData> {
                                   ),
                                 ),
                                 validator: (val) =>
-                                val.isEmpty ? 'Enter Contact' : null,
+                                    val.isEmpty ? 'Enter Contact' : null,
                                 onChanged: (val) {
                                   setState(() => vendorContact = val);
                                 },
@@ -575,28 +566,27 @@ class _EditMachineDataState extends State<EditMachineData> {
 //                                      color: Colors.blue,
 //                                    ),
                                   FlatButton(
-                                    child: buttonContainers(130, 16, 'Save Changes', 17),
+                                    child: buttonContainers(
+                                        130, 16, 'Save Changes', 17),
                                     onPressed: () {
                                       if (_formKey.currentState.validate()) {
                                         debugPrint("true");
                                         addMachine();
                                       }
                                     },
-
                                   ),
-                                  SizedBox(width: 10,),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
                                   FlatButton(
-                                    child: buttonContainers(130, 16, 'Delete Machine', 17),
+                                    child: buttonContainers(
+                                        130, 16, 'Delete Machine', 17),
                                     onPressed: () {
                                       deleteMachine();
                                     },
-
                                   ),
-
                                 ],
                               ),
-
-
                             ],
                           ))
                     ]))));
@@ -618,74 +608,74 @@ class _AmountOfExavationState extends State<AmountOfExavation> {
   Widget build(BuildContext context) {
     return Container(
         child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'For Soil Type',
-                    style: TextStyle(color: Colors.black, fontSize: 15),
+              Text(
+                'For Soil Type',
+                style: TextStyle(color: Colors.black, fontSize: 15),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Flexible(
+                child: DropdownButton<String>(
+                  value: soilTypeSelected[widget.index],
+                  //icon: Icon(Icons.arrow_downward),
+                  iconSize: 24,
+                  elevation: 16,
+                  //style: TextStyle(color: Colors.deepPurple),
+                  underline: Container(
+                    height: 2,
+                    color: Colors.grey,
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Flexible(
-                    child: DropdownButton<String>(
-                      value: soilTypeSelected[widget.index],
-                      //icon: Icon(Icons.arrow_downward),
-                      iconSize: 24,
-                      elevation: 16,
-                      //style: TextStyle(color: Colors.deepPurple),
-                      underline: Container(
-                        height: 2,
-                        color: Colors.grey,
-                      ),
-                      onChanged: (String newValue) {
-                        setState(() {
-                          soilTypeSelected[widget.index] = newValue;
-                          debugPrint(widget.index.toString());
-                        });
-                      },
-                      items: <String>['None', 'Type A', 'Type B', 'Type C']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Flexible(
-                    child: TextFormField(
-                      //initialValue: excavationAmount[widget.index].text,
-                      keyboardType: TextInputType.number,
-                      controller: excavationAmount[widget.index],
-                      validator: (val) => val.isEmpty ? 'Enter amount' : null,
-                      decoration: InputDecoration(
-                        labelText: "Excavation",
-                        fillColor: Colors.white,
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
+                  onChanged: (String newValue) {
+                    setState(() {
+                      soilTypeSelected[widget.index] = newValue;
+                      debugPrint(widget.index.toString());
+                    });
+                  },
+                  items: <String>['None', 'Type A', 'Type B', 'Type C']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Flexible(
+                child: TextFormField(
+                  //initialValue: excavationAmount[widget.index].text,
+                  keyboardType: TextInputType.number,
+                  controller: excavationAmount[widget.index],
+                  validator: (val) => val.isEmpty ? 'Enter amount' : null,
+                  decoration: InputDecoration(
+                    labelText: "Excavation",
+                    fillColor: Colors.white,
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
                           const BorderSide(color: Colors.blue, width: 2.0),
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              topLeft: Radius.circular(10),
-                              bottomRight: Radius.circular(10),
-                              bottomLeft: Radius.circular(10)),
-                        ),
-                      ),
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          topLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
+                          bottomLeft: Radius.circular(10)),
                     ),
                   ),
-                ],
+                ),
               ),
             ],
           ),
-        ));
+        ],
+      ),
+    ));
   }
 }

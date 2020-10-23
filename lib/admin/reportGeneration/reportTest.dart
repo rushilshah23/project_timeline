@@ -50,32 +50,20 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
   List alldayMachines=List();
 
   static const PdfColor tableHeaderColor = PdfColors.cyan100;
-  static const PdfColor headerColor = PdfColors.grey700;
+  static const PdfColor headerColor = PdfColors.cyan600;
   static const double headerFontSize = 20;
   static const PdfColor header2Color = PdfColors.grey600;
   static const double header2FontSize = 18;
   static const PdfColor textColor = PdfColors.grey600;
   static const double textFontSize = 17;
-  static const PdfColor text2Color = PdfColors.cyan600;
-  static const double text2FontSize = 17;
+  static const PdfColor text2Color = PdfColors.black;
+  static const double text2FontSize = 15;
   // static const double text3Color = PdfColors.black;
-  static const double text3FontSize = 20;
+  static const double text3FontSize = 18;
 
   static const _darkColor = PdfColors.blueGrey800;
   static const _redColor = PdfColors.grey700;
   static const white = PdfColors.white;
-
-  static const tableHeaders = ['Category', 'Budget', 'Expense', 'Result'];
-  static const pi = 22 / 7;
-  static const dataTable = [
-    ['Phone', 80, 95, -15],
-    ['Internet', 250, 230, 20],
-    ['Electricity', 300, 375, -75],
-    ['Movies', 85, 80, 5],
-    ['Food', 300, 350, -50],
-    ['Fuel', 650, 550, 100],
-    ['Insurance', 250, 310, -60],
-  ];
 
 
 
@@ -95,8 +83,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
 
 
 
-  createTodaysPdf() async{
-
+  createTodaysPdf() async {
     pdf.addPage(pw.MultiPage(
       pageFormat: PdfPageFormat.a4,
       margin: pw.EdgeInsets.all(32),
@@ -104,84 +91,149 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
         return <pw.Widget>[
           pw.Header(
             level: 0,
-            child: pw.Center(child:pw.Text("Project name: "+projectData["projectName"])),
+            child: pw.Center(
+                child: pw.Text("Project name: " + projectData["projectName"],
+                    style: pw.TextStyle(
+                      color: headerColor,
+                      fontSize: 25,
+                      fontWeight: pw.FontWeight.bold,
+                    ))),
           ),
-          pw.Center(child:pw.Text('Site Address: '+projectData["siteAddress"])),
-
+          pw.Center(
+              child: pw.Text('Site Address: ' + projectData["siteAddress"],
+                  style: pw.TextStyle(
+                    color: header2Color,
+                    fontSize: header2FontSize,
+                    fontWeight: pw.FontWeight.bold,
+                  ))),
           pw.SizedBox(height: 25),
-          pw.Center(child:pw.Text('Report For: $todaysDate')),
+          pw.Center(
+              child: pw.Text('Report For: $todaysDate',
+                  style: pw.TextStyle(
+                    color: text2Color,
+                    fontSize: text2FontSize,
+                  ))),
+          pw.SizedBox(height: 25),
           pw.Row(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
-                pw.Text('Approved Excavation: '+approvedVol.toString()),
+                pw.Text('Approved Excavation: ' + approvedVol.toString(),
+                    style: pw.TextStyle(
+                      color: text2Color,
+                      fontSize: text2FontSize,
+                    )),
                 // pw.Text('Total Excavation: '+totalVol.toString()),
-              ]
-          ),
-
+              ]),
           pw.SizedBox(height: 25),
-          pw.Table.fromTextArray(context: context, data: <List<String>>[
-            <String>['Supervisor Name', 'Contact No',],
-            ...supervisors.map(
-                    (msg) => [msg["name"], msg["mobile"]])
-          ]),
+          pw.Table.fromTextArray(
+              context: context,
+              border: pw.TableBorder(color: PdfColors.grey400),
+
+              headerDecoration: pw.BoxDecoration(
+                borderRadius: 2,
+                color: tableHeaderColor,
+              ),
+
+              cellStyle: const pw.TextStyle(
+                color: _redColor,
+                fontSize: textFontSize,
+              ),
+
+
+              data: <List<String>>[
+                <String>[
+                  'Supervisor Name',
+                  'Contact No',
+                ],
+                ...supervisors.map((msg) => [msg["name"], msg["mobile"]])
+              ]),
           pw.SizedBox(height: 25),
-          pw.Table.fromTextArray(context: context, data: <List<String>>[
-            <String>['Worker Name', 'Hours Worked', 'Machine used', 'Volume Excavated','Approval Status'],
-            ...todaysReport.map(
-                    (msg) => [msg["workerName"], msg["hoursWorked"].toString(),msg["MachineUsed"], msg["volumeExcavated"].toString(), msg["status"]])
-          ]),
+          pw.Table.fromTextArray(
+              context: context,
+              border: pw.TableBorder(color: PdfColors.grey400),
+              cellAlignment: pw.Alignment.centerLeft,
+              headerDecoration: pw.BoxDecoration(
+                borderRadius: 2,
+                color: tableHeaderColor,
+              ),
 
 
+
+              data: <List<String>>[
+                <String>[
+                  'Worker Name',
+                  'Hours Worked',
+                  'Machine used',
+                  'Volume Excavated',
+                  'Approval Status'
+                ],
+                ...todaysReport.map((msg) => [
+                  msg["workerName"],
+                  msg["hoursWorked"].toString(),
+                  msg["MachineUsed"],
+                  msg["volumeExcavated"].toString(),
+                  msg["status"]
+                ])
+              ]),
         ];
       },
     ));
-
-
-
-
   }
 
-
-
-
-  createOverallPdf() async{
-
+  createOverallPdf() async {
     pdf.addPage(pw.MultiPage(
       pageFormat: PdfPageFormat.a4,
       margin: pw.EdgeInsets.all(32),
       build: (pw.Context context) {
         return <pw.Widget>[
-          pw.Center(child:pw.Text('Report is generated on '+formatterForTime.format(date).toString())),
+          pw.Center(
+              child: pw.Text(
+                  'Report is generated on ' +
+                      formatterForTime.format(date).toString(),
+                  style: pw.TextStyle(
+                    color: headerColor,
+                    fontSize: 16,
+                    // fontWeight: pw.FontWeight.bold,
+                  ))),
           pw.SizedBox(height: 25),
           pw.Header(
             level: 0,
-            child: pw.Center(child:pw.Text("Project name: "+projectData["projectName"])),
+            child: pw.Center(
+                child: pw.Text("Project name: " + projectData["projectName"],
+                    style: pw.TextStyle(
+                      color: headerColor,
+                      fontWeight: pw.FontWeight.bold,
+                      fontSize: 25,
+                    ))),
           ),
-          pw.Center(child:pw.Text('Site Address: '+projectData["siteAddress"])),
-
+          pw.Center(
+              child: pw.Text('Site Address: ' + projectData["siteAddress"],
+                  style: pw.TextStyle(
+                    color: header2Color,
+                    fontSize: header2FontSize,
+                  ))),
           pw.SizedBox(height: 25),
-
           pw.Row(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
                 pw.Column(
-                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    crossAxisAlignment: pw.CrossAxisAlignment.center,
                     children: [
-                      // pw.Row(
-                      //     mainAxisAlignment: pw.MainAxisAlignment.end,
-                      //     children: [
-                      //       pw.Text('Soil Type: ',
-                      //           style: pw.TextStyle(
-                      //             color: textColor,
-                      //             fontSize: textFontSize,
-                      //           )),
-                      //       pw.Text(projectData["soilType"],
-                      //           style: pw.TextStyle(
-                      //             color: text2Color,
-                      //             fontSize: text2FontSize,
-                      //           )),
-                      //     ]),
-                      // pw.SizedBox(height: 40),
+                      pw.Row(
+                          mainAxisAlignment: pw.MainAxisAlignment.end,
+                          children: [
+                            pw.Text('Soil Type: ',
+                                style: pw.TextStyle(
+                                  color: textColor,
+                                  fontSize: textFontSize,
+                                )),
+                            pw.Text(projectData["soilType"],
+                                style: pw.TextStyle(
+                                  color: text2Color,
+                                  fontSize: text2FontSize,
+                                )),
+                          ]),
+                      pw.SizedBox(height: 40),
                       pw.Row(children: [
                         pw.Column(children: [
                           pw.Text('Excavation Goals: ',
@@ -230,110 +282,110 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                                   )),
                             ]),
                             pw.SizedBox(width: 50),
+                            pw.Column(children: [
 
-                            pw.Center(
-                              child: pw.Column(children: [
-                                pw.Text('Estimated Fuel: ',
-                                    style: pw.TextStyle(
-                                      color: textColor,
-                                      fontSize: textFontSize,
-                                    )),
-                                pw.SizedBox(height: 2),
-                                pw.Text(
-                                    projectData["totalFuelConsumption"] + " litre",
-                                    style: pw.TextStyle(
-                                      color: text2Color,
-                                      fontSize: text3FontSize,
-                                    )),
-                              ]),
-                            ),
-
-                          ]),
-                      pw.SizedBox(height: 20),
-                      pw.Row(
-                        children: [
-
-
-                       pw.Column(children: [
-                              pw.Text('Progress Percent: ',
+                              pw.Text('Estimated Fuel : ',
                                   style: pw.TextStyle(
                                     color: textColor,
                                     fontSize: textFontSize,
                                   )),
-                              pw.SizedBox(height: 2),
+
                               pw.Text(
-                                  projectData["progressPercent"] + " %",
+                                  projectData["totalFuelConsumption"] + " litre",
                                   style: pw.TextStyle(
                                     color: text2Color,
                                     fontSize: text3FontSize,
                                   )),
                             ]),
-
-                          pw.SizedBox(width: 30),
-
-                          pw.Column(children: [
-                            pw.Text('Approved Excavation: ',
-                                style: pw.TextStyle(
-                                  color: textColor,
-                                  fontSize: textFontSize,
-                                )),
-                            pw.Text(projectData["volumeExcavated"] + " m3",
-                                style: pw.TextStyle(
-                                  color: text2Color,
-                                  fontSize: text3FontSize,
-                                )),
                           ]),
-                        ],
+                      pw.SizedBox(height: 20),
+                      pw.Column(children: [
+                        pw.Text('Completion Percent: ',
+                            style: pw.TextStyle(
+                              color: textColor,
+                              fontSize: textFontSize,
+                            )),
+                        pw.Text(projectData["progressPercent"] + " %",
+                            style: pw.TextStyle(
+                              color: text2Color,
+                              fontSize: text3FontSize,
+                            )),
+                      ]),
+                      pw.SizedBox(height: 10),
+                      pw.Center(
+                        child: pw.Column(children: [
+                          pw.Text('Approved Excavation: ',
+                              style: pw.TextStyle(
+                                color: textColor,
+                                fontSize: text2FontSize,
+                              )),
+                          pw.SizedBox(height: 2),
+
+                          pw.Text(projectData["volumeExcavated"] + " m3",
+                              style: pw.TextStyle(
+                                color: text2Color,
+                                fontSize: text3FontSize,
+                              )),
+
+                        ]),
                       ),
-
-
-                    ]
-                ),
-
-
+                    ]),
                 pw.Container(
-                  width: 150,
-                  height: 150,
+                  width: 130,
+                  height: 130,
                   child: pw.Stack(
                     alignment: pw.Alignment.center,
                     fit: pw.StackFit.expand,
                     children: <pw.Widget>[
                       pw.Center(
                         child: pw.Text(
-                          (double.parse(projectData["progressPercent"])).toString()+'%',
+                          (double.parse(projectData["progressPercent"]))
+                              .toString() +
+                              '%',
+                          style: pw.TextStyle(
+                            color: textColor,
+                            fontSize: textFontSize,
+                          ),
                           textScaleFactor: 1.2,
                         ),
                       ),
                       pw.CircularProgressIndicator(
-                        value: double.parse(projectData["progressPercent"])/100,
-                        backgroundColor: PdfColors.grey400,
+                        value:
+                        double.parse(projectData["progressPercent"]) / 100,
+                        backgroundColor: PdfColors.grey300,
                         color: PdfColors.cyan600,
-                        strokeWidth: 13,
+                        strokeWidth: 10,
                       ),
                     ],
                   ),
                 )
-
-
-              ]
-          ),
-
-
+              ]),
           pw.SizedBox(height: 25),
-
           pw.Container(
             height: 300,
-
-            child:      pw.Chart(
+            child: pw.Chart(
               grid: pw.CartesianGrid(
-                xAxis: pw.FixedAxis.fromStrings( List<String>.generate(
-                    allDates.length, (index) => allDates[index]),
+                xAxis: pw.FixedAxis.fromStrings(
+                  List<String>.generate(
+                      allDates.length, (index) => allDates[index]),
                   marginStart: 30,
                   marginEnd: 30,
                   ticks: true,
                 ),
                 yAxis: pw.FixedAxis(
-                  [0, 20, 40, 60, 80,100, 120,140, 160,180, 200,],
+                  [
+                    0,
+                    20,
+                    40,
+                    60,
+                    80,
+                    100,
+                    120,
+                    140,
+                    160,
+                    180,
+                    200,
+                  ],
                   divisions: true,
                 ),
               ),
@@ -342,7 +394,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                   drawSurface: false,
                   isCurved: true,
                   drawPoints: true,
-                  color: PdfColors.teal,
+                  color: PdfColors.cyan,
                   data: List<pw.LineChartValue>.generate(
                     allDatesApprovedVolume.length,
                         (i) {
@@ -353,59 +405,96 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                 ),
               ],
             ),
-
           ),
-
           pw.SizedBox(height: 25),
-          pw.Center(child:pw.Text('Project Supervisors Details: ')),
+          pw.Center(
+              child: pw.Text('Project Supervisors Details: ',
+                  style: pw.TextStyle(
+                    color: textColor,
+                    fontSize: textFontSize,
+                  ))),
           pw.SizedBox(height: 25),
           pw.Table.fromTextArray(
-              headerDecoration: pw.BoxDecoration(
-                borderRadius: 2,
-                color: tableHeaderColor,
-              ),
-              context: context, data: <List<String>>[
-            <String>['Supervisor Name', 'Contact No',],
-            ...supervisors.map(
-                    (msg) => [msg["name"], msg["mobile"]])
-          ]),
-          pw.SizedBox(height: 25),
+            context: context,
 
+            headerDecoration: pw.BoxDecoration(
+              borderRadius: 2,
+              color: tableHeaderColor,
+            ),
+
+            border: pw.TableBorder(color: PdfColors.grey400),
+
+
+            data: <List<String>>[
+              <String>[
+                'Name',
+                'Contact no',
+              ],
+              ...supervisors.map((msg) => [msg["name"], msg["mobile"]])
+            ],
+
+          ),
+          // ]),
+          pw.SizedBox(height: 25),
           pw.ListView.builder(
               itemCount: allDates.length,
               itemBuilder: (context, index) {
-
-                ////debugPrint(selectedProjectsAllDaysWorkersList[index][index2].toString());
+                //debugPrint(selectedProjectsAllDaysWorkersList[index][index2].toString());
                 return pw.Column(
                     crossAxisAlignment: pw.CrossAxisAlignment.start,
                     children: [
-                      pw.SizedBox(height: 20,),
-                      pw.Center(child:pw.Text('Work Details of '+allDates[index])),
-                      pw.SizedBox(height: 10,),
-                      pw.Text('Approved Excavation: '+allDatesApprovedVolume[index].toString()),
-                      pw.SizedBox(height: 10,),
+                      pw.SizedBox(
+                        height: 20,
+                      ),
+                      pw.Center(
+                          child: pw.Text('Work Details of ' + allDates[index],
+                              style: pw.TextStyle(
+                                color: textColor,
+                                fontSize: textFontSize,
+                              ))),
+                      pw.SizedBox(
+                        height: 10,
+                      ),
+                      pw.Text(
+                          'Approved Excavation: ' +
+                              allDatesApprovedVolume[index].toString(),
+                          style: pw.TextStyle(
+                            color: textColor,
+                            fontSize: text2FontSize,
+                          )),
+                      pw.SizedBox(
+                        height: 10,
+                      ),
                       pw.Table.fromTextArray(
+                          context: context,
+                          border: pw.TableBorder(color: PdfColors.grey400),
                           headerDecoration: pw.BoxDecoration(
                             borderRadius: 2,
                             color: tableHeaderColor,
                           ),
-                          context: context, data: <List<dynamic>>[
-                        <String>['Worker Name', 'Hours Worked', 'Machine used', 'Volume Excavated','Approval Status'],
-                        ...allDaysReport[index].map(
-                                (msg) => [msg["workerName"], msg["hoursWorked"].toString(),msg["MachineUsed"], msg["volumeExcavated"].toString(), msg["status"]])
-                      ]),
-                    ]
 
-                );}),
-
+                          data: <List<dynamic>>[
+                            <String>[
+                              'Worker Name',
+                              'Hours Worked',
+                              'Machine used',
+                              'Volume Excavated',
+                              'Approval Status'
+                            ],
+                            ...allDaysReport[index].map((msg) => [
+                              msg["workerName"],
+                              msg["hoursWorked"].toString(),
+                              msg["MachineUsed"],
+                              msg["volumeExcavated"].toString(),
+                              msg["status"]
+                            ])
+                          ]),
+                    ]);
+              }),
         ];
       },
     ));
-
   }
-
-
-
 
   void loadMachines() async {
     await databaseReference

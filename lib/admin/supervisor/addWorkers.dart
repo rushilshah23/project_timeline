@@ -4,10 +4,17 @@ import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-
 class SearchWorkerPage extends StatefulWidget {
-  String name , email,  mobile , password,uid, userType,assignedProject;
-  SearchWorkerPage({Key key, this.name, this.email, this.mobile, this.assignedProject, this.userType, this.uid}) : super(key: key);
+  String name, email, mobile, password, uid, userType, assignedProject;
+  SearchWorkerPage(
+      {Key key,
+      this.name,
+      this.email,
+      this.mobile,
+      this.assignedProject,
+      this.userType,
+      this.uid})
+      : super(key: key);
   @override
   _SearchWorkerPageState createState() => _SearchWorkerPageState();
 }
@@ -18,31 +25,30 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
   List<String> prevSelected = [];
   final List<DropdownMenuItem> items = [];
   final List<WorkerList> workersList = [];
-  final CollectionReference workers = Firestore.instance.collection("workers");
+  final CollectionReference workers =
+      FirebaseFirestore.instance.collection("workers");
   final databaseReference = FirebaseDatabase.instance.reference();
-  var projectID ;
-
-
+  var projectID;
 
   Future<void> getData() async {
-    await workers.getDocuments().then((querySnapshot) {
-      querySnapshot.documents.forEach((result) {
+    await workers.get().then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
         setState(() {
           items.add(
             DropdownMenuItem(
               child: Container(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(result['name']),
-                      Text(
-                        result['mobile'].toString() +
-                            "  " +
-                            result['email'].toString(),
-                        style: TextStyle(color: Colors.grey, fontSize: 14),
-                      ),
-                    ],
-                  )),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(result['name']),
+                  Text(
+                    result['mobile'].toString() +
+                        "  " +
+                        result['email'].toString(),
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                  ),
+                ],
+              )),
               value: result['uid'].toString() +
                   "," +
                   result["name"].toString() +
@@ -80,8 +86,8 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
     try {
       prevSelected.forEach((prevWorker) async {
         await workers
-            .document(prevWorker)
-            .updateData({"assignedProject": "No project assigned"});
+            .doc(prevWorker)
+            .update({"assignedProject": "No project assigned"});
       });
       await databaseReference
           .child("projects")
@@ -91,8 +97,8 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
       selectedItems.forEach((i) async {
         print(workersList[i].uid);
         await workers
-            .document(workersList[i].uid)
-            .updateData({"assignedProject": projectID});
+            .doc(workersList[i].uid)
+            .update({"assignedProject": projectID});
         await databaseReference
             .child("projects")
             .child(projectID)
@@ -113,10 +119,11 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
   @override
   void initState() {
     setState(() {
-      projectID=widget.assignedProject;
+      projectID = widget.assignedProject;
     });
 
-    debugPrint("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"+widget.assignedProject.toString());
+    debugPrint("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" +
+        widget.assignedProject.toString());
     getData();
     super.initState();
   }
@@ -125,7 +132,7 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
   Widget build(BuildContext context) {
     if (items.length > 0)
       return Scaffold(
-          appBar: ThemeAppbar("Add Workers"),
+          appBar: ThemeAppbar("Add Workers", context),
           body: Container(
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
             child: ListView(
@@ -166,14 +173,13 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
                       child: Container(
                         height: 50,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Color(0xff018abd),
+                          borderRadius: BorderRadius.circular(10),
+                          color: Color(0xff018abd),
                         ),
                         child: Center(
                           child: Text(
                             'Save',
-                            style: TextStyle(color: Colors.white,
-                            fontSize: 16),
+                            style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
                         ),
                       ),
@@ -190,8 +196,8 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
     else
       return Scaffold(
           body: Center(
-            child: CircularProgressIndicator(),
-          ));
+        child: CircularProgressIndicator(),
+      ));
   }
 }
 
