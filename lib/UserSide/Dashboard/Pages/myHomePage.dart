@@ -164,10 +164,8 @@ class _MyHomeState extends State<MyHome> {
                 mainAxisSpacing: 15,
               ),
               delegate: SliverChildListDelegate([
-                ClayContainer(
-                  color: gridColor,
-                  customBorderRadius:
-                      BorderRadius.only(topLeft: Radius.circular(40)),
+                Container(
+                  color: Colors.white,
                   child: Padding(
                     padding: EdgeInsets.only(left: 10, right: 10),
                     child: FlipCard(
@@ -184,12 +182,8 @@ class _MyHomeState extends State<MyHome> {
                     ),
                   ),
                 ),
-                ClayContainer(
-                  height: cardClayContainerheight,
-                  width: cardClayContainerwidth,
-                  color: gridColor,
-                  customBorderRadius:
-                      BorderRadius.only(topRight: Radius.circular(40)),
+                Container(
+                  color: Colors.white,
                   child: Padding(
                     padding: EdgeInsets.only(left: 10, right: 10),
                     child: FlipCard(
@@ -205,8 +199,8 @@ class _MyHomeState extends State<MyHome> {
                     ),
                   ),
                 ),
-                ClayContainer(
-                  color: gridColor,
+                Container(
+                  color: Colors.white,
                   child: Padding(
                     padding: EdgeInsets.only(left: 10, right: 10),
                     child: FlipCard(
@@ -222,10 +216,8 @@ class _MyHomeState extends State<MyHome> {
                     ),
                   ),
                 ),
-                ClayContainer(
-                  height: cardClayContainerheight,
-                  width: cardClayContainerwidth,
-                  color: gridColor,
+                Container(
+                  color: Colors.white,
                   child: Padding(
                     padding: EdgeInsets.only(left: 10, right: 10),
                     child: FlipCard(
