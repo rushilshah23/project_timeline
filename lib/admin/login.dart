@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
 import 'package:project_timeline/admin/DocumentManager/core/services/database.dart';
 import 'package:project_timeline/admin/DocumentManager/wrapper.dart';
 import 'Register.dart';
-import 'colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'CommonWidgets.dart';
 
@@ -658,7 +658,9 @@ class LoginPageState extends State<LoginPage> {
         child: TextFormField(
           controller: userController,
           onChanged: (value) {
-            _email = value;
+            setState(() {
+              _email = value;
+            });
           },
           validator: (val) => val.isEmpty ? 'Enter email' : null,
           decoration: InputDecoration(
@@ -677,7 +679,9 @@ class LoginPageState extends State<LoginPage> {
         child: TextFormField(
           controller: passController,
           onChanged: (value) {
-            _password = value;
+            setState(() {
+              _password = value;
+            });
           },
           validator: (val) => val.isEmpty ? 'Enter password' : null,
           decoration: InputDecoration(
@@ -701,7 +705,9 @@ class LoginPageState extends State<LoginPage> {
         child: TextFormField(
           controller: userController,
           onChanged: (value) {
-            _email = value;
+            setState(() {
+              _email = value;
+            });
           },
           validator: (val) => val.isEmpty ? 'Enter mobile number' : null,
           decoration: InputDecoration(
@@ -722,238 +728,237 @@ class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final ProgressDialog pr = ProgressDialog(context);
-
     // TODO: implement build
     return new Scaffold(
+        backgroundColor: Colors.white,
         //resizeToAvoidBottomInset: false,
-        body: SingleChildScrollView(
-            child: Container(
-      child: Form(
-        key: formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-//            Container(
-//              width: MediaQuery.of(context).size.width,
-//              height: 250,
-//              decoration: BoxDecoration(
-//                gradient: gradients(),
-//                borderRadius:
-//                    BorderRadius.only(bottomLeft: Radius.circular(100)),
-//              ),
-//              child: Column(
-//                mainAxisAlignment: MainAxisAlignment.center,
-//                children: <Widget>[
-//                  Icon(
-//                    Icons.person,
-//                    size: 80,
-//                    color: Colors.white,
-//                  ),
-//                  Align(
-//                    alignment: Alignment.bottomRight,
-//                    child: Padding(
-//                      padding: const EdgeInsets.only(right: 32),
-//                    ),
-//                  ),
-//                ],
-//              ),
-//            ),
-
-            TopBar(),
-
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 10, bottom: 10, left: 30, right: 30),
+        body: Background(
+          child: SingleChildScrollView(
+              child: Container(
+            child: Form(
+              key: formKey,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  Text(
+                    "Login",
+                    style: GoogleFonts.playfairDisplay(
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 30),
+                  ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("Sign In Method:"),
-                      Row(
-                        children: [
-                          Radio(
-                              value: "email",
-                              groupValue: _signInMethod,
-                              onChanged: (value) {
-                                setState(() {
-                                  _signInMethod = value;
-                                });
-                              }),
-                          Text("Email")
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Radio(
-                              value: "OTP",
-                              groupValue: _signInMethod,
-                              onChanged: (value) {
-                                setState(() {
-                                  _signInMethod = value;
-                                  userController.clear();
-                                });
-                              }),
-                          Text("OTP")
-                        ],
+                      SizedBox(width: 55),
+                      Image.asset(
+                        "assets/3293465.jpg",
+                        height: 180,
+                        width: 350,
                       ),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text("User Type:"),
-                      SizedBox(
-                        width: 30,
-                      ),
-                      DropdownButton(
-                          hint: Text("Select User Type"),
-                          value: _requestType,
-                          items: _type.map((String usertype) {
-                            return DropdownMenuItem<String>(
-                              value: usertype,
-                              child: Text(
-                                usertype,
-                              ),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              _requestType = value;
-                            });
-                          }),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Column(
-                      children: _signInMethod == "email"
-                          ? showEmail()
-                          : showMobile()),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  RaisedButton(
-                    onPressed: () async {
-                      _signInMethod == "email"
-                          ? loginUsingEmail(pr)
-                          : checkOTP("+91" + _email, context, pr);
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    textColor: Colors.white,
-                    padding: EdgeInsets.all(0),
-                    child: Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.all(15),
-                      decoration: new BoxDecoration(
-                          color: Color(0xff018abd),
-                          borderRadius: BorderRadius.circular(12.0)),
-                      child: Text(
-                        "LOGIN",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Don't have an account?",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w400),
-                      ),
-                      FlatButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Register()),
-                          );
-                        },
-                        child: Text(
-                          'Register',
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic,
-                              color: Colors.blue[900]),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(bottom: 10, left: 30, right: 30),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Signed In Method: ",
+                              style: GoogleFonts.merriweather(
+                                  fontWeight: FontWeight.w700, fontSize: 16),
+                            ),
+                            Row(
+                              children: [
+                                Radio(
+                                    value: "email",
+                                    groupValue: _signInMethod,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _signInMethod = value;
+                                        userController.clear();
+                                      });
+                                    }),
+                                Text(
+                                  "Email",
+                                  style: GoogleFonts.merriweather(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Radio(
+                                    value: "OTP",
+                                    groupValue: _signInMethod,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _signInMethod = value;
+                                        userController.clear();
+                                      });
+                                    }),
+                                Text(
+                                  "OTP",
+                                  style: GoogleFonts.merriweather(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                      )
-                    ],
-                  )
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              "User Type: ",
+                              style: GoogleFonts.merriweather(
+                                  fontWeight: FontWeight.w700, fontSize: 16),
+                            ),
+                            SizedBox(
+                              width: 30,
+                            ),
+                            DropdownButton(
+                                hint: Text("Select User Type"),
+                                value: _requestType,
+                                items: _type.map((String usertype) {
+                                  return DropdownMenuItem<String>(
+                                    value: usertype,
+                                    child: Text(
+                                      usertype,
+                                      style: GoogleFonts.merriweather(
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    _requestType = value;
+                                  });
+                                }),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Column(
+                            children: _signInMethod == "email"
+                                ? showEmail()
+                                : showMobile()),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Center(
+                          child: RaisedButton(
+                            onPressed: () async {
+                              if (formKey.currentState.validate()) {
+                                _signInMethod == "email"
+                                    ? loginUsingEmail(pr)
+                                    : checkOTP("+91" + _email, context, pr);
+                              }
+                            },
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            textColor: Colors.white,
+                            padding: EdgeInsets.all(0),
+                            child: Container(
+                              width: 200,
+                              padding: EdgeInsets.all(15),
+                              decoration: new BoxDecoration(
+                                  color: Color(0xff005c9d),
+                                  borderRadius: BorderRadius.circular(12.0)),
+                              child: Text(
+                                "LOGIN",
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.merriweather(
+                                    fontWeight: FontWeight.w400, fontSize: 18),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 9,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Don't have an account?",
+                              style: GoogleFonts.merriweather(
+                                  fontWeight: FontWeight.w400, fontSize: 18),
+                            ),
+                            FlatButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Register()),
+                                );
+                              },
+                              child: Text(
+                                'Register',
+                                style: GoogleFonts.merriweather(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.blue[900]),
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
-    )));
+          )),
+        ));
   }
 }
 
-class TopBar extends StatelessWidget {
+class Background extends StatelessWidget {
+  final Widget child;
+  const Background({
+    Key key,
+    @required this.child,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      child: Container(
-        height: 300.0,
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      width: double.infinity,
+      height: size.height,
+      child: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          Positioned(
+            top: 0,
+            left: 0,
+            child: Image.asset(
+              "assets/image.png",
+              width: size.width * 0.35,
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: Image.asset(
+              "assets/image2.png",
+              width: size.width * 0.4,
+            ),
+          ),
+          child,
+        ],
       ),
-      painter: CurvePainter(),
     );
-  }
-}
-
-class CurvePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    Path path = Path();
-    Paint paint = Paint();
-
-    path.lineTo(0, size.height * 0.75);
-    path.quadraticBezierTo(size.width * 0.10, size.height * 0.70,
-        size.width * 0.17, size.height * 0.90);
-    path.quadraticBezierTo(
-        size.width * 0.20, size.height, size.width * 0.25, size.height * 0.90);
-    path.quadraticBezierTo(size.width * 0.40, size.height * 0.40,
-        size.width * 0.50, size.height * 0.70);
-    path.quadraticBezierTo(size.width * 0.60, size.height * 0.85,
-        size.width * 0.65, size.height * 0.65);
-    path.quadraticBezierTo(
-        size.width * 0.70, size.height * 0.90, size.width, 0);
-    path.close();
-
-    paint.color = colorThree;
-    canvas.drawPath(path, paint);
-
-    path = Path();
-    path.lineTo(0, size.height * 0.50);
-    path.quadraticBezierTo(size.width * 0.10, size.height * 0.80,
-        size.width * 0.15, size.height * 0.60);
-    path.quadraticBezierTo(size.width * 0.20, size.height * 0.45,
-        size.width * 0.27, size.height * 0.60);
-    path.quadraticBezierTo(
-        size.width * 0.45, size.height, size.width * 0.50, size.height * 0.80);
-    path.quadraticBezierTo(size.width * 0.55, size.height * 0.30,
-        size.width * 0.75, size.height * 0.65);
-    path.quadraticBezierTo(
-        size.width * 0.85, size.height * 0.93, size.width, size.height * 0.50);
-    path.lineTo(size.width, 0);
-    path.close();
-
-    paint.color = colorTwo;
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return oldDelegate != this;
   }
 }
