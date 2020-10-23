@@ -18,7 +18,6 @@ class _CreatedProjectsState extends State<CreatedProjects> {
   List ourCreatedProjects = List();
   List allProjects = List();
 
-  String uid = "8YiMHLBnBaNjmr3yPvk8NWvNPmm2";
 
 
 
@@ -42,7 +41,7 @@ class _CreatedProjectsState extends State<CreatedProjects> {
                   children: <Widget>[
                     Container(
                         width: MediaQuery.of(context).size.width / 1.4,
-                        padding: EdgeInsets.all(5),
+                        padding: EdgeInsets.only(  top: 20, bottom: 20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -67,17 +66,21 @@ class _CreatedProjectsState extends State<CreatedProjects> {
                               softWrap: false,
                               style: TextStyle(fontSize: 14),
                             ),
-                            Text(
-                              "Supervisor Name" + ": " + "Shraddha.V.Pawar",
-                              overflow: TextOverflow.clip,
-                              maxLines: 2,
-                              softWrap: false,
-                              style: TextStyle(fontSize: 14),
+                            // Text(
+                            //   "Supervisor Name" + ": " + "Shraddha.V.Pawar",
+                            //   overflow: TextOverflow.clip,
+                            //   maxLines: 2,
+                            //   softWrap: false,
+                            //   style: TextStyle(fontSize: 14),
+                            // ),
+
+                            SizedBox(
+                              height: 5,
                             ),
                             Row(
                               children: <Widget>[
                                 Text(
-                                  "Progress" + ": " + "20%",
+                                  "Progress" + ": " + ourCreatedProjects[index]["progressPercent"]+" %",
                                   overflow: TextOverflow.clip,
                                   maxLines: 2,
                                   softWrap: false,
@@ -87,7 +90,7 @@ class _CreatedProjectsState extends State<CreatedProjects> {
                                   width: 10,
                                 ),
                                 Text(
-                                  "Status" + ": " + "On Going",
+                                  "Status" + ": " + ourCreatedProjects[index]["projectStatus"],
                                   overflow: TextOverflow.clip,
                                   maxLines: 2,
                                   softWrap: false,
@@ -97,46 +100,46 @@ class _CreatedProjectsState extends State<CreatedProjects> {
                             ),
                           ],
                         )),
-                    Container(
-                        margin: EdgeInsets.only(top: 5),
-                        child: Column(
-                          children: <Widget>[
-                            SizedBox(
-                              width: 10,
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.edit),
-                              color: Colors.grey,
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => EditProject(
-                                          uniqueId: ourCreatedProjects[index])),
-                                );
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.delete),
-                              color: Colors.grey,
-                              onPressed: () {},
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.add_box),
-                              color: Colors.grey,
-                              onPressed: () {
-//                                    Navigator.push(
-//                                      context,
-//                                      MaterialPageRoute(
-//                                          builder: (context) => YourCreatedTasks(
-//                                            projectID: myCreatedProjects[index]
-//                                            ["projectID"],
-//                                          )),
-//                                    );
-                              },
-                            ),
-                          ],
-                        ))
+//                     Container(
+//                         margin: EdgeInsets.only(top: 5),
+//                         child: Column(
+//                           children: <Widget>[
+//                             SizedBox(
+//                               width: 10,
+//                             ),
+//                             IconButton(
+//                               icon: Icon(Icons.edit),
+//                               color: Colors.grey,
+//                               onPressed: () {
+//                                 Navigator.push(
+//                                   context,
+//                                   MaterialPageRoute(
+//                                       builder: (context) => EditProject(
+//                                           uniqueId: ourCreatedProjects[index])),
+//                                 );
+//                               },
+//                             ),
+//                             IconButton(
+//                               icon: Icon(Icons.delete),
+//                               color: Colors.grey,
+//                               onPressed: () {},
+//                             ),
+//                             IconButton(
+//                               icon: Icon(Icons.add_box),
+//                               color: Colors.grey,
+//                               onPressed: () {
+// //                                    Navigator.push(
+// //                                      context,
+// //                                      MaterialPageRoute(
+// //                                          builder: (context) => YourCreatedTasks(
+// //                                            projectID: myCreatedProjects[index]
+// //                                            ["projectID"],
+// //                                          )),
+// //                                    );
+//                               },
+//                             ),
+//                           ],
+//                         ))
                   ],
                 )
               ],
@@ -177,11 +180,17 @@ class _CreatedProjectsState extends State<CreatedProjects> {
                   ),
                 ],
               );
+            } else if (snap.hasData &&
+                !snap.hasError &&
+                snap.data.snapshot.value == null) {
+              return Center(
+                child: Text("No request found"),
+              );
             } else {
               return Center(
                   child: CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
-              ));
+                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+                  ));
             }
           }),
       floatingActionButton: floats(

@@ -199,17 +199,17 @@ class _MachineMasterState extends State<MachineMaster> {
                   ),
                 ],
               );
-            } else if (!snap.hasData ||
-                snap.hasError ||
+            } else if (snap.hasData &&
+                !snap.hasError &&
                 snap.data.snapshot.value == null) {
               return Center(
-                child: Text("No Data Found"),
+                child: Text("No request found"),
               );
-            } else{
+            } else {
               return Center(
                   child: CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
-              ));
+                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+                  ));
             }
           }),
       floatingActionButton: floats(context, AddNewMachine()),

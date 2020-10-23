@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/DocumentManager/core/models/usermodel.dart';
+import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
 import 'package:project_timeline/admin/DocumentManager/core/services/pathnavigator.dart';
 import 'package:project_timeline/admin/DocumentManager/ui/screens/home/drive.dart';
+import 'package:project_timeline/admin/DocumentManager/wrapper.dart';
 
 import 'package:project_timeline/admin/ProgressTimeLine/ProgressPage.dart';
 import 'package:project_timeline/admin/reportGeneration/ReportGeneration.dart';
@@ -23,6 +25,8 @@ class ManagerHomePage extends StatefulWidget {
 class ManagerHomePageState extends State<ManagerHomePage> {
   int _selectedDrawerIndex = 0;
   String appbartitle = "Dashboard";
+
+
 
   String name = '',
       lname = '',
@@ -60,6 +64,38 @@ class ManagerHomePageState extends State<ManagerHomePage> {
     Navigator.of(context).pop(); // close the drawer
     print(index);
     // Navigator.pop(context);
+  }
+
+  Future<bool> _onBackPressed() {
+    return showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text('Are you sure?'),
+        content: new Text('Do you want to exit an App'),
+        actions: <Widget>[
+          new GestureDetector(
+            onTap: () => Navigator.of(context).pop(false),
+            child: Text("NO"),
+          ),
+          SizedBox(height: 16),
+          new GestureDetector(
+            onTap: () async{
+              await AuthenticationService().signoutEmailId();
+              SharedPreferences _sharedpreferences =
+                  await SharedPreferences.getInstance();
+              _sharedpreferences.clear();
+              return Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
+                    showToast("Logout Successful");
+                    return Wrapper();
+                  }));
+            },
+            child: Text("YES"),
+          ),
+        ],
+      ),
+    ) ??
+        false;
   }
 
   _getDrawerItemWidget(int pos, UserModel user) {
@@ -114,7 +150,10 @@ class ManagerHomePageState extends State<ManagerHomePage> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
-    return Scaffold(
+
+    return WillPopScope(
+        onWillPop: _onBackPressed,
+        child:Scaffold(
       appBar: ThemeAppbar(appbartitle, context),
 
       drawer: ClipRRect(
@@ -252,6 +291,6 @@ class ManagerHomePageState extends State<ManagerHomePage> {
 //          ],
 //        ),
 //      ),
-    );
+    ));
   }
 }

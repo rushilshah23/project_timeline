@@ -33,7 +33,7 @@ class _ManagerRequestListState extends State<ManagerRequestList> {
         }).then((value) async {
           await databaseReference
               .child("request")
-              .child(managerType)
+              .child("manager")
               .child(worker["key"])
               .remove();
         }).then((value) {
@@ -54,7 +54,7 @@ class _ManagerRequestListState extends State<ManagerRequestList> {
         }).then((value) async {
           await databaseReference
               .child("request")
-              .child(managerType)
+              .child("manager")
               .child(worker["key"])
               .remove();
         }).then((value) {
@@ -202,7 +202,7 @@ class _ManagerRequestListState extends State<ManagerRequestList> {
     return Scaffold(
       // appBar: ThemeAppbar("Supervisor Request List"),
       body: StreamBuilder(
-        stream: databaseReference.child("request").child(managerType).onValue,
+        stream: databaseReference.child("request").child("manager").onValue,
         builder: (context, snap) {
           if (snap.hasData &&
               !snap.hasError &&

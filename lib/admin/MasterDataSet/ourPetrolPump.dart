@@ -220,11 +220,11 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
                   ),
                 ],
               );
-            } else if (!snap.hasData ||
-                snap.hasError ||
+            } else if (snap.hasData &&
+                !snap.hasError &&
                 snap.data.snapshot.value == null) {
               return Center(
-                child: Text("No Data Found"),
+                child: Text("No request found"),
               );
             } else {
               return Center(

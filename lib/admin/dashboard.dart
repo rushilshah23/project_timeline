@@ -4,18 +4,22 @@ import 'package:project_timeline/admin/reportGeneration/reportTest.dart';
 
 import 'CommonWidgets.dart';
 
-
-
 class DashBoard extends StatefulWidget {
-
-  String name , email,  mobile , password,uid, userType,assignedProject;
-  DashBoard({Key key, this.name, this.email, this.mobile, this.assignedProject, this.userType, this.uid}) : super(key: key);
+  String name, email, mobile, password, uid, userType, assignedProject;
+  DashBoard(
+      {Key key,
+      this.name,
+      this.email,
+      this.mobile,
+      this.assignedProject,
+      this.userType,
+      this.uid})
+      : super(key: key);
   @override
   _DashBoardState createState() => _DashBoardState();
 }
 
 class _DashBoardState extends State<DashBoard> {
-
   double percent = 10;
   double percent1 = 10;
   double percent2 = 80;
@@ -32,79 +36,67 @@ class _DashBoardState extends State<DashBoard> {
 //        backgroundColor: Colors.white,
 //      ),
       body: ListView(
-        children: <Widget>[
-          _myAppBar2(),
-          _body()
-        ],
+        children: <Widget>[_myAppBar2(), _body()],
       ),
     );
   }
 
   Widget _myAppBar2() {
     return Container(
-      height: MediaQuery.of(context).size.height/3.5,
-      width: MediaQuery
-          .of(context)
-          .size
-          .width,
+      height: MediaQuery.of(context).size.height / 3.5,
+      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
 //        gradient: LinearGradient(
 //            colors: [ Colors.orange[200],Colors.orange[400],Colors.orange[600],Colors.orange[800],Colors.deepOrange[600]],
 //            begin: Alignment.centerRight,
 //            end: Alignment(-1.0,-2.0)
 //        ),// Gradient
-      gradient: gradients()
-      ),
+          gradient: gradients()),
       child: Padding(
-        padding: const EdgeInsets.only(top: 16.0,left: 30),
+        padding: const EdgeInsets.only(top: 16.0, left: 30),
         child: Center(
             child: Column(
-              children: [
-                SizedBox(height: 35),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Expanded(
-                        flex: 1,
-                        child:Icon(
-                          Icons.person_pin,
-                          color: Colors.white,
-                          size: 50,
-                        )
-                    ),
-                    SizedBox(width: 15),
-                    Expanded(
-                      flex: 5,
-                      child:Container(
-                        child:Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Welcome',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 28.0
-                              ),
-                            ),
-                            Text(
-                              widget.name,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 20.0
-                              ),
-                            ),
-                          ],
+          children: [
+            SizedBox(height: 35),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Expanded(
+                    flex: 1,
+                    child: Icon(
+                      Icons.person_pin,
+                      color: Colors.white,
+                      size: 50,
+                    )),
+                SizedBox(width: 15),
+                Expanded(
+                  flex: 5,
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Welcome',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 28.0),
                         ),
-                      ),
+                        Text(
+                          widget.name,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 20.0),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-
               ],
-            )
-        ),
+            ),
+          ],
+        )),
       ),
     );
   }
@@ -112,7 +104,7 @@ class _DashBoardState extends State<DashBoard> {
   Widget _body() {
     return Container(
       child: Padding(
-        padding: const EdgeInsets.only(top: 20.0,left: 20,right: 20),
+        padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -121,45 +113,39 @@ class _DashBoardState extends State<DashBoard> {
               children: [
                 Column(
                   children: [
-                    Text(
-                        'Projects',
+                    Text('Projects',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
-                            fontSize: 18
-                        )
-                    ),
+                            fontSize: 18)),
                     SizedBox(height: 10),
-                    Text(
-                        '10',
+                    Text('10',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
-                            fontSize: 12
-                        )
-                    ),
+                            fontSize: 12)),
                   ],
                 ),
-                Container(height: 60, child: VerticalDivider(color: Colors.grey[400],width: 20,thickness: 2,)),
+                Container(
+                    height: 60,
+                    child: VerticalDivider(
+                      color: Colors.grey[400],
+                      width: 20,
+                      thickness: 2,
+                    )),
                 Column(
                   children: [
-                    Text(
-                        'Team',
+                    Text('Team',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
-                            fontSize: 18
-                        )
-                    ),
+                            fontSize: 18)),
                     SizedBox(height: 10),
-                    Text(
-                        '150',
+                    Text('150',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
-                            fontSize: 12
-                        )
-                    ),
+                            fontSize: 12)),
                   ],
                 ),
 //                Container(height: 60, child: VerticalDivider(color: Colors.grey[400],width: 20,thickness: 2,)),
@@ -192,8 +178,7 @@ class _DashBoardState extends State<DashBoard> {
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.grey[800]
-              ),
+                  color: Colors.grey[800]),
             ),
             SizedBox(height: 15),
             Row(
@@ -205,23 +190,21 @@ class _DashBoardState extends State<DashBoard> {
                       radius: 60.0,
                       lineWidth: 6.0,
                       animation: true,
-                      percent: double.parse(percent.toString())/100,
+                      percent: double.parse(percent.toString()) / 100,
                       center: new Text(
-                        percent.toString()+"%",
-                        style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
+                        percent.toString() + "%",
+                        style: new TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15.0),
                       ),
                       circularStrokeCap: CircularStrokeCap.round,
                       progressColor: Color(0xff02b9f3),
                     ),
                     SizedBox(height: 10),
-                    Text(
-                        'Completed',
+                    Text('Completed',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
-                            fontSize: 17
-                        )
-                    ),
+                            fontSize: 17)),
                   ],
                 ),
                 Column(
@@ -230,23 +213,21 @@ class _DashBoardState extends State<DashBoard> {
                       radius: 60.0,
                       lineWidth: 6.0,
                       animation: true,
-                      percent: double.parse(percent1.toString())/100,
+                      percent: double.parse(percent1.toString()) / 100,
                       center: new Text(
-                        percent1.toString()+"%",
-                        style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
+                        percent1.toString() + "%",
+                        style: new TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15.0),
                       ),
                       circularStrokeCap: CircularStrokeCap.round,
                       progressColor: Color(0xff018abd),
                     ),
                     SizedBox(height: 10),
-                    Text(
-                        'Ongoing',
+                    Text('Ongoing',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
-                            fontSize: 17
-                        )
-                    ),
+                            fontSize: 17)),
                   ],
                 ),
                 Column(
@@ -255,46 +236,42 @@ class _DashBoardState extends State<DashBoard> {
                       radius: 60.0,
                       lineWidth: 6.0,
                       animation: true,
-                      percent: double.parse(percent2.toString())/100,
+                      percent: double.parse(percent2.toString()) / 100,
                       center: new Text(
-                        percent2.toString()+"%",
-                        style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
+                        percent2.toString() + "%",
+                        style: new TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15.0),
                       ),
                       circularStrokeCap: CircularStrokeCap.round,
                       progressColor: Color(0xff005c9d),
                     ),
                     SizedBox(height: 10),
-                    Text(
-                        'Not Started',
+                    Text('Not Started',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
-                            fontSize: 17
-                        )
-                    ),
+                            fontSize: 17)),
                   ],
                 ),
-
               ],
             ),
             SizedBox(height: 70),
 
-          // RaisedButton(
-          //   child: Text("PDF testing"),
-          //   onPressed: () {
-          //     Navigator.pushReplacement(
-          //       context,
-          //       MaterialPageRoute(
-          //           builder: (context) => ReportGenerationTesting()),
-          //     );
-          //   },
-          // ),
-          //
+            // RaisedButton(
+            //   child: Text("PDF testing"),
+            //   onPressed: () {
+            //     Navigator.pushReplacement(
+            //       context,
+            //       MaterialPageRoute(
+            //           builder: (context) => ReportGenerationTesting()),
+            //     );
+            //   },
+            // ),
+            //
 
-
-
-              widget.userType.contains(managerType)? Center(
-              child: FlatButton(
+            widget.userType.contains("manager")
+                ? Center(
+                    child: FlatButton(
 //                child: Container(
 //                  height: 50,
 //                  width: double.infinity,
@@ -317,21 +294,21 @@ class _DashBoardState extends State<DashBoard> {
 //                    ),
 //                  ),
 //                ),
-              child: buttonContainers(double.infinity, 20, 'Get Report', 18),
-                onPressed: () {
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ReportGenerationTesting()),
-                  );
-                },
-              ),
-            ):Container(),
+                      child: buttonContainers(
+                          double.infinity, 20, 'Get Report', 18),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ReportGenerationTesting()),
+                        );
+                      },
+                    ),
+                  )
+                : Container(),
           ],
         ),
       ),
     );
   }
-
 }

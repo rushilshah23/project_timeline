@@ -21,12 +21,9 @@ class _RegisterState extends State<Register> {
       FirebaseFirestore.instance.collection("user");
   final _formKey = GlobalKey<FormState>();
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   List<String> _type = [workerType, supervisorType, managerType];
+  List<String> tempTypes = ["worker", "supervisor", "manager"];
+  String tempSelectedType;
   String _requestType = null ?? workerType;
   String _signInMethod = null ?? "email";
   String name;
@@ -44,6 +41,12 @@ class _RegisterState extends State<Register> {
   TextEditingController controllerAddress;
   TextEditingController controllerAge;
   TextEditingController controllerPassword;
+
+  @override
+  void initState() {
+    tempSelectedType = tempTypes[0];
+    super.initState();
+  }
 
   checkOTP(String phone, BuildContext context) async {}
 
@@ -66,7 +69,7 @@ class _RegisterState extends State<Register> {
           }).then((value) async {
             await databaseReference
                 .child("request")
-                .child(_requestType)
+                .child(tempSelectedType)
                 .child(uuid)
                 .set({
               "uid": result.user.uid,
@@ -104,7 +107,7 @@ class _RegisterState extends State<Register> {
           return LoginPage();
         }));
       } catch (e) {
-        showToast("Failed. Check your Internet !");
+        showToast(e.toString());
       }
     }
   }
@@ -219,12 +222,12 @@ class _RegisterState extends State<Register> {
         "uid": uniqueID,
         "address": address,
         "age": age,
-        "userType": _requestType,
+        "userType": tempSelectedType,
         'signInMethod': "otp"
       }).then((value) async {
         await databaseReference
             .child("request")
-            .child(_requestType)
+            .child(tempSelectedType)
             .child(uniqueID)
             .set({
           "uid": uniqueID,
@@ -264,6 +267,7 @@ class _RegisterState extends State<Register> {
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10)),
           ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerName,
         validator: (val) => val.isEmpty ? 'Enter your Name' : null,
@@ -284,6 +288,7 @@ class _RegisterState extends State<Register> {
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10)),
           ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerEmail,
         validator: (val) => val.isEmpty ? 'Enter Email' : null,
@@ -304,6 +309,7 @@ class _RegisterState extends State<Register> {
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10)),
           ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerPhoneNo,
         validator: (val) => val.isEmpty ? 'Enter Phone Number' : null,
@@ -324,6 +330,7 @@ class _RegisterState extends State<Register> {
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10)),
           ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerAddress,
         validator: (val) => val.isEmpty ? 'Enter your Address' : null,
@@ -344,6 +351,7 @@ class _RegisterState extends State<Register> {
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10)),
           ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerAge,
         validator: (val) => val.isEmpty ? 'Enter your Age' : null,
@@ -365,6 +373,7 @@ class _RegisterState extends State<Register> {
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10)),
           ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerPassword,
         validator: (val) => val.isEmpty ? 'Enter Password' : null,
@@ -390,6 +399,7 @@ class _RegisterState extends State<Register> {
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10)),
           ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerName,
         validator: (val) => val.isEmpty ? 'Enter your Name' : null,
@@ -410,6 +420,7 @@ class _RegisterState extends State<Register> {
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10)),
           ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerPhoneNo,
         validator: (val) => val.isEmpty ? 'Enter Phone Number' : null,
@@ -430,6 +441,7 @@ class _RegisterState extends State<Register> {
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10)),
           ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerAddress,
         validator: (val) => val.isEmpty ? 'Enter your Address' : null,
@@ -450,6 +462,7 @@ class _RegisterState extends State<Register> {
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10)),
           ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerAge,
         validator: (val) => val.isEmpty ? 'Enter your Age' : null,
@@ -533,6 +546,8 @@ class _RegisterState extends State<Register> {
                             onChanged: (value) {
                               setState(() {
                                 _requestType = value;
+                                tempSelectedType =
+                                    tempTypes[_type.indexOf(_requestType)];
                               });
                             }),
                       ],

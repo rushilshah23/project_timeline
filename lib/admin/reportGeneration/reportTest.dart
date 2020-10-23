@@ -34,7 +34,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
   List<DropdownMenuItem> projectsDropdwnItems = [];
 
   String uid="8YiMHLBnBaNjmr3yPvk8NWvNPmm2";
-
+  final _formKey = GlobalKey<FormState>();
 
   String selectedProject;
   List todaysReport=List() ;
@@ -136,7 +136,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
 
               cellStyle: const pw.TextStyle(
                 color: _redColor,
-                fontSize: textFontSize,
+                fontSize: 15,
               ),
 
 
@@ -148,7 +148,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                 ...supervisors.map((msg) => [msg["name"], msg["mobile"]])
               ]),
           pw.SizedBox(height: 25),
-          pw.Table.fromTextArray(
+          todaysReport.length!=0?pw.Table.fromTextArray(
               context: context,
               border: pw.TableBorder(color: PdfColors.grey400),
               cellAlignment: pw.Alignment.centerLeft,
@@ -174,7 +174,13 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                   msg["volumeExcavated"].toString(),
                   msg["status"]
                 ])
-              ]),
+              ]):pw.Center(child:pw.Text('No work recorded today' ,
+                  style: pw.TextStyle(
+                  color: text2Color,
+                  fontSize: text2FontSize,
+                  )
+          ),
+          ),
         ];
       },
     ));
@@ -588,7 +594,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
     String documentPath = documentDirectory.path;
     String fullPath = "$documentPath/todaysReport.pdf";
 
-    Navigator.push(
+    Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => ReportPreviewTesting(path: fullPath),
@@ -671,7 +677,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
     String documentPath = documentDirectory.path;
     String fullPath = "$documentPath/overallProgress.pdf";
 
-    Navigator.push(
+    Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => ReportPreviewTesting(path: fullPath),
@@ -684,6 +690,9 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
   @override
   void initState() {
     super.initState();
+    setState(() {
+      todaysDate= formatter.format(date);
+    });
     getProjectsData();
     loadMachines();
   }
@@ -691,6 +700,8 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
+      appBar: ThemeAppbar("Reports", context),
 
       body: Container(
         padding: EdgeInsets.all(10),
@@ -703,7 +714,9 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                   child: titleStyles('Report Generation ', 18),
                 ),
                 SizedBox(height: 20.0),
-                Container(
+                Form(
+                  key:_formKey ,
+                child:Container(
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(5),
@@ -713,7 +726,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                     child: Center(
                       child: new DropdownButtonFormField(
                         validator: (value) =>
-                        value == null ? 'Enter Start Date' : null,
+                        value == null ? 'Select Project' : null,
                         items:projectsDropdwnItems,
                         onChanged: (selectedAccountType) {
                           setState(() {
@@ -732,6 +745,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                       ),
                     ),
                   ),
+                )
                 ),
 
                 SizedBox(height: 20),
@@ -761,6 +775,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                           onPressed: () async{
 
                             // await selectedProjs();
+                            if(_formKey.currentState.validate())
                             generatetodaysReport();
 
                           },
@@ -784,7 +799,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                             //     MaterialPageRoute(
                             //       builder: (context) => ReportPreview(path: fullPath),
                             //     ));
-
+                            if(_formKey.currentState.validate())
                             generateOverallReport();
                           },
                         ),

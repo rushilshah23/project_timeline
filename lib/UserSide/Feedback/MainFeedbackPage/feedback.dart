@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:project_timeline/UserSide/Dashboard/Widgets/BottomNav.dart';
-import 'package:project_timeline/UserSide/MultiLingual/mainPages/language.dart';
-import 'package:project_timeline/UserSide/MultiLingual/pageTranslations/feedbackText.dart';
+import 'package:project_timeline/UserSide/Feedback/TextPages/feedbackText.dart';
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -50,25 +49,6 @@ class _LocalFeedbackState extends State<LocalFeedback> {
   @override
   void initState() {
     super.initState();
-    loadTextFields();
-  }
-
-  // Language _languageHome;
-  loadTextFields() async {
-    sharedPreferences = await SharedPreferences.getInstance();
-    language = sharedPreferences.getString('language');
-    if (language != 'en') {
-      for (var i = 0; i < feedbackText.length; i++) {
-        await Language(language).getTranslation(feedbackText[i]).then((value) {
-          setState(() {
-            feedbackText[i] = value;
-          });
-        });
-      }
-    }
-
-    // return text1 =
-    //     (await _langVar.getTranslation('We serve the society')).toString();
   }
 
   void submitLocalFeedback() {

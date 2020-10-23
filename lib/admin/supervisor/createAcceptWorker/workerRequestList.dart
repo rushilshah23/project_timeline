@@ -34,7 +34,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
         }).then((value) async {
           await databaseReference
               .child("request")
-              .child(workerType)
+              .child("worker")
               .child(worker["key"])
               .remove();
         }).then((value) {
@@ -55,7 +55,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
         }).then((value) async {
           await databaseReference
               .child("request")
-              .child(workerType)
+              .child("worker")
               .child(worker["key"])
               .remove();
         }).then((value) {
@@ -94,7 +94,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
   declineRequest(worker) async {
     await databaseReference
         .child("request")
-        .child("Worker")
+        .child("worker")
         .child(worker["key"])
         .remove()
         .then((value) {
@@ -231,7 +231,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
     return Scaffold(
       // appBar: ThemeAppbar("Worker Request List"),
       body: StreamBuilder(
-        stream: databaseReference.child("request").child(workerType).onValue,
+        stream: databaseReference.child("request").child("worker").onValue,
         builder: (context, snap) {
           if (snap.hasData &&
               !snap.hasError &&

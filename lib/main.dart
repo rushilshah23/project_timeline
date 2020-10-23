@@ -2,10 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/DocumentManager/core/models/usermodel.dart';
 import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
-import 'package:project_timeline/admin/DocumentManager/ui/widgets/loading.dart';
 import 'package:provider/provider.dart';
-import 'UserSide/AboutUs/MainPage/HomeScreen.dart';
-import 'UserSide/Dashboard/Pages/myHomePage.dart';
 import 'UserSide/Dashboard/Widgets/BottomNav.dart';
 import 'admin/dashboard.dart';
 import 'admin/login.dart';
@@ -23,7 +20,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  Geocoding geocoding = Geocoder.local;
+  final Geocoding geocoding = Geocoder.local;
 
   final Map<String, Geocoding> modes = {
     "Local": Geocoder.local,
@@ -38,12 +35,10 @@ class MyApp extends StatelessWidget {
       child: FutureBuilder(
         future: Firebase.initializeApp(),
         builder: (context, snapshot) {
-          // if (snapshot.hasError) {
-          //   Text("Error");
-          // } else if (snapshot.connectionState == ConnectionState.done) {
           return StreamProvider<UserModel>.value(
             value: AuthenticationService().user,
             child: MaterialApp(
+              debugShowCheckedModeBanner: false,
               title: 'Flutter Demo',
               theme: ThemeData(
                 primarySwatch: Colors.blue,
@@ -52,8 +47,6 @@ class MyApp extends StatelessWidget {
               home: BottomNav(),
             ),
           );
-          // } else
-          //   return Text("loading");
         },
       ),
     );
@@ -227,3 +220,32 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+// import 'package:flutter/material.dart';
+// import 'package:project_timeline/UserSide/Dashboard/Widgets/BottomNav.dart';
+
+// void main() {
+//   runApp(MyApp());
+// }
+
+// class MyApp extends StatefulWidget {
+//   @override
+//   _MyAppState createState() => _MyAppState();
+// }
+
+// class _MyAppState extends State<MyApp> {
+//   void initState() {
+//     super.initState();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'DashBoard',
+//       theme: ThemeData(
+//         visualDensity: VisualDensity.adaptivePlatformDensity,
+//       ),
+//       home: BottomNav(),
+//     );
+//   }
+// }
