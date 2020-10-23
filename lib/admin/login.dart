@@ -5,7 +5,6 @@ import 'package:project_timeline/admin/DocumentManager/core/services/authenticat
 import 'package:project_timeline/admin/DocumentManager/core/services/database.dart';
 import 'package:project_timeline/admin/DocumentManager/wrapper.dart';
 import 'Register.dart';
-import 'colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'CommonWidgets.dart';
 
@@ -723,7 +722,6 @@ class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final ProgressDialog pr = ProgressDialog(context);
-    Size size = MediaQuery.of(context).size;
     // TODO: implement build
     return new Scaffold(
       backgroundColor: Colors.white,
