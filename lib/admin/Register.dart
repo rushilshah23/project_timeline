@@ -25,6 +25,8 @@ class _RegisterState extends State<Register> {
   }
 
   List<String> _type = [workerType, supervisorType, managerType];
+  List<String> tempTypes = ["worker", "supervisor", "manager"];
+  String tempSelectedType;
   String _requestType = null ?? workerType;
   String _signInMethod = null ?? "email";
   String name;
@@ -64,7 +66,7 @@ class _RegisterState extends State<Register> {
           }).then((value) async {
             await databaseReference
                 .child("request")
-                .child(_requestType)
+                .child(tempSelectedType)
                 .child(uuid)
                 .set({
               "uid": result.user.uid,
@@ -213,12 +215,12 @@ class _RegisterState extends State<Register> {
         "uid": uniqueID,
         "address": address,
         "age": age,
-        "userType": _requestType,
+        "userType": tempSelectedType,
         'signInMethod': "otp"
       }).then((value) async {
         await databaseReference
             .child("request")
-            .child(_requestType)
+            .child(tempSelectedType)
             .child(uniqueID)
             .set({
           "uid": uniqueID,
@@ -527,6 +529,8 @@ class _RegisterState extends State<Register> {
                             onChanged: (value) {
                               setState(() {
                                 _requestType = value;
+                                tempSelectedType =
+                                    tempTypes[_type.indexOf(value)];
                               });
                             }),
                       ],

@@ -94,7 +94,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
   declineRequest(worker) async {
     await databaseReference
         .child("request")
-        .child("Worker")
+        .child("worker")
         .child(worker["key"])
         .remove()
         .then((value) {
