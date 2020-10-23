@@ -19,11 +19,6 @@ class _RegisterState extends State<Register> {
       FirebaseFirestore.instance.collection("user");
   final _formKey = GlobalKey<FormState>();
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   List<String> _type = [workerType, supervisorType, managerType];
   List<String> tempTypes = ["worker", "supervisor", "manager"];
   String tempSelectedType;
@@ -44,6 +39,12 @@ class _RegisterState extends State<Register> {
   TextEditingController controllerAddress;
   TextEditingController controllerAge;
   TextEditingController controllerPassword;
+
+  @override
+  void initState() {
+    tempSelectedType = tempTypes[0];
+    super.initState();
+  }
 
   checkOTP(String phone, BuildContext context) async {}
 
@@ -100,7 +101,7 @@ class _RegisterState extends State<Register> {
         });
         Navigator.pop(context);
       } catch (e) {
-        showToast("Failed. Check your Internet !");
+        showToast(e.toString());
       }
     }
   }
@@ -540,7 +541,7 @@ class _RegisterState extends State<Register> {
                               setState(() {
                                 _requestType = value;
                                 tempSelectedType =
-                                    tempTypes[_type.indexOf(value)];
+                                    tempTypes[_type.indexOf(_requestType)];
                               });
                             }),
                       ],
