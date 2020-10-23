@@ -248,8 +248,8 @@ class _SupervisorRequestListState extends State<SupervisorRequestList> {
           } else {
             return Center(
                 child: CircularProgressIndicator(
-              valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
-            ));
+                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+                ));
           }
         },
       ),

@@ -177,17 +177,17 @@ class _OurMachinesState extends State<OurMachines> {
                   ),
                 ],
               );
-            } else if (!snap.hasData ||
-                snap.hasError ||
+            } else if (snap.hasData &&
+                !snap.hasError &&
                 snap.data.snapshot.value == null) {
               return Center(
-                child: Text("No Data Found"),
+                child: Text("No request found"),
               );
             } else {
               return Center(
                   child: CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
-              ));
+                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+                  ));
             }
           }),
       /*floatingActionButton: FloatingActionButton(

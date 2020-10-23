@@ -610,16 +610,7 @@ class _TestState extends State<Test> {
         type: ProgressDialogType.Normal, isDismissible: true, showLogs: true);
 
     return Scaffold(
-        appBar: AppBar(
-          iconTheme: IconThemeData(
-            color: Colors.indigo[200],
-          ),
-          title: Text("Add  Project",
-              style: TextStyle(
-                color: Color(0xff02b9f3),
-              )),
-          backgroundColor: Colors.white,
-        ),
+        appBar: ThemeAppbar("Create Project",context),
         body: SingleChildScrollView(
           child: Form(
             key: _formKeyValue,
@@ -632,31 +623,7 @@ class _TestState extends State<Test> {
                     child: titleStyles('Create  Project', 24),
                   ),
                   SizedBox(height: 20),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  SearchableDropdown.multiple(
-                    items: supervisorDropdwnItems,
-                    selectedItems: selectedSupervisors,
-                    hint: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Text("Select Supervisors"),
-                    ),
-                    searchHint: "Select any",
-                    onChanged: (value) {
-                      setState(() {
-                        selectedSupervisors = value;
-                        debugPrint("vvvvvvvvvvvvvvvvvvv  " + value.toString());
-                      });
-                      print(selectedSupervisors.toString());
-                    },
-                    closeButton: (selectedItems) {
-                      return (selectedItems.isNotEmpty
-                          ? "Save ${selectedItems.length == 1 ? '"' + supervisorDropdwnItems[selectedItems.first].value.toString() + '"' : '(' + selectedItems.length.toString() + ')'}"
-                          : "Save without selection");
-                    },
-                    isExpanded: true,
-                  ),
+
                   TextFormField(
                     textInputAction: TextInputAction.newline,
                     keyboardType: TextInputType.multiline,
@@ -948,6 +915,33 @@ class _TestState extends State<Test> {
                         controlAffinity: ListTileControlAffinity.leading,
                       ),
                     ),
+                  ),
+
+
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SearchableDropdown.multiple(
+                    items: supervisorDropdwnItems,
+                    selectedItems: selectedSupervisors,
+                    hint: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text("Select Supervisors"),
+                    ),
+                    searchHint: "Select any",
+                    onChanged: (value) {
+                      setState(() {
+                        selectedSupervisors = value;
+                        debugPrint("vvvvvvvvvvvvvvvvvvv  " + value.toString());
+                      });
+                      print(selectedSupervisors.toString());
+                    },
+                    closeButton: (selectedItems) {
+                      return (selectedItems.isNotEmpty
+                          ? "Save ${selectedItems.length == 1 ? '"' + supervisorDropdwnItems[selectedItems.first].value.toString() + '"' : '(' + selectedItems.length.toString() + ')'}"
+                          : "Save without selection");
+                    },
+                    isExpanded: true,
                   ),
                   SizedBox(height: 40.0),
                   RaisedButton(

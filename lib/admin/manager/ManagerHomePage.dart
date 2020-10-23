@@ -24,6 +24,8 @@ class ManagerHomePageState extends State<ManagerHomePage> {
   int _selectedDrawerIndex = 0;
   String appbartitle = "Dashboard";
 
+
+
   String name = '',
       lname = '',
       email = '',
@@ -60,6 +62,28 @@ class ManagerHomePageState extends State<ManagerHomePage> {
     Navigator.of(context).pop(); // close the drawer
     print(index);
     // Navigator.pop(context);
+  }
+
+  Future<bool> _onBackPressed() {
+    return showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text('Are you sure?'),
+        content: new Text('Do you want to exit an App'),
+        actions: <Widget>[
+          new GestureDetector(
+            onTap: () => Navigator.of(context).pop(false),
+            child: Text("NO"),
+          ),
+          SizedBox(height: 16),
+          new GestureDetector(
+            onTap: () => Navigator.of(context).pop(true),
+            child: Text("YES"),
+          ),
+        ],
+      ),
+    ) ??
+        false;
   }
 
   _getDrawerItemWidget(int pos, UserModel user) {
@@ -114,7 +138,10 @@ class ManagerHomePageState extends State<ManagerHomePage> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
-    return Scaffold(
+
+    return WillPopScope(
+        onWillPop: _onBackPressed,
+        child:Scaffold(
       appBar: ThemeAppbar(appbartitle, context),
 
       drawer: ClipRRect(
@@ -252,6 +279,6 @@ class ManagerHomePageState extends State<ManagerHomePage> {
 //          ],
 //        ),
 //      ),
-    );
+    ));
   }
 }

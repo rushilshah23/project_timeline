@@ -142,8 +142,17 @@ class _ApproveWorkState extends State<ApproveWork> {
                     ));
                   },
                 );
+            } else if (snap.hasData &&
+                !snap.hasError &&
+                snap.data.snapshot.value == null) {
+              return Center(
+                child: Text("No request found"),
+              );
             } else {
-              return Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),));
+              return Center(
+                  child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+                  ));
             }
           }),
 
