@@ -35,15 +35,15 @@ class LoginPageState extends State<LoginPage> {
 
   FirebaseAuth _auth = FirebaseAuth.instance;
   final CollectionReference workers =
-  FirebaseFirestore.instance.collection("workers");
+      FirebaseFirestore.instance.collection("workers");
   final CollectionReference users =
-  FirebaseFirestore.instance.collection("user");
+      FirebaseFirestore.instance.collection("user");
   final CollectionReference supervisor =
-  FirebaseFirestore.instance.collection("supervisor");
+      FirebaseFirestore.instance.collection("supervisor");
   final CollectionReference manager =
-  FirebaseFirestore.instance.collection("manager");
+      FirebaseFirestore.instance.collection("manager");
   final CollectionReference newPhoneUser =
-  FirebaseFirestore.instance.collection("newPhoneUser");
+      FirebaseFirestore.instance.collection("newPhoneUser");
 
   // signOut() async {
   //   await _auth.signOut().then((value) {
@@ -113,8 +113,8 @@ class LoginPageState extends State<LoginPage> {
                         await pr.show();
                         final code = controllerOTP.text.trim();
                         AuthCredential credential =
-                        PhoneAuthProvider.credential(
-                            verificationId: verificationId, smsCode: code);
+                            PhoneAuthProvider.credential(
+                                verificationId: verificationId, smsCode: code);
                         print(credential);
                         print("`````````````````````````````````````````");
                         print("Verification Complete");
@@ -142,7 +142,7 @@ class LoginPageState extends State<LoginPage> {
               flag = 1;
               UserCredential result = await _auth
                   .signInWithEmailAndPassword(
-                  email: _email, password: _password)
+                      email: _email, password: _password)
                   .catchError((e) {
                 showToast(e.toString());
               });
@@ -190,7 +190,7 @@ class LoginPageState extends State<LoginPage> {
               flag = 1;
               UserCredential result = await _auth
                   .signInWithEmailAndPassword(
-                  email: _email, password: _password)
+                      email: _email, password: _password)
                   .catchError((e) {
                 showToast(e.toString());
               });
@@ -230,7 +230,7 @@ class LoginPageState extends State<LoginPage> {
               print(element.data());
               UserCredential result = await _auth
                   .signInWithEmailAndPassword(
-                  email: _email, password: _password)
+                      email: _email, password: _password)
                   .catchError((e) {
                 showToast(e.toString());
               });
@@ -269,7 +269,7 @@ class LoginPageState extends State<LoginPage> {
               print(element.data());
               UserCredential result = await _auth
                   .signInWithEmailAndPassword(
-                  email: _email, password: _password)
+                      email: _email, password: _password)
                   .catchError((e) {
                 showToast(e.toString());
               });
@@ -323,7 +323,7 @@ class LoginPageState extends State<LoginPage> {
                 element.data()["userType"] == userType) {
               firstTimeLogin = 1;
               UserCredential result =
-              await _auth.signInWithCredential(credential);
+                  await _auth.signInWithCredential(credential);
               User user = result.user;
               if (user.uid != null) {
                 await pr.hide();
@@ -365,7 +365,7 @@ class LoginPageState extends State<LoginPage> {
                   _signInMethod == "otp") {
                 flag = 1;
                 UserCredential result =
-                await _auth.signInWithCredential(credential);
+                    await _auth.signInWithCredential(credential);
                 User user = result.user;
                 if (user.uid != null) {
                   await pr.hide();
@@ -404,7 +404,7 @@ class LoginPageState extends State<LoginPage> {
                 element.data()["userType"] == supervisorType) {
               firstTimeLogin = 1;
               UserCredential result =
-              await _auth.signInWithCredential(credential);
+                  await _auth.signInWithCredential(credential);
               User user = result.user;
               if (user.uid != null) {
                 await pr.hide();
@@ -447,7 +447,7 @@ class LoginPageState extends State<LoginPage> {
                   _signInMethod == "otp") {
                 flag = 1;
                 UserCredential result =
-                await _auth.signInWithCredential(credential);
+                    await _auth.signInWithCredential(credential);
                 User user = result.user;
                 if (user.uid != null) {
                   await pr.hide();
@@ -487,7 +487,7 @@ class LoginPageState extends State<LoginPage> {
                 element.data()["userType"] == workerType) {
               firstTimeLogin = 1;
               UserCredential result =
-              await _auth.signInWithCredential(credential);
+                  await _auth.signInWithCredential(credential);
               User user = result.user;
               if (user.uid != null) {
                 await pr.hide();
@@ -530,7 +530,7 @@ class LoginPageState extends State<LoginPage> {
                   _signInMethod == "otp") {
                 flag = 1;
                 UserCredential result =
-                await _auth.signInWithCredential(credential);
+                    await _auth.signInWithCredential(credential);
                 User user = result.user;
                 if (user.uid != null) {
                   await pr.hide();
@@ -568,7 +568,7 @@ class LoginPageState extends State<LoginPage> {
                 element.data()["userType"] == managerType) {
               firstTimeLogin = 1;
               UserCredential result =
-              await _auth.signInWithCredential(credential);
+                  await _auth.signInWithCredential(credential);
               User user = result.user;
               if (user.uid != null) {
                 await pr.hide();
@@ -611,7 +611,7 @@ class LoginPageState extends State<LoginPage> {
                   _signInMethod == "otp") {
                 flag = 1;
                 UserCredential result =
-                await _auth.signInWithCredential(credential);
+                    await _auth.signInWithCredential(credential);
                 User user = result.user;
                 if (user.uid != null) {
                   await pr.hide();
@@ -658,7 +658,9 @@ class LoginPageState extends State<LoginPage> {
         child: TextFormField(
           controller: userController,
           onChanged: (value) {
-            _email = value;
+            setState(() {
+              _email = value;
+            });
           },
           validator: (val) => val.isEmpty ? 'Enter email' : null,
           decoration: InputDecoration(
@@ -666,7 +668,7 @@ class LoginPageState extends State<LoginPage> {
             hintText: 'Email',
             contentPadding: EdgeInsets.all(20.0),
             border:
-            OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
+                OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
           ),
         ),
       ),
@@ -677,7 +679,9 @@ class LoginPageState extends State<LoginPage> {
         child: TextFormField(
           controller: passController,
           onChanged: (value) {
-            _password = value;
+            setState(() {
+              _password = value;
+            });
           },
           validator: (val) => val.isEmpty ? 'Enter password' : null,
           decoration: InputDecoration(
@@ -685,7 +689,7 @@ class LoginPageState extends State<LoginPage> {
             hintText: 'Password',
             contentPadding: EdgeInsets.all(20.0),
             border:
-            OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
+                OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
           ),
         ),
       ),
@@ -701,7 +705,9 @@ class LoginPageState extends State<LoginPage> {
         child: TextFormField(
           controller: userController,
           onChanged: (value) {
-            _email = value;
+            setState(() {
+              _email = value;
+            });
           },
           validator: (val) => val.isEmpty ? 'Enter mobile number' : null,
           decoration: InputDecoration(
@@ -709,7 +715,7 @@ class LoginPageState extends State<LoginPage> {
             hintText: 'Mobile Number',
             contentPadding: EdgeInsets.all(20.0),
             border:
-            OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
+                OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
           ),
         ),
       ),
@@ -724,203 +730,196 @@ class LoginPageState extends State<LoginPage> {
     final ProgressDialog pr = ProgressDialog(context);
     // TODO: implement build
     return new Scaffold(
-      backgroundColor: Colors.white,
-      //resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.white,
+        //resizeToAvoidBottomInset: false,
         body: Background(
           child: SingleChildScrollView(
               child: Container(
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        "Login",
-                        style: GoogleFonts.playfairDisplay(
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 30
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(width: 55),
-                          Image.asset(
-                            "assets/3293465.jpg",
-                            height: 180,
-                            width: 350,
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            bottom: 10, left: 30, right: 30),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Signed In Method: ",
-                                  style: GoogleFonts.merriweather(
-                                      fontWeight: FontWeight.w700,
-                                    fontSize: 16
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Radio(
-                                        value: "email",
-                                        groupValue: _signInMethod,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            _signInMethod = value;
-                                          });
-                                        }),
-                                    Text(
-                                      "Email",
-                                      style: GoogleFonts.merriweather(
-                                          fontWeight: FontWeight.w400,
-                                        fontSize: 16
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Radio(
-                                        value: "OTP",
-                                        groupValue: _signInMethod,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            _signInMethod = value;
-                                            userController.clear();
-                                          });
-                                        }),
-                                    Text(
-                                      "OTP",
-                                      style: GoogleFonts.merriweather(
-                                        fontWeight: FontWeight.w400,
-                                          fontSize: 16
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "User Type: ",
-                                  style: GoogleFonts.merriweather(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 16
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 30,
-                                ),
-                                DropdownButton(
-                                    hint: Text("Select User Type"),
-                                    value: _requestType,
-                                    items: _type.map((String usertype) {
-                                      return DropdownMenuItem<String>(
-                                        value: usertype,
-                                        child: Text(
-                                          usertype,
-                                          style: GoogleFonts.merriweather(
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        ),
-                                      );
-                                    }).toList(),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _requestType = value;
-                                      });
-                                    }),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Column(
-                                children: _signInMethod == "email"
-                                    ? showEmail()
-                                    : showMobile()),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Center(
-                              child: RaisedButton(
-                                onPressed: () async {
-                                  _signInMethod == "email"
-                                      ? loginUsingEmail(pr)
-                                      : checkOTP("+91" + _email, context, pr);
-                                },
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                textColor: Colors.white,
-                                padding: EdgeInsets.all(0),
-                                child: Container(
-                                  width: 200,
-                                  padding: EdgeInsets.all(15),
-                                  decoration: new BoxDecoration(
-                                      color: Color(0xff005c9d),
-                                      borderRadius: BorderRadius.circular(12.0)),
-                                  child: Text(
-                                    "LOGIN",
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.merriweather(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 18
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 9,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Don't have an account?",
-                                  style: GoogleFonts.merriweather(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 18
-                                  ),
-                                ),
-                                FlatButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => Register()),
-                                    );
-                                  },
-                                  child: Text(
-                                    'Register',
-                                    style: GoogleFonts.merriweather(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        fontStyle: FontStyle.italic,
-                                        color: Colors.blue[900]),
-                                  ),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
+            child: Form(
+              key: formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "Login",
+                    style: GoogleFonts.playfairDisplay(
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 30),
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(width: 55),
+                      Image.asset(
+                        "assets/3293465.jpg",
+                        height: 180,
+                        width: 350,
                       ),
                     ],
                   ),
-                ),
-              )),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(bottom: 10, left: 30, right: 30),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Signed In Method: ",
+                              style: GoogleFonts.merriweather(
+                                  fontWeight: FontWeight.w700, fontSize: 16),
+                            ),
+                            Row(
+                              children: [
+                                Radio(
+                                    value: "email",
+                                    groupValue: _signInMethod,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _signInMethod = value;
+                                        userController.clear();
+                                      });
+                                    }),
+                                Text(
+                                  "Email",
+                                  style: GoogleFonts.merriweather(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Radio(
+                                    value: "OTP",
+                                    groupValue: _signInMethod,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _signInMethod = value;
+                                        userController.clear();
+                                      });
+                                    }),
+                                Text(
+                                  "OTP",
+                                  style: GoogleFonts.merriweather(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              "User Type: ",
+                              style: GoogleFonts.merriweather(
+                                  fontWeight: FontWeight.w700, fontSize: 16),
+                            ),
+                            SizedBox(
+                              width: 30,
+                            ),
+                            DropdownButton(
+                                hint: Text("Select User Type"),
+                                value: _requestType,
+                                items: _type.map((String usertype) {
+                                  return DropdownMenuItem<String>(
+                                    value: usertype,
+                                    child: Text(
+                                      usertype,
+                                      style: GoogleFonts.merriweather(
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    _requestType = value;
+                                  });
+                                }),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Column(
+                            children: _signInMethod == "email"
+                                ? showEmail()
+                                : showMobile()),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Center(
+                          child: RaisedButton(
+                            onPressed: () async {
+                              if (formKey.currentState.validate()) {
+                                _signInMethod == "email"
+                                    ? loginUsingEmail(pr)
+                                    : checkOTP("+91" + _email, context, pr);
+                              }
+                            },
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            textColor: Colors.white,
+                            padding: EdgeInsets.all(0),
+                            child: Container(
+                              width: 200,
+                              padding: EdgeInsets.all(15),
+                              decoration: new BoxDecoration(
+                                  color: Color(0xff005c9d),
+                                  borderRadius: BorderRadius.circular(12.0)),
+                              child: Text(
+                                "LOGIN",
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.merriweather(
+                                    fontWeight: FontWeight.w400, fontSize: 18),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 9,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Don't have an account?",
+                              style: GoogleFonts.merriweather(
+                                  fontWeight: FontWeight.w400, fontSize: 18),
+                            ),
+                            FlatButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Register()),
+                                );
+                              },
+                              child: Text(
+                                'Register',
+                                style: GoogleFonts.merriweather(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.blue[900]),
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )),
         ));
   }
 }
