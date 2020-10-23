@@ -1,13 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:clay_containers/clay_containers.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/UserSide/AboutUs/MainPage/HomeScreen.dart';
 import 'package:project_timeline/UserSide/Dashboard/Widgets/Couroselitems.dart';
 import 'package:project_timeline/UserSide/Feedback/MainFeedbackPage/feedback.dart';
 import 'package:project_timeline/UserSide/Gallery/HomePage.dart';
-import 'package:project_timeline/UserSide/MultiLingual/mainPages/language.dart';
-import 'package:project_timeline/UserSide/MultiLingual/pageTranslations/feedbackText.dart';
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
 import 'package:project_timeline/UserSide/UI/Widgets/cards.dart';
 import 'package:project_timeline/crowdfunding/leaderBoard.dart';
@@ -30,25 +27,6 @@ class _MyHomeState extends State<MyHome> {
   @override
   void initState() {
     super.initState();
-    loadTextFields();
-  }
-
-  // Language _languageHome;
-  loadTextFields() async {
-    sharedPreferences = await SharedPreferences.getInstance();
-    language = sharedPreferences.getString('language');
-    if (language != 'en') {
-      for (var i = 0; i < feedbackText.length; i++) {
-        await Language(language).getTranslation(feedbackText[i]).then((value) {
-          setState(() {
-            feedbackText[i] = value;
-          });
-        });
-      }
-    }
-
-    // return text1 =
-    //     (await _langVar.getTranslation('We serve the society')).toString();
   }
 
   List cardList = [Item1(), Item2()];
