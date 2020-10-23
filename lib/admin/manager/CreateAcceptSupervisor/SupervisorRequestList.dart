@@ -34,7 +34,7 @@ class _SupervisorRequestListState extends State<SupervisorRequestList> {
         }).then((value) async {
           await databaseReference
               .child("request")
-              .child(supervisorType)
+              .child("supervisor")
               .child(worker["key"])
               .remove();
         }).then((value) {
@@ -55,7 +55,7 @@ class _SupervisorRequestListState extends State<SupervisorRequestList> {
         }).then((value) async {
           await databaseReference
               .child("request")
-              .child(supervisorType)
+              .child("supervisor")
               .child(worker["key"])
               .remove();
         }).then((value) {
@@ -204,7 +204,7 @@ class _SupervisorRequestListState extends State<SupervisorRequestList> {
       // appBar: ThemeAppbar("Supervisor Request List"),
       body: StreamBuilder(
         stream:
-            databaseReference.child("request").child(supervisorType).onValue,
+            databaseReference.child("request").child("supervisor").onValue,
         builder: (context, snap) {
           if (snap.hasData &&
               !snap.hasError &&

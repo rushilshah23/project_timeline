@@ -293,7 +293,7 @@ class _DashBoardState extends State<DashBoard> {
 
 
 
-              widget.userType.contains(managerType)? Center(
+              widget.userType.contains("manager")? Center(
               child: FlatButton(
 //                child: Container(
 //                  height: 50,
