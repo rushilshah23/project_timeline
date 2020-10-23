@@ -96,7 +96,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                 );
               });
         },
-        codeAutoRetrievalTimeout: null);
+        codeAutoRetrievalTimeout: (String verificationId) {});
   }
 
   @override

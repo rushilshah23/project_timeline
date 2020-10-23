@@ -126,7 +126,7 @@ class LoginPageState extends State<LoginPage> {
                 );
               });
         },
-        codeAutoRetrievalTimeout: null);
+        codeAutoRetrievalTimeout: (String verificationId) {});
   }
 
   loginUsingEmail(pr) async {

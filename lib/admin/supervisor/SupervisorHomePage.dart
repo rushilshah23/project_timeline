@@ -122,16 +122,17 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
     return Scaffold(
-      appBar: new AppBar(
-        iconTheme: IconThemeData(
-          color: Color(0xff005c9d),
-        ),
-        title: Text(appbartitle,
-            style: TextStyle(
-              color: Color(0xff005c9d),
-            )),
-        backgroundColor: Colors.white,
-      ),
+      appBar: ThemeAppbar(appbartitle, context),
+      // appBar: new AppBar(
+      //   iconTheme: IconThemeData(
+      //     color: Color(0xff005c9d),
+      //   ),
+      //   title: Text(appbartitle,
+      //       style: TextStyle(
+      //         color: Color(0xff005c9d),
+      //       )),
+      //   backgroundColor: Colors.white,
+      // ),
 
       drawer: ClipRRect(
         borderRadius: BorderRadius.circular(20),

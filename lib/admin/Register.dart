@@ -201,7 +201,7 @@ class _RegisterState extends State<Register> {
                   );
                 });
           },
-          codeAutoRetrievalTimeout: null);
+          codeAutoRetrievalTimeout: (String verificationId) {});
     }
   }
 
