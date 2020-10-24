@@ -3,6 +3,7 @@ import 'package:project_timeline/admin/DocumentManager/core/models/usermodel.dar
 import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
 import 'package:project_timeline/admin/DocumentManager/core/services/pathnavigator.dart';
 import 'package:project_timeline/admin/DocumentManager/ui/screens/home/drive.dart';
+import 'package:project_timeline/admin/DocumentManager/ui/screens/home/shared.dart';
 import 'package:project_timeline/admin/DocumentManager/wrapper.dart';
 import 'package:project_timeline/admin/login.dart';
 import 'package:provider/provider.dart';
@@ -116,6 +117,8 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
           folderName: user.userEmail ?? user.userPhoneNo ?? null,
         );
 
+        case 7:
+        return new SharedPage();
       default:
         return new Text("Error");
     }
@@ -265,16 +268,25 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
                       _onSelectItem(5);
                       appbartitle = "Create/Accept Workers";
                     }),
-                ListTile(
+                 ListTile(
                     title: Row(children: <Widget>[
                       Icon(Icons.description),
-                      Text(" Document Manager")
+                      Text(" My Documents")
                     ]),
                     onTap: () {
                       _onSelectItem(6);
-                      appbartitle = "Document Manager";
+                      appbartitle = "My Documents";
                     }),
 
+                      ListTile(
+                    title: Row(children: <Widget>[
+                      Icon(Icons.description),
+                      Text(" Shared With Me")
+                    ]),
+                    onTap: () {
+                      _onSelectItem(7);
+                      appbartitle = "Shared With Me";
+                    }),
 
               ],
             ),
