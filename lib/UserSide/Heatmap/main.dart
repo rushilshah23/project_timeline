@@ -39,9 +39,9 @@ class _FirstScreen extends State<FirstScreen> {
   }
 
   void getCurrentLocation() async {
-    Position res = await Geolocator().getCurrentPosition();
+    //Position res = await Geolocator().getCurrentPosition();
     setState(() {
-      position = res;
+      //position = res;
       _child = mapWidget();
     });
   }
@@ -50,11 +50,11 @@ class _FirstScreen extends State<FirstScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(icon: Icon(Icons.arrow_left), onPressed: (){
-
-          Navigator.pop(context);
-
-        }),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_left),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
         title: Text('Heatmap'),
       ),
       body: _child,
@@ -96,33 +96,27 @@ class _FirstScreen extends State<FirstScreen> {
         // debugPrint(projectValues.toString());
       });
 
-      var markerIdVal = requestId;                                          
+      var markerIdVal = requestId;
       final MarkerId markerId = MarkerId(markerIdVal);
-    
-      
+
       for (int i = 0; i < projectValues.length; i++) {
         debugPrint(projectValues[i]['projectStatus']);
 
-           Marker marker = Marker(
-        
-      markerId: markerId,
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),       
-      position:
-          LatLng(request['location'].latitude, request['location'].longitude),
-      infoWindow:
-          InfoWindow(title: request['place'], 
-          snippet: "STATUS: "+projectValues[i]['projectStatus'],
+        Marker marker = Marker(
+          markerId: markerId,
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+          position: LatLng(
+              request['location'].latitude, request['location'].longitude),
+          infoWindow: InfoWindow(
+            title: request['place'],
+            snippet: "STATUS: " + projectValues[i]['projectStatus'],
           ),
-    );
-  
-    setState(() {
-      markers[markerId] = marker;
-    });
+        );
 
+        setState(() {
+          markers[markerId] = marker;
+        });
       }
-      
-      
-
-  });
+    });
   }
 }

@@ -24,6 +24,8 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage> {
   List<String> _type = [workerType, supervisorType, managerType];
   String _requestType = null ?? workerType;
+  List<String> tempTypes = ["worker", "supervisor", "manager"];
+  String tempSelectedType;
   String _signInMethod = null ?? "email";
   String _email, _password;
   var credential, selectedType, flag = 0, firstTimeLogin = 0;
@@ -44,6 +46,12 @@ class LoginPageState extends State<LoginPage> {
       FirebaseFirestore.instance.collection("manager");
   final CollectionReference newPhoneUser =
       FirebaseFirestore.instance.collection("newPhoneUser");
+
+  @override
+  void initState() {
+    tempSelectedType = tempTypes[0];
+    super.initState();
+  }
 
   // signOut() async {
   //   await _auth.signOut().then((value) {
@@ -313,14 +321,13 @@ class LoginPageState extends State<LoginPage> {
 
   loginUsingOTP(credential, pr) async {
     print("```````````````````````````");
-    print(_requestType);
+    print(tempSelectedType);
     print("```````````````````````````");
     try {
-      if (_requestType == userType) {
+      if (tempSelectedType == "user") {
         await newPhoneUser.get().then((value) {
           value.docs.forEach((element) async {
-            if (element.id == _email &&
-                element.data()["userType"] == userType) {
+            if (element.id == _email && element.data()["userType"] == "user") {
               firstTimeLogin = 1;
               UserCredential result =
                   await _auth.signInWithCredential(credential);
@@ -362,7 +369,7 @@ class LoginPageState extends State<LoginPage> {
           await users.get().then((value) {
             value.docs.forEach((element) async {
               if (element.data()["mobile"] == _email &&
-                  _signInMethod == "otp") {
+                  element.data()["signInMethod"] == "otp") {
                 flag = 1;
                 UserCredential result =
                     await _auth.signInWithCredential(credential);
@@ -397,11 +404,11 @@ class LoginPageState extends State<LoginPage> {
         } else {
           await newPhoneUser.doc(_email).delete();
         }
-      } else if (_requestType == supervisorType) {
+      } else if (tempSelectedType == "supervisor") {
         await newPhoneUser.get().then((value) {
           value.docs.forEach((element) async {
             if (element.id == _email &&
-                element.data()["userType"] == supervisorType) {
+                element.data()["userType"] == "supervisor") {
               firstTimeLogin = 1;
               UserCredential result =
                   await _auth.signInWithCredential(credential);
@@ -444,7 +451,7 @@ class LoginPageState extends State<LoginPage> {
           await supervisor.get().then((value) {
             value.docs.forEach((element) async {
               if (element.data()["mobile"] == _email &&
-                  _signInMethod == "otp") {
+                  element.data()["signInMethod"] == "otp") {
                 flag = 1;
                 UserCredential result =
                     await _auth.signInWithCredential(credential);
@@ -480,11 +487,14 @@ class LoginPageState extends State<LoginPage> {
         } else {
           await newPhoneUser.doc(_email).delete();
         }
-      } else if (_requestType == workerType) {
+      } else if (tempSelectedType == "worker") {
         await newPhoneUser.get().then((value) {
           value.docs.forEach((element) async {
             if (element.id == _email &&
-                element.data()["userType"] == workerType) {
+                element.data()["userType"] == "worker") {
+              print("```````````````````````````");
+              print("firstTimeLogin");
+              print("```````````````````````````");
               firstTimeLogin = 1;
               UserCredential result =
                   await _auth.signInWithCredential(credential);
@@ -524,10 +534,17 @@ class LoginPageState extends State<LoginPage> {
           });
         });
         if (firstTimeLogin != 1) {
+          print("```````````````````````````");
+          print("!firstTimeLogin");
+          print("```````````````````````````");
           await workers.get().then((value) {
             value.docs.forEach((element) async {
+              print(element.data()["mobile"]);
               if (element.data()["mobile"] == _email &&
-                  _signInMethod == "otp") {
+                  element.data()["signInMethod"] == "otp") {
+                print("```````````````````````````");
+                print("mobile found");
+                print("```````````````````````````");
                 flag = 1;
                 UserCredential result =
                     await _auth.signInWithCredential(credential);
@@ -561,11 +578,11 @@ class LoginPageState extends State<LoginPage> {
         } else {
           await newPhoneUser.doc(_email).delete();
         }
-      } else if (_requestType == managerType) {
+      } else if (tempSelectedType == "manager") {
         await newPhoneUser.get().then((value) {
           value.docs.forEach((element) async {
             if (element.id == _email &&
-                element.data()["userType"] == managerType) {
+                element.data()["userType"] == "manager") {
               firstTimeLogin = 1;
               UserCredential result =
                   await _auth.signInWithCredential(credential);
@@ -608,7 +625,7 @@ class LoginPageState extends State<LoginPage> {
           await manager.get().then((value) {
             value.docs.forEach((element) async {
               if (element.data()["mobile"] == _email &&
-                  _signInMethod == "otp") {
+                  element.data()["signInMethod"] == "otp") {
                 flag = 1;
                 UserCredential result =
                     await _auth.signInWithCredential(credential);
@@ -689,7 +706,6 @@ class LoginPageState extends State<LoginPage> {
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.vpn_key),
             hintText: 'Password',
-
             contentPadding: EdgeInsets.all(20.0),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
@@ -717,7 +733,6 @@ class LoginPageState extends State<LoginPage> {
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.phone),
             hintText: 'Mobile Number',
-
             contentPadding: EdgeInsets.all(20.0),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
@@ -845,6 +860,8 @@ class LoginPageState extends State<LoginPage> {
                                 onChanged: (value) {
                                   setState(() {
                                     _requestType = value;
+                                    tempSelectedType =
+                                        tempTypes[_type.indexOf(_requestType)];
                                   });
                                 }),
                           ],
