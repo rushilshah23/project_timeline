@@ -136,83 +136,88 @@ class _MyHomeState extends State<MyHome> {
             )
           ])),
           SliverGrid(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                childAspectRatio: 1.0,
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 15,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              childAspectRatio: 1.0,
+              crossAxisCount: 2,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 15,
+            ),
+            delegate: SliverChildListDelegate([
+              Container(
+                color: Colors.transparent,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 10, right: 5),
+                  child: FlipCard(
+                    onFlipDone: (isFront) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => DbTesting()));
+                    },
+                    flipOnTouch: true,
+                    direction: FlipDirection.HORIZONTAL,
+                    front: card1(),
+                    back: card1(),
+                  ),
+                ),
               ),
+              Container(
+                color: Colors.transparent,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 5, right: 10),
+                  child: FlipCard(
+                    onFlipDone: (isFront) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomeScreen()));
+                    },
+                    direction: FlipDirection.HORIZONTAL,
+                    front: card2(),
+                    back: card2(),
+                  ),
+                ),
+              ),
+              Container(
+                color: Colors.transparent,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 10, right: 5),
+                  child: FlipCard(
+                    onFlipDone: (isFront) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LocalFeedback()));
+                    },
+                    direction: FlipDirection.HORIZONTAL,
+                    front: card3(),
+                    back: card3(),
+                  ),
+                ),
+              ),
+              Container(
+                color: Colors.transparent,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 5, right: 10),
+                  child: FlipCard(
+                    onFlipDone: (isFront) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => leaderBoard()));
+                    },
+                    direction: FlipDirection.HORIZONTAL,
+                    front: card4(),
+                    back: card4(),
+                  ),
+                ),
+              ),
+            ]),
+          ),
+          SliverList(
               delegate: SliverChildListDelegate([
-                Container(
-                  color: Colors.white,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: FlipCard(
-                      onFlipDone: (isFront) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => DbTesting()));
-                      },
-                      flipOnTouch: true,
-                      direction: FlipDirection.HORIZONTAL,
-                      front: card1(),
-                      back: card1(),
-                    ),
-                  ),
-                ),
-                Container(
-                  color: Colors.white,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: FlipCard(
-                      onFlipDone: (isFront) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeScreen()));
-                      },
-                      direction: FlipDirection.HORIZONTAL,
-                      front: card2(),
-                      back: card2(),
-                    ),
-                  ),
-                ),
-                Container(
-                  color: Colors.white,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: FlipCard(
-                      onFlipDone: (isFront) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LocalFeedback()));
-                      },
-                      direction: FlipDirection.HORIZONTAL,
-                      front: card3(),
-                      back: card3(),
-                    ),
-                  ),
-                ),
-                Container(
-                  color: Colors.white,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: FlipCard(
-                      onFlipDone: (isFront) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => leaderBoard()));
-                      },
-                      direction: FlipDirection.HORIZONTAL,
-                      front: card4(),
-                      back: card4(),
-                    ),
-                  ),
-                ),
-              ])),
+            Container(
+              child: SizedBox(height: 30),
+            )
+          ])),
         ]),
       ),
     );
