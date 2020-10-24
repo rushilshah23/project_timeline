@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
+import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:project_timeline/admin/DocumentManager/core/models/filemodel.dart';
 import 'package:project_timeline/admin/DocumentManager/core/models/foldermodel.dart';
 import 'package:project_timeline/admin/DocumentManager/core/models/receivedusermodel.dart';
@@ -164,17 +165,20 @@ class _ShareDrivePageState extends State<ShareDrivePage> {
           // getFolderCardList(userModelVar: userModelVar);
           return snapshot.hasData && !snapshot.hasError
               ? Scaffold(
-                  appBar: AppBar(
-                      backgroundColor: appbarColor,
-                      title: AutoSizeText(
-                        widget.receivedUserModel.receivedUserEmailId,
-                        overflow: TextOverflow.visible,
-                      ),
-                      centerTitle: true,
-                      flexibleSpace: Container(
-                        decoration: colorBox,
-                      )),
-                  drawer: homeDrawer(context),
+
+                appBar: ThemeAppbar(widget.receivedUserModel.receivedUserEmailId, context),
+                  // appBar: AppBar(
+                  //     backgroundColor: appbarColor,
+                  //     title: AutoSizeText(
+                      
+                  //       widget.receivedUserModel.receivedUserEmailId,
+                  //       overflow: TextOverflow.visible,
+                        
+                  //     ),
+                  //     centerTitle: true,
+                     
+                  //     ),
+                  //drawer: homeDrawer(context),
                   floatingActionButtonLocation:
                       FloatingActionButtonLocation.endFloat,
                   body: folderModelList.length != 0 || fileModelList.length != 0

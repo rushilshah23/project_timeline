@@ -86,10 +86,10 @@ class _SharedPageState extends State<SharedPage> {
           // getReceivedUsersEmail();
           return snapshot.hasData && !snapshot.hasError
               ? Scaffold(
-                  appBar: AppBar(
-                    title: Text('Documents shared with you'),
-                    backgroundColor: appColor,
-                  ),
+                  // appBar: AppBar(
+                  //   title: Text('Documents shared with you'),
+                  //   backgroundColor: appColor,
+                  // ),
                   body: receivedModelListTileCards.length != 0
                       ? Container(
                           child: ListView(

@@ -3,6 +3,7 @@ import 'package:project_timeline/admin/DocumentManager/core/models/usermodel.dar
 import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
 import 'package:project_timeline/admin/DocumentManager/core/services/pathnavigator.dart';
 import 'package:project_timeline/admin/DocumentManager/ui/screens/home/drive.dart';
+import 'package:project_timeline/admin/DocumentManager/ui/screens/home/shared.dart';
 import 'package:project_timeline/admin/DocumentManager/wrapper.dart';
 
 import 'package:project_timeline/admin/ProgressTimeLine/ProgressPage.dart';
@@ -127,6 +128,9 @@ class ManagerHomePageState extends State<ManagerHomePage> {
 
       case 6:
         return new ReportGenerationTesting();
+
+         case 8:
+        return new SharedPage();
 
       case 7:
         return DrivePage(
@@ -267,11 +271,21 @@ class ManagerHomePageState extends State<ManagerHomePage> {
                 ListTile(
                     title: Row(children: <Widget>[
                       Icon(Icons.description),
-                      Text(" Document Manager")
+                      Text(" My Documents")
                     ]),
                     onTap: () {
                       _onSelectItem(7);
-                      appbartitle = "Document Manager";
+                      appbartitle = "My Documents";
+                    }),
+
+                      ListTile(
+                    title: Row(children: <Widget>[
+                      Icon(Icons.description),
+                      Text(" Shared With Me")
+                    ]),
+                    onTap: () {
+                      _onSelectItem(8);
+                      appbartitle = "Shared With Me";
                     }),
               ],
             ),

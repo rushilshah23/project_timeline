@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:project_timeline/UserSide/UI/Widgets/cards.dart';
+import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:project_timeline/admin/DocumentManager/core/models/filemodel.dart';
 import 'package:project_timeline/admin/DocumentManager/core/models/foldermodel.dart';
 import 'package:project_timeline/admin/DocumentManager/core/models/usermodel.dart';
@@ -368,24 +369,41 @@ class _DrivePageState extends State<DrivePage> {
           getFoldersList();
           return snapshot.hasData && !snapshot.hasError
               ? Scaffold(
-                  appBar: AppBar(
-                      backgroundColor: appBarColor,
-                      title: Text(
-                        widget.folderName ?? 'null',
-                        overflow: TextOverflow.visible,
-                        style: TextStyle(color: Colors.black),
+                 appBar: new AppBar(
+                   centerTitle: true, 
+                   automaticallyImplyLeading: false,
+                      iconTheme: IconThemeData(
+                        color: Color(0xff005c9d),
                       ),
+                      title: Text( 
+                        widget.folderName ?? 'null',
+                          style: TextStyle(
+                            color: Color(0xff005c9d),
+                          )),
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                    ),
+                  // appBar: AppBar(
+                  //     backgroundColor: appBarColor,
+                  //     title: Text(
+                  //       widget.folderName ?? 'null',
+                  //       overflow: TextOverflow.visible,
+                  //       style: TextStyle(color: Colors.black),
+                  //     ),
 
-                      // title: (
-                      //   widget.folderName ?? 'null',
-                      //   overflow: TextOverflow.visible,
-                      // ),
-                      centerTitle: true,
-                      flexibleSpace: Container(
-                        decoration: colorBox,
-                      )),
-                  drawer: homeDrawer(context),
+                  //     // title: (
+                  //     //   widget.folderName ?? 'null',
+                  //     //   overflow: TextOverflow.visible,
+                  //     // ),
+                  //     centerTitle: true,
+                  //     flexibleSpace: Container(
+                  //       decoration: colorBox,
+                  //     )),
+                  //drawer: homeDrawer(context),
+
+                  
                   floatingActionButton: FloatingActionButton(
+                     backgroundColor: Color(0xff005f89),
                     child: Icon(
                       Icons.add,
                       color: Colors.white,
@@ -400,8 +418,19 @@ class _DrivePageState extends State<DrivePage> {
                       //  WillPopScope(
                       //   onWillPop: gobackFolder,
                       //   child:
-                      foldersCard.length != 0 || filesCard.length != 0
-                          ? ListView(children: [
+                     Column(children:[ 
+
+                      //  SizedBox(height: 20,),
+                       
+                      
+                      //  Center(
+                      //   child: titleStyles("Folder:  "+widget.folderName ?? 'null', 18),
+                      //   ),
+
+                      
+                       
+                       foldersCard.length != 0 || filesCard.length != 0
+                          ? Flexible(child:ListView(children: [
                               foldersCard.length != 0 || filesCard.length != 0
                                   ? GridView.builder(
                                       physics: ScrollPhysics(),
@@ -439,7 +468,7 @@ class _DrivePageState extends State<DrivePage> {
                                         ),
                                       ),
                                     )
-                            ])
+                            ]))
                           : Center(
                               child: Container(
                                 padding: EdgeInsets.fromLTRB(50, 300, 50, 200),
@@ -453,7 +482,7 @@ class _DrivePageState extends State<DrivePage> {
                               ),
                             ),
                   // )
-                )
+                     ]))
               : Loading();
         });
   }
