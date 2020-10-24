@@ -428,9 +428,9 @@ class _DrivePageState extends State<DrivePage> {
                       //   ),
 
                       
-                       
+                       Flexible(child:
                        foldersCard.length != 0 || filesCard.length != 0
-                          ? Flexible(child:ListView(children: [
+                          ? ListView(children: [
                               foldersCard.length != 0 || filesCard.length != 0
                                   ? GridView.builder(
                                       physics: ScrollPhysics(),
@@ -468,7 +468,7 @@ class _DrivePageState extends State<DrivePage> {
                                         ),
                                       ),
                                     )
-                            ]))
+                            ])
                           : Center(
                               child: Container(
                                 padding: EdgeInsets.fromLTRB(50, 300, 50, 200),
@@ -482,7 +482,7 @@ class _DrivePageState extends State<DrivePage> {
                               ),
                             ),
                   // )
-                     ]))
+              )]))
               : Loading();
         });
   }
