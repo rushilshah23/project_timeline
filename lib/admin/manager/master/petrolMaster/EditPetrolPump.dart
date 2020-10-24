@@ -57,10 +57,7 @@ class _EditPetrolPumpState extends State<EditPetrolPump> {
           .remove();
       showToast("Deleted Successfully");
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => PetrolMaster()),
-      );
+     Navigator.of(context).pop();
 
     } catch (e) {
       debugPrint("This is the error " + e.toString());
@@ -102,11 +99,10 @@ class _EditPetrolPumpState extends State<EditPetrolPump> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Material(
-            child: Container(
-      height: MediaQuery.of(context).size.height / 1.5,
-      width: MediaQuery.of(context).size.width / 1.2,
+    return Scaffold(
+      appBar: ThemeAppbar("Edit Details", context),
+            body: Center(child: Container(
+      
       // Center is a layout widget. It takes a single child and positions it
       // in the middle of the parent.
       padding: EdgeInsets.all(20),
@@ -135,7 +131,7 @@ class _EditPetrolPumpState extends State<EditPetrolPump> {
                   decoration: InputDecoration(
                     labelText: "Petrol Pump Name",
                     border: OutlineInputBorder(),
-                    hintText: "Enter Petrol Pump Name",
+                    //hintText: "Enter Petrol Pump Name",
                   ),
                 ),
                 SizedBox(
@@ -155,7 +151,7 @@ class _EditPetrolPumpState extends State<EditPetrolPump> {
                   decoration: InputDecoration(
                     labelText: "Petrol Pump Address",
                     border: OutlineInputBorder(),
-                    hintText: "Enter Petrol Pump Address",
+                    //hintText: "Enter Petrol Pump Address",
                   ),
                 ),
                 SizedBox(

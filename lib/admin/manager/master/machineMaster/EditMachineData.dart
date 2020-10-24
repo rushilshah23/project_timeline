@@ -46,10 +46,7 @@ class _EditMachineDataState extends State<EditMachineData> {
         .remove();
 
     showToast("Removed Sucessfully");
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => MachineMaster()),
-    );
+    Navigator.of(context).pop();
 
 //    catch(e){
 //      debugPrint(e.toString());
@@ -91,6 +88,7 @@ class _EditMachineDataState extends State<EditMachineData> {
           },
         });
         showToast("Machine added Successfully");
+          Navigator.of(context).pop();
       } catch (e) {
         showToast("Failed. check your internet!");
       }

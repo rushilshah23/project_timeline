@@ -6,6 +6,7 @@ import 'package:project_timeline/admin/DocumentManager/ui/screens/home/drive.dar
 import 'package:project_timeline/admin/DocumentManager/wrapper.dart';
 
 import 'package:project_timeline/admin/ProgressTimeLine/ProgressPage.dart';
+import 'package:project_timeline/admin/login.dart';
 import 'package:project_timeline/admin/reportGeneration/ReportGeneration.dart';
 import 'package:project_timeline/admin/reportGeneration/reportTest.dart';
 import 'package:provider/provider.dart';
@@ -87,7 +88,7 @@ class ManagerHomePageState extends State<ManagerHomePage> {
               return Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) {
                     showToast("Logout Successful");
-                    return Wrapper();
+                  return LoginPage();
                   }));
             },
             child: Text("YES"),

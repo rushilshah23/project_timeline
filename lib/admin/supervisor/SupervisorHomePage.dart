@@ -4,6 +4,7 @@ import 'package:project_timeline/admin/DocumentManager/core/services/authenticat
 import 'package:project_timeline/admin/DocumentManager/core/services/pathnavigator.dart';
 import 'package:project_timeline/admin/DocumentManager/ui/screens/home/drive.dart';
 import 'package:project_timeline/admin/DocumentManager/wrapper.dart';
+import 'package:project_timeline/admin/login.dart';
 import 'package:provider/provider.dart';
 
 import '../CommonWidgets.dart';
@@ -89,12 +90,12 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
 
       case 4:
         return new YourAllocatedProjects(
-          name: name,
-          email: email,
-          uid: uid,
-          assignedProject: assignedProject,
-          mobile: mobile,
-          userType: userType,
+          name: name.toString(),
+          email: email.toString(),
+          uid: uid.toString(),
+          assignedProject: assignedProject.toString(),
+          mobile: mobile.toString(),
+          userType: userType.toString(),
         );
 
       case 5:
@@ -141,7 +142,7 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
               return Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) {
                     showToast("Logout Successful");
-                    return Wrapper();
+                   return LoginPage();
                   }));
             },
             child: Text("YES"),
@@ -241,7 +242,11 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
                       _onSelectItem(3);
                       appbartitle = "Our Projects";
                     }),
-                ListTile(
+
+                    if (assignedProject != "No project assigned" ||
+                        assignedProject != '' ||
+                        assignedProject != null)
+                       ListTile(
                     title: Row(children: <Widget>[
                       Icon(Icons.work),
                       Text(" Your Allocated Projects")
@@ -250,6 +255,7 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
                       _onSelectItem(4);
                       appbartitle = "Your Allocated Projects";
                     }),
+             
                 ListTile(
                     title: Row(children: <Widget>[
                       Icon(Icons.people),
@@ -268,6 +274,8 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
                       _onSelectItem(6);
                       appbartitle = "Document Manager";
                     }),
+
+
               ],
             ),
           ),

@@ -90,11 +90,10 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Material(
-            child: Container(
-      height: MediaQuery.of(context).size.height / 1.5,
-      width: MediaQuery.of(context).size.width / 1.2,
+    return Scaffold(
+       appBar: ThemeAppbar("Add a petrol pump", context),
+            body: Center(child:Container(
+    
       // Center is a layout widget. It takes a single child and positions it
       // in the middle of the parent.
       padding: EdgeInsets.only(top: 20, right: 20, left: 20),
@@ -122,7 +121,7 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
                   decoration: InputDecoration(
                     labelText: "Petrol Pump Name",
                     border: OutlineInputBorder(),
-                    hintText: "Enter Petrol Pump Name",
+                    //hintText: "Enter Petrol Pump Name",
                   ),
                 ),
                 SizedBox(
@@ -142,7 +141,7 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
                   decoration: InputDecoration(
                     labelText: "Petrol Pump Address",
                     border: OutlineInputBorder(),
-                    hintText: "Enter Petrol Pump Address",
+                    //hintText: "Enter Petrol Pump Address",
                   ),
                 ),
                 SizedBox(
@@ -164,7 +163,7 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
                         decoration: InputDecoration(
                           labelText: "District",
                           border: OutlineInputBorder(),
-                          hintText: "Enter Petrol Pump District",
+                          //hintText: "Enter Petrol Pump District",
                         ),
                       ),
                     ),
@@ -185,7 +184,7 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
                         decoration: InputDecoration(
                           labelText: "Town",
                           border: OutlineInputBorder(),
-                          hintText: "Enter Petrol Pump Town",
+                          //hintText: "Enter Petrol Pump Town",
                         ),
                       ),
                     ),
@@ -210,7 +209,7 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
                         decoration: InputDecoration(
                           labelText: "Pin Code",
                           border: OutlineInputBorder(),
-                          hintText: "Enter Petrol Pump Pin Code",
+                          //hintText: "Enter Petrol Pump Pin Code",
                         ),
                       ),
                     ),
@@ -231,7 +230,7 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
                         decoration: InputDecoration(
                           labelText: "Contact",
                           border: OutlineInputBorder(),
-                          hintText: "Enter Contact",
+                          //hintText: "Enter Contact",
                         ),
                       ),
                     ),

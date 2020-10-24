@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:uuid/uuid.dart';
-import 'package:geocoder/geocoder.dart';
 import 'package:geocoder/services/base.dart';
 import '../../CommonWidgets.dart';
 
@@ -132,6 +131,9 @@ class _TestState extends State<Test> {
   }
 
   sendToDb() async {
+
+    int errorType=0;
+
     final CollectionReference supervisor =
         FirebaseFirestore.instance.collection("supervisor");
 
@@ -142,10 +144,14 @@ class _TestState extends State<Test> {
       var geocoding = AppState.of(context).mode;
       var results = await geocoding.findAddressesFromQuery(siteAddress);
       print("``````````````````````");
+
+      errorType=1;
       debugPrint(results[0].coordinates.toString());
       this.setState(() {
         coordinates.add(results[0].coordinates);
       });
+
+      errorType=2;
       FirebaseFirestore.instance.collection("markers").add({
         'location':
             new GeoPoint(coordinates[0].latitude, coordinates[0].longitude),
@@ -178,7 +184,7 @@ class _TestState extends State<Test> {
             },
         },
       });
-
+      errorType=3;
       selectedSupervisors.forEach((i) async {
         debugPrint(supervisorList[i].uid);
         await supervisor
@@ -197,7 +203,12 @@ class _TestState extends State<Test> {
       showToast("Project added Successfully");
     } catch (e) {
       print(e);
-      showToast("Failed. check your internet!");
+     
+
+      if(errorType==0)
+          showToast("Enter Valid Address");
+       if(errorType==1)
+           showToast("Failed. check your internet!");
     }
   }
 
@@ -381,7 +392,7 @@ class _TestState extends State<Test> {
             )));
   }
 
-  estimate2() async {
+  Future<bool> estimate2() async {
     volume = 0.5 *
         double.parse(length) *
         double.parse(depth) *
@@ -404,6 +415,9 @@ class _TestState extends State<Test> {
       progressPercent = (excavationDone / volume) * 100;
     });
 
+
+    if(progressPercent<=100)
+    {
     if (ourExcavtn == 0.0) {
       setState(() {
         status = 'Not Started';
@@ -412,7 +426,7 @@ class _TestState extends State<Test> {
       setState(() {
         status = 'Ongoing';
       });
-    } else if (ourExcavtn == volume) {
+    } else if (ourExcavtn > volume) {
       setState(() {
         status = 'Completed';
       });
@@ -534,15 +548,21 @@ class _TestState extends State<Test> {
     debugPrint(actualrentPerday.toString());
     debugPrint(totalRent.toString());
     debugPrint(totalfuel.toString());
+
+    return true;
+    }
+
+    else return false;
+
   }
 
   showAlertDialog(BuildContext context) async {
-    await estimate2();
+    var state= await estimate2();
     // set up the buttons
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("AlertDialog"),
+      title: Text("Dear User"),
       content: Builder(builder: (context) {
         // Get available height and width of the build area of this widget. Make a choice depending on the size.
         var height = MediaQuery.of(context).size.height;
@@ -596,11 +616,42 @@ class _TestState extends State<Test> {
       }),
     );
 
+
+     AlertDialog alert2 = AlertDialog(
+      title: Text("Dear User"),
+      content: Builder(builder: (context) {
+        // Get available height and width of the build area of this widget. Make a choice depending on the size.
+        var height = MediaQuery.of(context).size.height;
+      
+        return Container(
+            height: height /3,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  height: 10,
+                ),
+                Text("The work is already completed and the completed work is greater than the project goals."),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("Hence the progress is > 100% which is not true."),
+                 SizedBox(
+                  height: 10,
+                ),
+                Text("Thus put proper goals."),
+               
+              ],
+            ));
+      }),
+    );
+
     // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return alert;
+        return state?alert:alert2;
+
       },
     );
   }

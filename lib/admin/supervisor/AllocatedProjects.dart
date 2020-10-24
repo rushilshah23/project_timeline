@@ -35,36 +35,17 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
   }
 
 
-  getProjDetails()
+  getProjDetails() async
   {
     debugPrint("----------------"+widget.assignedProject.toString());
-    try {
-      if(widget.assignedProject!="No project assigned"|| widget.assignedProject!='' )
-      {
-        databaseReference.child(widget.assignedProject).once().then((
+    await databaseReference.child(widget.assignedProject).once().then((
             DataSnapshot dataSnapshot) {
           debugPrint(dataSnapshot.value.toString());
           setState(() {
             projectDetails = dataSnapshot.value;
-            allocated=true;
-            isLoading=false;
+          
           });
         });
-      }
-      else
-        setState(() {
-          allocated=false;
-          isLoading=true;
-        });
-    }
-    catch(e)
-    {
-      debugPrint(e.toString());
-      setState(() {
-        allocated=false;
-        isLoading=true;
-      });
-    }
   }
 
 
@@ -73,9 +54,8 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
   Widget build(BuildContext context) {
     debugPrint(allocated.toString());
 
-    if (isLoading == false)
-    {
-      if (allocated == true) {
+   
+      
         if (projectDetails != null) {
           return Scaffold(
 
@@ -87,16 +67,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
               )
           );
         }
-
-      }
-      else {
-        return Scaffold(
-          body: Center(
-            child: Text("You've not been assigned\nto any project"),),
-        );
-      }
-    }else{
-
+        else{
       return Scaffold(
         body: Center(child: CircularProgressIndicator(),),
       );

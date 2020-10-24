@@ -133,24 +133,35 @@ class _PetrolMasterState extends State<PetrolMaster> {
                               color: Colors.grey,
                               onPressed: () {
                                 // debugPrint(allPetrolPumpData[index]["key"].toString());
-                                showDialog(
-                                  context: context,
-                                  builder: (_) => EditPetrolPump(
+
+                                   Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => EditPetrolPump(
                                     data: allPetrolPumpData[index],
-                                  ),
-                                );
+                                  ),),
+                                  );
+                                // showDialog(
+                                //   context: context,
+                                //   builder: (_) => EditPetrolPump(
+                                //     data: allPetrolPumpData[index],
+                                //   ),
+                                // );
                               },
                             ),
                             IconButton(
                               icon: Icon(Icons.arrow_forward),
                               color: Colors.grey,
                               onPressed: () {
+
+                               
                                 showDialog(
                                   context: context,
                                   builder: (_) => PetrolPumpDetails(
                                     data: allPetrolPumpData[index],
                                   ),
                                 );
+
+                                
                               },
                             ),
 //                            IconButton(

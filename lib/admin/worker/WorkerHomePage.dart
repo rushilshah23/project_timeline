@@ -7,6 +7,7 @@ import 'package:project_timeline/admin/MasterDataSet/ourMachines.dart';
 import 'package:project_timeline/admin/MasterDataSet/ourPetrolPump.dart';
 import 'package:project_timeline/admin/ProgressTimeLine/ProgressPage.dart';
 import 'package:project_timeline/admin/dashboard.dart';
+import 'package:project_timeline/admin/login.dart';
 import 'package:project_timeline/admin/worker/updateWork.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -77,7 +78,7 @@ class WorkerHomePageState extends State<WorkerHomePage> {
                   return Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) {
                     showToast("Logout Successful");
-                    return Wrapper();
+                   return LoginPage();
                   }));
                 },
                 child: Text("YES"),
@@ -213,8 +214,8 @@ class WorkerHomePageState extends State<WorkerHomePage> {
                           appbartitle = "Our Projects";
                         }),
                     if (assignedProject != "No project assigned" ||
-                        assignedProject == '' ||
-                        assignedProject == null)
+                        assignedProject != '' ||
+                        assignedProject != null)
                       ListTile(
                           title: Row(children: <Widget>[
                             Icon(Icons.work),

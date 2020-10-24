@@ -3,6 +3,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_timeline/admin/MasterDataSet/ourMachinesDetailsDisplay.dart';
 
 
 import '../../../CommonWidgets.dart';
@@ -32,13 +33,13 @@ class _MachineMasterState extends State<MachineMaster> {
 
         child: GestureDetector(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => EditMachineData(
-                          machineDetails: allMachines[index],
-                        )),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //       builder: (context) => EditMachineData(
+              //             machineDetails: allMachines[index],
+              //           )),
+              // );
             },
             child: Card(
                 elevation: 4,
@@ -57,8 +58,8 @@ class _MachineMasterState extends State<MachineMaster> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
-                            Container(
-                                padding: EdgeInsets.all(5),
+                            Flexible(
+                                //padding: EdgeInsets.all(5),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
@@ -114,13 +115,16 @@ class _MachineMasterState extends State<MachineMaster> {
                                                   .toString() +
                                               " litre/hr",
                                           overflow: TextOverflow.clip,
-                                          maxLines: 2,
-                                          softWrap: false,
+                                        
+                                          softWrap: true,
                                           style: TextStyle(fontSize: 15),
                                         ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
+                                        
+                                        
+                                      ],
+                                    ),
+
+
                                         Text(
                                           "Rent" +
                                               ": " +
@@ -128,14 +132,56 @@ class _MachineMasterState extends State<MachineMaster> {
                                                   ["machineRent"] +
                                               " Rs/hr",
                                           overflow: TextOverflow.clip,
-                                          maxLines: 2,
-                                          softWrap: false,
+                                         
+                                          softWrap: true,
                                           style: TextStyle(fontSize: 14),
                                         ),
-                                      ],
-                                    ),
+
                                   ],
+
+
                                 )),
+
+                                Column(
+                                  children: [
+                                    IconButton(
+                                          icon: Icon(Icons.edit),
+                                          color: Colors.grey,
+                                          onPressed: () {
+
+                                          
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => EditMachineData(
+                                                        machineDetails: allMachines[index],
+                                                      )),
+                                            );
+                                            
+                                          },
+                                        ),
+
+                                           IconButton(
+                                          icon: Icon(Icons.arrow_forward),
+                                          color: Colors.grey,
+                                          onPressed: () {
+
+                                          
+                                            showDialog(
+                                              context: context,
+                                              builder: (_) => OurMachinesDetailsDisplay(
+                                                data: allMachines,
+                                                indexes: index,
+                                              ),
+                                            );
+
+                                            
+                                          },
+                                        ),
+                                  ],
+                                ),
+                                         
+
                           ],
                         )
                       ],

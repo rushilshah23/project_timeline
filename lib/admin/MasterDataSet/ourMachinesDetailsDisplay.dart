@@ -50,8 +50,8 @@ class _OurMachinesDetailsDisplayState extends State<OurMachinesDetailsDisplay> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Machine ID: " +
-                      widget.data[widget.indexes]["machineID"].toString()),
+                  // Text("Machine ID: " +
+                  //     widget.data[widget.indexes]["machineID"].toString()),
                   SizedBox(
                     height: 10,
                   ),
