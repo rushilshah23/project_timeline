@@ -67,7 +67,7 @@ class AuthenticationService {
   Future signoutEmailId() async {
     try {
       await _auth.signOut();
-      userfromAuthentication(null);
+      // userfromAuthentication(null);
     } catch (error) {
       debugPrint(error.toString());
     }

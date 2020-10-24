@@ -423,60 +423,61 @@ class _DrivePageState extends State<DrivePage> {
                     //   child: titleStyles("Folder:  "+widget.folderName ?? 'null', 18),
                     //   ),
 
-                    foldersCard.length != 0 || filesCard.length != 0
-                        ? Flexible(
-                            child: ListView(children: [
-                            foldersCard.length != 0 || filesCard.length != 0
-                                ? GridView.builder(
-                                    physics: ScrollPhysics(),
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: (foldersCard.length +
-                                            filesCard.length) ??
-                                        0,
-                                    gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 2),
-                                    itemBuilder: (_, index) {
-                                      // print(
-                                      //     "length is  ${foldersCard.length + filesCard.length}");
-                                      // print(
-                                      //     "foldercard length is ${foldersCard.length}");
-                                      // print(
-                                      //     "filecard length is ${filesCard.length}");
-                                      return index < foldersCard.length
-                                          // &&  index >= 0
-                                          ? foldersCard[index]
-                                          : filesCard[
-                                              index - foldersCard.length];
-                                    })
-                                : Center(
-                                    child: Container(
-                                      padding:
-                                          EdgeInsets.fromLTRB(50, 300, 50, 200),
-                                      child: Text(
-                                        'No Items',
-                                        style: TextStyle(
-                                            fontSize: 40,
-                                            fontWeight: FontWeight.bold,
-                                            color: appColor),
+                    Flexible(
+                      child: foldersCard.length != 0 || filesCard.length != 0
+                          ? ListView(children: [
+                              foldersCard.length != 0 || filesCard.length != 0
+                                  ? GridView.builder(
+                                      physics: ScrollPhysics(),
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: (foldersCard.length +
+                                              filesCard.length) ??
+                                          0,
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 2),
+                                      itemBuilder: (_, index) {
+                                        // print(
+                                        //     "length is  ${foldersCard.length + filesCard.length}");
+                                        // print(
+                                        //     "foldercard length is ${foldersCard.length}");
+                                        // print(
+                                        //     "filecard length is ${filesCard.length}");
+                                        return index < foldersCard.length
+                                            // &&  index >= 0
+                                            ? foldersCard[index]
+                                            : filesCard[
+                                                index - foldersCard.length];
+                                      })
+                                  : Center(
+                                      child: Container(
+                                        padding: EdgeInsets.fromLTRB(
+                                            50, 300, 50, 200),
+                                        child: Text(
+                                          'No Items',
+                                          style: TextStyle(
+                                              fontSize: 40,
+                                              fontWeight: FontWeight.bold,
+                                              color: appColor),
+                                        ),
                                       ),
-                                    ),
-                                  )
-                          ]))
-                        : Center(
-                            child: Container(
-                              padding: EdgeInsets.fromLTRB(50, 300, 50, 200),
-                              child: Text(
-                                'No Items',
-                                style: TextStyle(
-                                    fontSize: 40,
-                                    fontWeight: FontWeight.bold,
-                                    color: appColor),
+                                    )
+                            ])
+                          : Center(
+                              child: Container(
+                                padding: EdgeInsets.fromLTRB(50, 300, 50, 200),
+                                child: Text(
+                                  'No Items',
+                                  style: TextStyle(
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.bold,
+                                      color: appColor),
+                                ),
                               ),
                             ),
-                          ),
-                    // )
+                      // )
+                    )
                   ]))
               : Loading();
         });
