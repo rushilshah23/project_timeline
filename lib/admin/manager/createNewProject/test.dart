@@ -183,7 +183,7 @@ class _TestState extends State<Test> {
         debugPrint(supervisorList[i].uid);
         await supervisor
             .doc(supervisorList[i].uid)
-            .updateData({"assignedProject": uniqueID});
+            .update({"assignedProject": uniqueID});
         await databaseReference
             .child("projects")
             .child(uniqueID)
@@ -584,7 +584,7 @@ class _TestState extends State<Test> {
                     RaisedButton(
                       onPressed: () {
                         debugPrint('Create Project');
-                        showToast("Project Created");
+                      
                         sendToDb();
                       },
                       child: Text("Create Project"),

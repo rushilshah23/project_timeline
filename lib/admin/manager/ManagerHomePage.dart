@@ -34,8 +34,8 @@ class ManagerHomePageState extends State<ManagerHomePage> {
       mobile = '',
       password = '',
       uid = '',
-      userType,
-      assignedProject;
+      userType='',
+      assignedProject='';
   _loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -48,7 +48,7 @@ class ManagerHomePageState extends State<ManagerHomePage> {
       assignedProject = (prefs.getString('assignedProject') ?? '');
 
       print(
-          "inside profile=" + email + name + mobile + lname + assignedProject);
+          "inside profile=" + email + name + mobile + lname + assignedProject+ userType);
     });
   }
 

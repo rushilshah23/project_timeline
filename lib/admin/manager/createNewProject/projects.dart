@@ -1,11 +1,11 @@
 //This page is under manager section
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../CommonWidgets.dart';
-import 'EditProject.dart';
 import 'test.dart';
 
 class CreatedProjects extends StatefulWidget {
@@ -18,13 +18,48 @@ class _CreatedProjectsState extends State<CreatedProjects> {
   List ourCreatedProjects = List();
   List allProjects = List();
 
-
-
+   final CollectionReference markers =
+        FirebaseFirestore.instance.collection("markers");
 
   @override
   void initState() {
     super.initState();
   }
+
+
+    Future<void> _onDelete(String projectID) {
+    return showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text('Are you sure?'),
+        content: new Text('Do you want to delete the project?'),
+        actions: <Widget>[
+          new GestureDetector(
+            onTap: () => Navigator.of(context).pop(false),
+            child: Text("NO"),
+          ),
+          SizedBox(height: 16),
+          new GestureDetector(
+            onTap: () async{
+                databaseReference
+                        .child("projects")
+                        .child(projectID)
+                        .remove();
+
+                        await markers
+                      .doc(projectID)
+                      .delete();
+
+                    showToast("Removed Sucessfully");
+                    Navigator.of(context).pop();
+            },
+            child: Text("YES"),
+          ),
+        ],
+      ),
+    );
+  }
+
 
   Widget displayProject(int index) {
     return Container(
@@ -100,6 +135,15 @@ class _CreatedProjectsState extends State<CreatedProjects> {
                             ),
                           ],
                         )),
+
+                              IconButton(
+                              icon: Icon(Icons.delete),
+                              color: Colors.grey,
+                              onPressed: () {
+                                _onDelete(ourCreatedProjects[index]["projectID"]);
+                              },
+                            ),
+                          
 //                     Container(
 //                         margin: EdgeInsets.only(top: 5),
 //                         child: Column(
@@ -119,11 +163,11 @@ class _CreatedProjectsState extends State<CreatedProjects> {
 //                                 );
 //                               },
 //                             ),
-//                             IconButton(
-//                               icon: Icon(Icons.delete),
+//                              icon: Icon(Icons.delete),
 //                               color: Colors.grey,
 //                               onPressed: () {},
-//                             ),
+//                             ),       IconButton(
+//                       
 //                             IconButton(
 //                               icon: Icon(Icons.add_box),
 //                               color: Colors.grey,
