@@ -369,20 +369,19 @@ class _DrivePageState extends State<DrivePage> {
           getFoldersList();
           return snapshot.hasData && !snapshot.hasError
               ? Scaffold(
-                 appBar: new AppBar(
-                   centerTitle: true, 
-                   automaticallyImplyLeading: false,
-                      iconTheme: IconThemeData(
-                        color: Color(0xff005c9d),
-                      ),
-                      title: Text( 
-                        widget.folderName ?? 'null',
-                          style: TextStyle(
-                            color: Color(0xff005c9d),
-                          )),
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
+                  appBar: new AppBar(
+                    centerTitle: true,
+                    automaticallyImplyLeading: false,
+                    iconTheme: IconThemeData(
+                      color: Color(0xff005c9d),
                     ),
+                    title: Text(widget.folderName ?? 'null',
+                        style: TextStyle(
+                          color: Color(0xff005c9d),
+                        )),
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                  ),
                   // appBar: AppBar(
                   //     backgroundColor: appBarColor,
                   //     title: Text(
@@ -401,9 +400,8 @@ class _DrivePageState extends State<DrivePage> {
                   //     )),
                   //drawer: homeDrawer(context),
 
-                  
                   floatingActionButton: FloatingActionButton(
-                     backgroundColor: Color(0xff005f89),
+                    backgroundColor: Color(0xff005f89),
                     child: Icon(
                       Icons.add,
                       color: Colors.white,
@@ -418,71 +416,68 @@ class _DrivePageState extends State<DrivePage> {
                       //  WillPopScope(
                       //   onWillPop: gobackFolder,
                       //   child:
-                     Column(children:[ 
+                      Column(children: [
+                    //  SizedBox(height: 20,),
 
-                      //  SizedBox(height: 20,),
-                       
-                      
-                      //  Center(
-                      //   child: titleStyles("Folder:  "+widget.folderName ?? 'null', 18),
-                      //   ),
+                    //  Center(
+                    //   child: titleStyles("Folder:  "+widget.folderName ?? 'null', 18),
+                    //   ),
 
-                      
-                       
-                       foldersCard.length != 0 || filesCard.length != 0
-                          ? Flexible(child:ListView(children: [
-                              foldersCard.length != 0 || filesCard.length != 0
-                                  ? GridView.builder(
-                                      physics: ScrollPhysics(),
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.vertical,
-                                      itemCount: (foldersCard.length +
-                                              filesCard.length) ??
-                                          0,
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 2),
-                                      itemBuilder: (_, index) {
-                                        // print(
-                                        //     "length is  ${foldersCard.length + filesCard.length}");
-                                        // print(
-                                        //     "foldercard length is ${foldersCard.length}");
-                                        // print(
-                                        //     "filecard length is ${filesCard.length}");
-                                        return index < foldersCard.length
-                                            // &&  index >= 0
-                                            ? foldersCard[index]
-                                            : filesCard[
-                                                index - foldersCard.length];
-                                      })
-                                  : Center(
-                                      child: Container(
-                                        padding: EdgeInsets.fromLTRB(
-                                            50, 300, 50, 200),
-                                        child: Text(
-                                          'No Items',
-                                          style: TextStyle(
-                                              fontSize: 40,
-                                              fontWeight: FontWeight.bold,
-                                              color: appColor),
-                                        ),
+                    foldersCard.length != 0 || filesCard.length != 0
+                        ? Flexible(
+                            child: ListView(children: [
+                            foldersCard.length != 0 || filesCard.length != 0
+                                ? GridView.builder(
+                                    physics: ScrollPhysics(),
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: (foldersCard.length +
+                                            filesCard.length) ??
+                                        0,
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2),
+                                    itemBuilder: (_, index) {
+                                      // print(
+                                      //     "length is  ${foldersCard.length + filesCard.length}");
+                                      // print(
+                                      //     "foldercard length is ${foldersCard.length}");
+                                      // print(
+                                      //     "filecard length is ${filesCard.length}");
+                                      return index < foldersCard.length
+                                          // &&  index >= 0
+                                          ? foldersCard[index]
+                                          : filesCard[
+                                              index - foldersCard.length];
+                                    })
+                                : Center(
+                                    child: Container(
+                                      padding:
+                                          EdgeInsets.fromLTRB(50, 300, 50, 200),
+                                      child: Text(
+                                        'No Items',
+                                        style: TextStyle(
+                                            fontSize: 40,
+                                            fontWeight: FontWeight.bold,
+                                            color: appColor),
                                       ),
-                                    )
-                            ]))
-                          : Center(
-                              child: Container(
-                                padding: EdgeInsets.fromLTRB(50, 300, 50, 200),
-                                child: Text(
-                                  'No Items',
-                                  style: TextStyle(
-                                      fontSize: 40,
-                                      fontWeight: FontWeight.bold,
-                                      color: appColor),
-                                ),
+                                    ),
+                                  )
+                          ]))
+                        : Center(
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(50, 300, 50, 200),
+                              child: Text(
+                                'No Items',
+                                style: TextStyle(
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.bold,
+                                    color: appColor),
                               ),
                             ),
-                  // )
-                     ]))
+                          ),
+                    // )
+                  ]))
               : Loading();
         });
   }
