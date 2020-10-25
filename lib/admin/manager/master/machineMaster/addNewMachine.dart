@@ -29,7 +29,8 @@ class _AddNewMachineState extends State<AddNewMachine> {
       bucketCapacity,
       operatingWeight,
       modelName,
-      vendorContact;
+      vendorContact,
+       amountOfExavation;
 
   final databaseReference = FirebaseDatabase.instance.reference();
 
@@ -66,15 +67,20 @@ class _AddNewMachineState extends State<AddNewMachine> {
             'name': vendorName,
             'contactNo': vendorContact,
           },
-          'excavation': {
-            for (int i = 0; i < amountOfExavationCount; i++)
-              '$i': {
-                'soilType': soilTypeSelected[i].toString(),
-                'amountOfExcavation': excavationAmount[i].text.toString(),
-              }
-          },
+          'amountOfExcavation':int.parse(amountOfExavation),
+          // 'excavation': {
+          //   for (int i = 0; i < amountOfExavationCount; i++)
+          //     '$i': {
+          //       'soilType': soilTypeSelected[i].toString(),
+          //       'amountOfExcavation': excavationAmount[i].text.toString(),
+          //     }
+          // },
         });
         showToast("Machine added Successfully");
+
+
+        Navigator.of(context).pop();
+
       } catch (e) {
         showToast("Failed. check your internet!");
       }
@@ -323,6 +329,30 @@ class _AddNewMachineState extends State<AddNewMachine> {
                               ),
 
                               SizedBox(height: 10),
+
+
+                               TextFormField(
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                        labelText: "Amount of Excavation",
+                                        hintText: "m3/hr",
+                                        fillColor: Colors.white,
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: Colors.blue, width: 2.0),
+                                          borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(10),
+                                              topLeft: Radius.circular(10),
+                                              bottomRight: Radius.circular(10),
+                                              bottomLeft: Radius.circular(10)),
+                                        ),
+                                      ),
+                                      validator: (val) =>
+                                          val.isEmpty ? 'Enter Excavation' : null,
+                                      onChanged: (val) {
+                                        setState(() => amountOfExavation = val);
+                                      },
+                                    ),
 //                      Text(
 //                        'Fuel Consumption (litre/hr)',
 //                        style: TextStyle(color: Colors.black, fontSize: 16),
@@ -396,54 +426,54 @@ class _AddNewMachineState extends State<AddNewMachine> {
 ////                          )),
 //                        ],
 //                      ),
-                              SizedBox(height: 20),
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 10),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 1,
-                                    color: Colors.grey,
-                                  ),
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(
-                                          5.0) //         <--- border radius here
-                                      ),
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text('Amount of Excavation (m3/hr)',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                            )),
-                                        IconButton(
-                                          icon: Icon(Icons.add,
-                                              color: Colors.indigo[900]),
-                                          onPressed: addDynamic,
-                                        ),
-                                      ],
-                                    ),
-                                    Flexible(
-                                      fit: FlexFit.loose,
-                                      child: new ListView.builder(
-                                        shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(),
-                                        scrollDirection: Axis.vertical,
-                                        itemCount: amountOfExavationCount,
-                                        itemBuilder: (context, index) {
-                                          return AmountOfExavation(
-                                              index: index);
-                                        },
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
+                              // SizedBox(height: 20),
+                              // Container(
+                              //   padding: EdgeInsets.symmetric(
+                              //       vertical: 10, horizontal: 10),
+                              //   decoration: BoxDecoration(
+                              //     border: Border.all(
+                              //       width: 1,
+                              //       color: Colors.grey,
+                              //     ),
+                              //     borderRadius: BorderRadius.all(
+                              //         Radius.circular(
+                              //             5.0) //         <--- border radius here
+                              //         ),
+                              //   ),
+                              //   child: Column(
+                              //     mainAxisSize: MainAxisSize.min,
+                              //     children: [
+                              //       Row(
+                              //         mainAxisAlignment:
+                              //             MainAxisAlignment.spaceBetween,
+                              //         children: [
+                              //           Text('Amount of Excavation (m3/hr)',
+                              //               style: TextStyle(
+                              //                 fontSize: 16,
+                              //               )),
+                              //           IconButton(
+                              //             icon: Icon(Icons.add,
+                              //                 color: Colors.indigo[900]),
+                              //             onPressed: addDynamic,
+                              //           ),
+                              //         ],
+                              //       ),
+                              //       Flexible(
+                              //         fit: FlexFit.loose,
+                              //         child: new ListView.builder(
+                              //           shrinkWrap: true,
+                              //           physics: NeverScrollableScrollPhysics(),
+                              //           scrollDirection: Axis.vertical,
+                              //           itemCount: amountOfExavationCount,
+                              //           itemBuilder: (context, index) {
+                              //             return AmountOfExavation(
+                              //                 index: index);
+                              //           },
+                              //         ),
+                              //       )
+                              //     ],
+                              //   ),
+                              // ),
 
                               SizedBox(height: 20),
                               Text(
@@ -474,8 +504,10 @@ class _AddNewMachineState extends State<AddNewMachine> {
                               ),
                               SizedBox(height: 10),
                               TextFormField(
+                                keyboardType: TextInputType.phone,
                                 decoration: InputDecoration(
                                   labelText: "Contact No",
+                                  
                                   fillColor: Colors.white,
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: const BorderSide(

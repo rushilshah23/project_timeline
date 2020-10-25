@@ -32,7 +32,7 @@ class _EditMachineDataState extends State<EditMachineData> {
       bucketCapacity,
       operatingWeight,
       modelName,
-      vendorContact;
+      vendorContact, amountOfExavation;
   String machineID;
 
   final databaseReference = FirebaseDatabase.instance.reference();
@@ -79,13 +79,14 @@ class _EditMachineDataState extends State<EditMachineData> {
             'name': vendorName,
             'contactNo': vendorContact,
           },
-          'excavation': {
-            for (int i = 0; i < amountOfExavationCount; i++)
-              '$i': {
-                'soilType': soilTypeSelected[i].toString(),
-                'amountOfExcavation': excavationAmount[i].text.toString(),
-              }
-          },
+          'amountOfExcavation':amountOfExavation.toString(),
+          // 'excavation': {
+          //   for (int i = 0; i < amountOfExavationCount; i++)
+          //     '$i': {
+          //       'soilType': soilTypeSelected[i].toString(),
+          //       'amountOfExcavation': excavationAmount[i].text.toString(),
+          //     }
+          // },
         });
         showToast("Machine added Successfully");
           Navigator.of(context).pop();
@@ -109,18 +110,19 @@ class _EditMachineDataState extends State<EditMachineData> {
       operatingWeight = widget.machineDetails["operatingWeight"];
       fuelConsumption = widget.machineDetails["fuelConsumption"];
       machineRent = widget.machineDetails["machineRent"];
+       amountOfExavation = widget.machineDetails["amountOfExcavation"].toString();
       machineID = widget.machineDetails["machineID"];
       vendorName = widget.machineDetails["vendor"]["name"];
       vendorContact = widget.machineDetails["vendor"]["contactNo"];
 
-      List temp = widget.machineDetails["excavation"];
-      amountOfExavationCount = temp.length;
+      // List temp = widget.machineDetails["excavation"];
+      // amountOfExavationCount = temp.length;
 
-      for (int i = 0; i < temp.length; i++) {
-        excavationAmount[i].text = temp[i]["amountOfExcavation"];
-        soilTypeSelected[i] = temp[i]["soilType"];
-      }
-      debugPrint(temp.toString());
+      // for (int i = 0; i < temp.length; i++) {
+      //   excavationAmount[i].text = temp[i]["amountOfExcavation"];
+      //   soilTypeSelected[i] = temp[i]["soilType"];
+      // }
+      // debugPrint(temp.toString());
     });
   }
 
@@ -372,6 +374,30 @@ class _EditMachineDataState extends State<EditMachineData> {
                               ),
 
                               SizedBox(height: 10),
+
+                              TextFormField(
+                                initialValue: amountOfExavation,
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                        labelText: "Amount of Excavation",
+                                        hintText: "m3/hr",
+                                        fillColor: Colors.white,
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: Colors.blue, width: 2.0),
+                                          borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(10),
+                                              topLeft: Radius.circular(10),
+                                              bottomRight: Radius.circular(10),
+                                              bottomLeft: Radius.circular(10)),
+                                        ),
+                                      ),
+                                      validator: (val) =>
+                                          val.isEmpty ? 'Enter Excavation' : null,
+                                      onChanged: (val) {
+                                        setState(() => amountOfExavation = val);
+                                      },
+                                    ),
 //                      Text(
 //                        'Fuel Consumption (litre/hr)',
 //                        style: TextStyle(color: Colors.black, fontSize: 16),
@@ -446,55 +472,55 @@ class _EditMachineDataState extends State<EditMachineData> {
 //                        ],
 //                      ),
                               SizedBox(height: 20),
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 10),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 1,
-                                    color: Colors.grey,
-                                  ),
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(
-                                          5.0) //         <--- border radius here
-                                      ),
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text('Amount of Excavation (m3/hr)',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                            )),
-                                        IconButton(
-                                          icon: Icon(Icons.add,
-                                              color: Colors.indigo),
-                                          onPressed: addDynamic,
-                                        ),
-                                      ],
-                                    ),
-                                    Flexible(
-                                      fit: FlexFit.loose,
-                                      child: new ListView.builder(
-                                        shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(),
-                                        scrollDirection: Axis.vertical,
-                                        itemCount: amountOfExavationCount,
-                                        itemBuilder: (context, index) {
-                                          return AmountOfExavation(
-                                              index: index);
-                                        },
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
+                              // Container(
+                              //   padding: EdgeInsets.symmetric(
+                              //       vertical: 10, horizontal: 10),
+                              //   decoration: BoxDecoration(
+                              //     border: Border.all(
+                              //       width: 1,
+                              //       color: Colors.grey,
+                              //     ),
+                              //     borderRadius: BorderRadius.all(
+                              //         Radius.circular(
+                              //             5.0) //         <--- border radius here
+                              //         ),
+                              //   ),
+                              //   child: Column(
+                              //     mainAxisSize: MainAxisSize.min,
+                              //     children: [
+                              //       Row(
+                              //         mainAxisAlignment:
+                              //             MainAxisAlignment.spaceBetween,
+                              //         children: [
+                              //           Text('Amount of Excavation (m3/hr)',
+                              //               style: TextStyle(
+                              //                 fontSize: 16,
+                              //               )),
+                              //           IconButton(
+                              //             icon: Icon(Icons.add,
+                              //                 color: Colors.indigo),
+                              //             onPressed: addDynamic,
+                              //           ),
+                              //         ],
+                              //       ),
+                              //       Flexible(
+                              //         fit: FlexFit.loose,
+                              //         child: new ListView.builder(
+                              //           shrinkWrap: true,
+                              //           physics: NeverScrollableScrollPhysics(),
+                              //           scrollDirection: Axis.vertical,
+                              //           itemCount: amountOfExavationCount,
+                              //           itemBuilder: (context, index) {
+                              //             return AmountOfExavation(
+                              //                 index: index);
+                              //           },
+                              //         ),
+                              //       )
+                              //     ],
+                              //   ),
+                              // ),
 
-                              SizedBox(height: 20),
+                              // SizedBox(height: 20),
                               Text(
                                 'Vendor Details',
                                 style: TextStyle(
@@ -565,7 +591,7 @@ class _EditMachineDataState extends State<EditMachineData> {
 //                                    ),
                                   FlatButton(
                                     child: buttonContainers(
-                                        130, 16, 'Save Changes', 17),
+                                         MediaQuery.of(context).size.width-100, 20, 'Save Changes', 17),
                                     onPressed: () {
                                       if (_formKey.currentState.validate()) {
                                         debugPrint("true");
@@ -573,16 +599,19 @@ class _EditMachineDataState extends State<EditMachineData> {
                                       }
                                     },
                                   ),
+
+
+                            
                                   SizedBox(
                                     width: 10,
                                   ),
-                                  FlatButton(
-                                    child: buttonContainers(
-                                        130, 16, 'Delete Machine', 17),
-                                    onPressed: () {
-                                      deleteMachine();
-                                    },
-                                  ),
+                                  // FlatButton(
+                                  //   child: buttonContainers(
+                                  //       130, 16, 'Delete Machine', 17),
+                                  //   onPressed: () {
+                                  //     deleteMachine();
+                                  //   },
+                                  // ),
                                 ],
                               ),
                             ],

@@ -6,6 +6,7 @@ import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:uuid/uuid.dart';
 import 'package:geocoder/services/base.dart';
 import '../../CommonWidgets.dart';
+import 'projects.dart';
 
 List<String> machineTypeSelected = [];
 List<TextEditingController> usagePerDay = [];
@@ -201,6 +202,16 @@ class _TestState extends State<Test> {
         });
       });
       showToast("Project added Successfully");
+
+
+                  Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>  CreatedProjects(),),
+                      );
+
+
+
     } catch (e) {
       print(e);
      

@@ -36,8 +36,8 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
       mobile = '',
       password = '',
       uid = '',
-      userType,
-      assignedProject;
+      userType='',
+      assignedProject='';
   _loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -246,10 +246,8 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
                       appbartitle = "Our Projects";
                     }),
 
-                    if (assignedProject != "No project assigned" ||
-                        assignedProject != '' ||
-                        assignedProject != null)
-                       ListTile(
+                     assignedProject.contains(" ")||assignedProject.contains("No project assigned")?Container(): 
+                      ListTile(
                     title: Row(children: <Widget>[
                       Icon(Icons.work),
                       Text(" Your Allocated Projects")

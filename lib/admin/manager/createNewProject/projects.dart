@@ -21,6 +21,12 @@ class _CreatedProjectsState extends State<CreatedProjects> {
    final CollectionReference markers =
         FirebaseFirestore.instance.collection("markers");
 
+         final CollectionReference workersCollec =
+      FirebaseFirestore.instance.collection("workers");
+
+       final CollectionReference supervisorsCollec =
+      FirebaseFirestore.instance.collection("supervisor");
+
   @override
   void initState() {
     super.initState();
@@ -41,6 +47,43 @@ class _CreatedProjectsState extends State<CreatedProjects> {
           SizedBox(height: 16),
           new GestureDetector(
             onTap: () async{
+
+                await  databaseReference
+                        .child("projects")
+                        .child(projectID)
+                        .once().then((value){
+                          
+                          Map projectData= value.value;
+
+                          if(projectData.containsKey("supervisors"))
+                          {
+                              Map supervisors = value.value["supervisors"];
+                              List supervisorsList = supervisors.keys.toList();
+
+                              debugPrint(supervisorsList.toString());
+                               supervisorsList.forEach((sup ) async {
+                                await supervisorsCollec
+                                    .doc(sup)
+                                    .update({"assignedProject": "No project assigned"});
+                              });
+                          }
+
+                          
+                         if(projectData.containsKey("workers"))
+                          {
+                              Map workers = value.value["workers"];
+                              List workersList = workers.keys.toList();
+                               workersList.forEach((workr ) async {
+                                await workersCollec
+                                    .doc(workr)
+                                    .update({"assignedProject": "No project assigned"});
+                              });
+                          }
+
+
+                        });
+
+
                 databaseReference
                         .child("projects")
                         .child(projectID)
@@ -52,6 +95,7 @@ class _CreatedProjectsState extends State<CreatedProjects> {
 
                     showToast("Removed Sucessfully");
                     Navigator.of(context).pop();
+                     
             },
             child: Text("YES"),
           ),

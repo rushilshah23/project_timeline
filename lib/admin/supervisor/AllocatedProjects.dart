@@ -142,10 +142,11 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                               radius: 120.0,
                               lineWidth: 13.0,
                               animation: true,
-                              percent: double.parse("70") / 100,
+                              percent: double.parse(projectDetails["progressPercent"]) / 100,
                               center: new Text(
-                                "70" + "%",
+                                projectDetails["progressPercent"] + "%",
                                 style: new TextStyle(
+                                  color: Color(0xff93e1ed),
                                     fontWeight: FontWeight.bold, fontSize: 20.0),
                               ),
                               circularStrokeCap: CircularStrokeCap.round,
