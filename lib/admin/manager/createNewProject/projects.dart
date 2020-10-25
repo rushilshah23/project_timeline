@@ -272,7 +272,7 @@ class _CreatedProjectsState extends State<CreatedProjects> {
                 !snap.hasError &&
                 snap.data.snapshot.value == null) {
               return Center(
-                child: Text("No request found"),
+                child: Text("No projects found"),
               );
             } else {
               return Center(

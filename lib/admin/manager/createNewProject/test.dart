@@ -204,11 +204,7 @@ class _TestState extends State<Test> {
       showToast("Project added Successfully");
 
 
-                  Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>  CreatedProjects(),),
-                      );
+     Navigator.of(context).pop();
 
 
 

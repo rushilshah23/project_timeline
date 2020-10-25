@@ -221,7 +221,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
         print(hoursWorked);
         machineDetails.forEach((machine) {
           if (machine.machineID == machineUsed) {
-            exacavatedPerHour = double.parse(machine.excavation);
+            exacavatedPerHour = double.parse(machine.excavation.toString());
           }
         });
 
@@ -247,7 +247,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
   }
 
   addtoDB() async {
-    // try {
+    try {
     await databaseReference
         .child("projects")
         .child(projectID)
@@ -285,9 +285,12 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
     pr.hide().then((isHidden) {
       showToast("Added successfully");
     });
-    // } catch (e) {
-    //   showToast("Failed. Check your Internet");
-    // }
+    } catch (e) {
+       pr.hide().then((isHidden) {
+     showToast("Failed. Check your Internet");
+    });
+      
+    }
   }
 
   addDynamic() {
@@ -304,7 +307,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
 
   Widget build(BuildContext context) {
     pr = pr = new ProgressDialog(context,
-        type: ProgressDialogType.Normal, isDismissible: false, showLogs: true);
+        type: ProgressDialogType.Normal, isDismissible: true, showLogs: true);
     if (machines.length > 0)
       return Scaffold(
         body: Container(

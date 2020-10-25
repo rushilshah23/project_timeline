@@ -259,7 +259,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
         print(hoursWorked);
         machineDetails.forEach((machine) {
           if (machine.machineID == machineUsed) {
-            exacavatedPerHour = double.parse(machine.excavation);
+            exacavatedPerHour = double.parse(machine.excavation.toString());
           }
         });
         depth = double.parse(depthController.text);
@@ -328,7 +328,10 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
         showToast("Added successfully");
       });
     } catch (e) {
-      showToast("Failed. Check your Internet");
+       pr.hide().then((isHidden) {
+        showToast("Failed. Check your Internet");
+      });
+     
     }
   }
 
