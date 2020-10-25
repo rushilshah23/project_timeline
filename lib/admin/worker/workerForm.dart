@@ -7,16 +7,18 @@ import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
+import '../CommonWidgets.dart';
 
 int timeIntervals;
 List<DateTime> startTime = List.generate(74, (i) => DateTime.now());
 List<DateTime> endTime = List.generate(74, (i) => DateTime.now());
 
 class WorkerForm extends StatelessWidget {
+
+   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,16 +31,9 @@ class WorkerForm extends StatelessWidget {
 }
 
 class WorkerFormPage extends StatefulWidget {
-  String name, email, mobile, password, uid, userType, assignedProject;
-  WorkerFormPage(
-      {Key key,
-      this.name,
-      this.email,
-      this.mobile,
-      this.assignedProject,
-      this.userType,
-      this.uid})
-      : super(key: key);
+
+  String name , email,  mobile , password,uid, userType,assignedProject;
+  WorkerFormPage({Key key, this.name, this.email, this.mobile, this.assignedProject, this.userType, this.uid}) : super(key: key);
   @override
   _WorkerFormPageState createState() => _WorkerFormPageState();
 }
@@ -68,9 +63,9 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
   TextEditingController commentController = TextEditingController();
   final DateTime now = DateTime.now();
   final DateFormat formatter = DateFormat('dd-MM-yyyy');
-  var projectID;
-  var workerID;
-  var workerName ;
+  var projectID = "b570da70-fa93-11ea-9561-89a3a74b28bb";
+  var workerID = '8YiMHLBnBaNjmr3yPvk8NWvNPmm2';
+  var workerName = 'rajesh kumar';
   List<Asset> images = List<Asset>();
   String _error = 'No Error Dectected';
 
@@ -81,10 +76,13 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
   @override
   void initState() {
     setState(() {
-      projectID = widget.assignedProject;
-      workerID = widget.name;
-      workerName = widget.uid;
       loadData();
+
+      projectID=widget.assignedProject;
+      workerName=widget.name;
+      workerID=widget.uid;
+
+
     });
     timeIntervals = 1;
     super.initState();
@@ -238,10 +236,10 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
       });
 
       if (images.length > 0) {
-        //await uploadFile();
-        //addtoDB();
+        await uploadFile();
+        addtoDB();
       } else if (images.length == 0) {
-        //addtoDB();
+        addtoDB();
       }
     }
   }
@@ -252,7 +250,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
         .child("projects")
         .child(projectID)
         .child("progress")
-        .child("12-09-2020")
+        .child(todaysDate)
         .child(workerID)
         .set({
       "MachineUsed": machineUsed,
@@ -286,10 +284,10 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
       showToast("Added successfully");
     });
     } catch (e) {
-       pr.hide().then((isHidden) {
-     showToast("Failed. Check your Internet");
+     
+      pr.hide().then((isHidden) {
+       showToast("Failed. Check your Internet");
     });
-      
     }
   }
 
@@ -385,11 +383,11 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                             ),
                             IconButton(
                               icon:
-                                  Icon(Icons.remove, color: Color(0xff005c9d)),
+                                  Icon(Icons.remove, color: Colors.deepOrange),
                               onPressed: removeDynamic,
                             ),
                             IconButton(
-                              icon: Icon(Icons.add, color: Color(0xff005c9d)),
+                              icon: Icon(Icons.add, color: Colors.deepOrange),
                               onPressed: addDynamic,
                             ),
                           ],
@@ -644,7 +642,7 @@ class _WorkIntervalsState extends State<WorkIntervals> {
                     ),
                     highlightedTextStyle: TextStyle(
                       fontSize: 15,
-                      color: Color(0xff005c9d)
+                      color: Colors.deepOrange,
                     ),
                     itemHeight: 30,
                     spacing: 0,
@@ -678,7 +676,7 @@ class _WorkIntervalsState extends State<WorkIntervals> {
                     ),
                     highlightedTextStyle: TextStyle(
                       fontSize: 15,
-                      color: Color(0xff005c9d),
+                      color: Colors.deepOrange,
                     ),
                     itemHeight: 30,
                     spacing: 0,
