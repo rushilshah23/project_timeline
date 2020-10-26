@@ -22,7 +22,6 @@ class DeleteUserPage extends StatefulWidget {
 
 class _DeleteUserPageState extends State<DeleteUserPage> {
   var projectID;
-  var userType = "worker";
   var selectedValue;
   List<int> selectedItems = [];
   final List<DropdownMenuItem> items = [];
