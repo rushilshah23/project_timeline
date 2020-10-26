@@ -249,7 +249,7 @@ class _MachineMasterState extends State<MachineMaster> {
                 !snap.hasError &&
                 snap.data.snapshot.value == null) {
               return Center(
-                child: Text("No request found"),
+                child: Text("No data found"),
               );
             } else {
               return Center(

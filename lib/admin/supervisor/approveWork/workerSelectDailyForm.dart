@@ -74,11 +74,13 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
     setState(() {
       projectID = widget.assignedProject;
       loadData();
+      timeIntervals = 1;
+       todaysDate = formatter.format(now);
     });
 
-    timeIntervals = 1;
+    
     super.initState();
-    todaysDate = formatter.format(now);
+   
   }
 
   Widget buildGridView() {
@@ -291,41 +293,42 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
 
   addtoDB() async {
     try {
-      // await databaseReference
-      //     .child("projects")
-      //     .child(projectID)
-      //     .child("progress")
-      //     .child("12-09-2020")
-      //     .child(workerID)
-      //     .set({
-      //   "MachineUsed": machineUsed,
-      //   "hoursWorked": hoursWorked,
-      //   'intervals': {
-      //     for (int i = 0; i < timeIntervals; i++)
-      //       '$i': {
-      //         'startTime': startTime[i].toString(),
-      //         'endTime': endTime[i].toString(),
-      //       }
-      //   },
-      //   'images': {
-      //     for (int i = 0; i < _uploadedFileURL.length; i++)
-      //       '$i': _uploadedFileURL[i].toString(),
-      //   },
-      //   "workerName": workerName,
-      //   "depth": depth,
-      //   "length": length,
-      //   "upperWidth": upperWidth,
-      //   "lowerWidth": lowerWidth,
-      //   "volumeExcavated": volume,
-      //   "estimatedVolume": estimateVolume,
-      //   "workDifference": workDifference,
-      //   "result": estimation,
-      //   "status": "Pending",
-      //   "comment": comment,
-      // });
+      await databaseReference
+          .child("projects")
+          .child(projectID)
+          .child("progress")
+          .child(todaysDate)
+          .child(workerID)
+          .set({
+        "MachineUsed": machineUsed,
+        "hoursWorked": hoursWorked,
+        'intervals': {
+          for (int i = 0; i < timeIntervals; i++)
+            '$i': {
+              'startTime': startTime[i].toString(),
+              'endTime': endTime[i].toString(),
+            }
+        },
+        'images': {
+          for (int i = 0; i < _uploadedFileURL.length; i++)
+            '$i': _uploadedFileURL[i].toString(),
+        },
+        "workerName": workerName,
+        "depth": depth,
+        "length": length,
+        "upperWidth": upperWidth,
+        "lowerWidth": lowerWidth,
+        "volumeExcavated": volume,
+        "estimatedVolume": estimateVolume,
+        "workDifference": workDifference,
+        "result": estimation,
+        "status": "Accepted",
+        "comment": comment,
+      });
 
       pr.hide().then((isHidden) {
         showToast("Added successfully");
+        Navigator.of(context).pop();
       });
     } catch (e) {
        pr.hide().then((isHidden) {
@@ -360,8 +363,14 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
               key: _formKey,
               child: ListView(
                 children: <Widget>[
+                   Center(
+                    child: titleStyles('Update For Workers', 18),
+                  ),
+                    SizedBox(
+                    height: 10,
+                  ),
                   Center(
-                    child: titleStyles('For :' + todaysDate, 18),
+                    child: titleStyles('For :' + todaysDate, 16),
                   ),
                   SizedBox(
                     height: 10,

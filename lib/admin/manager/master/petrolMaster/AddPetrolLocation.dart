@@ -129,7 +129,7 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
                 ),
                 TextFormField(
                   minLines: 1,
-                  maxLines: 3,
+                  maxLines: 6,
                   validator: (String content) {
                     if (content.length == 0) {
                       return "Please Enter Petrol Pump Address";
@@ -267,9 +267,7 @@ class _AddPetrolLocationState extends State<AddPetrolLocation> {
                         },
                       ),
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
+                   
 //                    Flexible(
 //                    child :FlatButton(
 //                      child: Container(

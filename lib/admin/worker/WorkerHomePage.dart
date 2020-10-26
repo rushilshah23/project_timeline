@@ -12,6 +12,7 @@ import 'package:project_timeline/admin/worker/updateWork.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../main.dart';
+import '../profile.dart';
 
 class WorkerHomePage extends StatefulWidget {
   @override
@@ -28,7 +29,7 @@ class WorkerHomePageState extends State<WorkerHomePage> {
       mobile = '',
       password = '',
       uid = '',
-      userType,
+      userType='',
       assignedProject;
   _loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -82,16 +83,7 @@ class WorkerHomePageState extends State<WorkerHomePage> {
               PageRouteBuilder(pageBuilder: (BuildContext context, Animation animation,
                   Animation secondaryAnimation) {
                 return MyApp();
-              }, transitionsBuilder: (BuildContext context, Animation<double> animation,
-                  Animation<double> secondaryAnimation, Widget child) {
-                return new SlideTransition(
-                  position: new Tween<Offset>(
-                    begin: const Offset(1.0, 0.0),
-                    end: Offset.zero,
-                  ).animate(animation),
-                  child: child,
-                );
-              }),
+              },),
               (Route route) => false);
                 },
                 child: Text("YES"),
@@ -170,6 +162,12 @@ class WorkerHomePageState extends State<WorkerHomePage> {
                       currentAccountPicture: InkWell(
                         onTap: () {
                           print("image clicked");
+
+                            Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProfilePage(uid: uid,userType: userType,)),
+                          );
                         },
                         child: CircleAvatar(
                           backgroundColor: Colors.white,

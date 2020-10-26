@@ -79,7 +79,7 @@ class _ApproveWorkState extends State<ApproveWork> {
                 );
 
                 //debugPrint(allMachines.toString());
-                debugPrint(data.keys.toList().toString());
+               // debugPrint(data.keys.toList().toString());
                 days = data.keys.toList();
                 work = data.values.toList();
                 Map temp;
@@ -102,7 +102,7 @@ class _ApproveWorkState extends State<ApproveWork> {
 
 
                 }
-                debugPrint(finalDisplayList.toString());
+                //debugPrint(finalDisplayList.toString());
               }
               return
                 new GroupedListView<dynamic, String>(

@@ -529,7 +529,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
               String documentPath = documentDirectory.path;
               String fullPath = "$documentPath/overallProgress.pdf";
 
-              Navigator.pushReplacement(
+              Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ReportPreviewTesting(path: fullPath),
@@ -569,7 +569,8 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
 
   Widget _myAppBar2() {
     return Container(
-      height: MediaQuery.of(context).size.height/3.5,
+      padding: EdgeInsets.only(bottom:25),
+      //height: MediaQuery.of(context).size.height/3.5,
       width: MediaQuery
           .of(context)
           .size
@@ -630,7 +631,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                           children: [
                             CircularPercentIndicator(
                               backgroundColor: Colors.grey[200],
-                              radius: 120.0,
+                              radius: MediaQuery.of(context).size.height/6,
                               lineWidth: 13.0,
                               animation: true,
                               percent: double.parse(projectData["progressPercent"]) / 100,
@@ -758,13 +759,12 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                       );
                     },
                     child:Card(
+                      elevation: 2,
                       child:Container(
-                          height: MediaQuery.of(context).size.height/5,
-                          width: MediaQuery.of(context).size.width/2.5,
-                          padding: EdgeInsets.only(top: 10),
-                          child:ListView(
-                            children: [
-                              Column(
+                         
+                           width: MediaQuery.of(context).size.width/2-30,
+                         padding: EdgeInsets.symmetric(vertical: 35),
+                          child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(Icons.description,size: 50, color: Colors.grey,),
@@ -772,8 +772,6 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                                   Text("Project Details"),
                                 ],
                               ),
-                            ],
-                          )
                       ),
                     )),
 
@@ -787,13 +785,12 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                       );
                     },
                     child:Card(
+                      elevation: 2,
                       child:Container(
-                          height: MediaQuery.of(context).size.height/5,
-                          width: MediaQuery.of(context).size.width/2.5,
-                          padding: EdgeInsets.only(top: 10),
-                          child:ListView(
-                            children: [
-                              Column(
+                          
+                           width: MediaQuery.of(context).size.width/2-30,
+                         padding: EdgeInsets.symmetric(vertical: 35),
+                          child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(Icons.people,size: 50, color: Colors.grey,),
@@ -801,8 +798,6 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                                   Text("Add Workers"),
                                 ],
                               ),
-                            ],
-                          )
 
                       ),
                     )),
@@ -823,13 +818,11 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                       );
                     },
                     child: Card(
+                      elevation: 2,
                       child:Container(
-                          height: MediaQuery.of(context).size.height/5,
-                          width: MediaQuery.of(context).size.width/2.5,
-                          padding: EdgeInsets.only(top: 10),
-                          child:ListView(
-                            children: [
-                              Column(
+                         width: MediaQuery.of(context).size.width/2-30,
+                         padding: EdgeInsets.symmetric(vertical: 35),
+                          child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(Icons.check_circle_outline,size: 50, color: Colors.grey,),
@@ -837,9 +830,6 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                                   Text("Approve Work"),
                                 ],
                               ),
-                            ],
-                          )
-
                       ),
                     )),
 
@@ -848,22 +838,19 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                         generateOverallReport();
                     },
                     child:Card(
+                      elevation: 2,
                       child:Container(
-                          height: MediaQuery.of(context).size.height/5,
-                          width: MediaQuery.of(context).size.width/2.5,
-                          padding: EdgeInsets.only(top: 10),
-                          child:ListView(
-                            children: [
-                              Column(
+                          
+                           width: MediaQuery.of(context).size.width/2-30,
+                         padding: EdgeInsets.symmetric(vertical: 35),
+                          child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(Icons.insert_drive_file,size: 50, color: Colors.grey,),
                                   SizedBox(height:10),
-                                  Text("Today's Report"),
+                                  Text("Project Report"),
                                 ],
                               ),
-                            ],
-                          )
 
                       ),
                     )),

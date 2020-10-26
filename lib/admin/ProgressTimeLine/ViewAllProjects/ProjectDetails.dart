@@ -96,7 +96,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
     return Scaffold(
       appBar: ThemeAppbar("Our Project", context),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.only(right:20.0,left: 20),
         child: ListView(
           children: [
             Column(
