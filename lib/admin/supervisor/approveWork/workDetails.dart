@@ -113,16 +113,20 @@ class _WorkDetailsState extends State<WorkDetails> {
         child: Material(
       child: Container(
         width: MediaQuery.of(context).size.width / 1.3,
-        height: MediaQuery.of(context).size.height / 1.2,
-        padding: EdgeInsets.fromLTRB(20, 40, 20, 10),
+        height: MediaQuery.of(context).size.height / 1.3,
+        padding: EdgeInsets.symmetric(horizontal: 10),
         child: Container(
           child: ListView(
             children: <Widget>[
+               SizedBox(
+                height: 20,
+              ),
               Center(
 //                        child: Text('Details:',
 //                            style: titlestyles(18, Colors.orange)
 //                        ),
-                child: titleStyles('Details:', 18),
+             
+                child: titleStyles('Work Details:', 18),
               ),
               SizedBox(
                 height: 20,
@@ -167,7 +171,7 @@ class _WorkDetailsState extends State<WorkDetails> {
               Text("Images: "),
               buildGridView(),
               SizedBox(
-                height: 50,
+                height: 20,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

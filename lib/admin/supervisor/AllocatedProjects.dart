@@ -81,10 +81,10 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
 
   getProjDetails() async
   {
-    debugPrint("----------------"+widget.assignedProject.toString());
+    //debugPrint("----------------"+widget.assignedProject.toString());
     await databaseReference.child("projects").child(widget.assignedProject).once().then((
             DataSnapshot dataSnapshot) {
-          debugPrint(dataSnapshot.value.toString());
+          //debugPrint(dataSnapshot.value.toString());
           setState(() {
             projectData = dataSnapshot.value;
             machines= projectData["machinesSelected"];
@@ -495,16 +495,14 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
             allDatesApprovedVolume[i]=allDatesApprovedVolume[i]+double.parse(todaysWorkersDataList[j]["volumeExcavated"].toString());
             approvedVol= approvedVol+double.parse(todaysWorkersDataList[j]["volumeExcavated"].toString());
 
-            debugPrint("------------"+todaysWorkersDataList[j].toString());
+            //debugPrint("------------"+todaysWorkersDataList[j].toString());
 
 
           }
 
           if(allMachinesData.containsKey(todaysWorkersDataList[j]["MachineUsed"]))
-          {
-            debugPrint("sjhdaaaaaaaaaaaaaaaaaaaaaaaaaatr");
+          {           
             String machineModel=allMachinesData[todaysWorkersDataList[j]["MachineUsed"]]["machineName"]+"\n"+allMachinesData[todaysWorkersDataList[j]["MachineUsed"]]["modelName"];
-            debugPrint("------------"+machineModel);
             allDaysReport[i][j]["MachineUsed"]=machineModel;
           }
         }
@@ -543,19 +541,35 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(allocated.toString());
+    //debugPrint(allocated.toString());
 
-   
+      
       
         if (projectData != null) {
           return Scaffold(
 
-              body: ListView(
+              body: StreamBuilder(
+             stream:databaseReference.child("projects").child(widget.assignedProject).onValue,
+               builder: (context, snap) {
+            
+              getProjDetails();
+                 
+              if (snap.hasData &&
+                !snap.hasError &&
+                snap.data.snapshot.value != null) {
+                  return ListView(
                 children: <Widget>[
                   _myAppBar2(),
                   _body()
                 ],
-              )
+              );}
+              else{
+                return Scaffold(
+                  body: Center(child: CircularProgressIndicator(),),
+                );
+
+              }
+            }),
           );
         }
         else{
