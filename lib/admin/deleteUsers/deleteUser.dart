@@ -97,7 +97,7 @@ class _DeleteUserPageState extends State<DeleteUserPage> {
     if (items.length > 0)
       return Scaffold(
           body: Container(
-        padding: EdgeInsets.symmetric( horizontal: 20),
+        padding: EdgeInsets.symmetric( horizontal: 7),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

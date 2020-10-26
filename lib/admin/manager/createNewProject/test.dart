@@ -1033,7 +1033,17 @@ class _TestState extends State<Test> {
                         if (isFormValid)
                           showAlertDialog(context);
                         else
-                          showToast("Incomplete form");
+                        {
+                          if(machineDetailsList.length==0)
+                          {
+                            showToast("Please first add machines to the system");
+                          }
+                          else{
+                            showToast("Incomplete form");
+                          }
+                          
+                        }
+                         
                       }
                     },
                   ),

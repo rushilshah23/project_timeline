@@ -249,11 +249,11 @@ class ManagerHomePageState extends State<ManagerHomePage> {
                 ListTile(
                     title: Row(children: <Widget>[
                       Icon(Icons.star),
-                      Text(" Our Projects")
+                      Text(" Create Project")
                     ]),
                     onTap: () {
                       _onSelectItem(3);
-                      appbartitle = "Our Projects";
+                      appbartitle = "Create Project";
                     }),
                 ListTile(
                     title: Row(children: <Widget>[
