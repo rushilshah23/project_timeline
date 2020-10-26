@@ -3,7 +3,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:project_timeline/admin/reportGeneration/reportTest.dart';
-
 import 'CommonWidgets.dart';
 
 class DashBoard extends StatefulWidget {
@@ -26,9 +25,9 @@ class _DashBoardState extends State<DashBoard> {
   double percent1 = 10;
   double percent2 = 80;
 
-    final databaseReference = FirebaseDatabase.instance.reference();
+  final databaseReference = FirebaseDatabase.instance.reference();
 
-  int team=0;
+  int team = 0;
 
   List allProjects = List();
   int noOfProjects = 0;
@@ -47,11 +46,8 @@ class _DashBoardState extends State<DashBoard> {
     );
   }
 
-
-    getDetails() async
-    {
-
-       int m=0,s=0,w=0;
+  getDetails() async {
+    int m = 0, s = 0, w = 0;
     databaseReference
         .child("projects")
         .once()
@@ -68,7 +64,6 @@ class _DashBoardState extends State<DashBoard> {
         if (progPercent >= 100) completed++;
       }
 
-
       setState(() {
         ongoingPercent = (ongoing / noOfProjects) * 100;
         notStartedPercent = (notStarted / noOfProjects) * 100;
@@ -78,29 +73,33 @@ class _DashBoardState extends State<DashBoard> {
       });
     });
 
+    await FirebaseFirestore.instance
+        .collection('manager')
+        .get()
+        .then((myDocuments) {
+      m = team + myDocuments.docs.length;
+    });
 
+    await FirebaseFirestore.instance
+        .collection('supervisor')
+        .get()
+        .then((myDocuments) {
+      s = team + myDocuments.docs.length;
+    });
 
-     
-       await FirebaseFirestore.instance.collection('manager').get().then((myDocuments){
-                  m=team+myDocuments.docs.length;  
-        });
+    await FirebaseFirestore.instance
+        .collection('worker')
+        .get()
+        .then((myDocuments) {
+      w = team + myDocuments.docs.length;
+    });
 
-         await FirebaseFirestore.instance.collection('supervisor').get().then((myDocuments){
-        s=team+myDocuments.docs.length;
-        });
+    setState(() {
+      team = m + s + w;
+    });
+  }
 
-        await FirebaseFirestore.instance.collection('worker').get().then((myDocuments){
-        w=team+myDocuments.docs.length;  
-        });
-
-        setState(() {
-          team= m+s+w;
-        });
-
-      
-    }
-
-    @override
+  @override
   void initState() {
     super.initState();
     getDetails();
@@ -246,82 +245,81 @@ class _DashBoardState extends State<DashBoard> {
                   color: Colors.grey[800]),
             ),
             SizedBox(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    children: [
-                      CircularPercentIndicator(
-                        radius: 60.0,
-                        lineWidth: 6.0,
-                        animation: true,
-                        percent: completedPercent / 100,
-                        center: new Text(
-                          completedPercent.toInt().toString() + "%",
-                          style: new TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 15.0),
-                        ),
-                        circularStrokeCap: CircularStrokeCap.round,
-                        progressColor: Colors.blue[800],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Column(
+                  children: [
+                    CircularPercentIndicator(
+                      radius: 60.0,
+                      lineWidth: 6.0,
+                      animation: true,
+                      percent: completedPercent / 100,
+                      center: new Text(
+                        completedPercent.toInt().toString() + "%",
+                        style: new TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15.0),
                       ),
-                      SizedBox(height: 10),
-                      Text('Completed',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey[600],
-                              fontSize: 17)),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      CircularPercentIndicator(
-                        radius: 60.0,
-                        lineWidth: 6.0,
-                        animation: true,
-                        percent: ongoingPercent / 100,
-                        center: new Text(
-                          (ongoingPercent.toInt()).toString() + "%",
-                          style: new TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 15.0),
-                        ),
-                        circularStrokeCap: CircularStrokeCap.round,
-                        progressColor: Colors.blue[600],
+                      circularStrokeCap: CircularStrokeCap.round,
+                      progressColor: Colors.blue[800],
+                    ),
+                    SizedBox(height: 10),
+                    Text('Completed',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey[600],
+                            fontSize: 17)),
+                  ],
+                ),
+                Column(
+                  children: [
+                    CircularPercentIndicator(
+                      radius: 60.0,
+                      lineWidth: 6.0,
+                      animation: true,
+                      percent: ongoingPercent / 100,
+                      center: new Text(
+                        (ongoingPercent.toInt()).toString() + "%",
+                        style: new TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15.0),
                       ),
-                      SizedBox(height: 10),
-                      Text('Ongoing',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey[600],
-                              fontSize: 17)),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      CircularPercentIndicator(
-                        radius: 60.0,
-                        lineWidth: 6.0,
-                        animation: true,
-                        percent: notStartedPercent / 100,
-                        center: new Text(
-                          notStartedPercent.toInt().toString() + "%",
-                          style: new TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 15.0),
-                        ),
-                        circularStrokeCap: CircularStrokeCap.round,
-                        progressColor: Colors.blue[300],
+                      circularStrokeCap: CircularStrokeCap.round,
+                      progressColor: Colors.blue[600],
+                    ),
+                    SizedBox(height: 10),
+                    Text('Ongoing',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey[600],
+                            fontSize: 17)),
+                  ],
+                ),
+                Column(
+                  children: [
+                    CircularPercentIndicator(
+                      radius: 60.0,
+                      lineWidth: 6.0,
+                      animation: true,
+                      percent: notStartedPercent / 100,
+                      center: new Text(
+                        notStartedPercent.toInt().toString() + "%",
+                        style: new TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15.0),
                       ),
-                      SizedBox(height: 10),
-                      Text('Not Started',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey[600],
-                              fontSize: 17)),
-                    ],
-                  ),
-                ],
-              ),
+                      circularStrokeCap: CircularStrokeCap.round,
+                      progressColor: Colors.blue[300],
+                    ),
+                    SizedBox(height: 10),
+                    Text('Not Started',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey[600],
+                            fontSize: 17)),
+                  ],
+                ),
+              ],
+            ),
             SizedBox(height: 70),
-
             // RaisedButton(
             //   child: Text("PDF testing"),
             //   onPressed: () {

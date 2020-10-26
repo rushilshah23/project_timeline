@@ -7,6 +7,7 @@ import 'package:project_timeline/admin/MasterDataSet/ourMachines.dart';
 import 'package:project_timeline/admin/MasterDataSet/ourPetrolPump.dart';
 import 'package:project_timeline/admin/ProgressTimeLine/ProgressPage.dart';
 import 'package:project_timeline/admin/dashboard.dart';
+import 'package:project_timeline/admin/deleteUser.dart';
 import 'package:project_timeline/admin/login.dart';
 import 'package:project_timeline/admin/worker/updateWork.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -117,6 +118,15 @@ class WorkerHomePageState extends State<WorkerHomePage> {
 
       case 4:
         return new UpdateWork(
+          name: name,
+          email: email,
+          uid: uid,
+          assignedProject: assignedProject,
+          mobile: mobile,
+          userType: userType,
+        );
+      case 5:
+        return new DeleteUserPage(
           name: name,
           email: email,
           uid: uid,
@@ -236,6 +246,15 @@ class WorkerHomePageState extends State<WorkerHomePage> {
                             _onSelectItem(4);
                             appbartitle = "Update Your Work";
                           }),
+                    ListTile(
+                        title: Row(children: <Widget>[
+                          Icon(Icons.work),
+                          Text("Delete User")
+                        ]),
+                        onTap: () {
+                          _onSelectItem(5);
+                          appbartitle = "Delete User";
+                        }),
 
 //                ListTile(
 //                    title: Row(children: <Widget>[
