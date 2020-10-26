@@ -5,6 +5,8 @@ import 'package:project_timeline/admin/DocumentManager/wrapper.dart';
 import 'package:project_timeline/admin/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../main.dart';
+
 String workerType = "Worker";
 String managerType = "Manager";
 String supervisorType = "Supervisor";
@@ -20,22 +22,79 @@ showToast(String msg) {
       fontSize: 18.0);
 }
 
+
+ Future<bool> _onBackPressed(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text('Are you sure?'),
+        content: new Text('Do you want to exit an App'),
+        actions: <Widget>[
+          new GestureDetector(
+            onTap: () => Navigator.of(context).pop(false),
+            child: Text("NO"),
+          ),
+          SizedBox(height: 16),
+          new GestureDetector(
+            onTap: () async{
+              await AuthenticationService().signoutEmailId();
+              SharedPreferences _sharedpreferences =
+              await SharedPreferences.getInstance();
+              _sharedpreferences.clear();
+              Navigator.pushAndRemoveUntil(
+              context,
+              PageRouteBuilder(pageBuilder: (BuildContext context, Animation animation,
+                  Animation secondaryAnimation) {
+                return MyApp();
+              }, transitionsBuilder: (BuildContext context, Animation<double> animation,
+                  Animation<double> secondaryAnimation, Widget child) {
+                return new SlideTransition(
+                  position: new Tween<Offset>(
+                    begin: const Offset(1.0, 0.0),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: child,
+                );
+              }),
+              (Route route) => false);
+            },
+            child: Text("YES"),
+          ),
+        ],
+      ),
+    ) ??
+        false;
+  }
+
 Widget ThemeAppbar(String title, BuildContext context) {
   return new AppBar(
     actions: <Widget>[
+
+      IconButton(
+          icon: Icon(Icons.home),
+          onPressed: () async {
+          Navigator.pushAndRemoveUntil(
+              context,
+              PageRouteBuilder(pageBuilder: (BuildContext context, Animation animation,
+                  Animation secondaryAnimation) {
+                return MyApp();
+              }, transitionsBuilder: (BuildContext context, Animation<double> animation,
+                  Animation<double> secondaryAnimation, Widget child) {
+                return new SlideTransition(
+                  position: new Tween<Offset>(
+                    begin: const Offset(1.0, 0.0),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: child,
+                );
+              }),
+              (Route route) => false);
+        }),
+
       IconButton(
           icon: Icon(Icons.exit_to_app),
           onPressed: () async {
-            await AuthenticationService().signoutEmailId();
-            SharedPreferences _sharedpreferences =
-                await SharedPreferences.getInstance();
-            _sharedpreferences.clear();
-            return Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) {
-              showToast("Logout Successful");
-              // return Wrapper();
-              return LoginPage();
-            }));
+             _onBackPressed(context);
           })
     ],
     iconTheme: IconThemeData(

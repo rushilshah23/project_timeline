@@ -5,6 +5,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:project_timeline/admin/ProgressTimeLine/theme.dart';
 import 'package:project_timeline/crowdfunding/ApiRazorPay.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProjectDetails extends StatefulWidget {
   Map projectDetails;
@@ -19,11 +20,13 @@ class _ProjectDetailsState extends State<ProjectDetails> {
   List workers = List();
   List images = List();
   int w, s;
+  bool isUser=false;
 
   @override
   void initState() {
     super.initState();
 
+    _loadData();
     images = widget.projectDetails["approvedImages"];
     ////debugPrint(images.toString());
 
@@ -52,6 +55,17 @@ class _ProjectDetailsState extends State<ProjectDetails> {
         workers.length = 0;
       });
     }
+  }
+
+
+    _loadData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+     
+      isUser = (prefs.getBool('isLoggedIn') ?? false);
+  
+    });
   }
 
   Widget buildGridView() {
@@ -280,7 +294,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                 //   ),
                 // ),
                 SizedBox(height: 20),
-                Container(
+                isUser?Container(
                   decoration: BoxDecoration(
                       color: Colors.white70,
                       borderRadius: BorderRadius.circular(5),
@@ -361,7 +375,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                       ],
                     ),
                   ),
-                ),
+                ):Container(),
                 SizedBox(height: 30),
                 Text('Images',
                     style: TextStyle(

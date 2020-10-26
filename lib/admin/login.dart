@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project_timeline/UserSide/Dashboard/Widgets/BottomNav.dart';
 import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
 import 'package:project_timeline/admin/DocumentManager/core/services/database.dart';
 import 'package:project_timeline/admin/DocumentManager/wrapper.dart';
+import '../main.dart';
 import 'Register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'CommonWidgets.dart';
@@ -15,6 +17,7 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'manager/ManagerHomePage.dart';
 import 'supervisor/SupervisorHomePage.dart';
 import 'worker/WorkerHomePage.dart';
+
 
 class LoginPage extends StatefulWidget {
   @override
@@ -53,15 +56,6 @@ class LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
-  // signOut() async {
-  //   await _auth.signOut().then((value) {
-  //     return Navigator.pushReplacement(context,
-  //         MaterialPageRoute(builder: (context) {
-  //       showToast("Logout Successful");
-  //       return Wrapper();
-  //     }));
-  //   });
-  // }
 
   _setData(String name, String email, String mobile, String uid,
       String assignedProject) async {
@@ -745,11 +739,13 @@ class LoginPageState extends State<LoginPage> {
     ];
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     final ProgressDialog pr = ProgressDialog(context);
     // TODO: implement build
-    return new Scaffold(
+     return Scaffold(
         backgroundColor: Colors.white,
         //resizeToAvoidBottomInset: false,
         body: Background(

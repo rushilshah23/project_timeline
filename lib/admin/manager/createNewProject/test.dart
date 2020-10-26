@@ -153,7 +153,7 @@ class _TestState extends State<Test> {
       });
 
       errorType=2;
-      FirebaseFirestore.instance.collection("markers").add({
+      FirebaseFirestore.instance.collection("markers").doc(uniqueID).set({
         'location':
             new GeoPoint(coordinates[0].latitude, coordinates[0].longitude),
         'place': siteAddress,

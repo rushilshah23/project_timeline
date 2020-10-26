@@ -8,6 +8,7 @@ import 'package:project_timeline/admin/DocumentManager/wrapper.dart';
 import 'package:project_timeline/admin/login.dart';
 import 'package:provider/provider.dart';
 
+import '../../main.dart';
 import '../CommonWidgets.dart';
 import 'createAcceptWorker/createAcceptWorker.dart';
 
@@ -142,11 +143,22 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
               SharedPreferences _sharedpreferences =
               await SharedPreferences.getInstance();
               _sharedpreferences.clear();
-              return Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) {
-                    showToast("Logout Successful");
-                   return LoginPage();
-                  }));
+              Navigator.pushAndRemoveUntil(
+              context,
+              PageRouteBuilder(pageBuilder: (BuildContext context, Animation animation,
+                  Animation secondaryAnimation) {
+                return MyApp();
+              }, transitionsBuilder: (BuildContext context, Animation<double> animation,
+                  Animation<double> secondaryAnimation, Widget child) {
+                return new SlideTransition(
+                  position: new Tween<Offset>(
+                    begin: const Offset(1.0, 0.0),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: child,
+                );
+              }),
+              (Route route) => false);
             },
             child: Text("YES"),
           ),

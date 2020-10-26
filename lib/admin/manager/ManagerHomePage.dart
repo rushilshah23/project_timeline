@@ -12,6 +12,7 @@ import 'package:project_timeline/admin/reportGeneration/ReportGeneration.dart';
 import 'package:project_timeline/admin/reportGeneration/reportTest.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../main.dart';
 import '../CommonWidgets.dart';
 import '../dashboard.dart';
 import 'CreateAcceptSupervisor/createAcceptSupervisor.dart';
@@ -86,11 +87,22 @@ class ManagerHomePageState extends State<ManagerHomePage> {
               SharedPreferences _sharedpreferences =
                   await SharedPreferences.getInstance();
               _sharedpreferences.clear();
-              return Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) {
-                    showToast("Logout Successful");
-                  return LoginPage();
-                  }));
+              Navigator.pushAndRemoveUntil(
+              context,
+              PageRouteBuilder(pageBuilder: (BuildContext context, Animation animation,
+                  Animation secondaryAnimation) {
+                return MyApp();
+              }, transitionsBuilder: (BuildContext context, Animation<double> animation,
+                  Animation<double> secondaryAnimation, Widget child) {
+                return new SlideTransition(
+                  position: new Tween<Offset>(
+                    begin: const Offset(1.0, 0.0),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: child,
+                );
+              }),
+              (Route route) => false);
             },
             child: Text("YES"),
           ),
