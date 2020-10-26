@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -212,15 +211,15 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
 
   void submitForm() async {
     if (_formKey.currentState.validate()) {
-      if (selectedMachine != null) {
-        await pr.show();
+      await pr.show();
+      machineUsed = selectedMachine.split(",")[0];
+      hoursWorked = 0;
+      for (int i = 0; i < timeIntervals; i++) {
+        hoursWorked += endTime[i].difference(startTime[i]).inHours;
+      }
+      print(hoursWorked);
+      if (hoursWorked > 0 && selectedMachine != null) {
         setState(() {
-          machineUsed = selectedMachine.split(",")[0];
-          hoursWorked = 0;
-          for (int i = 0; i < timeIntervals; i++) {
-            hoursWorked += endTime[i].difference(startTime[i]).inHours;
-          }
-          print(hoursWorked);
           machineDetails.forEach((machine) {
             if (machine.machineID == machineUsed) {
               exacavatedPerHour = double.parse(machine.excavation.toString());
@@ -244,7 +243,9 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
           addtoDB();
         }
       } else {
-        showToast("Please add machines");
+        pr.hide();
+        if (selectedMachine != null) showToast("Please add machines");
+        if (hoursWorked > 0) showToast("Please enter positive time interval");
       }
     }
   }
