@@ -7,8 +7,6 @@ import 'package:project_timeline/admin/MasterDataSet/ourMachines.dart';
 import 'package:project_timeline/admin/MasterDataSet/ourPetrolPump.dart';
 import 'package:project_timeline/admin/ProgressTimeLine/ProgressPage.dart';
 import 'package:project_timeline/admin/dashboard.dart';
-import 'package:project_timeline/admin/deleteUser.dart';
-import 'package:project_timeline/admin/login.dart';
 import 'package:project_timeline/admin/worker/updateWork.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -125,15 +123,15 @@ class WorkerHomePageState extends State<WorkerHomePage> {
           mobile: mobile,
           userType: userType,
         );
-      case 5:
-        return new DeleteUserPage(
-          name: name,
-          email: email,
-          uid: uid,
-          assignedProject: assignedProject,
-          mobile: mobile,
-          userType: userType,
-        );
+      // case 5:
+      //   return new DeleteUserPage(
+      //     name: name,
+      //     email: email,
+      //     uid: uid,
+      //     assignedProject: assignedProject,
+      //     mobile: mobile,
+      //     userType: userType,
+      //   );
 
       default:
         return new Text("Error");
@@ -246,25 +244,8 @@ class WorkerHomePageState extends State<WorkerHomePage> {
                             _onSelectItem(4);
                             appbartitle = "Update Your Work";
                           }),
-                    ListTile(
-                        title: Row(children: <Widget>[
-                          Icon(Icons.work),
-                          Text("Delete User")
-                        ]),
-                        onTap: () {
-                          _onSelectItem(5);
-                          appbartitle = "Delete User";
-                        }),
+                   
 
-//                ListTile(
-//                    title: Row(children: <Widget>[
-//                      Icon(Icons.people),
-//                      Text(" Create/Accept Supervisors")
-//                    ]),
-//                    onTap: () {
-//                      _onSelectItem(5);
-//                      appbartitle = "Create/Accept Supervisors";
-//                    }),
                   ],
                 ),
               ),

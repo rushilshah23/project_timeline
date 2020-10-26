@@ -6,33 +6,32 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class DeleteUserPage extends StatefulWidget {
-  String name, email, mobile, password, uid, userType, assignedProject;
+  String userType,collectionName;
   DeleteUserPage(
       {Key key,
-      this.name,
-      this.email,
-      this.mobile,
-      this.assignedProject,
       this.userType,
-      this.uid})
+      this.collectionName,
+     })
       : super(key: key);
   @override
   _DeleteUserPageState createState() => _DeleteUserPageState();
 }
 
 class _DeleteUserPageState extends State<DeleteUserPage> {
-  var projectID;
+  //var projectID;
   var selectedValue;
   List<int> selectedItems = [];
   final List<DropdownMenuItem> items = [];
   final List<WorkerList> workersList = [];
-  final CollectionReference workers =
-      FirebaseFirestore.instance.collection("workers");
+  CollectionReference workers;
+     
   final CollectionReference user =
       FirebaseFirestore.instance.collection("user");
   final databaseReference = FirebaseDatabase.instance.reference();
 
   Future<void> getData() async {
+
+    workers=  FirebaseFirestore.instance.collection(widget.collectionName);
     await workers.get().then((querySnapshot) {
       querySnapshot.docs.forEach((result) {
         setState(() {
@@ -86,7 +85,7 @@ class _DeleteUserPageState extends State<DeleteUserPage> {
   @override
   void initState() {
     setState(() {
-      projectID = widget.assignedProject;
+     // projectID = widget.assignedProject;
       getData();
     });
     super.initState();
@@ -98,14 +97,14 @@ class _DeleteUserPageState extends State<DeleteUserPage> {
     if (items.length > 0)
       return Scaffold(
           body: Container(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        padding: EdgeInsets.symmetric( horizontal: 20),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               SizedBox(height: 10),
               Center(
-                child: titleStyles('Delete Workers', 18),
+                child: titleStyles('Delete '+widget.userType, 18),
               ),
               SizedBox(height: 10),
               Card(
@@ -118,12 +117,12 @@ class _DeleteUserPageState extends State<DeleteUserPage> {
                 ),
                 margin: EdgeInsets.all(20),
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: SearchableDropdown.multiple(
                     items: items,
                     selectedItems: selectedItems,
                     displayClearIcon: false,
-                    hint: "Select any",
+                    hint: "Select "+widget.userType,
                     searchHint: "Select any",
                     onChanged: (value) {
                       print(value);
@@ -132,30 +131,30 @@ class _DeleteUserPageState extends State<DeleteUserPage> {
                       });
                     },
                     dialogBox: false,
-                    closeButton: (selectedItemsClose) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          RaisedButton(
-                              onPressed: () {
-                                setState(() {
-                                  selectedItems.clear();
-                                  selectedItems.addAll(
-                                      Iterable<int>.generate(items.length)
-                                          .toList());
-                                });
-                              },
-                              child: Text("Select all")),
-                          RaisedButton(
-                              onPressed: () {
-                                setState(() {
-                                  selectedItems.clear();
-                                });
-                              },
-                              child: Text("Select none")),
-                        ],
-                      );
-                    },
+                    // closeButton: (selectedItemsClose) {
+                    //   return Row(
+                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //     children: <Widget>[
+                    //       RaisedButton(
+                    //           onPressed: () {
+                    //             setState(() {
+                    //               selectedItems.clear();
+                    //               selectedItems.addAll(
+                    //                   Iterable<int>.generate(items.length)
+                    //                       .toList());
+                    //             });
+                    //           },
+                    //           child: Text("Select all")),
+                    //       RaisedButton(
+                    //           onPressed: () {
+                    //             setState(() {
+                    //               selectedItems.clear();
+                    //             });
+                    //           },
+                    //           child: Text("Select none")),
+                    //     ],
+                    //   );
+                    // },
                     menuConstraints: BoxConstraints.tight(Size.fromHeight(350)),
                     isExpanded: true,
                   ),
@@ -171,7 +170,7 @@ class _DeleteUserPageState extends State<DeleteUserPage> {
                   ),
                   child: Center(
                     child: Text(
-                      'Save',
+                      'Delete '+widget.userType+"s",
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),

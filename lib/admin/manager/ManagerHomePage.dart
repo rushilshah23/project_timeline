@@ -1,14 +1,16 @@
+
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/DocumentManager/core/models/usermodel.dart';
 import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
 import 'package:project_timeline/admin/DocumentManager/core/services/pathnavigator.dart';
 import 'package:project_timeline/admin/DocumentManager/ui/screens/home/drive.dart';
 import 'package:project_timeline/admin/DocumentManager/ui/screens/home/shared.dart';
-import 'package:project_timeline/admin/DocumentManager/wrapper.dart';
+
 
 import 'package:project_timeline/admin/ProgressTimeLine/ProgressPage.dart';
-import 'package:project_timeline/admin/login.dart';
-import 'package:project_timeline/admin/reportGeneration/ReportGeneration.dart';
+import 'package:project_timeline/admin/deleteUsers/deleteUser.dart';
+import 'package:project_timeline/admin/deleteUsers/deleteUsersTabs.dart';
+
 import 'package:project_timeline/admin/reportGeneration/reportTest.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -151,6 +153,13 @@ class ManagerHomePageState extends State<ManagerHomePage> {
           folderName: user.userEmail ?? user.userPhoneNo ?? null,
         );
 
+       case 9:
+          return new DeleteUserTabs();
+      // case 9:
+      //   return new DeleteUserPage(userType:workerType,collectionName:"workers");
+
+      //  case 10:
+      //   return new DeleteUserPage(userType:supervisorType,collectionName:"supervisor");  
       default:
         return new Text("Error");
     }
@@ -295,6 +304,26 @@ class ManagerHomePageState extends State<ManagerHomePage> {
                       _onSelectItem(8);
                       appbartitle = "Shared With Me";
                     }),
+
+                       ListTile(
+                    title: Row(children: <Widget>[
+                      Icon(Icons.delete),
+                      Text(" Delete Users")
+                    ]),
+                    onTap: () {
+                      _onSelectItem(9);
+                      appbartitle = "Delete Users";
+                    }),
+
+                    //   ListTile(
+                    // title: Row(children: <Widget>[
+                    //   Icon(Icons.delete),
+                    //   Text(" Delete Supervisors")
+                    // ]),
+                    // onTap: () {
+                    //   _onSelectItem(10);
+                    //   appbartitle = "Delete Supervisors";
+                    // }),
               ],
             ),
           ),

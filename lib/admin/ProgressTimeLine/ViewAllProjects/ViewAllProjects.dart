@@ -139,7 +139,7 @@ class _AllProjectsState extends State<AllProjects> {
               !snap.hasError &&
               snap.data.snapshot.value == null) {
             return Center(
-              child: Text("No request found"),
+              child: Text("No Projects found"),
             );
           } else {
             return Center(

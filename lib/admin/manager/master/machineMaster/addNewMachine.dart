@@ -532,17 +532,15 @@ class _AddNewMachineState extends State<AddNewMachine> {
                                 child: FlatButton(
                                   child: Container(
                                     height: 50,
-                                    width: 400,
+                                    width: MediaQuery.of(context).size.width-100,
                                     color: Color(0xff018abd),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 130, top: 15),
-                                      child: Text(
+                                   
+                                      child: Center(child:Text(
                                         'Add Machine',
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 17),
-                                      ),
-                                    ),
+                                      )),
+                                    
                                   ),
                                   onPressed: () {
                                     if (_formKey.currentState.validate()) {

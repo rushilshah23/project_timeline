@@ -17,6 +17,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import 'approveWork/WorkApproveModule.dart';
+
 
 
 
@@ -827,8 +829,14 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>  WorkApproveModTabs(name: widget.name,email: widget.email, uid: widget.uid,
-                            assignedProject: widget.assignedProject,mobile: widget.mobile,userType: widget.userType,),),
+                          builder: (context) =>  ApproveWork(
+                            name: widget.name,
+                            email: widget.email,
+                            uid: widget.uid,
+                            assignedProject: widget.assignedProject,
+                            mobile: widget.mobile,
+                            userType: widget.userType,
+                          ),),
                       );
                     },
                     child: Card(

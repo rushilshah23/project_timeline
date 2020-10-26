@@ -23,7 +23,8 @@ class _ProfilePageState extends State<ProfilePage> {
   List collection = ["manager", "supervisor", "workers"];
  
   Map myData;
-  String usertype;
+  bool status=false;
+  String usertype,signinMethod;
 
   _loadData() async {
     await FirebaseFirestore.instance
@@ -40,6 +41,8 @@ class _ProfilePageState extends State<ProfilePage> {
         mobileController.text=myData["mobile"]??"";
         addressController.text=myData["address"]??"";
         ageController.text=myData["age"]??"";
+        status=true;
+        signinMethod= myData["signInMethod"]??"";
       });
 
     });
@@ -95,9 +98,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+  
     return Scaffold(
         appBar: ThemeAppbar("Edit Profile", context),
-        body: Center(
+        body: status?Center(
             child: Container(
           // Center is a layout widget. It takes a single child and positions it
           // in the middle of the parent.
@@ -133,7 +137,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     SizedBox(
                       height: 20,
                     ),
-                    TextFormField(
+                    signinMethod.toLowerCase().contains("email")? TextFormField(
                      
 
                       validator: (String content) {
@@ -149,7 +153,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         border: OutlineInputBorder(),
                         //hintText: "Enter Petrol Pump Address",
                       ),
-                    ),
+                    ):Container(),
                     SizedBox(
                       height: 20,
                     ),
@@ -162,6 +166,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           return null;
                         }
                       },
+                      keyboardType: TextInputType.number,
                       controller: mobileController,
                       decoration: InputDecoration(
                         labelText: "Your Mobile",
@@ -242,6 +247,9 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
           ),
-        )));
+        )):
+        Center(child: CircularProgressIndicator(),),
+        );
+      
   }
 }
