@@ -21,9 +21,12 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
   FirebaseAuth auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
 
-  @override
+    @override
   void initState() {
     super.initState();
+    setState(() {
+       password = randomAlphaNumeric(6);
+    });
   }
 
   String _signInMethod = null ?? "email";
@@ -41,12 +44,12 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
   TextEditingController controllerAge;
   TextEditingController controllerPassword;
 
+  
+
   addUserUsingEmail() async {
     debugPrint(name);
     if (_formKey.currentState.validate()) {
-      var uuid = Uuid();
-      String uniqueID = uuid.v1();
-      password = randomAlphaNumeric(6);
+   
       debugPrint("name " + name);
       debugPrint("email " + email);
       debugPrint("phoneNo " + phoneNo);
@@ -283,28 +286,30 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                       },
                     ),
                     SizedBox(height: 15),
-                    // TextFormField(
-                    //   obscureText: true,
-                    //   decoration: InputDecoration(
-                    //     labelText: "Password",
-                    //     fillColor: Colors.white,
-                    //     focusedBorder: OutlineInputBorder(
-                    //       borderSide:
-                    //           const BorderSide(color: Colors.blue, width: 2.0),
-                    //       borderRadius: BorderRadius.only(
-                    //           topRight: Radius.circular(10),
-                    //           topLeft: Radius.circular(10),
-                    //           bottomRight: Radius.circular(10),
-                    //           bottomLeft: Radius.circular(10)),
-                    //     ),
-                    //   ),
-                    //   controller: controllerPassword,
-                    //   validator: (val) => val.isEmpty ? 'Enter Password' : null,
-                    //   onChanged: (val) {
-                    //     setState(() => password = val);
-                    //   },
-                    // ),
-                    SizedBox(height: 10),
+                     _signInMethod == "email" ?TextFormField(
+                  
+                      initialValue: password,
+                      enabled: false,
+                      decoration: InputDecoration(
+                        labelText: "Password",
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.blue, width: 2.0),
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10),
+                              topLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10),
+                              bottomLeft: Radius.circular(10)),
+                        ),
+                      ),
+                      // controller: controllerPassword,
+                      // validator: (val) => val.isEmpty ? 'Enter Password' : null,
+                      // onChanged: (val) {
+                      //   setState(() => password = val);
+                      // },
+                    ):Container(),
+                    SizedBox(height: 20),
                     Center(
                       child: FlatButton(
 //                        child: Container(

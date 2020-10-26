@@ -55,15 +55,15 @@ class _ProfilePageState extends State<ProfilePage> {
         .doc(widget.uid)
         .update({
           'name':nameController.text,
-          'email':emailController.text,
-          'mobile':mobileController.text,
+          'email':emailController.text??"",
+          'mobile':mobileController.text??"",
           'address':addressController.text,
           'age':ageController.text,
             
         });
       
         showToast("Edited Successfully");
-        Navigator.of(context).pop();
+        
      }catch(e)
      {
        debugPrint(e.toString());
@@ -139,14 +139,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     signinMethod.toLowerCase().contains("email")? TextFormField(
                      
-
-                      validator: (String content) {
-                        if (content.isEmpty) {
-                          return "Please fill data";
-                        } else {
-                          return null;
-                        }
-                      },
+                      enabled:signinMethod.toLowerCase().contains("email")?  false:true,
+                      
                       controller: emailController,
                       decoration: InputDecoration(
                         labelText: "Your Email",
@@ -158,14 +152,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       height: 20,
                     ),
                     TextFormField(
+                       enabled:signinMethod.toLowerCase().contains("otp")?  false:true,
                      
-                      validator: (String content) {
-                        if (content.isEmpty) {
-                          return "Please fill data";
-                        } else {
-                          return null;
-                        }
-                      },
                       keyboardType: TextInputType.number,
                       controller: mobileController,
                       decoration: InputDecoration(
@@ -197,7 +185,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       height: 20,
                     ),
                     TextFormField(
+                       
                       validator: (String content) {
+                        
                         if (content.isEmpty) {
                           return "Please fill data";
                         } else {

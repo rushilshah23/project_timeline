@@ -88,7 +88,7 @@ class _DashBoardState extends State<DashBoard> {
     });
 
     await FirebaseFirestore.instance
-        .collection('worker')
+        .collection('workers')
         .get()
         .then((myDocuments) {
       w = team + myDocuments.docs.length;

@@ -22,6 +22,9 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
   @override
   void initState() {
     super.initState();
+    setState(() {
+       password = randomAlphaNumeric(6);
+    });
   }
 
   String _signInMethod = null ?? "email";
@@ -38,10 +41,11 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
   TextEditingController controllerAddress;
   TextEditingController controllerAge;
   TextEditingController controllerPassword;
+  
 
   addUserUsingEmail() async {
     if (_formKey.currentState.validate()) {
-      password = randomAlphaNumeric(6);
+     
       debugPrint("name " + name);
       debugPrint("email " + email);
       debugPrint("phoneNo " + phoneNo);
@@ -80,6 +84,9 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
       }
     }
   }
+
+ 
+  
 
   addUserUsingPhone() async {
     if (_formKey.currentState.validate()) {
@@ -279,28 +286,30 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                       },
                     ),
                     SizedBox(height: 15),
-                    // TextFormField(
-                    //   obscureText: true,
-                    //   decoration: InputDecoration(
-                    //     labelText: "Password",
-                    //     fillColor: Colors.white,
-                    //     focusedBorder: OutlineInputBorder(
-                    //       borderSide:
-                    //           const BorderSide(color: Colors.blue, width: 2.0),
-                    //       borderRadius: BorderRadius.only(
-                    //           topRight: Radius.circular(10),
-                    //           topLeft: Radius.circular(10),
-                    //           bottomRight: Radius.circular(10),
-                    //           bottomLeft: Radius.circular(10)),
-                    //     ),
-                    //   ),
-                    //   controller: controllerPassword,
-                    //   validator: (val) => val.isEmpty ? 'Enter Password' : null,
-                    //   onChanged: (val) {
-                    //     setState(() => password = val);
-                    //   },
-                    // ),
-                    SizedBox(height: 10),
+                     _signInMethod == "email" ?TextFormField(
+                  
+                      initialValue: password,
+                      enabled: false,
+                      decoration: InputDecoration(
+                        labelText: "Password",
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.blue, width: 2.0),
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10),
+                              topLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10),
+                              bottomLeft: Radius.circular(10)),
+                        ),
+                      ),
+                      // controller: controllerPassword,
+                      // validator: (val) => val.isEmpty ? 'Enter Password' : null,
+                      // onChanged: (val) {
+                      //   setState(() => password = val);
+                      // },
+                    ):Container(),
+                    SizedBox(height: 20),
                     Center(
                       child: FlatButton(
 //                        child: Container(
