@@ -77,7 +77,7 @@ class LoginPageState extends State<LoginPage> {
         phoneNumber: phone,
         timeout: Duration(seconds: 120),
         verificationCompleted: (AuthCredential credential) async {
-          Navigator.of(context).pop();
+         
           print(credential);
           print("`````````````````````````````````````````");
           print("Verification Complete");

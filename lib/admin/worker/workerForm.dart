@@ -575,8 +575,9 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                       child: Container(
                         height: 50,
                         width: double.infinity,
+                        color: Color(0xff005f89),
                         decoration: BoxDecoration(
-                          gradient: gradients(),
+                          // gradient: gradients(),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Center(
