@@ -17,8 +17,6 @@ List<DateTime> startTime = List.generate(74, (i) => DateTime.now());
 List<DateTime> endTime = List.generate(74, (i) => DateTime.now());
 
 class WorkerForm extends StatelessWidget {
-
-   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,9 +29,16 @@ class WorkerForm extends StatelessWidget {
 }
 
 class WorkerFormPage extends StatefulWidget {
-
-  String name , email,  mobile , password,uid, userType,assignedProject;
-  WorkerFormPage({Key key, this.name, this.email, this.mobile, this.assignedProject, this.userType, this.uid}) : super(key: key);
+  String name, email, mobile, password, uid, userType, assignedProject;
+  WorkerFormPage(
+      {Key key,
+      this.name,
+      this.email,
+      this.mobile,
+      this.assignedProject,
+      this.userType,
+      this.uid})
+      : super(key: key);
   @override
   _WorkerFormPageState createState() => _WorkerFormPageState();
 }
@@ -78,11 +83,9 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
     setState(() {
       loadData();
 
-      projectID=widget.assignedProject;
-      workerName=widget.name;
-      workerID=widget.uid;
-
-
+      projectID = widget.assignedProject;
+      workerName = widget.name;
+      workerID = widget.uid;
     });
     timeIntervals = 1;
     super.initState();
@@ -209,85 +212,86 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
 
   void submitForm() async {
     if (_formKey.currentState.validate()) {
-      await pr.show();
-      setState(() {
-        machineUsed = selectedMachine.split(",")[0];
-        hoursWorked = 0;
-        for (int i = 0; i < timeIntervals; i++) {
-          hoursWorked += endTime[i].difference(startTime[i]).inHours;
-        }
-        print(hoursWorked);
-        machineDetails.forEach((machine) {
-          if (machine.machineID == machineUsed) {
-            exacavatedPerHour = double.parse(machine.excavation.toString());
+      if (selectedMachine != null) {
+        await pr.show();
+        setState(() {
+          machineUsed = selectedMachine.split(",")[0];
+          hoursWorked = 0;
+          for (int i = 0; i < timeIntervals; i++) {
+            hoursWorked += endTime[i].difference(startTime[i]).inHours;
           }
+          print(hoursWorked);
+          machineDetails.forEach((machine) {
+            if (machine.machineID == machineUsed) {
+              exacavatedPerHour = double.parse(machine.excavation.toString());
+            }
+          });
+          depth = double.parse(depthController.text);
+          length = double.parse(lengthController.text);
+          upperWidth = double.parse(upperWidthController.text);
+          lowerWidth = double.parse(lowerWidthController.text);
+          comment = commentController.text;
+          volume = length * depth * (upperWidth + lowerWidth) / 2;
+          estimateVolume = hoursWorked * exacavatedPerHour;
+          workDifference = (volume - estimateVolume) / estimateVolume * 100;
+          estimation = estimateVolume < volume ? "Pass" : "Fail";
+          print(estimation);
         });
-
-        depth = double.parse(depthController.text);
-        length = double.parse(lengthController.text);
-        upperWidth = double.parse(upperWidthController.text);
-        lowerWidth = double.parse(lowerWidthController.text);
-        comment = commentController.text;
-        volume = length * depth * (upperWidth + lowerWidth) / 2;
-        estimateVolume = hoursWorked * exacavatedPerHour;
-        workDifference = (volume - estimateVolume) / estimateVolume * 100;
-        estimation = estimateVolume < volume ? "Pass" : "Fail";
-        print(estimation);
-      });
-
-      if (images.length > 0) {
-        await uploadFile();
-        addtoDB();
-      } else if (images.length == 0) {
-        addtoDB();
+        if (images.length > 0) {
+          await uploadFile();
+          addtoDB();
+        } else if (images.length == 0) {
+          addtoDB();
+        }
+      } else {
+        showToast("Please add machines");
       }
     }
   }
 
   addtoDB() async {
     try {
-    await databaseReference
-        .child("projects")
-        .child(projectID)
-        .child("progress")
-        .child(todaysDate)
-        .child(workerID)
-        .set({
-      "MachineUsed": machineUsed,
-      "hoursWorked": hoursWorked,
-      "workerID": workerID,
-      'intervals': {
-        for (int i = 0; i < timeIntervals; i++)
-          '$i': {
-            'startTime': startTime[i].toString(),
-            'endTime': endTime[i].toString(),
-          }
-      },
-      'images': {
-        for (int i = 0; i < _uploadedFileURL.length; i++)
-          '$i': _uploadedFileURL[i].toString(),
-      },
-      "workerName": workerName,
-      "depth": depth,
-      "length": length,
-      "upperWidth": upperWidth,
-      "lowerWidth": lowerWidth,
-      "volumeExcavated": volume,
-      "estimatedVolume": estimateVolume,
-      "workDifference": workDifference,
-      "result": estimation,
-      "status": "Pending",
-      "comment": comment,
-    });
+      await databaseReference
+          .child("projects")
+          .child(projectID)
+          .child("progress")
+          .child(todaysDate)
+          .child(workerID)
+          .set({
+        "MachineUsed": machineUsed,
+        "hoursWorked": hoursWorked,
+        "workerID": workerID,
+        'intervals': {
+          for (int i = 0; i < timeIntervals; i++)
+            '$i': {
+              'startTime': startTime[i].toString(),
+              'endTime': endTime[i].toString(),
+            }
+        },
+        'images': {
+          for (int i = 0; i < _uploadedFileURL.length; i++)
+            '$i': _uploadedFileURL[i].toString(),
+        },
+        "workerName": workerName,
+        "depth": depth,
+        "length": length,
+        "upperWidth": upperWidth,
+        "lowerWidth": lowerWidth,
+        "volumeExcavated": volume,
+        "estimatedVolume": estimateVolume,
+        "workDifference": workDifference,
+        "result": estimation,
+        "status": "Pending",
+        "comment": comment,
+      });
 
-    pr.hide().then((isHidden) {
-      showToast("Added successfully");
-    });
-    } catch (e) {
-     
       pr.hide().then((isHidden) {
-       showToast("Failed. Check your Internet");
-    });
+        showToast("Added successfully");
+      });
+    } catch (e) {
+      pr.hide().then((isHidden) {
+        showToast("Failed. Check your Internet");
+      });
     }
   }
 

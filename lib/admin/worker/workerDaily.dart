@@ -81,7 +81,7 @@ class _WorkerDailyState extends State<WorkerDaily> {
                     itemCount: date.length,
                     itemBuilder: (context, index) {
                       return Card(
-                        color: Color(0xff93e1ed),
+                        color: Colors.white,
                         elevation: 3,
                         child: ListTile(
                           leading: getIcon(date[index][workerID]["status"]),
@@ -103,8 +103,8 @@ class _WorkerDailyState extends State<WorkerDaily> {
                 } else {
                   return Center(
                       child: CircularProgressIndicator(
-                        valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
-                      ));
+                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+                  ));
                 }
               }),
         ),
