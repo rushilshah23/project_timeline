@@ -77,7 +77,7 @@ class _BottomNavState extends State<BottomNav> {
           iconTheme: IconThemeData(
             color: Color(0xff005c9d),
           ),
-          title: Text("aol",
+          title: Text("IAHV",
               style: TextStyle(
                 color: Color(0xff005c9d),
               )),
