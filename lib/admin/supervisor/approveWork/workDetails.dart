@@ -24,12 +24,19 @@ class _WorkDetailsState extends State<WorkDetails> {
   String progressPercent;
   double totalVol;
   double totalProgress;
+  double workdiff=0.0;
 
   @override
   void initState() {
     debugPrint(widget.data["date"].toString());
     debugPrint(widget.data["images"].toString());
-    images = widget.data["images"];
+
+    if(widget.data.containsKey("images"))
+     images = widget.data["images"];
+
+     setState(() {
+       workdiff=  widget.data["workDifference"];
+     });
 
     databaseReference
         .child("projects")
@@ -160,7 +167,7 @@ class _WorkDetailsState extends State<WorkDetails> {
               SizedBox(
                 height: 30,
               ),
-              Text("Work difference: "+ widget.data["workDifference"].toString()+" %"),
+              Text("Work difference: "+ workdiff.toInt().toString()+" %"),
               SizedBox(
                 height: 15,
               ),
