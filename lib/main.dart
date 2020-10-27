@@ -10,6 +10,8 @@ import 'admin/manager/createNewProject/test.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geocoder/services/base.dart';
 
+import 'intro/intro.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -51,7 +53,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          home: BottomNav(),
+          home: IntroScreen(),
         ),
       ),
       //   },
