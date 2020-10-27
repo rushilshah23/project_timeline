@@ -60,7 +60,7 @@ class _ApproveWorkState extends State<ApproveWork> {
 
     return new Scaffold(
 
-      appBar:  ThemeAppbar("Approve Work",context),
+      //appBar:  ThemeAppbar("Approve Work",context),
 
 
       body: StreamBuilder(

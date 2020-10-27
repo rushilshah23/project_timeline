@@ -829,7 +829,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>  ApproveWork(
+                          builder: (context) =>  WorkApproveModTabs(
                             name: widget.name,
                             email: widget.email,
                             uid: widget.uid,
