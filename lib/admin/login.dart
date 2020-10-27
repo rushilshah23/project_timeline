@@ -94,7 +94,7 @@ class LoginPageState extends State<LoginPage> {
           await pr.hide();
           showDialog(
               context: context,
-              barrierDismissible: false,
+              barrierDismissible: true,
               builder: (context) {
                 return AlertDialog(
                   title: Text("Give the code?"),

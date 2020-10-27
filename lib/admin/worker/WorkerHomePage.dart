@@ -232,9 +232,7 @@ class WorkerHomePageState extends State<WorkerHomePage> {
                           _onSelectItem(3);
                           appbartitle = "Our Projects";
                         }),
-                    if (assignedProject != "No project assigned" ||
-                        assignedProject != '' ||
-                        assignedProject != null)
+                   assignedProject.contains(" ")||assignedProject.contains("No project assigned")?Container():
                       ListTile(
                           title: Row(children: <Widget>[
                             Icon(Icons.work),

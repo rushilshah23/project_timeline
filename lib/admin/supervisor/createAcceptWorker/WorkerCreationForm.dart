@@ -130,7 +130,19 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
           ),
         ),
         controller: controllerEmail,
-        validator: (val) => val.isEmpty ? 'Enter Email' : null,
+        validator: (val) {
+           Pattern pattern =
+        r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
+        r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
+        r"{0,253}[a-zA-Z0-9])?)*$";
+          RegExp regex = new RegExp(pattern);
+          if(val.isEmpty)
+          return 'Enter Email';
+          if (!regex.hasMatch(val) || val == null)
+          return 'Enter a valid email address';
+          else
+            return null;
+        } ,
         onChanged: (val) {
           setState(() => email = val);
         },
@@ -236,8 +248,14 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                         ),
                       ),
                       controller: controllerPhoneNo,
-                      validator: (val) =>
-                          val.isEmpty ? 'Enter Phone Number' : null,
+                          validator: (val) {
+                        
+                          if(val.isEmpty) return 'Enter Phone Number';
+                          if (val.length<10|| val.length>10)
+                          return 'Enter a valid Phone Number';
+                          else
+                            return null;
+                        },    
                       onChanged: (val) {
                         setState(() => phoneNo = val);
                       },

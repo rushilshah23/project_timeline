@@ -89,7 +89,7 @@ class _RegisterState extends State<Register> {
               );
 
               AuthenticationService().userfromAuthentication(user);
-              showToast("User requested Added");
+              showToast("Request Successfully Sent");
             });
           });
         });
@@ -237,7 +237,7 @@ class _RegisterState extends State<Register> {
           'age': age,
           'signInMethod': "otp"
         }).then((value) {
-          showToast("User request Added");
+          showToast("Request successfully sent");
         });
       });
       setState(() {
@@ -277,6 +277,7 @@ class _RegisterState extends State<Register> {
       ),
       SizedBox(height: 15),
       TextFormField(
+        keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           labelText: "Email",
           fillColor: Colors.white,
@@ -291,15 +292,29 @@ class _RegisterState extends State<Register> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerEmail,
-        validator: (val) => val.isEmpty ? 'Enter Email' : null,
+        validator: (val) {
+           Pattern pattern =
+        r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
+        r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
+        r"{0,253}[a-zA-Z0-9])?)*$";
+          RegExp regex = new RegExp(pattern);
+          if(val.isEmpty)
+          return 'Enter Email';
+          if (!regex.hasMatch(val) || val == null)
+          return 'Enter a valid email address';
+          else
+            return null;
+        } ,
         onChanged: (val) {
           setState(() => email = val);
         },
       ),
       SizedBox(height: 15),
       TextFormField(
+        keyboardType: TextInputType.number,
         decoration: InputDecoration(
           labelText: "Phone no",
+        
           fillColor: Colors.white,
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.blue, width: 2.0),
@@ -312,7 +327,14 @@ class _RegisterState extends State<Register> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerPhoneNo,
-        validator: (val) => val.isEmpty ? 'Enter Phone Number' : null,
+        validator: (val) {
+         
+          if(val.isEmpty) return 'Enter Phone Number';
+           if (val.length<10|| val.length>10)
+          return 'Enter a valid Phone Number';
+          else
+            return null;
+        },  
         onChanged: (val) {
           setState(() => phoneNo = val);
         },
@@ -340,8 +362,10 @@ class _RegisterState extends State<Register> {
       ),
       SizedBox(height: 15),
       TextFormField(
+          keyboardType: TextInputType.number,
         decoration: InputDecoration(
           labelText: "Age",
+          
           fillColor: Colors.white,
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.blue, width: 2.0),
@@ -361,6 +385,7 @@ class _RegisterState extends State<Register> {
       ),
       SizedBox(height: 15),
       TextFormField(
+         // keyboardType: TextInputType.visiblePassword,
         obscureText: true,
         decoration: InputDecoration(
           labelText: "Password",
@@ -477,7 +502,17 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ThemeAppbar("Request Login", context),
+     appBar:  AppBar(
+          iconTheme: IconThemeData(
+            color: Color(0xff005c9d),
+          ),
+          title: Text("Register",
+              style: TextStyle(
+                color: Color(0xff005c9d),
+              )),
+          backgroundColor: Colors.white,
+         
+        ),
       body: Container(
         child: Form(
           key: _formKey,
