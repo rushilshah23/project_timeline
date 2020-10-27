@@ -323,6 +323,9 @@ class _RegisterState extends State<Register> {
       ),
       SizedBox(height: 15),
       TextFormField(
+        textInputAction: TextInputAction.newline,
+        keyboardType: TextInputType.multiline,
+        maxLines: null,
         decoration: InputDecoration(
           labelText: "Address",
           fillColor: Colors.white,

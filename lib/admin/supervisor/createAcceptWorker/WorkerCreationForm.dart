@@ -254,6 +254,9 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                     ),
                     SizedBox(height: 15),
                     TextFormField(
+                      textInputAction: TextInputAction.newline,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
                       decoration: InputDecoration(
                         labelText: "Address",
                         fillColor: Colors.white,
