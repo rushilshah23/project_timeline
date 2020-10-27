@@ -24,19 +24,18 @@ class _WorkDetailsState extends State<WorkDetails> {
   String progressPercent;
   double totalVol;
   double totalProgress;
-  double workdiff=0.0;
+  double workdiff = 0.0;
 
   @override
   void initState() {
     debugPrint(widget.data["date"].toString());
     debugPrint(widget.data["images"].toString());
 
-    if(widget.data.containsKey("images"))
-     images = widget.data["images"];
+    if (widget.data.containsKey("images")) images = widget.data["images"];
 
-     setState(() {
-       workdiff=  widget.data["workDifference"];
-     });
+    setState(() {
+      workdiff = widget.data["workDifference"];
+    });
 
     databaseReference
         .child("projects")
@@ -125,14 +124,14 @@ class _WorkDetailsState extends State<WorkDetails> {
         child: Container(
           child: ListView(
             children: <Widget>[
-               SizedBox(
+              SizedBox(
                 height: 20,
               ),
               Center(
 //                        child: Text('Details:',
 //                            style: titlestyles(18, Colors.orange)
 //                        ),
-             
+
                 child: titleStyles('Work Details:', 18),
               ),
               SizedBox(
@@ -167,7 +166,7 @@ class _WorkDetailsState extends State<WorkDetails> {
               SizedBox(
                 height: 30,
               ),
-              Text("Work difference: "+ workdiff.toInt().toString()+" %"),
+              Text("Work difference: " + workdiff.toInt().toString() + " %"),
               SizedBox(
                 height: 15,
               ),
@@ -176,7 +175,7 @@ class _WorkDetailsState extends State<WorkDetails> {
                 height: 25,
               ),
               Text("Images: "),
-              buildGridView(),
+              //buildGridView(),
               SizedBox(
                 height: 20,
               ),

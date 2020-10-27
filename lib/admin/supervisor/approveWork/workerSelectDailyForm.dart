@@ -75,12 +75,9 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
       projectID = widget.assignedProject;
       loadData();
       timeIntervals = 1;
-       todaysDate = formatter.format(now);
+      todaysDate = formatter.format(now);
     });
-
-    
     super.initState();
-   
   }
 
   Widget buildGridView() {
@@ -186,6 +183,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
         .once()
         .then((snapshot) {
       snapshot.value.forEach((key, values) {
+        print(values);
         setState(() {
           machines.add(
             DropdownMenuItem(
@@ -208,8 +206,9 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                   values['modelName'].toString(),
             ),
           );
-          machineDetails
-              .add(MachineDetails(values["machineID"], values["excavation"]));
+          machineDetails.add(
+            MachineDetails(values["machineID"], values["amountOfExcavation"]),
+          );
         });
       });
     });
@@ -261,6 +260,8 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
         print(hoursWorked);
         machineDetails.forEach((machine) {
           if (machine.machineID == machineUsed) {
+            print("MAchine Selected Here");
+            print(machine.excavation);
             exacavatedPerHour = double.parse(machine.excavation.toString());
           }
         });
@@ -281,9 +282,8 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
         print(workerName);
         print(workerID);
       });
-
       if (images.length > 0) {
-        // await uploadFile();
+        await uploadFile();
         addtoDB();
       } else if (images.length == 0) {
         addtoDB();
@@ -331,10 +331,9 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
         Navigator.of(context).pop();
       });
     } catch (e) {
-       pr.hide().then((isHidden) {
+      pr.hide().then((isHidden) {
         showToast("Failed. Check your Internet");
       });
-     
     }
   }
 
@@ -363,10 +362,10 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
               key: _formKey,
               child: ListView(
                 children: <Widget>[
-                   Center(
+                  Center(
                     child: titleStyles('Update For Workers', 18),
                   ),
-                    SizedBox(
+                  SizedBox(
                     height: 10,
                   ),
                   Center(
