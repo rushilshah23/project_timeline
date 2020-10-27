@@ -21,11 +21,11 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
   FirebaseAuth auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
 
-    @override
+  @override
   void initState() {
     super.initState();
     setState(() {
-       password = randomAlphaNumeric(6);
+      password = randomAlphaNumeric(6);
     });
   }
 
@@ -37,19 +37,17 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
   String age;
   String password;
 
-  TextEditingController controllerName;
-  TextEditingController controllerEmail;
-  TextEditingController controllerPhoneNo;
-  TextEditingController controllerAddress;
-  TextEditingController controllerAge;
-  TextEditingController controllerPassword;
-
-  
+  final controllerName = TextEditingController();
+  final controllerEmail = TextEditingController();
+  final controllerPhoneNo = TextEditingController();
+  final controllerOTP = TextEditingController();
+  final controllerAddress = TextEditingController();
+  final controllerAge = TextEditingController();
+  final controllerPassword = TextEditingController();
 
   addUserUsingEmail() async {
     debugPrint(name);
     if (_formKey.currentState.validate()) {
-   
       debugPrint("name " + name);
       debugPrint("email " + email);
       debugPrint("phoneNo " + phoneNo);
@@ -67,22 +65,14 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
             "uid": result.user.uid,
             "address": address,
             "age": age,
-             "signInMethod": 'email',
-             "assignedProject":'No project assigned',
+            "signInMethod": 'email',
+            "assignedProject": 'No project assigned',
             "password": password
           }).then((value) async {
             showToast("Added successfully");
           });
         });
 
-        setState(() {
-          controllerAddress = null;
-          controllerName = null;
-          controllerEmail = null;
-          controllerPhoneNo = null;
-          controllerAge = null;
-          controllerPassword = null;
-        });
         // Navigator.pop(context);
       } catch (e) {
         showToast("Failed. Check your Internet !");
@@ -99,18 +89,10 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
           "name": name,
           "address": address,
           "age": age,
-           "assignedProject":'No project assigned',
+          "assignedProject": 'No project assigned',
           "signInMethod": 'otp',
         }).then((value) async {
           showToast("Added successfully");
-        });
-        setState(() {
-          controllerAddress = null;
-          controllerName = null;
-          controllerEmail = null;
-          controllerPhoneNo = null;
-          controllerAge = null;
-          controllerPassword = null;
         });
       } catch (e) {
         showToast("Failed. Check your Internet !");
@@ -136,18 +118,17 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
         controller: controllerEmail,
         keyboardType: TextInputType.emailAddress,
         validator: (val) {
-           Pattern pattern =
-        r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
-        r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
-        r"{0,253}[a-zA-Z0-9])?)*$";
+          Pattern pattern =
+              r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
+              r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
+              r"{0,253}[a-zA-Z0-9])?)*$";
           RegExp regex = new RegExp(pattern);
-          if(val.isEmpty)
-          return 'Enter Email';
+          if (val.isEmpty) return 'Enter Email';
           if (!regex.hasMatch(val) || val == null)
-          return 'Enter a valid email address';
+            return 'Enter a valid email address';
           else
             return null;
-        } ,
+        },
         onChanged: (val) {
           setState(() => email = val);
         },
@@ -192,6 +173,10 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                                 onChanged: (value) {
                                   setState(() {
                                     _signInMethod = value;
+                                    controllerName.clear();
+                                    controllerPhoneNo.clear();
+                                    controllerAddress.clear();
+                                    controllerAge.clear();
                                   });
                                 }),
                             Text("Email ID")
@@ -205,6 +190,12 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                                 onChanged: (value) {
                                   setState(() {
                                     _signInMethod = value;
+                                    controllerName.clear();
+                                    controllerEmail.clear();
+                                    controllerPhoneNo.clear();
+                                    controllerAddress.clear();
+                                    controllerAge.clear();
+                                    controllerPassword.clear();
                                   });
                                 }),
                             Text("OTP")
@@ -239,7 +230,6 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                     ),
                     SizedBox(height: 15),
                     TextFormField(
-
                       decoration: InputDecoration(
                         labelText: "Phone no",
                         fillColor: Colors.white,
@@ -254,14 +244,13 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                         ),
                       ),
                       controller: controllerPhoneNo,
-                     validator: (val) {
-                        
-                          if(val.isEmpty) return 'Enter Phone Number';
-                          if (val.length<10|| val.length>10)
+                      validator: (val) {
+                        if (val.isEmpty) return 'Enter Phone Number';
+                        if (val.length < 10 || val.length > 10)
                           return 'Enter a valid Phone Number';
-                          else
-                            return null;
-                        },    
+                        else
+                          return null;
+                      },
                       onChanged: (val) {
                         setState(() => phoneNo = val);
                       },
@@ -310,29 +299,30 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                       },
                     ),
                     SizedBox(height: 15),
-                     _signInMethod == "email" ?TextFormField(
-                  
-                      initialValue: password,
-                      enabled: false,
-                      decoration: InputDecoration(
-                        labelText: "Password",
-                        fillColor: Colors.white,
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.blue, width: 2.0),
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              topLeft: Radius.circular(10),
-                              bottomRight: Radius.circular(10),
-                              bottomLeft: Radius.circular(10)),
-                        ),
-                      ),
-                      // controller: controllerPassword,
-                      // validator: (val) => val.isEmpty ? 'Enter Password' : null,
-                      // onChanged: (val) {
-                      //   setState(() => password = val);
-                      // },
-                    ):Container(),
+                    _signInMethod == "email"
+                        ? TextFormField(
+                            initialValue: password,
+                            enabled: false,
+                            decoration: InputDecoration(
+                              labelText: "Password",
+                              fillColor: Colors.white,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Colors.blue, width: 2.0),
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(10),
+                                    topLeft: Radius.circular(10),
+                                    bottomRight: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10)),
+                              ),
+                            ),
+                            // controller: controllerPassword,
+                            // validator: (val) => val.isEmpty ? 'Enter Password' : null,
+                            // onChanged: (val) {
+                            //   setState(() => password = val);
+                            // },
+                          )
+                        : Container(),
                     SizedBox(height: 20),
                     Center(
                       child: FlatButton(
