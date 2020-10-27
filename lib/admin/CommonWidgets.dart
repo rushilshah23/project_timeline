@@ -133,7 +133,7 @@ titleStyles(String text, double size) {
       style: TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: size,
-        color: Colors.blue[900],
+        color:  Color(0xff005c9d),
         fontStyle: FontStyle.italic,
       ));
 }

@@ -515,7 +515,7 @@ class _RegisterState extends State<Register> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Center(
-                        child: titleStyles('Register for Work Requests', 18)),
+                        child: titleStyles('Fill Your Details', 18)),
                     SizedBox(height: 15),
                     Row(
                       children: [
@@ -594,7 +594,7 @@ class _RegisterState extends State<Register> {
                     ),
                     Center(
                       child: FlatButton(
-                        child: buttonContainers(400, 20, 'Register', 18),
+                        child: buttonContainers(400, 15, 'Register', 18),
                         onPressed: () {
                           _signInMethod == "email"
                               ? addUserUsingEmail()
