@@ -65,6 +65,8 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
             "address": address,
             "age": age,
             "password": password,
+           
+          "signInMethod": 'email',
           }).then((value) async {
             showToast("Added successfully");
           });
@@ -97,6 +99,8 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
           "name": name,
           "address": address,
           "age": age,
+            "assignedProject":'No project assigned',
+          "signInMethod": 'otp',
         }).then((value) async {
           showToast("Added successfully");
         });
@@ -130,6 +134,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
           ),
         ),
         controller: controllerEmail,
+         keyboardType: TextInputType.emailAddress,
         validator: (val) {
            Pattern pattern =
         r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"

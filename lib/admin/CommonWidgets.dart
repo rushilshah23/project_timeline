@@ -48,6 +48,7 @@ showToast(String msg) {
                 return MyApp();
               }, ),
               (Route route) => false);
+              showToast("Successful logout");
             },
             child: Text("YES"),
           ),
@@ -80,6 +81,7 @@ Widget ThemeAppbar(String title, BuildContext context) {
                 );
               }),
               (Route route) => false);
+              
         }),
 
       IconButton(

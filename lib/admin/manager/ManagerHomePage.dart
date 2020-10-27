@@ -97,6 +97,7 @@ class ManagerHomePageState extends State<ManagerHomePage> {
                 return MyApp();
               },),
               (Route route) => false);
+               showToast("Successful logout");
             },
             child: Text("YES"),
           ),
@@ -311,7 +312,13 @@ class ManagerHomePageState extends State<ManagerHomePage> {
                       Text(" Delete Users")
                     ]),
                     onTap: () {
-                      _onSelectItem(9);
+                     // _onSelectItem(9);
+
+                        Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DeleteUserTabs()),
+                      );
                       appbartitle = "Delete Users";
                     }),
 

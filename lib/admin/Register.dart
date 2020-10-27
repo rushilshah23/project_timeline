@@ -155,7 +155,7 @@ class _RegisterState extends State<Register> {
           codeSent: (String verificationId, [int forceResendingToken]) {
             showDialog(
                 context: context,
-                barrierDismissible: false,
+                barrierDismissible: true,
                 builder: (context) {
                   return AlertDialog(
                     title: Text("Give the code?"),
@@ -311,9 +311,9 @@ class _RegisterState extends State<Register> {
       ),
       SizedBox(height: 15),
       TextFormField(
-        keyboardType: TextInputType.number,
+      
         decoration: InputDecoration(
-          labelText: "Phone no",
+          labelText: "Mobile no",
         
           fillColor: Colors.white,
           focusedBorder: OutlineInputBorder(
@@ -327,6 +327,7 @@ class _RegisterState extends State<Register> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerPhoneNo,
+          keyboardType: TextInputType.number,
         validator: (val) {
          
           if(val.isEmpty) return 'Enter Phone Number';
@@ -435,7 +436,7 @@ class _RegisterState extends State<Register> {
       SizedBox(height: 15),
       TextFormField(
         decoration: InputDecoration(
-          labelText: "Phone no",
+          labelText: "Mobile no",
           fillColor: Colors.white,
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.blue, width: 2.0),
@@ -448,7 +449,15 @@ class _RegisterState extends State<Register> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerPhoneNo,
-        validator: (val) => val.isEmpty ? 'Enter Phone Number' : null,
+         keyboardType: TextInputType.number,
+        validator: (val) {
+         
+          if(val.isEmpty) return 'Enter Phone Number';
+           if (val.length<10|| val.length>10)
+          return 'Enter a valid Phone Number';
+          else
+            return null;
+        },  
         onChanged: (val) {
           setState(() => phoneNo = val);
         },
@@ -476,6 +485,7 @@ class _RegisterState extends State<Register> {
       ),
       SizedBox(height: 15),
       TextFormField(
+        keyboardType: TextInputType.number,
         decoration: InputDecoration(
           labelText: "Age",
           fillColor: Colors.white,
@@ -594,6 +604,7 @@ class _RegisterState extends State<Register> {
                     Center(
                       child: FlatButton(
                         child: buttonContainers(400, 20, 'Register', 18),
+                        
                         onPressed: () {
                           _signInMethod == "email"
                               ? addUserUsingEmail()

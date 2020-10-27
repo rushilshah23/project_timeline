@@ -80,6 +80,7 @@ class _DeleteUserPageState extends State<DeleteUserPage> {
     });
     await pr.hide();
     showToast("User Deleted Successfully");
+    Navigator.of(context).pop();
   }
 
   @override

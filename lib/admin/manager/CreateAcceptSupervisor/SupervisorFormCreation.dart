@@ -67,6 +67,8 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
             "uid": result.user.uid,
             "address": address,
             "age": age,
+             "signInMethod": 'email',
+             "assignedProject":'No project assigned',
             "password": password
           }).then((value) async {
             showToast("Added successfully");
@@ -97,6 +99,8 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
           "name": name,
           "address": address,
           "age": age,
+           "assignedProject":'No project assigned',
+          "signInMethod": 'otp',
         }).then((value) async {
           showToast("Added successfully");
         });
@@ -130,6 +134,7 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
           ),
         ),
         controller: controllerEmail,
+        keyboardType: TextInputType.emailAddress,
         validator: (val) {
            Pattern pattern =
         r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"

@@ -84,6 +84,7 @@ class WorkerHomePageState extends State<WorkerHomePage> {
                 return MyApp();
               },),
               (Route route) => false);
+               showToast("Successful logout");
                 },
                 child: Text("YES"),
               ),

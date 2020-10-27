@@ -222,18 +222,51 @@ class _TestState extends State<Test> {
   Future<void> getData() async {
     await supervisors.get().then((querySnapshot) {
       querySnapshot.docs.forEach((result) {
+
+        Color color;
+        String status='';
+        String isAssng= result["assignedProject"];
+        if(isAssng.contains(" ")||isAssng.contains("No project assigned"))
+        {
+          color = Colors.green[700];
+          status= "No project assigned";
+        }
+        else  {
+          color = Colors.blue[700];
+          status= "Project assigned";
+          }
+
+       
         setState(() {
           supervisorDropdwnItems.add(
             DropdownMenuItem(
               child: Container(
+                //color: color,
+                padding: EdgeInsets.all(10),
                   child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(result['name']),
-                  Text(
+                  
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                    result.data().containsKey("email")?Text(
+                    result['email'].toString(),
+                    style: TextStyle(color: Colors.grey),
+                  ):Container(),
+                   result.data().containsKey("mobile")? Text(
                     result['mobile'],
                     style: TextStyle(color: Colors.grey),
+                  ):Container(),
+                    ],
                   ),
+
+                  Text(
+                    status,
+                    style: TextStyle(color:color),
+                  )
+                 
                 ],
               )),
               value: result['name'],

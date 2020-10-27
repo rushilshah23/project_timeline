@@ -52,7 +52,7 @@ class _WorkApproveModTabsState extends State<DeleteUserTabs>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     // appBar: ThemeAppbar("Approve Work", context),
+      appBar: ThemeAppbar("Delete Users", context),
       body: SafeArea(
         child: ListView(
           children: <Widget>[

@@ -166,15 +166,15 @@ class LoginPageState extends State<LoginPage> {
               //
               if (user.uid != null) {
                 await pr.hide();
-                print("```````````````````````````");
-                print("account login successful");
-                print(user.uid);
-                print(element.data()["email"]);
-                print(element.data()["mobile"]);
-                print(element.data()["name"]);
-                print(element.data()["assignedProject"]);
-                showToast("Login Successful");
-                print("```````````````````````````");
+                // print("```````````````````````````");
+                // print("account login successful");
+                // print(user.uid);
+                // print(element.data()["email"]);
+                // print(element.data()["mobile"]);
+                // print(element.data()["name"]);
+                // print(element.data()["assignedProject"]);
+                 showToast("Login Successful");
+                // print("```````````````````````````");
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => ManagerHomePage()),
@@ -328,14 +328,14 @@ class LoginPageState extends State<LoginPage> {
               User user = result.user;
               if (user.uid != null) {
                 await pr.hide();
-                print("```````````````````````````");
-                print("account creation successful");
-                print(user.uid);
-                print(element.data()["mobile"]);
-                print(element.data()["name"]);
-                print(element.data()["assignedProject"]);
-                showToast("Login Successful");
-                print("```````````````````````````");
+                // print("```````````````````````````");
+                // print("account creation successful");
+                // print(user.uid);
+                // print(element.data()["mobile"]);
+                // print(element.data()["name"]);
+                // print(element.data()["assignedProject"]);
+                 showToast("Login Successful");
+                // print("```````````````````````````");
                 users.doc(user.uid).set({
                   "assignedProject": "No project assigned",
                   "mobile": element["mobile"],
@@ -370,13 +370,13 @@ class LoginPageState extends State<LoginPage> {
                 User user = result.user;
                 if (user.uid != null) {
                   await pr.hide();
-                  print("```````````````````````````");
-                  print(element.data()["uid"]);
-                  print(element.data()["mobile"]);
-                  print(element.data()["name"]);
-                  print(element.data()["assignedProject"]);
-                  showToast("Login Successful");
-                  print("```````````````````````````");
+                  // print("```````````````````````````");
+                  // print(element.data()["uid"]);
+                  // print(element.data()["mobile"]);
+                  // print(element.data()["name"]);
+                  // print(element.data()["assignedProject"]);
+                   showToast("Login Successful");
+                  // print("```````````````````````````");
                   _setData(
                       element.data()["name"],
                       element.data()["email"],
@@ -393,7 +393,8 @@ class LoginPageState extends State<LoginPage> {
             });
           });
           if (flag == 0) {
-            showToast("Please register first");
+            await pr.hide();
+            showToast("Account not accepted");
           }
         } else {
           await newPhoneUser.doc(_email).delete();
@@ -410,14 +411,14 @@ class LoginPageState extends State<LoginPage> {
               if (user.uid != null) {
                 await pr.hide();
 
-                print("```````````````````````````");
-                print("account creation successful");
-                print(user.uid);
-                print(element.data()["mobile"]);
-                print(element.data()["name"]);
-                print(element.data()["assignedProject"]);
-                showToast("Login Successful");
-                print("```````````````````````````");
+                // print("```````````````````````````");
+                // print("account creation successful");
+                // print(user.uid);
+                // print(element.data()["mobile"]);
+                // print(element.data()["name"]);
+                // print(element.data()["assignedProject"]);
+                 showToast("Login Successful");
+                // print("```````````````````````````");
                 supervisor.doc(user.uid).set({
                   "assignedProject": "No project assigned",
                   "mobile": element["mobile"],
@@ -453,13 +454,13 @@ class LoginPageState extends State<LoginPage> {
                 if (user.uid != null) {
                   await pr.hide();
 
-                  print("```````````````````````````");
-                  print(element.data()["uid"]);
-                  print(element.data()["mobile"]);
-                  print(element.data()["name"]);
-                  print(element.data()["assignedProject"]);
-                  showToast("Login Successful");
-                  print("```````````````````````````");
+                  // print("```````````````````````````");
+                  // print(element.data()["uid"]);
+                  // print(element.data()["mobile"]);
+                  // print(element.data()["name"]);
+                  // print(element.data()["assignedProject"]);
+                   showToast("Login Successful");
+                  // print("```````````````````````````");
                   _setData(
                       element.data()["name"],
                       element.data()["email"],
@@ -476,7 +477,8 @@ class LoginPageState extends State<LoginPage> {
             });
           });
           if (flag == 0) {
-            showToast("Please register first");
+            await pr.hide();
+            showToast("Account not accepted");
           }
         } else {
           await newPhoneUser.doc(_email).delete();
@@ -496,14 +498,14 @@ class LoginPageState extends State<LoginPage> {
               if (user.uid != null) {
                 await pr.hide();
 
-                print("```````````````````````````");
-                print("account creation successful");
-                print(user.uid);
-                print(element.data()["mobile"]);
-                print(element.data()["name"]);
-                print(element.data()["assignedProject"]);
-                showToast("Login Successful");
-                print("```````````````````````````");
+                // print("```````````````````````````");
+                // print("account creation successful");
+                // print(user.uid);
+                // print(element.data()["mobile"]);
+                // print(element.data()["name"]);
+                // print(element.data()["assignedProject"]);
+                 showToast("Login Successful");
+                // print("```````````````````````````");
                 workers.doc(user.uid).set({
                   "assignedProject": "No project assigned",
                   "mobile": element["mobile"],
@@ -545,13 +547,13 @@ class LoginPageState extends State<LoginPage> {
                 User user = result.user;
                 if (user.uid != null) {
                   await pr.hide();
-                  print("```````````````````````````");
-                  print(element.data()["uid"]);
-                  print(element.data()["mobile"]);
-                  print(element.data()["name"]);
-                  print(element.data()["assignedProject"]);
-                  showToast("Login Successful");
-                  print("```````````````````````````");
+                  // print("```````````````````````````");
+                  // print(element.data()["uid"]);
+                  // print(element.data()["mobile"]);
+                  // print(element.data()["name"]);
+                  // print(element.data()["assignedProject"]);
+                   showToast("Login Successful");
+                  // print("```````````````````````````");
                   _setData(
                       element.data()["name"],
                       element.data()["email"],
@@ -567,7 +569,8 @@ class LoginPageState extends State<LoginPage> {
             });
           });
           if (flag == 0) {
-            showToast("Please register first");
+            pr.hide();
+            showToast("Account not accepted");
           }
         } else {
           await newPhoneUser.doc(_email).delete();
@@ -584,14 +587,14 @@ class LoginPageState extends State<LoginPage> {
               if (user.uid != null) {
                 await pr.hide();
 
-                print("```````````````````````````");
-                print("account creation successful");
-                print(user.uid);
-                print(element.data()["mobile"]);
-                print(element.data()["name"]);
-                print(element.data()["assignedProject"]);
-                showToast("Login Successful");
-                print("```````````````````````````");
+                // print("```````````````````````````");
+                // print("account creation successful");
+                // print(user.uid);
+                // print(element.data()["mobile"]);
+                // print(element.data()["name"]);
+                // print(element.data()["assignedProject"]);
+                 showToast("Login Successful");
+                // print("```````````````````````````");
                 manager.doc(user.uid).set({
                   "assignedProject": "No project assigned",
                   "mobile": element["mobile"],
@@ -627,13 +630,13 @@ class LoginPageState extends State<LoginPage> {
                 if (user.uid != null) {
                   await pr.hide();
 
-                  print("```````````````````````````");
-                  print(element.data()["uid"]);
-                  print(element.data()["mobile"]);
-                  print(element.data()["name"]);
-                  print(element.data()["assignedProject"]);
+                  // print("```````````````````````````");
+                  // print(element.data()["uid"]);
+                  // print(element.data()["mobile"]);
+                  // print(element.data()["name"]);
+                  // print(element.data()["assignedProject"]);
                   showToast("Login Successful");
-                  print("```````````````````````````");
+                  // print("```````````````````````````");
                   _setData(
                       element.data()["name"],
                       element.data()["email"],
@@ -650,7 +653,8 @@ class LoginPageState extends State<LoginPage> {
             });
           });
           if (flag == 0) {
-            showToast("Please register first");
+               pr.hide();
+            showToast("Account not accepted");
           }
         } else {
           await newPhoneUser.doc(_email).delete();
@@ -678,6 +682,7 @@ class LoginPageState extends State<LoginPage> {
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.email),
             hintText: 'Email',
+             labelText: 'Email',
             contentPadding: EdgeInsets.all(20.0),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
@@ -700,6 +705,7 @@ class LoginPageState extends State<LoginPage> {
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.vpn_key),
             hintText: 'Password',
+             labelText: "Password",
             contentPadding: EdgeInsets.all(20.0),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
@@ -722,11 +728,19 @@ class LoginPageState extends State<LoginPage> {
               _email = value;
             });
           },
-          validator: (val) => val.isEmpty ? 'Enter mobile number' : null,
-          keyboardType: TextInputType.phone,
+           validator: (val) {
+         
+          if(val.isEmpty) return 'Enter Phone Number';
+           if (val.length<10|| val.length>10)
+          return 'Enter a valid Phone Number';
+          else
+            return null;
+        },  
+          keyboardType: TextInputType.number,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.phone),
             hintText: 'Mobile Number',
+             labelText: "Mobile Number",
             contentPadding: EdgeInsets.all(20.0),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
@@ -786,7 +800,7 @@ class LoginPageState extends State<LoginPage> {
                             Text(
                               "Signed In Method: ",
                               style: GoogleFonts.merriweather(
-                                  fontWeight: FontWeight.w700, fontSize: 16),
+                                  fontWeight: FontWeight.w700, fontSize: 14),
                             ),
                             Row(
                               children: [
@@ -803,7 +817,7 @@ class LoginPageState extends State<LoginPage> {
                                   "Email",
                                   style: GoogleFonts.merriweather(
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 16),
+                                      fontSize: 15),
                                 ),
                               ],
                             ),
@@ -822,7 +836,7 @@ class LoginPageState extends State<LoginPage> {
                                   "OTP",
                                   style: GoogleFonts.merriweather(
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 16),
+                                      fontSize: 15),
                                 ),
                               ],
                             ),
@@ -834,7 +848,7 @@ class LoginPageState extends State<LoginPage> {
                             Text(
                               "User Type: ",
                               style: GoogleFonts.merriweather(
-                                  fontWeight: FontWeight.w700, fontSize: 16),
+                                  fontWeight: FontWeight.w700, fontSize: 14),
                             ),
                             SizedBox(
                               width: 30,
