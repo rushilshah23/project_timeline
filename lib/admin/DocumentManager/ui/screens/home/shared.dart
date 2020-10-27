@@ -112,7 +112,7 @@ class _SharedPageState extends State<SharedPage> {
                             child: Text(
                               'No Items',
                               style: TextStyle(
-                                  fontSize: 40,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: appColor),
                             ),

@@ -322,13 +322,13 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
         "estimatedVolume": estimateVolume,
         "workDifference": workDifference,
         "result": estimation,
-        "status": "Accepted",
+        "status": "Pending",
         "comment": comment,
       });
 
       pr.hide().then((isHidden) {
         showToast("Added successfully");
-        Navigator.of(context).pop();
+        //Navigator.of(context).pop();
       });
     } catch (e) {
       pr.hide().then((isHidden) {

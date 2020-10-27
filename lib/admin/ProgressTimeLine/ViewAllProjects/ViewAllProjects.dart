@@ -63,7 +63,8 @@ class _AllProjectsState extends State<AllProjects> {
                           radius: 48.0,
                           lineWidth: 5,
                           animation: true,
-                          percent: double.parse(allProjects[index]["progressPercent"].toString()) / 100,
+                          percent: double.parse(allProjects[index]["progressPercent"])<100? double.parse(allProjects[index]["progressPercent"])>0?
+                              double.parse(allProjects[index]["progressPercent"])/ 100:0:1,
                           center: new Text(
                             allProjects[index]["progressPercent"].toString() + "%",
                             style: new TextStyle(

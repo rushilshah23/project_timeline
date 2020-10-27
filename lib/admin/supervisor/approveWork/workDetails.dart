@@ -31,10 +31,14 @@ class _WorkDetailsState extends State<WorkDetails> {
     debugPrint(widget.data["date"].toString());
     debugPrint(widget.data["images"].toString());
 
-    if (widget.data.containsKey("images")) images = widget.data["images"];
+    if (widget.data.containsKey("images")) 
+    setState(() {
+       images = widget.data["images"];
+    });
+   
 
     setState(() {
-      workdiff = widget.data["workDifference"];
+      workdiff = double.parse(widget.data["workDifference"].toString());
     });
 
     databaseReference
@@ -175,7 +179,7 @@ class _WorkDetailsState extends State<WorkDetails> {
                 height: 25,
               ),
               Text("Images: "),
-              //buildGridView(),
+              buildGridView(),
               SizedBox(
                 height: 20,
               ),

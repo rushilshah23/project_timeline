@@ -210,7 +210,7 @@ class _ShareDrivePageState extends State<ShareDrivePage> {
                                     child: Text(
                                       'No Items',
                                       style: TextStyle(
-                                          fontSize: 40,
+                                          fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                           color: appColor),
                                     ),
@@ -223,7 +223,7 @@ class _ShareDrivePageState extends State<ShareDrivePage> {
                             child: Text(
                               'No Items',
                               style: TextStyle(
-                                  fontSize: 40,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: appColor),
                             ),

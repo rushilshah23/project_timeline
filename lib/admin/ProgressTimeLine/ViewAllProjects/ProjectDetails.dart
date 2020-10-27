@@ -113,10 +113,8 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                           radius: 140.0,
                           lineWidth: 10.0,
                           animation: true,
-                          percent: double.parse(widget
-                                  .projectDetails["progressPercent"]
-                                  .toString()) /
-                              100,
+                          percent: double.parse(widget.projectDetails["progressPercent"])<100? double.parse(widget.projectDetails["progressPercent"])>0?
+                              double.parse(widget.projectDetails["progressPercent"])/ 100:0:1,
                           center: new Text(
                             widget.projectDetails["progressPercent"]
                                     .toString() +
@@ -131,11 +129,12 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                     ),
                     Column(
                       children: [
+                        SizedBox(height: 8),
                         Text('Project Name',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 21,
-                              color: Colors.indigo[300],
+                              color: Color(0xff005c9d),
                               fontStyle: FontStyle.italic,
                             )),
                         SizedBox(height: 8),
@@ -155,7 +154,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
-                                      color: Colors.indigo[300],
+                                      color: Color(0xff005c9d),
                                       fontStyle: FontStyle.italic,
                                     )),
                                 SizedBox(height: 8),
@@ -182,7 +181,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
-                                      color: Colors.indigo[300],
+                                      color: Color(0xff005c9d),
                                       fontStyle: FontStyle.italic,
                                     )),
                                 SizedBox(height: 8),
@@ -208,7 +207,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
-                                      color: Colors.indigo[300],
+                                      color: Color(0xff005c9d),
                                       fontStyle: FontStyle.italic,
                                     )),
                                 SizedBox(height: 8),
@@ -234,7 +233,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
-                                      color: Colors.indigo[300],
+                                      color: Color(0xff005c9d),
                                       fontStyle: FontStyle.italic,
                                     )),
                                 SizedBox(height: 8),
@@ -260,7 +259,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
-                      color: Colors.indigo[300],
+                      color: Color(0xff005c9d),
                       fontStyle: FontStyle.italic,
                     )),
                 Container(
@@ -281,7 +280,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                 //     style: TextStyle(
                 //       fontWeight: FontWeight.bold,
                 //       fontSize: 18,
-                //       color: Colors.indigo[300],
+                //       color: Color(0xff005c9d),
                 //       fontStyle: FontStyle.italic,
                 //     )
                 // ),
@@ -311,7 +310,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
-                                  color: Colors.indigo[300],
+                                  color: Color(0xff005c9d),
                                   fontStyle: FontStyle.italic,
                                 )),
                             Container(
@@ -348,7 +347,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
-                                  color: Colors.indigo[300],
+                                  color: Color(0xff005c9d),
                                   fontStyle: FontStyle.italic,
                                 )),
                             Container(
@@ -381,7 +380,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
-                      color: Colors.indigo[300],
+                      color: Color(0xff005c9d),
                       fontStyle: FontStyle.italic,
                     )),
 

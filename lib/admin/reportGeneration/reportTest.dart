@@ -357,7 +357,8 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                       ),
                       pw.CircularProgressIndicator(
                         value:
-                        double.parse(projectData["progressPercent"]) / 100,
+                         double.parse(projectData["progressPercent"])<100? double.parse(projectData["progressPercent"])>0?
+                              double.parse(projectData["progressPercent"])/ 100:0:1,
                         backgroundColor: PdfColors.grey300,
                         color: PdfColors.cyan600,
                         strokeWidth: 10,

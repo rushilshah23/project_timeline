@@ -300,7 +300,8 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                       ),
                       pw.CircularProgressIndicator(
                         value:
-                        double.parse(projectData["progressPercent"]) / 100,
+                      double.parse(projectData["progressPercent"])<100? double.parse(projectData["progressPercent"])>0?
+                              double.parse(projectData["progressPercent"])/ 100:0:1,
                         backgroundColor: PdfColors.grey300,
                         color: PdfColors.cyan600,
                         strokeWidth: 10,
@@ -650,7 +651,8 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                               radius: MediaQuery.of(context).size.height/6,
                               lineWidth: 13.0,
                               animation: true,
-                              percent: double.parse(projectData["progressPercent"]) / 100,
+                              percent: double.parse(projectData["progressPercent"])<100? double.parse(projectData["progressPercent"])>0?
+                              double.parse(projectData["progressPercent"])/ 100:0:1,
                               center: new Text(
                                 projectData["progressPercent"] + "%",
                                 style: new TextStyle(
