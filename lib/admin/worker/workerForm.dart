@@ -329,7 +329,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                   ),
                   SearchableDropdown.single(
                     items: machines,
-                    value: null,
+                    value: selectedMachine,
                     hint: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Text("Select any"),
@@ -575,14 +575,11 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                       child: Container(
                         height: 50,
                         width: double.infinity,
-                       
                         decoration: BoxDecoration(
                           // gradient: gradients(),
                           color: Color(0xff018abd),
                           borderRadius: BorderRadius.circular(10),
                         ),
-
-
                         child: Center(
                           child: Text(
                             "Submit",

@@ -376,7 +376,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                   ),
                   SearchableDropdown.single(
                     items: workers,
-                    value: null,
+                    value: selectedWorker,
                     hint: "Select one",
                     searchHint: "Select one",
                     onChanged: (value) {
@@ -392,7 +392,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                   ),
                   SearchableDropdown.single(
                     items: machines,
-                    value: null,
+                    value: selectedMachine,
                     hint: "Select one",
                     searchHint: "Select one",
                     onChanged: (value) {
