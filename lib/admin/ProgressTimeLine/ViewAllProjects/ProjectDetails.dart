@@ -401,6 +401,11 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                 .toString())));
                   },
                 ),
+
+                  SizedBox(
+                  height: 20,
+                ),
+
               ],
             ),
           ],

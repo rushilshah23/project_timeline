@@ -80,16 +80,19 @@ class _WorkDetailsState extends State<WorkDetails> {
       });
     }
 
-    // if (status == "Declined") {
-    //   totalVol = double.parse(volumeExcavated) -
-    //       double.parse(widget.data["volumeExcavated"].toString());
-    //   totalProgress = (totalVol / double.parse(volumeToBeExcavated)) * 100;
+    if (status == "Declined") {
+       if(widget.data["status"].toString().contains("Accepted"))
+      { 
+      totalVol = double.parse(volumeExcavated) -
+          double.parse(widget.data["volumeExcavated"].toString());
+      totalProgress = (totalVol / double.parse(volumeToBeExcavated)) * 100;
 
-    //   await databaseReference.child("projects").child(widget.projectID).update({
-    //     'volumeExcavated': totalVol.ceil().toString(),
-    //     'progressPercent': totalProgress.ceil().toString(),
-    //   });
-    // }
+      await databaseReference.child("projects").child(widget.projectID).update({
+        'volumeExcavated': totalVol.ceil().toString(),
+        'progressPercent': totalProgress.ceil().toString(),
+      });
+      }
+    }
 
     showToast("$status successfully");
      Navigator.of(context).pop();

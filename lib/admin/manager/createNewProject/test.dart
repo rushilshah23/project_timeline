@@ -1169,7 +1169,10 @@ class _SelectMachinesState extends State<SelectMachines> {
                       .map<DropdownMenuItem<String>>((var value) {
                     return DropdownMenuItem<String>(
                       value: value.machineID,
-                      child: Text(value.machineName),
+                      child:Container(child: Column(children: [
+                        Text(value.machineName),
+                         Text(value.modelName,style: TextStyle(color: Colors.grey)),
+                      ],),),
                     );
                   }).toList(),
                 ),
