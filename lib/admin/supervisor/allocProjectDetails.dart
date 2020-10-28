@@ -295,11 +295,11 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
 
 
                 Container(
-                  width: MediaQuery.of(context).size.width-50,
+                  //width: MediaQuery.of(context).size.width-50,
                   child: Text(
                     widget.projectDetails["siteAddress"].toString(),
                     overflow: TextOverflow.visible,
-                    maxLines: 5,
+                    //maxLines: 5,
                     softWrap: true,
                     style: TextStyle(
                         fontSize: 15,
