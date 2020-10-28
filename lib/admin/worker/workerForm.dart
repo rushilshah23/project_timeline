@@ -207,6 +207,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
 
     debugPrint(_uploadedFileURL.toString());
     debugPrint("done-------------------------------------------");
+    Navigator.of(context).pop();
   }
 
   void submitForm() async {
@@ -571,7 +572,10 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                     width: double.infinity,
                     height: 50,
                     child: FlatButton(
-                      onPressed: submitForm,
+                      onPressed:(){
+                        
+                        submitForm();
+                      } ,
                       child: Container(
                         height: 50,
                         width: double.infinity,
