@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:project_timeline/HeatMap/heatmap.dart';
 import 'package:project_timeline/UserSide/AboutUs/MainPage/HomeScreen.dart';
 import 'package:project_timeline/UserSide/Dashboard/Widgets/Couroselitems.dart';
 import 'package:project_timeline/UserSide/Feedback/MainFeedbackPage/feedback.dart';
@@ -168,7 +169,7 @@ class _MyHomeState extends State<MyHome> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HomeScreen()));
+                              builder: (context) => HeatMap()));    //Heatmap
                     },
                     direction: FlipDirection.HORIZONTAL,
                     front: card2(),
