@@ -263,7 +263,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                       fontStyle: FontStyle.italic,
                     )),
                 Container(
-                  width: 160,
+                 // width: 160,
                   child: Text(
                     widget.projectDetails["siteAddress"].toString(),
                     overflow: TextOverflow.visible,
@@ -401,6 +401,11 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                 .toString())));
                   },
                 ),
+
+                  SizedBox(
+                  height: 20,
+                ),
+
               ],
             ),
           ],

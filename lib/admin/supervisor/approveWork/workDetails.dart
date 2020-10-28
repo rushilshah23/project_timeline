@@ -81,6 +81,8 @@ class _WorkDetailsState extends State<WorkDetails> {
     }
 
     if (status == "Declined") {
+       if(widget.data["status"].toString().contains("Accepted"))
+      { 
       totalVol = double.parse(volumeExcavated) -
           double.parse(widget.data["volumeExcavated"].toString());
       totalProgress = (totalVol / double.parse(volumeToBeExcavated)) * 100;
@@ -89,9 +91,11 @@ class _WorkDetailsState extends State<WorkDetails> {
         'volumeExcavated': totalVol.ceil().toString(),
         'progressPercent': totalProgress.ceil().toString(),
       });
+      }
     }
 
     showToast("$status successfully");
+     Navigator.of(context).pop();
   }
 
   Widget buildGridView() {
@@ -199,6 +203,13 @@ class _WorkDetailsState extends State<WorkDetails> {
 //                              ),
                       child: buttonContainers(150, 10, 'Approve', 18),
                       onPressed: () {
+                        if(widget.data["status"].toString().contains("Accepted"))
+                        
+                        { 
+                          showToast("Already Accepted");
+                          Navigator.of(context).pop();
+                        }
+                        else
                         repondToWork("Accepted");
                       },
                     ),
@@ -215,6 +226,11 @@ class _WorkDetailsState extends State<WorkDetails> {
 //                                child: Center(child: Text("Reject",style: titlestyles(18, Colors.white),))),
                       child: buttonContainers(150, 10, 'Reject', 18),
                       onPressed: () {
+                         if(widget.data["status"].toString().contains("Declined"))
+                         { Navigator.of(context).pop();
+                        showToast("Already Declined");
+                         }
+                        else
                         repondToWork("Declined");
                       },
                     ),

@@ -205,7 +205,7 @@ class _TestState extends State<Test> {
 
 
      Navigator.of(context).pop();
-
+      Navigator.of(context).pop();
 
 
     } catch (e) {
@@ -1150,6 +1150,8 @@ class _SelectMachinesState extends State<SelectMachines> {
                 flex: 3,
                 child: DropdownButtonFormField<String>(
                   value: machineTypeSelected[widget.index],
+                    isDense: false,
+                        isExpanded: true,
                   //icon: Icon(Icons.arrow_downward),
                   hint: Text(
                     'Select Machine',
@@ -1167,7 +1169,10 @@ class _SelectMachinesState extends State<SelectMachines> {
                       .map<DropdownMenuItem<String>>((var value) {
                     return DropdownMenuItem<String>(
                       value: value.machineID,
-                      child: Text(value.machineName),
+                      child:Container(child: Column(children: [
+                        Text(value.machineName),
+                         Text(value.modelName,style: TextStyle(color: Colors.grey)),
+                      ],),),
                     );
                   }).toList(),
                 ),

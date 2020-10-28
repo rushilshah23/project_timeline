@@ -50,27 +50,39 @@ class _OurMachinesDetailsDisplayState extends State<OurMachinesDetailsDisplay> {
                   SizedBox(
                     height: 10,
                   ),
-                  // Text("Machine ID: " +
-                  //     widget.data[widget.indexes]["machineID"].toString()),
+                  Text("Amount Of Excavation: " +
+                      widget.data[widget.indexes]["amountOfExcavation"].toString()+" m3/hr"),
                   SizedBox(
                     height: 10,
                   ),
                   Text("Tank Capacity: " +
-                      widget.data[widget.indexes]["tankCapacity"].toString()),
+                      widget.data[widget.indexes]["tankCapacity"].toString()+" litre"),
                   SizedBox(
                     height: 10,
                   ),
                   Text("Fuel Consumption: " +
                       widget.data[widget.indexes]["fuelConsumption"]
-                          .toString()),
+                          .toString()+" litre"),
                   SizedBox(
                     height: 10,
                   ),
                   Text("Operating Weight: " +
                       widget.data[widget.indexes]["operatingWeight"]
-                          .toString()),
+                          .toString()+" kg"),
+                
                   SizedBox(
                     height: 10,
+                  ),
+                  Text("Bucket Capacity: " +
+                      widget.data[widget.indexes]["bucketCapacity"].toString() +" litre"),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text("Engine Power: " +
+                      widget.data[widget.indexes]["enginePower"].toString()+" rpm"),
+
+                        SizedBox(
+                    height: 20,
                   ),
                   Text("Vendor Name: " +
                       widget.data[widget.indexes]["vendor"]["name"].toString()),
@@ -80,16 +92,6 @@ class _OurMachinesDetailsDisplayState extends State<OurMachinesDetailsDisplay> {
                   Text("Vendor Contact No: " +
                       widget.data[widget.indexes]["vendor"]["contactNo"]
                           .toString()),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text("Bucket Capacity: " +
-                      widget.data[widget.indexes]["bucketCapacity"].toString()),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text("Engine Power: " +
-                      widget.data[widget.indexes]["enginePower"].toString()),
 
                   // Text(widget.data["petrolPumpName"].toString()),
                   // SizedBox(
