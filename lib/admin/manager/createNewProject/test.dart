@@ -542,6 +542,7 @@ class _TestState extends State<Test> {
     debugPrint(beyondMeansumExcavtn.toString());
 
     for (int i = 1; ourExcavtn < volume; i++) {
+        days =(i);
       debugPrint("------------------------------"+ourExcavtn.toString());
       if (ourExcavtn + sumExcavtn > volume && ourExcavtn < volume) {
         double temp = volume - ourExcavtn;
@@ -601,11 +602,12 @@ class _TestState extends State<Test> {
         }
        else{
            totalfuel = sumfuel +totalfuel;
+          totalRent = sumRent +  totalRent;
        }
       }
      
 
-      days =(i);
+    
     }
 
     debugPrint(
