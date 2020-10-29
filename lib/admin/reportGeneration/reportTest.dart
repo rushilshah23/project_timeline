@@ -614,9 +614,16 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
     await databaseReference.child("projects").child(selectedProject).once().then((DataSnapshot dataSnapshot) {
 
       projectData= dataSnapshot.value;
+      Map progdata = dataSnapshot.value["progress"];
+    
+      var sortedEntries = progdata.entries.toList()..sort((e1, e2) {
+      return e2.key.compareTo(e1.key);
+    });
 
-      Map data1 = dataSnapshot.value["progress"];
-      ////debugPrint(data.toString());
+    Map data1= Map();
+
+    for(int i=0;i<sortedEntries.length;i++)
+      data1.putIfAbsent(sortedEntries[i].key, () => sortedEntries[i].value);
 
       Map supMap= dataSnapshot.value["supervisors"];
       supervisors=supMap.values.toList();

@@ -462,11 +462,24 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
 
       if(projectData.containsKey("progress"))
       {
-       Map data1 = dataSnapshot.value["progress"];
-      ////debugPrint(data.toString());
+      
+     
       state=true;
       Map supMap= dataSnapshot.value["supervisors"];
       supervisors=supMap.values.toList();
+
+
+        Map progdata = dataSnapshot.value["progress"];
+    
+      var sortedEntries = progdata.entries.toList()..sort((e1, e2) {
+      return e2.key.compareTo(e1.key);
+        });
+
+        Map data1= Map();
+
+        for(int i=0;i<sortedEntries.length;i++)
+          data1.putIfAbsent(sortedEntries[i].key, () => sortedEntries[i].value);
+
 
       allDates= data1.keys.toList();
       List allDatesData= data1.values.toList();
