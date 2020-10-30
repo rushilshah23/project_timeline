@@ -143,10 +143,8 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                           radius: 140.0,
                           lineWidth: 10.0,
                           animation: true,
-                          percent: double.parse(widget
-                                  .projectDetails["progressPercent"]
-                                  .toString()) /
-                              100,
+                       percent: double.parse(widget.projectDetails["progressPercent"])<100? double.parse(widget.projectDetails["progressPercent"])>0?
+                              double.parse(widget.projectDetails["progressPercent"])/ 100:0:1,
                           center: new Text(
                             widget.projectDetails["progressPercent"]
                                     .toString() +
@@ -161,11 +159,12 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                     ),
                     Column(
                       children: [
+                        SizedBox(height: 8),
                         Text('Project Name',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 21,
-                              color: Colors.indigo[300],
+                              color: Color(0xff005c9d),
                               fontStyle: FontStyle.italic,
                             )),
                         SizedBox(height: 8),
@@ -185,7 +184,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
-                                      color: Colors.indigo[300],
+                                      color: Color(0xff005c9d),
                                       fontStyle: FontStyle.italic,
                                     )),
                                 SizedBox(height: 8),
@@ -212,7 +211,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
-                                      color: Colors.indigo[300],
+                                      color: Color(0xff005c9d),
                                       fontStyle: FontStyle.italic,
                                     )),
                                 SizedBox(height: 8),
@@ -238,7 +237,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
-                                      color: Colors.indigo[300],
+                                      color: Color(0xff005c9d),
                                       fontStyle: FontStyle.italic,
                                     )),
                                 SizedBox(height: 8),
@@ -264,7 +263,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
-                                      color: Colors.indigo[300],
+                                      color: Color(0xff005c9d),
                                       fontStyle: FontStyle.italic,
                                     )),
                                 SizedBox(height: 8),
@@ -290,17 +289,17 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
-                      color: Colors.indigo[300],
+                      color: Color(0xff005c9d),
                       fontStyle: FontStyle.italic,
                     )),
 
 
                 Container(
-                  width: MediaQuery.of(context).size.width-50,
+                  //width: MediaQuery.of(context).size.width-50,
                   child: Text(
                     widget.projectDetails["siteAddress"].toString(),
                     overflow: TextOverflow.visible,
-                    maxLines: 5,
+                    //maxLines: 5,
                     softWrap: true,
                     style: TextStyle(
                         fontSize: 15,
@@ -314,7 +313,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                 //     style: TextStyle(
                 //       fontWeight: FontWeight.bold,
                 //       fontSize: 18,
-                //       color: Colors.indigo[300],
+                //       color: Color(0xff005c9d),
                 //       fontStyle: FontStyle.italic,
                 //     )
                 // ),
@@ -331,7 +330,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
-                      color: Colors.indigo[300],
+                      color: Color(0xff005c9d),
                       fontStyle: FontStyle.italic,
                     )),
 
@@ -340,10 +339,11 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: List.generate(machinesNameModel.length, (index) {
                         return   Container(
+                          color:  Colors.grey.withOpacity(0.1),
                           margin: EdgeInsets.only(top:10,bottom:10),
                           child:ListTile(  
                             title:Text("Name:  "+ machinesNameModel[index]["machineName"]),
-                            subtitle:  Text("Usage/day:  "+ machinesNameModel[index]["usagePerDay"]),
+                            subtitle:  Text("Usage/day:  "+ machinesNameModel[index]["usagePerDay"] +" hrs"),
                             ));
                            
                          
@@ -369,7 +369,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
-                                  color: Colors.indigo[300],
+                                  color: Color(0xff005c9d),
                                   fontStyle: FontStyle.italic,
                                 )),
                             Container(
@@ -406,7 +406,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
-                                  color: Colors.indigo[300],
+                                  color: Color(0xff005c9d),
                                   fontStyle: FontStyle.italic,
                                 )),
                             Container(
@@ -439,7 +439,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
-                      color: Colors.indigo[300],
+                      color: Color(0xff005c9d),
                       fontStyle: FontStyle.italic,
                     )),
 

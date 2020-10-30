@@ -28,7 +28,7 @@ class WorkerHomePageState extends State<WorkerHomePage> {
       mobile = '',
       password = '',
       uid = '',
-      userType='',
+      userType = '',
       assignedProject;
   _loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -77,14 +77,13 @@ class WorkerHomePageState extends State<WorkerHomePage> {
                   SharedPreferences _sharedpreferences =
                       await SharedPreferences.getInstance();
                   _sharedpreferences.clear();
-                  Navigator.pushAndRemoveUntil(
-              context,
-              PageRouteBuilder(pageBuilder: (BuildContext context, Animation animation,
-                  Animation secondaryAnimation) {
-                return MyApp();
-              },),
-              (Route route) => false);
-               showToast("Successful logout");
+                  Navigator.pushAndRemoveUntil(context, PageRouteBuilder(
+                    pageBuilder: (BuildContext context, Animation animation,
+                        Animation secondaryAnimation) {
+                      return MyApp();
+                    },
+                  ), (Route route) => false);
+                  showToast("Successful logout");
                 },
                 child: Text("YES"),
               ),
@@ -124,16 +123,7 @@ class WorkerHomePageState extends State<WorkerHomePage> {
           mobile: mobile,
           userType: userType,
         );
-      // case 5:
-      //   return new DeleteUserPage(
-      //     name: name,
-      //     email: email,
-      //     uid: uid,
-      //     assignedProject: assignedProject,
-      //     mobile: mobile,
-      //     userType: userType,
-      //   );
-
+    
       default:
         return new Text("Error");
     }
@@ -172,10 +162,13 @@ class WorkerHomePageState extends State<WorkerHomePage> {
                         onTap: () {
                           print("image clicked");
 
-                            Navigator.push(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ProfilePage(uid: uid,userType: userType,)),
+                                builder: (context) => ProfilePage(
+                                      uid: uid,
+                                      userType: userType,
+                                    )),
                           );
                         },
                         child: CircleAvatar(
@@ -233,18 +226,31 @@ class WorkerHomePageState extends State<WorkerHomePage> {
                           _onSelectItem(3);
                           appbartitle = "Our Projects";
                         }),
-                   assignedProject.contains(" ")||assignedProject.contains("No project assigned")?Container():
-                      ListTile(
-                          title: Row(children: <Widget>[
-                            Icon(Icons.work),
-                            Text(" Update Your Work")
-                          ]),
-                          onTap: () {
-                            _onSelectItem(4);
-                            appbartitle = "Update Your Work";
-                          }),
-                   
+                    assignedProject.contains(" ") ||
+                            assignedProject.contains("No project assigned")
+                        ? Container()
+                        : ListTile(
+                            title: Row(children: <Widget>[
+                              Icon(Icons.work),
+                              Text(" Update Your Work")
+                            ]),
+                            onTap: () {
+                             // _onSelectItem(4);
 
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UpdateWork(
+                                          name: name,
+                                          email: email,
+                                          uid: uid,
+                                          assignedProject: assignedProject,
+                                          mobile: mobile,
+                                          userType: userType,
+                                        )),
+                              );
+                              //appbartitle = "Update Your Work";
+                            }),
                   ],
                 ),
               ),

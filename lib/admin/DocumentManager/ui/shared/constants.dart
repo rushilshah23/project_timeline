@@ -12,7 +12,7 @@ class HexColor extends Color {
   HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 }
 
-const Color appColor = Color(0xFF02DEED);
+const Color appColor = Color(0xff005c9d);
 
 // const BoxDecoration colorBox = BoxDecoration(color: Color(0xFF02DEED));
 const BoxDecoration colorBox = BoxDecoration(color: Colors.transparent);

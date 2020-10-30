@@ -139,6 +139,18 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     signinMethod.toLowerCase().contains("email")? TextFormField(
                      
+                      validator: (val) {
+                        Pattern pattern =
+                            r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
+                            r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
+                            r"{0,253}[a-zA-Z0-9])?)*$";
+                        RegExp regex = new RegExp(pattern);
+                        
+                        if (!regex.hasMatch(val) )
+                          return 'Enter a valid email address';
+                        else
+                          return null;
+                      },
                       enabled:signinMethod.toLowerCase().contains("email")?  false:true,
                       
                       controller: emailController,
@@ -153,7 +165,13 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     TextFormField(
                        enabled:signinMethod.toLowerCase().contains("otp")?  false:true,
-                     
+
+                       validator:(val){
+                      if (val.length < 10 || val.length > 10)
+                        return 'Enter a valid Phone Number';
+                      else
+                        return null;
+                       },
                       keyboardType: TextInputType.number,
                       controller: mobileController,
                       decoration: InputDecoration(

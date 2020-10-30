@@ -119,7 +119,8 @@ class _ManagerRequestListState extends State<ManagerRequestList> {
                                 softWrap: false,
                                 style: TextStyle(fontSize: 14),
                               ),
-                            if (allWorkerRequest[index]["signInMethod"] != null)
+                            if (allWorkerRequest[index]["signInMethod"] !=
+                                "email")
                               Text(
                                 "Sign In method : OTP",
                                 overflow: TextOverflow.clip,

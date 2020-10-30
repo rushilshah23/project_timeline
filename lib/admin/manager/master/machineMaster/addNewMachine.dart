@@ -505,6 +505,13 @@ class _AddNewMachineState extends State<AddNewMachine> {
                               SizedBox(height: 10),
                               TextFormField(
                                 keyboardType: TextInputType.phone,
+                                validator: (val) {
+                                if (val.isEmpty) return 'Enter Phone Number';
+                                if (val.length < 10 || val.length > 10)
+                                  return 'Enter a valid Phone Number';
+                                else
+                                  return null;
+                              },
                                 decoration: InputDecoration(
                                   labelText: "Contact No",
                                   
@@ -519,8 +526,7 @@ class _AddNewMachineState extends State<AddNewMachine> {
                                         bottomLeft: Radius.circular(10)),
                                   ),
                                 ),
-                                validator: (val) =>
-                                    val.isEmpty ? 'Enter Contact' : null,
+                              
                                 onChanged: (val) {
                                   setState(() => vendorContact = val);
                                 },

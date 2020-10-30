@@ -16,7 +16,7 @@ class WorkDetails extends StatefulWidget {
 class _WorkDetailsState extends State<WorkDetails> {
   Map data;
   int indexes;
-  List images = [];
+  List images = List();
   final databaseReference = FirebaseDatabase.instance.reference();
   Map projectData;
   String volumeExcavated;
@@ -24,12 +24,25 @@ class _WorkDetailsState extends State<WorkDetails> {
   String progressPercent;
   double totalVol;
   double totalProgress;
+  double workdiff = 0.0;
+
+  List allApprovedImages = [];
+
 
   @override
   void initState() {
     debugPrint(widget.data["date"].toString());
     debugPrint(widget.data["images"].toString());
-    images = widget.data["images"];
+
+    if (widget.data.containsKey("images")) 
+    setState(() {
+       images = widget.data["images"];
+    });
+   
+
+    setState(() {
+      workdiff = double.parse(widget.data["workDifference"].toString());
+    });
 
     databaseReference
         .child("projects")
@@ -41,6 +54,7 @@ class _WorkDetailsState extends State<WorkDetails> {
         volumeExcavated = projectData["volumeExcavated"];
         volumeToBeExcavated = projectData["volumeToBeExcavated"];
         progressPercent = projectData["progressPercent"];
+        allApprovedImages.addAll(projectData["approvedImages"]);
       });
     });
 
@@ -59,29 +73,43 @@ class _WorkDetailsState extends State<WorkDetails> {
     });
 
     if (status == "Accepted") {
+      
+       images.forEach((element) {
+        allApprovedImages.add(element);
+      });
+
       totalVol = double.parse(volumeExcavated) +
           double.parse(widget.data["volumeExcavated"].toString());
       totalProgress = (totalVol / double.parse(volumeToBeExcavated)) * 100;
 
       await databaseReference.child("projects").child(widget.projectID).update({
-        'approvedImages': widget.data["images"],
+        'approvedImages': allApprovedImages,
         'volumeExcavated': totalVol.ceil().toString(),
         'progressPercent': totalProgress.ceil().toString(),
       });
     }
 
     if (status == "Declined") {
+       if(widget.data["status"].toString().contains("Accepted"))
+      { 
+
+        images.forEach((element) {
+            allApprovedImages.remove(element);
+          });
       totalVol = double.parse(volumeExcavated) -
           double.parse(widget.data["volumeExcavated"].toString());
       totalProgress = (totalVol / double.parse(volumeToBeExcavated)) * 100;
 
       await databaseReference.child("projects").child(widget.projectID).update({
+        'approvedImages': allApprovedImages,
         'volumeExcavated': totalVol.ceil().toString(),
         'progressPercent': totalProgress.ceil().toString(),
       });
+      }
     }
 
     showToast("$status successfully");
+     Navigator.of(context).pop();
   }
 
   Widget buildGridView() {
@@ -118,14 +146,14 @@ class _WorkDetailsState extends State<WorkDetails> {
         child: Container(
           child: ListView(
             children: <Widget>[
-               SizedBox(
+              SizedBox(
                 height: 20,
               ),
               Center(
 //                        child: Text('Details:',
 //                            style: titlestyles(18, Colors.orange)
 //                        ),
-             
+
                 child: titleStyles('Work Details:', 18),
               ),
               SizedBox(
@@ -160,7 +188,7 @@ class _WorkDetailsState extends State<WorkDetails> {
               SizedBox(
                 height: 30,
               ),
-              Text("Work difference: "+ widget.data["workDifference"].toString()+" %"),
+              Text("Work difference: " + workdiff.toInt().toString() + " %"),
               SizedBox(
                 height: 15,
               ),
@@ -189,6 +217,13 @@ class _WorkDetailsState extends State<WorkDetails> {
 //                              ),
                       child: buttonContainers(150, 10, 'Approve', 18),
                       onPressed: () {
+                        if(widget.data["status"].toString().contains("Accepted"))
+                        
+                        { 
+                          showToast("Already Accepted");
+                          Navigator.of(context).pop();
+                        }
+                        else
                         repondToWork("Accepted");
                       },
                     ),
@@ -205,6 +240,11 @@ class _WorkDetailsState extends State<WorkDetails> {
 //                                child: Center(child: Text("Reject",style: titlestyles(18, Colors.white),))),
                       child: buttonContainers(150, 10, 'Reject', 18),
                       onPressed: () {
+                         if(widget.data["status"].toString().contains("Declined"))
+                         { Navigator.of(context).pop();
+                        showToast("Already Declined");
+                         }
+                        else
                         repondToWork("Declined");
                       },
                     ),

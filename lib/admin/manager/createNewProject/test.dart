@@ -205,7 +205,7 @@ class _TestState extends State<Test> {
 
 
      Navigator.of(context).pop();
-
+      Navigator.of(context).pop();
 
 
     } catch (e) {
@@ -433,6 +433,11 @@ class _TestState extends State<Test> {
   }
 
   Future<bool> estimate2() async {
+    totalRent=0;
+    totalfuel=0;
+    ourExcavtn=0;
+    days=0;
+    
     volume = 0.5 *
         double.parse(length) *
         double.parse(depth) *
@@ -484,9 +489,9 @@ class _TestState extends State<Test> {
     double sumExcavtn = 0;
     double sumUsagePrDay = 0;
 
-    double beyondMeansumExcavtn = 0;
-    double beyondMeanExcasumRent = 0;
-    double beyondMeansumfuel = 0;
+    double beyondMeansumExcavtn = 0.0;
+    double beyondMeanExcasumRent = 0.0;
+    double beyondMeansumfuel = 0.0;
 
     List actualperdayamountofExca = [];
     List actualperdayFuelConsump = [];
@@ -499,12 +504,12 @@ class _TestState extends State<Test> {
       for (int j = 0; j < machineDetailsList.length; j++) {
         if (machineTypeSelected[i] == machineDetailsList[j].machineID) {
           sumExcavtn = sumExcavtn +
-              double.parse(machineDetailsList[j].amountOfExcavation.toString());
+              double.parse(machineDetailsList[j].amountOfExcavation.toString())*double.parse(usagePerDay[i].text);
           sumUsagePrDay = sumUsagePrDay + double.parse(usagePerDay[i].text);
           sumfuel = sumfuel +
-              double.parse(machineDetailsList[j].fuelConsumption.toString());
+              double.parse(machineDetailsList[j].fuelConsumption.toString())*double.parse(usagePerDay[i].text);
           sumRent = sumRent +
-              double.parse(machineDetailsList[j].rentPerHour.toString());
+              double.parse(machineDetailsList[j].rentPerHour.toString())*double.parse(usagePerDay[i].text);
 
           perhramountofExca.add(double.parse(
               machineDetailsList[j].amountOfExcavation.toString()));
@@ -512,6 +517,7 @@ class _TestState extends State<Test> {
               double.parse(machineDetailsList[j].fuelConsumption.toString()));
           renthrday
               .add(double.parse(machineDetailsList[j].rentPerHour.toString()));
+              break;
         }
       }
     }
@@ -521,7 +527,9 @@ class _TestState extends State<Test> {
     for (int i = 0; i < machinesCount; i++) {
       debugPrint(machineTypeSelected[i].toString());
       debugPrint(usagePerDay[i].text);
-      if ((sumUsagePrDay / machinesCount) < perhramountofExca[i]) {
+      double mean =(sumUsagePrDay / machinesCount);
+     
+      if ((sumUsagePrDay / machinesCount) < double.parse(usagePerDay[i].text)) {
         beyondMeansumExcavtn = beyondMeansumExcavtn + perhramountofExca[i];
         beyondMeanExcasumRent = beyondMeanExcasumRent + renthrday[i];
         beyondMeansumfuel = beyondMeansumfuel + perhrFuelConsump[i];
@@ -529,13 +537,16 @@ class _TestState extends State<Test> {
     }
 
     debugPrint("sum " + sumExcavtn.toString());
+     debugPrint("sum " + sumfuel.toString());
     debugPrint((sumUsagePrDay / machinesCount).toString());
     debugPrint(beyondMeansumExcavtn.toString());
 
     for (int i = 1; ourExcavtn < volume; i++) {
+        days =(i);
+      debugPrint("------------------------------"+ourExcavtn.toString());
       if (ourExcavtn + sumExcavtn > volume && ourExcavtn < volume) {
         double temp = volume - ourExcavtn;
-        double percent = ((temp / sumExcavtn));
+        double percent = ((temp / volume));
 
         ourExcavtn = ourExcavtn + temp;
         debugPrint("came here--------------");
@@ -548,9 +559,22 @@ class _TestState extends State<Test> {
 
         debugPrint("here the exca--" + (sumExcavtn * percent).toString());
         break;
-      } else if (ourExcavtn + sumExcavtn < volume && ourExcavtn < volume) {
+      } 
+      else if(ourExcavtn + sumExcavtn == volume && ourExcavtn < volume)
+      {
+        ourExcavtn=ourExcavtn+sumExcavtn;
+         totalfuel = sumfuel +totalfuel;
+          totalRent = sumRent +  totalRent;
+        actualperdayamountofExca.add(sumExcavtn);
+        actualperdayFuelConsump.add(sumfuel );
+        actualrentPerday.add(sumRent);
+
+      }
+      else if (ourExcavtn + sumExcavtn < volume && ourExcavtn < volume) {
         ourExcavtn = ourExcavtn + sumExcavtn;
-        if (beyondMeansumExcavtn + ourExcavtn > volume && ourExcavtn < volume) {
+        if(beyondMeansumExcavtn>0.0)
+        {
+          if (beyondMeansumExcavtn + ourExcavtn > volume && ourExcavtn < volume) {
           debugPrint("ourExcavtn" + ourExcavtn.toString());
           double temp = volume - ourExcavtn;
           double percent = ((temp / sumExcavtn));
@@ -575,19 +599,25 @@ class _TestState extends State<Test> {
           actualperdayFuelConsump.add(sumfuel + beyondMeansumfuel);
           actualrentPerday.add(sumRent + beyondMeanExcasumRent);
         }
+        }
+       else{
+           totalfuel = sumfuel +totalfuel;
+          totalRent = sumRent +  totalRent;
+       }
       }
+     
 
-      days = i;
+    
     }
 
     debugPrint(
         "--------------------------------------" + ourExcavtn.toString());
     debugPrint(days.toString());
-    debugPrint(actualperdayamountofExca.toString());
-    debugPrint(actualperdayFuelConsump.toString());
-    debugPrint(actualrentPerday.toString());
-    debugPrint(totalRent.toString());
-    debugPrint(totalfuel.toString());
+    debugPrint("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-------xxxxxxxxxxxxxxxxxx"+actualperdayamountofExca.toString());
+    // debugPrint(actualperdayFuelConsump.toString());
+    // debugPrint(actualrentPerday.toString());
+    // debugPrint(totalRent.toString());
+    // debugPrint(totalfuel.toString());
 
     return true;
     }
@@ -1150,6 +1180,8 @@ class _SelectMachinesState extends State<SelectMachines> {
                 flex: 3,
                 child: DropdownButtonFormField<String>(
                   value: machineTypeSelected[widget.index],
+                    isDense: false,
+                        isExpanded: true,
                   //icon: Icon(Icons.arrow_downward),
                   hint: Text(
                     'Select Machine',
@@ -1167,7 +1199,10 @@ class _SelectMachinesState extends State<SelectMachines> {
                       .map<DropdownMenuItem<String>>((var value) {
                     return DropdownMenuItem<String>(
                       value: value.machineID,
-                      child: Text(value.machineName),
+                      child:Container(child: Column(children: [
+                        Text(value.machineName),
+                         Text(value.modelName,style: TextStyle(color: Colors.grey)),
+                      ],),),
                     );
                   }).toList(),
                 ),

@@ -207,6 +207,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
 
     debugPrint(_uploadedFileURL.toString());
     debugPrint("done-------------------------------------------");
+    Navigator.of(context).pop();
   }
 
   void submitForm() async {
@@ -329,7 +330,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                   ),
                   SearchableDropdown.single(
                     items: machines,
-                    value: null,
+                    value: selectedMachine,
                     hint: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Text("Select any"),
@@ -571,13 +572,16 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                     width: double.infinity,
                     height: 50,
                     child: FlatButton(
-                      onPressed: submitForm,
+                      onPressed:(){
+                        
+                        submitForm();
+                      } ,
                       child: Container(
                         height: 50,
                         width: double.infinity,
-                        color: Color(0xff005f89),
                         decoration: BoxDecoration(
                           // gradient: gradients(),
+                          color: Color(0xff018abd),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Center(

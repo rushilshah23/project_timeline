@@ -34,24 +34,63 @@ class _EditMachineDataState extends State<EditMachineData> {
       modelName,
       vendorContact, amountOfExavation;
   String machineID;
-
+  List allProjects = List();
+ int noOfProjects = 0;
   final databaseReference = FirebaseDatabase.instance.reference();
 
-  deleteMachine() {
-//    try {
-    databaseReference
+  deleteMachine() async{
+    bool isthere=false;
+   try {
+
+       await databaseReference
+        .child("projects")
+        .once()
+        .then((DataSnapshot dataSnapshot) {
+          Map data = dataSnapshot.value;
+          allProjects = [];
+          allProjects = data.values.toList();
+        });
+
+        for(int i=0;i<allProjects.length;i++)
+        {
+          List machinesSelected = allProjects[i]["machinesSelected"];
+          for(int j=0;j<machinesSelected.length;j++)
+          {
+            if(machinesSelected[j]["machineID"]==machineID)
+            {
+              isthere=true;
+              break;
+            }
+          }
+        }
+
+        if(isthere)
+        {
+          showToast("Machine is or was used in some projects.\nHence it cannot be deleted in order to maintain records ");
+         Navigator.of(context).pop();
+
+        }
+        else{
+          
+          databaseReference
         .child("masters")
         .child("machineMaster")
         .child(machineID)
         .remove();
 
-    showToast("Removed Sucessfully");
-    Navigator.of(context).pop();
+        showToast("Removed Sucessfully");
+        Navigator.of(context).pop();
+      
+        }
+     
 
-//    catch(e){
-//      debugPrint(e.toString());
-//      showToast("Check your internet");
-//    }
+
+  
+   }
+   catch(e){
+     debugPrint(e.toString());
+     showToast("Check your internet");
+   }
   }
 
   addDynamic() {
@@ -88,7 +127,7 @@ class _EditMachineDataState extends State<EditMachineData> {
           //     }
           // },
         });
-        showToast("Machine added Successfully");
+        showToast("Details Edited Successfully");
           Navigator.of(context).pop();
       } catch (e) {
         showToast("Failed. check your internet!");
@@ -550,6 +589,13 @@ class _EditMachineDataState extends State<EditMachineData> {
                               ),
                               SizedBox(height: 10),
                               TextFormField(
+                                validator: (val) {
+                                if (val.isEmpty) return 'Enter Phone Number';
+                                if (val.length < 10 || val.length > 10)
+                                  return 'Enter a valid Phone Number';
+                                else
+                                  return null;
+                              },
                                 initialValue: vendorContact,
                                 decoration: InputDecoration(
                                   labelText: "Contact No",
@@ -564,8 +610,7 @@ class _EditMachineDataState extends State<EditMachineData> {
                                         bottomLeft: Radius.circular(10)),
                                   ),
                                 ),
-                                validator: (val) =>
-                                    val.isEmpty ? 'Enter Contact' : null,
+                             
                                 onChanged: (val) {
                                   setState(() => vendorContact = val);
                                 },
@@ -574,7 +619,7 @@ class _EditMachineDataState extends State<EditMachineData> {
                               SizedBox(height: 10),
 
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                               // mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
 //                                  RaisedButton(
 //                                      child: Text(
@@ -591,7 +636,7 @@ class _EditMachineDataState extends State<EditMachineData> {
 //                                    ),
                                   FlatButton(
                                     child: buttonContainers(
-                                         MediaQuery.of(context).size.width-100, 20, 'Save Changes', 17),
+                                         MediaQuery.of(context).size.width/2.5-25, 15, 'Save', 17),
                                     onPressed: () {
                                       if (_formKey.currentState.validate()) {
                                         debugPrint("true");
@@ -602,16 +647,13 @@ class _EditMachineDataState extends State<EditMachineData> {
 
 
                             
-                                  SizedBox(
-                                    width: 10,
+                                  FlatButton(
+                                    child: buttonContainers(
+                                         MediaQuery.of(context).size.width/2.5-25, 15, 'Delete', 17),
+                                    onPressed: () {
+                                      deleteMachine();
+                                    },
                                   ),
-                                  // FlatButton(
-                                  //   child: buttonContainers(
-                                  //       130, 16, 'Delete Machine', 17),
-                                  //   onPressed: () {
-                                  //     deleteMachine();
-                                  //   },
-                                  // ),
                                 ],
                               ),
                             ],

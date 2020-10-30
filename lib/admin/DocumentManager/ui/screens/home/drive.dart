@@ -457,7 +457,7 @@ class _DrivePageState extends State<DrivePage> {
                                         child: Text(
                                           'No Items',
                                           style: TextStyle(
-                                              fontSize: 40,
+                                              fontSize: 20,
                                               fontWeight: FontWeight.bold,
                                               color: appColor),
                                         ),
@@ -470,7 +470,7 @@ class _DrivePageState extends State<DrivePage> {
                                 child: Text(
                                   'No Items',
                                   style: TextStyle(
-                                      fontSize: 40,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: appColor),
                                 ),

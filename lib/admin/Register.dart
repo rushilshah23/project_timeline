@@ -19,7 +19,7 @@ class _RegisterState extends State<Register> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   final CollectionReference user =
       FirebaseFirestore.instance.collection("user");
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = new GlobalKey<FormState>();
 
   List<String> _type = [workerType, supervisorType, managerType];
   List<String> tempTypes = ["worker", "supervisor", "manager"];
@@ -34,13 +34,13 @@ class _RegisterState extends State<Register> {
   String password;
   var code, uuid;
 
-  TextEditingController controllerName;
-  TextEditingController controllerEmail;
-  TextEditingController controllerPhoneNo;
-  TextEditingController controllerOTP;
-  TextEditingController controllerAddress;
-  TextEditingController controllerAge;
-  TextEditingController controllerPassword;
+  final controllerName = TextEditingController();
+  final controllerEmail = TextEditingController();
+  final controllerPhoneNo = TextEditingController();
+  final controllerOTP = TextEditingController();
+  final controllerAddress = TextEditingController();
+  final controllerAge = TextEditingController();
+  final controllerPassword = TextEditingController();
 
   @override
   void initState() {
@@ -92,14 +92,6 @@ class _RegisterState extends State<Register> {
               showToast("Request Successfully Sent");
             });
           });
-        });
-        setState(() {
-          controllerAddress = null;
-          controllerName = null;
-          controllerEmail = null;
-          controllerPhoneNo = null;
-          controllerAge = null;
-          controllerPassword = null;
         });
         Navigator.pop(context);
         Navigator.pushReplacement(context,
@@ -240,13 +232,6 @@ class _RegisterState extends State<Register> {
           showToast("Request successfully sent");
         });
       });
-      setState(() {
-        controllerAddress = null;
-        controllerName = null;
-        controllerPhoneNo = null;
-        controllerAge = null;
-        controllerOTP = null;
-      });
       Navigator.pop(context);
     } catch (e) {
       showToast("Failed. Check your Internet !");
@@ -293,28 +278,25 @@ class _RegisterState extends State<Register> {
         ),
         controller: controllerEmail,
         validator: (val) {
-           Pattern pattern =
-        r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
-        r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
-        r"{0,253}[a-zA-Z0-9])?)*$";
+          Pattern pattern =
+              r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
+              r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
+              r"{0,253}[a-zA-Z0-9])?)*$";
           RegExp regex = new RegExp(pattern);
-          if(val.isEmpty)
-          return 'Enter Email';
+          if (val.isEmpty) return 'Enter Email';
           if (!regex.hasMatch(val) || val == null)
-          return 'Enter a valid email address';
+            return 'Enter a valid email address';
           else
             return null;
-        } ,
+        },
         onChanged: (val) {
           setState(() => email = val);
         },
       ),
       SizedBox(height: 15),
       TextFormField(
-      
         decoration: InputDecoration(
           labelText: "Mobile no",
-        
           fillColor: Colors.white,
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.blue, width: 2.0),
@@ -327,21 +309,23 @@ class _RegisterState extends State<Register> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerPhoneNo,
-          keyboardType: TextInputType.number,
+        keyboardType: TextInputType.number,
         validator: (val) {
-         
-          if(val.isEmpty) return 'Enter Phone Number';
-           if (val.length<10|| val.length>10)
-          return 'Enter a valid Phone Number';
+          if (val.isEmpty) return 'Enter Phone Number';
+          if (val.length < 10 || val.length > 10)
+            return 'Enter a valid Phone Number';
           else
             return null;
-        },  
+        },
         onChanged: (val) {
           setState(() => phoneNo = val);
         },
       ),
       SizedBox(height: 15),
       TextFormField(
+        textInputAction: TextInputAction.newline,
+        keyboardType: TextInputType.multiline,
+        maxLines: null,
         decoration: InputDecoration(
           labelText: "Address",
           fillColor: Colors.white,
@@ -363,10 +347,9 @@ class _RegisterState extends State<Register> {
       ),
       SizedBox(height: 15),
       TextFormField(
-          keyboardType: TextInputType.number,
+        keyboardType: TextInputType.number,
         decoration: InputDecoration(
           labelText: "Age",
-          
           fillColor: Colors.white,
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.blue, width: 2.0),
@@ -386,7 +369,7 @@ class _RegisterState extends State<Register> {
       ),
       SizedBox(height: 15),
       TextFormField(
-         // keyboardType: TextInputType.visiblePassword,
+        // keyboardType: TextInputType.visiblePassword,
         obscureText: true,
         decoration: InputDecoration(
           labelText: "Password",
@@ -449,15 +432,14 @@ class _RegisterState extends State<Register> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerPhoneNo,
-         keyboardType: TextInputType.number,
+        keyboardType: TextInputType.number,
         validator: (val) {
-         
-          if(val.isEmpty) return 'Enter Phone Number';
-           if (val.length<10|| val.length>10)
-          return 'Enter a valid Phone Number';
+          if (val.isEmpty) return 'Enter Phone Number';
+          if (val.length < 10 || val.length > 10)
+            return 'Enter a valid Phone Number';
           else
             return null;
-        },  
+        },
         onChanged: (val) {
           setState(() => phoneNo = val);
         },
@@ -512,17 +494,16 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar:  AppBar(
-          iconTheme: IconThemeData(
-            color: Color(0xff005c9d),
-          ),
-          title: Text("Register",
-              style: TextStyle(
-                color: Color(0xff005c9d),
-              )),
-          backgroundColor: Colors.white,
-         
+      appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Color(0xff005c9d),
         ),
+        title: Text("Register",
+            style: TextStyle(
+              color: Color(0xff005c9d),
+            )),
+        backgroundColor: Colors.white,
+      ),
       body: Container(
         child: Form(
           key: _formKey,
@@ -534,7 +515,7 @@ class _RegisterState extends State<Register> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Center(
-                        child: titleStyles('Register for Work Requests', 18)),
+                        child: titleStyles('Fill Your Details', 18)),
                     SizedBox(height: 15),
                     Row(
                       children: [
@@ -550,6 +531,10 @@ class _RegisterState extends State<Register> {
                                 onChanged: (value) {
                                   setState(() {
                                     _signInMethod = value;
+                                    controllerName.clear();
+                                    controllerPhoneNo.clear();
+                                    controllerAddress.clear();
+                                    controllerAge.clear();
                                   });
                                 }),
                             Text("Email ID")
@@ -563,6 +548,12 @@ class _RegisterState extends State<Register> {
                                 onChanged: (value) {
                                   setState(() {
                                     _signInMethod = value;
+                                    controllerName.clear();
+                                    controllerEmail.clear();
+                                    controllerPhoneNo.clear();
+                                    controllerAddress.clear();
+                                    controllerAge.clear();
+                                    controllerPassword.clear();
                                   });
                                 }),
                             Text("OTP")
@@ -603,8 +594,7 @@ class _RegisterState extends State<Register> {
                     ),
                     Center(
                       child: FlatButton(
-                        child: buttonContainers(400, 20, 'Register', 18),
-                        
+                        child: buttonContainers(400, 15, 'Register', 18),
                         onPressed: () {
                           _signInMethod == "email"
                               ? addUserUsingEmail()

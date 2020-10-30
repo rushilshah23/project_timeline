@@ -300,7 +300,8 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                       ),
                       pw.CircularProgressIndicator(
                         value:
-                        double.parse(projectData["progressPercent"]) / 100,
+                      double.parse(projectData["progressPercent"])<100? double.parse(projectData["progressPercent"])>0?
+                              double.parse(projectData["progressPercent"])/ 100:0:1,
                         backgroundColor: PdfColors.grey300,
                         color: PdfColors.cyan600,
                         strokeWidth: 10,
@@ -461,11 +462,24 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
 
       if(projectData.containsKey("progress"))
       {
-       Map data1 = dataSnapshot.value["progress"];
-      ////debugPrint(data.toString());
+      
+     
       state=true;
       Map supMap= dataSnapshot.value["supervisors"];
       supervisors=supMap.values.toList();
+
+
+        Map progdata = dataSnapshot.value["progress"];
+    
+      var sortedEntries = progdata.entries.toList()..sort((e1, e2) {
+      return e2.key.compareTo(e1.key);
+        });
+
+        Map data1= Map();
+
+        for(int i=0;i<sortedEntries.length;i++)
+          data1.putIfAbsent(sortedEntries[i].key, () => sortedEntries[i].value);
+
 
       allDates= data1.keys.toList();
       List allDatesData= data1.values.toList();
@@ -650,7 +664,8 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                               radius: MediaQuery.of(context).size.height/6,
                               lineWidth: 13.0,
                               animation: true,
-                              percent: double.parse(projectData["progressPercent"]) / 100,
+                              percent: double.parse(projectData["progressPercent"])<100? double.parse(projectData["progressPercent"])>0?
+                              double.parse(projectData["progressPercent"])/ 100:0:1,
                               center: new Text(
                                 projectData["progressPercent"] + "%",
                                 style: new TextStyle(
@@ -829,7 +844,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>  ApproveWork(
+                          builder: (context) =>  WorkApproveModTabs(
                             name: widget.name,
                             email: widget.email,
                             uid: widget.uid,
