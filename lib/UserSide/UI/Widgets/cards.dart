@@ -133,7 +133,8 @@ card4() {
                 textStyle: TextStyle(
                     color: Color(0xff018abd),
                     fontSize: 17,
-                    fontWeight: FontWeight.w700)),
+                    fontWeight:
+                    FontWeight.w700)),
           ),
         ],
       ),

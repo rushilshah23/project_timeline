@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 const carousel1 = BoxDecoration(
   borderRadius: BorderRadius.only(
-      bottomRight: Radius.circular(40), bottomLeft: Radius.circular(40)),
+      bottomRight: Radius.circular(25), bottomLeft: Radius.circular(25)),
   image: DecorationImage(
       image: NetworkImage(
           'https://www.iahv.org/in-en/wp-content/uploads/2019/02/17.jpg'),
@@ -12,7 +12,7 @@ const carousel1 = BoxDecoration(
 
 const carousel2 = BoxDecoration(
   borderRadius: BorderRadius.only(
-      bottomRight: Radius.circular(40), bottomLeft: Radius.circular(40)),
+      bottomRight: Radius.circular(25), bottomLeft: Radius.circular(25)),
   image: DecorationImage(
       image: NetworkImage(
           'https://www.iahv.org/in-en/wp-content/uploads/2019/02/130608-Save-water-save-Bengaluru-012.jpg'),

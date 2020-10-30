@@ -33,7 +33,7 @@ class _MainAOLPageState extends State<MainAOLPage> {
             fontStyle: FontStyle.italic),
         centerWidget: Container(
             width: 250.0,
-            height: 150.0,
+            height: 170.0,
             decoration: new BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 shape: BoxShape.rectangle,

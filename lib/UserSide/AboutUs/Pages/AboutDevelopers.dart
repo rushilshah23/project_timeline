@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:link/link.dart';
+import 'package:project_timeline/UserSide/AboutUs/MainPage/HomeScreen.dart';
+import 'package:project_timeline/UserSide/AboutUs/Pages/AboutDevelopersMain.dart';
 import 'package:project_timeline/UserSide/Feedback/TextPages/DevelopersText.dart';
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -184,9 +186,16 @@ class _DevelopersPageState extends State<DevelopersPage> {
           ),
           backgroundImage: 'assets/waterimg.jpg',
           backgroundOpacity: 0.7),
+
     );
   }
-
+  void onDonePress() {
+    // Do what you want
+    Navigator.pop(
+      context,
+      MaterialPageRoute(builder: (context) =>  HomeScreen()),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -195,11 +204,15 @@ class _DevelopersPageState extends State<DevelopersPage> {
           'About Developers',
           style: TextStyle(color: darkestColor),
         ),
+        backgroundColor: appbarColor,
+
       ),
       body: IntroSlider(
         isShowSkipBtn: false,
         isShowPrevBtn: true,
         isShowDoneBtn: true,
+        onDonePress: this.onDonePress,
+
         isShowDotIndicator: true,
         isShowNextBtn: true,
         slides: this.slides,
@@ -208,7 +221,9 @@ class _DevelopersPageState extends State<DevelopersPage> {
         colorDot: Colors.white30,
         renderNextBtn: Icon(Icons.arrow_forward_ios, color: Colors.white),
         renderPrevBtn: Icon(Icons.arrow_back_ios, color: Colors.white),
+
       ),
+
     );
   }
 }

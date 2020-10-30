@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
+import 'package:project_timeline/UserSide/AboutUs/MainPage/HomeScreen.dart';
 import 'package:project_timeline/UserSide/Feedback/MainFeedbackPage/feedback.dart';
 import 'package:project_timeline/UserSide/Feedback/TextPages/AOLText.dart';
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
@@ -204,7 +205,7 @@ class _AOLPageState extends State<AOLPage> {
       new Slide(
           title: AOLText[8],
           centerWidget: Container(
-              width: 190.0,
+              width: 205.0,
               height: 190.0,
               decoration: new BoxDecoration(
                   shape: BoxShape.circle,
@@ -311,23 +312,7 @@ class _AOLPageState extends State<AOLPage> {
                   ),
                 ),
                 SizedBox(height: 20),
-                RaisedButton.icon(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    elevation: 2,
-                    color: Colors.grey,
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LocalFeedback()));
-                    },
-                    icon: Icon(Icons.feedback),
-                    label: Text(
-                      AOLText[18],
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    )),
+
               ],
             ),
           ),
@@ -335,7 +320,13 @@ class _AOLPageState extends State<AOLPage> {
           backgroundOpacity: 0.7),
     );
   }
-
+  void onDonePress() {
+    // Do what you want
+    Navigator.pop(
+      context,
+      MaterialPageRoute(builder: (context) =>  HomeScreen()),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -348,6 +339,8 @@ class _AOLPageState extends State<AOLPage> {
         isShowSkipBtn: false,
         isShowPrevBtn: true,
         slides: this.slides,
+        isShowDoneBtn: true,
+        onDonePress: this.onDonePress,
         colorActiveDot: Colors.white,
         colorDot: Colors.white30,
         isScrollable: true,
