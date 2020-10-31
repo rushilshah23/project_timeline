@@ -539,8 +539,10 @@ class _AddNewMachineState extends State<AddNewMachine> {
                                   child: Container(
                                     height: 50,
                                     width: MediaQuery.of(context).size.width-100,
-                                    color: Color(0xff018abd),
-                                   
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Color(0xff018abd),
+                                    ),
                                       child: Center(child:Text(
                                         'Add Machine',
                                         style: TextStyle(

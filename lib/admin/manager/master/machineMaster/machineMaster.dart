@@ -67,13 +67,14 @@ class _MachineMasterState extends State<MachineMaster> {
                                       "Machine Name: " +
                                           allMachines[index]["machineName"],
                                       overflow: TextOverflow.clip,
-                                      maxLines: 1,
-                                      softWrap: false,
+                                      maxLines: 2,
+                                      softWrap: true,
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                           fontStyle: FontStyle.italic),
                                     ),
+                                    SizedBox(height: 4,),
                                     Text(
                                       "Model: " +
                                           allMachines[index]["modelName"],
@@ -85,7 +86,7 @@ class _MachineMasterState extends State<MachineMaster> {
                                           fontWeight: FontWeight.w700),
                                     ),
                                     SizedBox(
-                                      height: 5,
+                                      height: 1,
                                     ),
                                     Text(
                                       "Operating Weight: " +

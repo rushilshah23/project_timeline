@@ -472,10 +472,11 @@ class _CreateNewProjectState extends State<CreateNewProject> {
                 ),
                 SizedBox(height: 10),
                 FlatButton(
-                  child: Text(
-                    'Estimate Project',
-                    style: TextStyle(color: Colors.white, fontSize: 17),
-                  ),
+//                  child: Text(
+//                    'Estimate Project',
+//                    style: TextStyle(color: Colors.white, fontSize: 17),
+//                  ),
+                  child: buttonContainers(400, 'Estimate Project', 18),
                   color: Color(0xff018abd),
                   onPressed: () {
                     for (int i = 0; i < listDyn.length; i++) {

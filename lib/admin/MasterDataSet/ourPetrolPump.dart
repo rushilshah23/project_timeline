@@ -78,6 +78,8 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
                                 softWrap: false,
                                 style: TextStyle(
                                   fontSize: 14,
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w900
                                 ),
                               ),
                               SizedBox(

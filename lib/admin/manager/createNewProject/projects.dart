@@ -124,25 +124,41 @@ class _CreatedProjectsState extends State<CreatedProjects> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(
-                              "Project: " +
+                            Row(
+                              children: [
+                                Text(
+                                  "Project: ",
+                                  overflow: TextOverflow.clip,
+                                  maxLines: 1,
+                                  softWrap: false,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic
+                                  ),
+                                ),
+                                Text(
                                   ourCreatedProjects[index]["projectName"],
-                              overflow: TextOverflow.clip,
-                              maxLines: 1,
-                              softWrap: false,
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),
+                                  overflow: TextOverflow.clip,
+                                  maxLines: 1,
+                                  softWrap: true,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500
+                                  ),
+                                ),
+                              ],
                             ),
                             SizedBox(
                               height: 5,
                             ),
+
                             Text(
                               "Site Address: " +
                                   ourCreatedProjects[index]["siteAddress"],
                               overflow: TextOverflow.clip,
                               maxLines: 2,
-                              softWrap: false,
+                              softWrap: true,
                               style: TextStyle(fontSize: 14),
                             ),
                             // Text(
@@ -158,22 +174,52 @@ class _CreatedProjectsState extends State<CreatedProjects> {
                             ),
                             Row(
                               children: <Widget>[
-                                Text(
-                                  "Progress" + ": " + ourCreatedProjects[index]["progressPercent"]+" %",
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 2,
-                                  softWrap: false,
-                                  style: TextStyle(fontSize: 14),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Progress" + ": ",
+                                      overflow: TextOverflow.clip,
+                                      maxLines: 2,
+                                      softWrap: false,
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic
+                                      ),
+                                    ),
+                                    Text(
+                                      ourCreatedProjects[index]["progressPercent"]+" %",
+                                      overflow: TextOverflow.clip,
+                                      maxLines: 2,
+                                      softWrap: false,
+                                      style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
                                 ),
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Text(
-                                  "Status" + ": " + ourCreatedProjects[index]["projectStatus"],
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 2,
-                                  softWrap: false,
-                                  style: TextStyle(fontSize: 14),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Status" + ": ",
+                                      overflow: TextOverflow.clip,
+                                      maxLines: 2,
+                                      softWrap: false,
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic
+                                      ),
+                                    ),
+                                    Text(
+                                      ourCreatedProjects[index]["projectStatus"],
+                                      overflow: TextOverflow.clip,
+                                      maxLines: 2,
+                                      softWrap: false,
+                                      style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),

@@ -556,6 +556,9 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                     children: [
                       Text("Upload Photos"),
                       RaisedButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)
+                        ),
                         child: Text("Pick images"),
                         onPressed: loadAssets,
                       )

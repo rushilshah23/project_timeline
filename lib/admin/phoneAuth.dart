@@ -139,7 +139,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
               Container(
                 width: double.infinity,
                 child: FlatButton(
-                  child: buttonContainers(200, 20, 'LOGIN', 20),
+                  child: buttonContainers(200, 'LOGIN', 20),
                   onPressed: () {
                     final phone = _phoneController.text.trim();
 

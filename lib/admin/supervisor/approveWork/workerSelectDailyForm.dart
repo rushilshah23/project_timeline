@@ -616,7 +616,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                     child: FlatButton(
                       onPressed: () => submitForm(),
                       child:
-                          buttonContainers(double.infinity, 10, 'Submit', 18),
+                          buttonContainers(double.infinity, 'Submit', 18),
                     ),
                   )
                 ],

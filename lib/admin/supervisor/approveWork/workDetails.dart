@@ -215,7 +215,7 @@ class _WorkDetailsState extends State<WorkDetails> {
 //                                ),
 //                                  child: Center(child: Text("Approve",style: titlestyles(18, Colors.white),))
 //                              ),
-                      child: buttonContainers(150, 10, 'Approve', 18),
+                      child: buttonContainers(150, 'Approve', 18),
                       onPressed: () {
                         if(widget.data["status"].toString().contains("Accepted"))
                         
@@ -238,7 +238,7 @@ class _WorkDetailsState extends State<WorkDetails> {
 //                                    borderRadius: BorderRadius.circular(5)
 //                                ),
 //                                child: Center(child: Text("Reject",style: titlestyles(18, Colors.white),))),
-                      child: buttonContainers(150, 10, 'Reject', 18),
+                      child: buttonContainers(150, 'Reject', 18),
                       onPressed: () {
                          if(widget.data["status"].toString().contains("Declined"))
                          { Navigator.of(context).pop();

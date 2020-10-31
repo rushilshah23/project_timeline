@@ -636,7 +636,7 @@ class _EditMachineDataState extends State<EditMachineData> {
 //                                    ),
                                   FlatButton(
                                     child: buttonContainers(
-                                         MediaQuery.of(context).size.width/2.5-25, 15, 'Save', 17),
+                                         MediaQuery.of(context).size.width/2.5-25, 'Save', 17),
                                     onPressed: () {
                                       if (_formKey.currentState.validate()) {
                                         debugPrint("true");
@@ -649,7 +649,7 @@ class _EditMachineDataState extends State<EditMachineData> {
                             
                                   FlatButton(
                                     child: buttonContainers(
-                                         MediaQuery.of(context).size.width/2.5-25, 15, 'Delete', 17),
+                                         MediaQuery.of(context).size.width/2.5-25, 'Delete', 17),
                                     onPressed: () {
                                       deleteMachine();
                                     },

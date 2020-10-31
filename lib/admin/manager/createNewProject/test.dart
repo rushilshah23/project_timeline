@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:uuid/uuid.dart';
@@ -632,7 +633,13 @@ class _TestState extends State<Test> {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Dear User"),
+      title: Text(
+        "Estimated Result",
+        style: TextStyle(
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.w700,
+            fontSize: 26),
+      ),
       content: Builder(builder: (context) {
         // Get available height and width of the build area of this widget. Make a choice depending on the size.
         var height = MediaQuery.of(context).size.height;
@@ -645,39 +652,101 @@ class _TestState extends State<Test> {
                 SizedBox(
                   height: 10,
                 ),
-                Text("Total Volume: " + ourExcavtn.ceil().toString() + "m3"),
+                Row(
+                  children: [
+                    Text(
+                      "Total Volume: ",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: 15),
+                    ),
+                    Text(
+                      ourExcavtn.ceil().toString() + "m3",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400, fontSize: 15),
+                    ),
+                  ],
+                ),
                 SizedBox(
                   height: 10,
                 ),
-                Text("No of Days: " + days.toString()),
+                Row(
+                  children: [
+                    Text(
+                      "No of Days: ",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: 15),
+                    ),
+                    Text(
+                      days.toString(),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400, fontSize: 15),
+                    ),
+                  ],
+                ),
                 SizedBox(
                   height: 10,
                 ),
-                Text("Total Rent of Machines Used: " +
-                    totalRent.ceil().toString() +
-                    " Rs"),
+                Row(
+                  children: [
+                    Text(
+                      "Total Rent of Machines Used: ",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: 14),
+                    ),
+                    Text(
+                      totalRent.ceil().toString() + " Rs",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400, fontSize: 14),
+                    ),
+                  ],
+                ),
                 SizedBox(
                   height: 10,
                 ),
-                Text("Total Fuel requires: " +
-                    totalfuel.ceil().toString() +
-                    " litre"),
+                Row(
+                  children: [
+                    Text(
+                      "Total Fuel requires: ",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: 14),
+                    ),
+                    Text(
+                      totalfuel.ceil().toString() + " litre",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400, fontSize: 14),
+                    ),
+                  ],
+                ),
                 SizedBox(
-                  height: 30,
+                  height: MediaQuery.of(context).size.height/10,
                 ),
                 Center(
-                  child: Text("Do you want to create this project?"),
+                  child: Text(
+                    "Do you want to create this project?",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500, fontSize: 15),
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)
+                      ),
+                      color: Color(0xFF005c9d),
                       onPressed: () {
                         debugPrint('Create Project');
-                      
                         sendToDb();
                       },
-                      child: Text("Create Project"),
+                      child: Text(
+                        "Create Project",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                          color: Colors.white
+                        ),
+                      ),
                     ),
                   ],
                 )
@@ -1066,19 +1135,24 @@ class _TestState extends State<Test> {
                   ),
                   SizedBox(height: 40.0),
                   RaisedButton(
-                    color: Color(0xff018abd),
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-                      child: Center(
-                          child: Text(
-                        'Estimate Project',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17),
-                      )),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)
                     ),
+                    color: Color(0xff018abd),
+//                    child: Padding(
+//                      padding:
+//                          EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+//                      child: Center(
+//                          child: Text(
+//                        'Estimate Project',
+//                        style: TextStyle(
+//                            color: Colors.white,
+//                            fontWeight: FontWeight.bold,
+//                            fontSize: 17),
+//                          )
+//                      ),
+//                    ),
+                    child: buttonContainers(400, 'Estimate Project', 18),
                     onPressed: () {
                       bool isFormValid = false;
                       if (_formKeyValue.currentState.validate()) {

@@ -594,7 +594,7 @@ class _RegisterState extends State<Register> {
                     ),
                     Center(
                       child: FlatButton(
-                        child: buttonContainers(400, 15, 'Register', 18),
+                        child: buttonContainers(400, 'Register', 18),
                         onPressed: () {
                           _signInMethod == "email"
                               ? addUserUsingEmail()

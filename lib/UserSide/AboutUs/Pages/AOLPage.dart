@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:project_timeline/UserSide/AboutUs/MainPage/HomeScreen.dart';
-import 'package:project_timeline/UserSide/Feedback/MainFeedbackPage/feedback.dart';
 import 'package:project_timeline/UserSide/Feedback/TextPages/AOLText.dart';
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
 

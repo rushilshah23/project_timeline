@@ -779,7 +779,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                         ),
 
                         FlatButton(
-                          child: buttonContainers(double.infinity, 20, 'Todays Report', 18),
+                          child: buttonContainers(double.infinity, 'Todays Report', 18),
                           onPressed: () async{
 
                             // await selectedProjs();
@@ -792,7 +792,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                           height: 50,
                         ),
                         FlatButton(
-                          child: buttonContainers(double.infinity, 20, 'Generate Overall Report', 18),
+                          child: buttonContainers(double.infinity, 'Generate Overall Report', 18),
                           onPressed: () async{
                             // await selectedProjs();
                             // await allDayReportPdf();

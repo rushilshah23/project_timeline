@@ -139,10 +139,11 @@ titleStyles(String text, double size) {
 }
 
 Widget buttonContainers(
-    double width, double padding, String text, double size) {
+    double width, String text, double size) {
   return Container(
     width: width,
-    padding: EdgeInsets.all(padding),
+    height: 50,
+    padding: EdgeInsets.all(15),
     decoration: new BoxDecoration(
       borderRadius: BorderRadius.circular(10),
       color: Color(0xff018abd),
@@ -158,3 +159,5 @@ Widget buttonContainers(
     ),
   );
 }
+
+

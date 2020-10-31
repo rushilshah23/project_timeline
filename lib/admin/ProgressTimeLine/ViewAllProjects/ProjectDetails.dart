@@ -391,7 +391,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                 ),
 
                 FlatButton(
-                  child: buttonContainers(double.infinity, 20, 'Donate', 18),
+                  child: buttonContainers(double.infinity, 'Donate', 18),
                   onPressed: () {
                     Navigator.push(
                         context,

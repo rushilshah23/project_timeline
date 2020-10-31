@@ -338,7 +338,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
 //                            ),
 //                          ),
 //                        ),
-                        child: buttonContainers(400, 20, 'Create Worker', 18),
+                        child: buttonContainers(400, 'Create Worker', 18),
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
                             setState(() {

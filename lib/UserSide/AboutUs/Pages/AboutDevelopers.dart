@@ -3,7 +3,6 @@ import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:link/link.dart';
 import 'package:project_timeline/UserSide/AboutUs/MainPage/HomeScreen.dart';
-import 'package:project_timeline/UserSide/AboutUs/Pages/AboutDevelopersMain.dart';
 import 'package:project_timeline/UserSide/Feedback/TextPages/DevelopersText.dart';
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';

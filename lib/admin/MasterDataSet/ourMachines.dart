@@ -58,10 +58,12 @@ class _OurMachinesState extends State<OurMachines> {
                                       "Machine Name: " +
                                           allMachines[index]["machineName"],
                                       overflow: TextOverflow.clip,
-                                      maxLines: 1,
-                                      softWrap: false,
+                                      maxLines: 2,
+                                      softWrap: true,
                                       style: TextStyle(
-                                        fontSize: 14,
+                                        fontSize: 15,
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.w900
                                       ),
                                     ),
                                     Text(

@@ -342,7 +342,7 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
 //                          ),
 //                        ),
                         child:
-                            buttonContainers(400, 20, 'Create Supervisor', 18),
+                            buttonContainers(400, 'Create Supervisor', 18),
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
                             setState(() {

@@ -358,7 +358,7 @@ class _DashBoardState extends State<DashBoard> {
 //                  ),
 //                ),
                       child: buttonContainers(
-                          double.infinity, 20, 'Get Report', 18),
+                          double.infinity, 'Get Report', 18),
                       onPressed: () {
                         Navigator.push(
                           context,
