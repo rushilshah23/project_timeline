@@ -45,6 +45,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
   List allDaysReport=List();
   List allDates=List();
   List allDatesApprovedVolume= [];
+  List graphPoints= [];
   List perDayExcavation=List();
 
   List alldayMachines=List();
@@ -374,7 +375,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
               grid: pw.CartesianGrid(
                 xAxis: pw.FixedAxis.fromStrings(
                   List<String>.generate(
-                      allDates.length, (index) => allDates[index]),
+                      graphPoints.length, (index) => graphPoints[index][0]),
                   marginStart: 30,
                   marginEnd: 30,
                   ticks: true,
@@ -403,9 +404,9 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
                   drawPoints: true,
                   color: PdfColors.cyan,
                   data: List<pw.LineChartValue>.generate(
-                    allDatesApprovedVolume.length,
+                    graphPoints.length,
                         (i) {
-                      final num v = allDatesApprovedVolume[i];
+                      final num v = graphPoints[i][1];
                       return pw.LineChartValue(i.toDouble(), v.toDouble());
                     },
                   ),
@@ -611,6 +612,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
     allDates.clear();
     approvedVol=0;
     allDatesApprovedVolume.clear();
+    graphPoints.clear();
     await databaseReference.child("projects").child(selectedProject).once().then((DataSnapshot dataSnapshot) {
 
       projectData= dataSnapshot.value;
@@ -632,6 +634,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
       List allDatesData= data1.values.toList();
 
       allDatesApprovedVolume =List.generate(allDates.length, (i) =>0.0);
+      graphPoints =List.generate(allDates.length, (i) =>[allDates[i],0.0]);
 
       //debugPrint(allDatesData.toString());
 
@@ -657,6 +660,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
             //debugPrint(todaysWorkersDataList[j]["workerName"].toString());
             allDatesApprovedVolume[i]=allDatesApprovedVolume[i]+double.parse(todaysWorkersDataList[j]["volumeExcavated"].toString());
             approvedVol= approvedVol+double.parse(todaysWorkersDataList[j]["volumeExcavated"].toString());
+            graphPoints[i][1]=graphPoints[i][1]+double.parse(todaysWorkersDataList[j]["volumeExcavated"].toString());
 
             debugPrint("------------"+todaysWorkersDataList[j].toString());
 
@@ -669,11 +673,18 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
             String machineModel=allMachinesData[todaysWorkersDataList[j]["MachineUsed"]]["machineName"]+"\n"+allMachinesData[todaysWorkersDataList[j]["MachineUsed"]]["modelName"];
             debugPrint("------------"+machineModel);
             allDaysReport[i][j]["MachineUsed"]=machineModel;
+           
           }
         }
       }
 
       //debugPrint(allDatesApprovedVolume.toString());
+
+       graphPoints.sort((a,b) {
+                  var adate = a[0]; //before -> var adate = a.expiry;
+                  var bdate = b[0]; //before -> var bdate = b.expiry;
+                  return adate.compareTo(bdate); //to get the order other way just switch `adate & bdate`
+                  });
     }
     );
 

@@ -78,10 +78,12 @@ class _FirstScreen extends State<HeatMapPage> {
   }
 
   populateClients() {
-    FirebaseFirestore.instance.collection('markers').get().then((docs) {
-      if (docs.docs.isNotEmpty) {
-        for (int i = 0; i < docs.docs.length; ++i) {
-          initMarker(docs.docs[i].data, docs.docs[i].id);
+    FirebaseFirestore.instance.collection('markers').get().then((val) {
+      if (val.docs.isNotEmpty) {
+        for (int i = 0; i < val.docs.length; ++i) {
+          debugPrint("-------------------------"+val.docs[i].data.toString());
+           debugPrint("-------------------------"+val.docs[i].data()["projectID"].toString());
+          initMarker(val.docs[i].data(), val.docs[i].id);
         }
       }
     });
@@ -92,17 +94,15 @@ class _FirstScreen extends State<HeatMapPage> {
     Map projectMap;
     projectValues.clear();
     //projectValues
-   await  databaseReference.child("projects").once().then((DataSnapshot snapshot) {
-       
-     // debugPrint(projectMap.toString());
+   await  databaseReference.child("projects").once().then((DataSnapshot snapshot) {   
           projectMap=snapshot.value;
-      
   });
 
   debugPrint("-----------------------------"+projectMap[request['projectID']]["projectStatus"].toString());
+  debugPrint("-----------------------------"+request['location'].latitude.toString());
 
- var markerIdVal = requestId;                                          
-      final MarkerId markerId = MarkerId(markerIdVal);
+                                       
+      final MarkerId markerId = MarkerId(requestId);
    
       Marker marker = Marker(   
       markerId: markerId,

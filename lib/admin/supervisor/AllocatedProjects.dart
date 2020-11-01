@@ -45,6 +45,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
   List machines=[];
   List workers=[];
 
+ List graphPoints= [];
     List allDaysReport=List();
   List allDates=List();
   List allDatesApprovedVolume= [];
@@ -317,7 +318,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
               grid: pw.CartesianGrid(
                 xAxis: pw.FixedAxis.fromStrings(
                   List<String>.generate(
-                      allDates.length, (index) => allDates[index]),
+                      graphPoints.length, (index) => graphPoints[index][0]),
                   marginStart: 30,
                   marginEnd: 30,
                   ticks: true,
@@ -346,9 +347,9 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                   drawPoints: true,
                   color: PdfColors.cyan,
                   data: List<pw.LineChartValue>.generate(
-                    allDatesApprovedVolume.length,
+                    graphPoints.length,
                         (i) {
-                      final num v = allDatesApprovedVolume[i];
+                      final num v = graphPoints[i][1];
                       return pw.LineChartValue(i.toDouble(), v.toDouble());
                     },
                   ),
@@ -456,6 +457,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
     allDates.clear();
     approvedVol=0;
     allDatesApprovedVolume.clear();
+     graphPoints.clear();
     await databaseReference.child("projects").child(widget.assignedProject).once().then((DataSnapshot dataSnapshot) {
 
       projectData= dataSnapshot.value;
@@ -485,6 +487,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
       List allDatesData= data1.values.toList();
 
       allDatesApprovedVolume =List.generate(allDates.length, (i) =>0.0);
+       graphPoints =List.generate(allDates.length, (i) =>[allDates[i],0.0]);
 
       //debugPrint(allDatesData.toString());
 
@@ -511,6 +514,8 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
             allDatesApprovedVolume[i]=allDatesApprovedVolume[i]+double.parse(todaysWorkersDataList[j]["volumeExcavated"].toString());
             approvedVol= approvedVol+double.parse(todaysWorkersDataList[j]["volumeExcavated"].toString());
 
+               graphPoints[i][1]=graphPoints[i][1]+double.parse(todaysWorkersDataList[j]["volumeExcavated"].toString());
+
             //debugPrint("------------"+todaysWorkersDataList[j].toString());
 
 
@@ -527,6 +532,12 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
       
       }
 
+
+       graphPoints.sort((a,b) {
+                  var adate = a[0]; //before -> var adate = a.expiry;
+                  var bdate = b[0]; //before -> var bdate = b.expiry;
+                  return adate.compareTo(bdate); //to get the order other way just switch `adate & bdate`
+                  });
    
 
       //debugPrint(allDatesApprovedVolume.toString());

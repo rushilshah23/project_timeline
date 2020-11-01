@@ -169,7 +169,7 @@ class _MyHomeState extends State<MyHome> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HeatMap()));    //Heatmap
+                              builder: (context) => HeatMapPage()));    //Heatmap
                     },
                     direction: FlipDirection.HORIZONTAL,
                     front: card2(),
