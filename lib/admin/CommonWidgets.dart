@@ -22,72 +22,75 @@ showToast(String msg) {
       fontSize: 18.0);
 }
 
-
- Future<bool> _onBackPressed(BuildContext context) {
-    return showDialog(
-      context: context,
-      builder: (context) => new AlertDialog(
-        title: new Text('Are you sure?'),
-        content: new Text('Do you want to exit an App'),
-        actions: <Widget>[
-          new GestureDetector(
-            onTap: () => Navigator.of(context).pop(false),
-            child: Text("NO"),
-          ),
-          SizedBox(height: 16),
-          new GestureDetector(
-            onTap: () async{
-              await AuthenticationService().signoutEmailId();
-              SharedPreferences _sharedpreferences =
-              await SharedPreferences.getInstance();
-              _sharedpreferences.clear();
-              Navigator.pushAndRemoveUntil(
-              context,
-              PageRouteBuilder(pageBuilder: (BuildContext context, Animation animation,
-                  Animation secondaryAnimation) {
-                return MyApp();
-              }, ),
-              (Route route) => false);
-              showToast("Successful logout");
-            },
-            child: Text("YES"),
-          ),
-        ],
-      ),
-    ) ??
-        false;
-  }
+Future<bool> _onBackPressed(BuildContext context) {
+  return showDialog(
+        context: context,
+        builder: (context) => new AlertDialog(
+          title: new Text('Are you sure?'),
+          content: new Text('Do you want to Logout?'),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: new GestureDetector(
+                onTap: () => Navigator.of(context).pop(false),
+                child: Text("NO"),
+              ),
+            ),
+            SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: new GestureDetector(
+                onTap: () async {
+                  await AuthenticationService().signoutEmailId();
+                  SharedPreferences _sharedpreferences =
+                      await SharedPreferences.getInstance();
+                  _sharedpreferences.clear();
+                  Navigator.pushAndRemoveUntil(context, PageRouteBuilder(
+                    pageBuilder: (BuildContext context, Animation animation,
+                        Animation secondaryAnimation) {
+                      return MyApp();
+                    },
+                  ), (Route route) => false);
+                  showToast("Successful Logout");
+                },
+                child: Text("YES"),
+              ),
+            ),
+          ],
+        ),
+      ) ??
+      false;
+}
 
 Widget ThemeAppbar(String title, BuildContext context) {
   return new AppBar(
     actions: <Widget>[
-
       IconButton(
           icon: Icon(Icons.home),
           onPressed: () async {
-          Navigator.pushAndRemoveUntil(
-              context,
-              PageRouteBuilder(pageBuilder: (BuildContext context, Animation animation,
-                  Animation secondaryAnimation) {
-                return MyApp();
-              }, transitionsBuilder: (BuildContext context, Animation<double> animation,
-                  Animation<double> secondaryAnimation, Widget child) {
-                return new SlideTransition(
-                  position: new Tween<Offset>(
-                    begin: const Offset(1.0, 0.0),
-                    end: Offset.zero,
-                  ).animate(animation),
-                  child: child,
-                );
-              }),
-              (Route route) => false);
-              
-        }),
-
+            Navigator.pushAndRemoveUntil(
+                context,
+                PageRouteBuilder(pageBuilder: (BuildContext context,
+                    Animation animation, Animation secondaryAnimation) {
+                  return MyApp();
+                }, transitionsBuilder: (BuildContext context,
+                    Animation<double> animation,
+                    Animation<double> secondaryAnimation,
+                    Widget child) {
+                  return new SlideTransition(
+                    position: new Tween<Offset>(
+                      begin: const Offset(1.0, 0.0),
+                      end: Offset.zero,
+                    ).animate(animation),
+                    child: child,
+                  );
+                }),
+                (Route route) => false);
+          }),
       IconButton(
           icon: Icon(Icons.exit_to_app),
           onPressed: () async {
-             _onBackPressed(context);
+            _onBackPressed(context);
           })
     ],
     iconTheme: IconThemeData(
@@ -133,13 +136,12 @@ titleStyles(String text, double size) {
       style: TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: size,
-        color:  Color(0xff005c9d),
+        color: Color(0xff005c9d),
         fontStyle: FontStyle.italic,
       ));
 }
 
-Widget buttonContainers(
-    double width, String text, double size) {
+Widget buttonContainers(double width, String text, double size) {
   return Container(
     width: width,
     height: 50,
@@ -160,4 +162,49 @@ Widget buttonContainers(
   );
 }
 
+Widget withoutLogoutAppbar({
+  BuildContext context,
+  String title,
+  bool isLoggedIn,
+  Function goto,
+}) {
+  return AppBar(
+    iconTheme: IconThemeData(
+      color: Color(0xff005c9d),
+    ),
+    title: Text(title,
+        style: TextStyle(
+          color: Color(0xff005c9d),
+        )),
+    backgroundColor: Colors.white,
+    actions: <Widget>[
+      IconButton(
+        icon: Icon(
+          Icons.person,
+        ),
+        onPressed: () {
+          // do something
+          isLoggedIn == false
+              ? Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                )
+              : goto();
+        },
+      )
+    ],
+  );
+}
 
+Widget plainAppBar({BuildContext context, String title}) {
+  return AppBar(
+    iconTheme: IconThemeData(
+      color: Color(0xff005c9d),
+    ),
+    title: Text(title,
+        style: TextStyle(
+          color: Color(0xff005c9d),
+        )),
+    backgroundColor: Colors.white,
+  );
+}
