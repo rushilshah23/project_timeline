@@ -25,7 +25,7 @@ class DetailsPage extends StatelessWidget {
                         bottomRight: Radius.circular(30)),
                     image: DecorationImage(
                       image: NetworkImage(imagePath),
-                      fit: BoxFit.cover,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),

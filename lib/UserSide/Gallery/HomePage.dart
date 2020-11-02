@@ -41,7 +41,7 @@ class _DbTestingState extends State<DbTesting> {
   Widget build(BuildContext context) {
     if (projectValues.length != 0) {
       return Scaffold(
-        backgroundColor: Color(0xFF0094ff),
+        backgroundColor: Color(0xFF018abd),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
