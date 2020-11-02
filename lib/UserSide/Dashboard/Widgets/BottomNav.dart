@@ -17,7 +17,7 @@ class BottomNav extends StatefulWidget {
 }
 
 class _BottomNavState extends State<BottomNav> {
-  bool isLoggedIn = false;
+  bool isLoggedIn=false;
   String userType;
   int currentPage = 0;
   GlobalKey bottomNavigationKey = GlobalKey();
@@ -31,70 +31,73 @@ class _BottomNavState extends State<BottomNav> {
     _loadData();
   }
 
-  _loadData() async {
+
+    _loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     setState(() {
+     
       isLoggedIn = (prefs.getBool('isLoggedIn') ?? false);
-      userType = (prefs.getString('userType') ?? '');
+      userType= (prefs.getString('userType') ?? '');
     });
   }
 
-  void goToHomePage() {
-    if (userType == managerType) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => ManagerHomePage()),
-      );
-    }
-    if (userType == workerType) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => WorkerHomePage()),
-      );
-    }
-    if (userType == supervisorType) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => SupervisorHomePage()),
-      );
-    }
+  void goToHomePage()
+  {
+     if(userType==managerType)
+     {
+          Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ManagerHomePage()),
+                );
+     }
+      if(userType==workerType)
+     {
+          Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => WorkerHomePage()),
+                );
+     }
+      if(userType==supervisorType)
+     {
+          Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SupervisorHomePage()),
+                );
+     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: withoutLogoutAppbar(
-          context: context,
-          goto: goToHomePage,
-          isLoggedIn: isLoggedIn,
-          title: "IAHV",
+        appBar:  AppBar(
+          iconTheme: IconThemeData(
+            color: Color(0xff005c9d),
+          ),
+          title: Text("IAHV",
+              style: TextStyle(
+                color: Color(0xff005c9d),
+              )),
+          backgroundColor: Colors.white,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.person,
+              ),
+              onPressed: () {
+                // do something
+                isLoggedIn==false?Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => LoginPage()),
+                ):goToHomePage();
+              },
+            )
+          ],
         ),
-        // AppBar(
-        //   iconTheme: IconThemeData(
-        //     color: Color(0xff005c9d),
-        //   ),
-        //   title: Text("IAHV",
-        //       style: TextStyle(
-        //         color: Color(0xff005c9d),
-        //       )),
-        //   backgroundColor: Colors.white,
-        //   actions: <Widget>[
-        //     IconButton(
-        //       icon: Icon(
-        //         Icons.person,
-        //       ),
-        //       onPressed: () {
-        //         // do something
-        //         isLoggedIn==false?Navigator.push(
-        //           context,
-        //           MaterialPageRoute(
-        //               builder: (context) => LoginPage()),
-        //         ):goToHomePage();
-        //       },
-        //     )
-        //   ],
-        // ),
         body: getPage(currentPage),
         bottomNavigationBar: FancyBottomNavigation(
           circleColor: bottomnavColor,

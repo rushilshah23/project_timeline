@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 
+
+
 class FeedBackDetails extends StatefulWidget {
   final Map feedBackData;
-  FeedBackDetails({
-    Key key,
-    this.feedBackData,
-  }) : super(key: key);
+  FeedBackDetails({Key key, this.feedBackData,})
+      : super(key: key);
 
   @override
-  _FeedBackDetailsState createState() => _FeedBackDetailsState();
+  _FeedBackDetailsState createState() =>
+      _FeedBackDetailsState();
 }
 
 class _FeedBackDetailsState extends State<FeedBackDetails> {
@@ -28,47 +29,50 @@ class _FeedBackDetailsState extends State<FeedBackDetails> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Center(
-                    child: titleStyles('Feedback given by:', 18),
+                  child: titleStyles('Feedback given by:', 18),
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  Text("Name: " + widget.feedBackData["name"].toString()),
+                  Text("Name: " +
+                      widget.feedBackData["name"].toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Groundwater level before: " +
-                      widget.feedBackData["groundwater level before"]
-                          .toString()),
+                 Text("groundwater level before: " +
+                      widget.feedBackData["groundwater level before"].toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Groundwater level after: " +
-                      widget.feedBackData["groundwater level after"]
-                          .toString()),
+                  Text("groundwater level after: " +
+                      widget.feedBackData["groundwater level after"].toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Crop production before: " +
+                  Text("crop production before: " +
                       widget.feedBackData["crop production before"].toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Crop production after: " +
+
+                  Text("crop production after: " +
                       widget.feedBackData["crop production after"].toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Feedback: " +
+
+                  Text("feedback: " +
                       widget.feedBackData["feedback"].toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Suggestions: " +
+
+                  Text("suggestions: " +
                       widget.feedBackData["suggestions"].toString()),
                   SizedBox(
                     height: 10,
                   ),
+              
                 ],
               ),
             ],
