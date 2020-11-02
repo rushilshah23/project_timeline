@@ -29,7 +29,7 @@ class WorkerHomePageState extends State<WorkerHomePage> {
       password = '',
       uid = '',
       userType = '',
-      assignedProject;
+      assignedProject='';
   _loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -59,39 +59,7 @@ class WorkerHomePageState extends State<WorkerHomePage> {
     // Navigator.pop(context);
   }
 
-  Future<bool> _onBackPressed() {
-    return showDialog(
-          context: context,
-          builder: (context) => new AlertDialog(
-            title: new Text('Are you sure?'),
-            content: new Text('Do you want to exit an App'),
-            actions: <Widget>[
-              new GestureDetector(
-                onTap: () => Navigator.of(context).pop(false),
-                child: Text("NO"),
-              ),
-              SizedBox(height: 16),
-              new GestureDetector(
-                onTap: () async {
-                  await AuthenticationService().signoutEmailId();
-                  SharedPreferences _sharedpreferences =
-                      await SharedPreferences.getInstance();
-                  _sharedpreferences.clear();
-                  Navigator.pushAndRemoveUntil(context, PageRouteBuilder(
-                    pageBuilder: (BuildContext context, Animation animation,
-                        Animation secondaryAnimation) {
-                      return MyApp();
-                    },
-                  ), (Route route) => false);
-                  showToast("Successful logout");
-                },
-                child: Text("YES"),
-              ),
-            ],
-          ),
-        ) ??
-        false;
-  }
+ 
 
   _getDrawerItemWidget(int pos) {
     switch (pos) {
@@ -102,7 +70,7 @@ class WorkerHomePageState extends State<WorkerHomePage> {
           uid: uid,
           assignedProject: assignedProject,
           mobile: mobile,
-          userType: userType,
+          userType: workerType,
         );
 
       case 1:
@@ -132,18 +100,9 @@ class WorkerHomePageState extends State<WorkerHomePage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: _onBackPressed,
+        onWillPop: () =>  onBackPressed(context),
         child: Scaffold(
-          // appBar: new AppBar(
-          //   iconTheme: IconThemeData(
-          //     color: Color(0xff005c9d),
-          //   ),
-          //   title: Text(appbartitle,
-          //       style: TextStyle(
-          //         color: Color(0xff005c9d),
-          //       )),
-          //   backgroundColor: Colors.white,
-          // ),
+         
           appBar: ThemeAppbar(appbartitle, context),
 
           drawer: ClipRRect(

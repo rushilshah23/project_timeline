@@ -3,6 +3,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:project_timeline/admin/reportGeneration/reportTest.dart';
+import 'package:project_timeline/admin/supervisor/AllocatedProjects.dart';
+import 'package:project_timeline/admin/worker/updateWork.dart';
 import 'CommonWidgets.dart';
 
 class DashBoard extends StatefulWidget {
@@ -24,6 +26,7 @@ class _DashBoardState extends State<DashBoard> {
   double percent = 10;
   double percent1 = 10;
   double percent2 = 80;
+  bool isWorkerA=false,isSuperA=false;
 
   final databaseReference = FirebaseDatabase.instance.reference();
 
@@ -103,6 +106,20 @@ class _DashBoardState extends State<DashBoard> {
   void initState() {
     super.initState();
     getDetails();
+
+    if( !widget.assignedProject.contains(" ") && !widget.assignedProject.contains("No project assigned"))
+    {
+      if(widget.userType.contains("Supervisor"))
+      setState(() { debugPrint("trueeeeeeeeeeeeeee sssssssssssss");isSuperA= true;});
+                 
+      else  if(widget.userType.contains("Worker"))
+      setState(() {debugPrint("trueeeeeeeeeeeeeee wwwwwwwwwww");isWorkerA = true;});
+                
+
+      debugPrint("trueeeeeeeeeeeeeee");
+      debugPrint(widget.userType);
+    }
+
   }
 
   Widget _myAppBar2() {
@@ -212,28 +229,7 @@ class _DashBoardState extends State<DashBoard> {
                             fontSize: 12)),
                   ],
                 ),
-//                Container(height: 60, child: VerticalDivider(color: Colors.grey[400],width: 20,thickness: 2,)),
-//                Column(
-//                  children: [
-//                    Text(
-//                        'Donation',
-//                        style: TextStyle(
-//                            fontWeight: FontWeight.bold,
-//                            color: Colors.grey[600],
-//                            fontSize: 18
-//                        )
-//                    ),
-//                    SizedBox(height: 10),
-//                    Text(
-//                        '123',
-//                        style: TextStyle(
-//                            fontWeight: FontWeight.bold,
-//                            color: Colors.grey[600],
-//                            fontSize: 12
-//                        )
-//                    ),
-//                  ],
-//                ),
+
               ],
             ),
             SizedBox(height: 35),
@@ -320,43 +316,11 @@ class _DashBoardState extends State<DashBoard> {
               ],
             ),
             SizedBox(height: 70),
-            // RaisedButton(
-            //   child: Text("PDF testing"),
-            //   onPressed: () {
-            //     Navigator.pushReplacement(
-            //       context,
-            //       MaterialPageRoute(
-            //           builder: (context) => ReportGenerationTesting()),
-            //     );
-            //   },
-            // ),
-            //
+          
 
             widget.userType.contains("Manager")
                 ? Center(
                     child: FlatButton(
-//                child: Container(
-//                  height: 50,
-//                  width: double.infinity,
-//                  decoration: BoxDecoration(
-//                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-//                    gradient: LinearGradient(
-//                        colors: [ Colors.orange[200],Colors.orange[400],Colors.orange[600],Colors.orange[800],Colors.deepOrange[600]],
-//                        begin: Alignment.centerRight,
-//                        end: Alignment(-1.0,-2.0)
-//                    ), //Gradient
-//                  ),
-//                  child: Center(
-//
-//                    child: Text(
-//                        'Our Projects',
-//                      style: TextStyle(
-//                        color: Colors.white,
-//                        fontWeight: FontWeight.bold
-//                      ),
-//                    ),
-//                  ),
-//                ),
                       child: buttonContainers(
                           double.infinity, 'Get Report', 18),
                       onPressed: () {
@@ -365,6 +329,54 @@ class _DashBoardState extends State<DashBoard> {
                           MaterialPageRoute(
                               builder: (context) => ReportGenerationTesting()),
                         );
+                      },
+                    ),
+                  )
+                : Container(),
+
+
+                    isSuperA
+                ? Center(
+                    child: FlatButton(
+                      child: buttonContainers(
+                          double.infinity, 'Approve Work', 18),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>YourAllocatedProjects(
+                                          name: widget.name,
+                                          email: widget.email,
+                                          uid: widget.uid,
+                                          assignedProject: widget.assignedProject,
+                                          mobile: widget.mobile,
+                                          userType: widget.userType,
+                              )
+                            ),
+                        );
+                      },
+                    ),
+                  )
+                : Container(),
+
+                isWorkerA
+                ? Center(
+                    child: FlatButton(
+                      child: buttonContainers(
+                          double.infinity, 'Update Your Work', 18),
+                      onPressed: () {
+                         Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UpdateWork(
+                                          name: widget.name,
+                                          email: widget.email,
+                                          uid: widget.uid,
+                                          assignedProject: widget.assignedProject,
+                                          mobile: widget.mobile,
+                                          userType: widget.userType,
+                                        )),
+                              );
                       },
                     ),
                   )

@@ -23,18 +23,18 @@ showToast(String msg) {
 }
 
 
- Future<bool> _onBackPressed(BuildContext context) {
+ Future<bool> onBackPressed(BuildContext context) {
     return showDialog(
       context: context,
       builder: (context) => new AlertDialog(
         title: new Text('Are you sure?'),
-        content: new Text('Do you want to exit an App'),
+        content: new Text('Do you want to logout?'),
         actions: <Widget>[
           new GestureDetector(
             onTap: () => Navigator.of(context).pop(false),
-            child: Text("NO"),
+            child: Text("NO",style: TextStyle(fontSize: 17),),
           ),
-          SizedBox(height: 16),
+          SizedBox(width: 18),
           new GestureDetector(
             onTap: () async{
               await AuthenticationService().signoutEmailId();
@@ -50,8 +50,10 @@ showToast(String msg) {
               (Route route) => false);
               showToast("Successful logout");
             },
-            child: Text("YES"),
+            child: Text("YES",style: TextStyle(fontSize: 17),),
           ),
+
+           
         ],
       ),
     ) ??
@@ -87,7 +89,7 @@ Widget ThemeAppbar(String title, BuildContext context) {
       IconButton(
           icon: Icon(Icons.exit_to_app),
           onPressed: () async {
-             _onBackPressed(context);
+             onBackPressed(context);
           })
     ],
     iconTheme: IconThemeData(

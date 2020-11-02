@@ -227,6 +227,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                     ),
                     SizedBox(height: 15),
                     TextFormField(
+                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         labelText: "Phone no",
                         fillColor: Colors.white,
