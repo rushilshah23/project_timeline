@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:project_timeline/UserSide/Dashboard/Widgets/BottomNav.dart';
 import 'package:project_timeline/UserSide/Feedback/TextPages/feedbackText.dart';
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
+import 'package:project_timeline/admin/CommonWidgets.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Feedback extends StatefulWidget {
@@ -42,12 +44,17 @@ class _LocalFeedbackState extends State<LocalFeedback> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  final databaseReference = FirebaseDatabase.instance.reference();
+  List<DropdownMenuItem> projectsDropdwnItems = [];
+  String selectedProject;
+
   bool feedback;
   SharedPreferences sharedPreferences;
   String language;
 
   @override
   void initState() {
+    getProjectsData();
     super.initState();
   }
 
@@ -55,7 +62,12 @@ class _LocalFeedbackState extends State<LocalFeedback> {
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.instance;
     DatabaseReference databaseReference = firebaseDatabase.reference();
 
-    databaseReference.child("localFeedback").push().set({
+    databaseReference
+        .child('projects')
+        .child(selectedProject)
+        .child("localFeedback")
+        .push()
+        .set({
       'name': _name.text,
       'contactNumber': _contactNumber.text,
       'email': _email.text,
@@ -183,7 +195,8 @@ class _LocalFeedbackState extends State<LocalFeedback> {
 
   String emailValidator(value) {
     if (value.isEmpty) {
-      return feedbackText[19];
+      // return feedbackText[19];
+      return null;
     } else if (value.toString().contains('@') &&
         value.toString().contains('.')) {
       return null;
@@ -235,22 +248,57 @@ class _LocalFeedbackState extends State<LocalFeedback> {
     );
   }
 
+  Future<void> getProjectsData() async {
+    databaseReference
+        .child("projects")
+        .once()
+        .then((DataSnapshot dataSnapshot) {
+      Map projMap = dataSnapshot.value;
+
+      // debugPrint(projects.toString());
+      projMap.values.toList().forEach((result) {
+        setState(() {
+          // Map resultMap = result;
+          // if(resultMap.containsKey("progress")){
+          projectsDropdwnItems.add(
+            DropdownMenuItem(
+              child: Container(
+                  child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(result['projectName']),
+                  Text(
+                    result['siteAddress'],
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ],
+              )),
+              value: result['projectID'],
+            ),
+          );
+          // }
+        });
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: appbarColor,
-          title: Text(feedbackText[8]),
-          centerTitle: true,
-          leading: GestureDetector(
-            child: Icon(Icons.arrow_back),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => BottomNav()));
-            },
-          ),
-        ),
+        appBar: ThemeAppbar('Feedback', context),
+        // appBar: AppBar(
+        //   automaticallyImplyLeading: false,
+        //   backgroundColor: appbarColor,
+        //   title: Text(feedbackText[8]),
+        //   centerTitle: true,
+        //   leading: GestureDetector(
+        //     child: Icon(Icons.arrow_back),
+        //     onTap: () {
+        //       Navigator.push(context,
+        //           MaterialPageRoute(builder: (context) => BottomNav()));
+        //     },
+        //   ),
+        // ),
         body: Container(
           margin: EdgeInsets.fromLTRB(32, 8, 32, 8),
           child: Padding(
@@ -261,6 +309,39 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                     key: _formKey,
                     child: Column(
                       children: <Widget>[
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Center(
+                              child: new DropdownButtonFormField(
+                                validator: (value) =>
+                                    value == null ? 'Select Project' : null,
+                                items: projectsDropdwnItems,
+                                onChanged: (selectedAccountType) {
+                                  setState(() {
+                                    selectedProject = selectedAccountType;
+                                    debugPrint(selectedProject);
+                                  });
+                                },
+                                value: selectedProject,
+                                isDense: false,
+                                isExpanded: true,
+                                hint: Text(
+                                  'Select Projects',
+                                  style: TextStyle(
+                                      color: Colors.black54, fontSize: 14),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                         SizedBox(
                           height: 20,
                         ),
@@ -278,11 +359,12 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                           keyboard: TextInputType.number,
                           decorationText: feedbackText[11],
                           controllername: _contactNumber,
-                          validateFunction: contactValidator,
+                          // validateFunction: contactValidator,
                           numFormatter: [
-                            WhitelistingTextInputFormatter.digitsOnly
+                            FilteringTextInputFormatter.digitsOnly
+                            // WhitelistingTextInputFormatter.digitsOnly
                           ],
-                          compulsory: "*",
+                          compulsory: "",
                           maxlen: 10,
                         ),
                         SizedBox(
@@ -293,17 +375,17 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                             decorationText: feedbackText[12],
                             controllername: _email,
                             validateFunction: emailValidator,
-                            compulsory: "*"),
+                            compulsory: ""),
                         SizedBox(
                           height: 20,
                         ),
-                        fields(
-                          labelText: feedbackText[3],
-                          decorationText: feedbackText[13],
-                          controllername: _address,
-                          validateFunction: addressValidator,
-                          compulsory: "*",
-                        ),
+                        // fields(
+                        //   labelText: feedbackText[3],
+                        //   decorationText: feedbackText[13],
+                        //   controllername: _address,
+                        //   validateFunction: addressValidator,
+                        //   compulsory: "*",
+                        // ),
                         SizedBox(
                           height: 20,
                         ),
