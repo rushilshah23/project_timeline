@@ -285,7 +285,8 @@ class _LocalFeedbackState extends State<LocalFeedback> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: ThemeAppbar('Feedback', context),
+        appBar: plainAppBar(context: context, title: 'Feedback'),
+        // appBar: ThemeAppbar('Feedback', context),
         // appBar: AppBar(
         //   automaticallyImplyLeading: false,
         //   backgroundColor: appbarColor,
