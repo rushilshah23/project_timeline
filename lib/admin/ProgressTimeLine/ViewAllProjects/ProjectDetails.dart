@@ -7,6 +7,8 @@ import 'package:project_timeline/admin/ProgressTimeLine/theme.dart';
 import 'package:project_timeline/crowdfunding/ApiRazorPay.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'feedbackDetails.dart';
+
 class ProjectDetails extends StatefulWidget {
   Map projectDetails;
   ProjectDetails({this.projectDetails});
@@ -20,7 +22,8 @@ class _ProjectDetailsState extends State<ProjectDetails> {
   List workers = List();
   List images = List();
   int w, s;
-  bool isUser=false;
+  bool isUser = false;
+  List feedbackList = List();
 
   @override
   void initState() {
@@ -29,6 +32,12 @@ class _ProjectDetailsState extends State<ProjectDetails> {
     _loadData();
     images = widget.projectDetails["approvedImages"];
     ////debugPrint(images.toString());
+    ///
+
+    Map feedback = widget.projectDetails["localFeedback"];
+    setState(() {
+      feedbackList = feedback.values.toList();
+    });
 
     if (images == null) {
       setState(() {
@@ -57,14 +66,11 @@ class _ProjectDetailsState extends State<ProjectDetails> {
     }
   }
 
-
-    _loadData() async {
+  _loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     setState(() {
-     
       isUser = (prefs.getBool('isLoggedIn') ?? false);
-  
     });
   }
 
@@ -96,7 +102,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
     return Scaffold(
       appBar: ThemeAppbar("Our Project", context),
       body: Padding(
-        padding: const EdgeInsets.only(right:20.0,left: 20),
+        padding: const EdgeInsets.only(right: 20.0, left: 20),
         child: ListView(
           children: [
             Column(
@@ -113,8 +119,17 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                           radius: 140.0,
                           lineWidth: 10.0,
                           animation: true,
-                          percent: double.parse(widget.projectDetails["progressPercent"])<100? double.parse(widget.projectDetails["progressPercent"])>0?
-                              double.parse(widget.projectDetails["progressPercent"])/ 100:0:1,
+                          percent: double.parse(widget
+                                      .projectDetails["progressPercent"]) <
+                                  100
+                              ? double.parse(widget
+                                          .projectDetails["progressPercent"]) >
+                                      0
+                                  ? double.parse(widget
+                                          .projectDetails["progressPercent"]) /
+                                      100
+                                  : 0
+                              : 1,
                           center: new Text(
                             widget.projectDetails["progressPercent"]
                                     .toString() +
@@ -263,7 +278,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                       fontStyle: FontStyle.italic,
                     )),
                 Container(
-                 // width: 160,
+                  // width: 160,
                   child: Text(
                     widget.projectDetails["siteAddress"].toString(),
                     overflow: TextOverflow.visible,
@@ -293,88 +308,94 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                 //   ),
                 // ),
                 SizedBox(height: 20),
-                isUser?Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white70,
-                      borderRadius: BorderRadius.circular(5),
-                      boxShadow: customShadow),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height / 3.5,
-                    child: Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            //SizedBox(height: 10),
-                            Text('Our Supervisors',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                  color: Color(0xff005c9d),
-                                  fontStyle: FontStyle.italic,
-                                )),
-                            Container(
-                              height: MediaQuery.of(context).size.height / 4,
-                              width: 150,
-                              child: new ListView.builder(
-                                itemCount: supervisors.length,
-                                itemBuilder: (context, index) {
-                                  s = index + 1;
-                                  return Text(
-                                      "$s.  " +
-                                          supervisors[index]["name"].toString(),
-                                      overflow: TextOverflow.visible,
-                                      softWrap: true,
+                isUser
+                    ? Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white70,
+                            borderRadius: BorderRadius.circular(5),
+                            boxShadow: customShadow),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height / 3.5,
+                          child: Row(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  //SizedBox(height: 10),
+                                  Text('Our Supervisors',
                                       style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                      ));
-                                },
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                        color: Color(0xff005c9d),
+                                        fontStyle: FontStyle.italic,
+                                      )),
+                                  Container(
+                                    height:
+                                        MediaQuery.of(context).size.height / 4,
+                                    width: 150,
+                                    child: new ListView.builder(
+                                      itemCount: supervisors.length,
+                                      itemBuilder: (context, index) {
+                                        s = index + 1;
+                                        return Text(
+                                            "$s.  " +
+                                                supervisors[index]["name"]
+                                                    .toString(),
+                                            overflow: TextOverflow.visible,
+                                            softWrap: true,
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w500,
+                                            ));
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
+                              Container(
+                                  child: VerticalDivider(
+                                color: Colors.grey[400],
+                                width: 30,
+                                thickness: 1,
+                              )),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Our Workers',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                        color: Color(0xff005c9d),
+                                        fontStyle: FontStyle.italic,
+                                      )),
+                                  Container(
+                                    height:
+                                        MediaQuery.of(context).size.height / 4,
+                                    width: 150,
+                                    child: new ListView.builder(
+                                      itemCount: workers.length,
+                                      itemBuilder: (context, index) {
+                                        w = index + 1;
+                                        return Text(
+                                            "$w.  " +
+                                                workers[index]["name"]
+                                                    .toString(),
+                                            overflow: TextOverflow.visible,
+                                            softWrap: true,
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w500,
+                                            ));
+                                      },
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
                         ),
-                        Container(
-                            child: VerticalDivider(
-                          color: Colors.grey[400],
-                          width: 30,
-                          thickness: 1,
-                        )),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Our Workers',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                  color: Color(0xff005c9d),
-                                  fontStyle: FontStyle.italic,
-                                )),
-                            Container(
-                              height: MediaQuery.of(context).size.height / 4,
-                              width: 150,
-                              child: new ListView.builder(
-                                itemCount: workers.length,
-                                itemBuilder: (context, index) {
-                                  w = index + 1;
-                                  return Text(
-                                      "$w.  " +
-                                          workers[index]["name"].toString(),
-                                      overflow: TextOverflow.visible,
-                                      softWrap: true,
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                      ));
-                                },
-                              ),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ):Container(),
+                      )
+                    : Container(),
                 SizedBox(height: 30),
                 Text('Images',
                     style: TextStyle(
@@ -385,6 +406,70 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                     )),
 
                 buildGridView(),
+
+                SizedBox(
+                  height: 20,
+                ),
+
+                Text('Feedback',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Color(0xff005c9d),
+                      fontStyle: FontStyle.italic,
+                    )),
+
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: List.generate(feedbackList.length, (index) {
+                      return Container(
+                        color: Colors.grey.withOpacity(0.1),
+                        margin: EdgeInsets.only(top: 5, bottom: 5),
+                        child: ExpansionTile(
+                          title: Text("Name:  " + feedbackList[index]["name"]),
+                          subtitle: Text("Time:  " +                   
+                              feedbackList[index]["timestamp"] +
+                              " hrs"),
+                          children: <Widget>[
+                            
+                            Row(children: <Widget>[
+                              Icon(Icons.arrow_right),
+                              Flexible(
+                                child: Text( feedbackList[index]["feedback"] ,
+                                    maxLines: 10,
+                                   ),
+                              ),
+                             
+                            ]),
+                            SizedBox(height: 10,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: <Widget>[
+                            
+                            GestureDetector(
+                              onTap:() {
+                                 showDialog(
+                                  context: context,
+                                  builder: (_) => FeedBackDetails(
+                                      feedBackData: feedbackList[index]),
+                                );  
+                              },
+                              child:Text("Read More",style: TextStyle(
+                                  color: Colors.lightBlue,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold))
+                             
+                              ),
+                              
+                               Icon(Icons.keyboard_arrow_right_sharp),
+                            ]),
+                          ],
+                        ),
+                      );
+                    }),
+                  ),
+                ),
 
                 SizedBox(
                   height: 20,
@@ -402,10 +487,9 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                   },
                 ),
 
-                  SizedBox(
+                SizedBox(
                   height: 20,
                 ),
-
               ],
             ),
           ],
