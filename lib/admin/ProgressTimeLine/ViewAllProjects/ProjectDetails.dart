@@ -445,7 +445,6 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: List.generate(feebackDisplayLimit, (index) {
-                      var keyboard_arrow_right_sharp;
                       return Container(
                         color: Colors.grey.withOpacity(0.1),
                         margin: EdgeInsets.only(top: 5, bottom: 5),

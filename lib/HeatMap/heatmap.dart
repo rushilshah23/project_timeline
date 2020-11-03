@@ -27,7 +27,6 @@ class _FirstScreen extends State<HeatMapPage> {
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   Position position;
   Widget _child;
-  // List<String> _progress = ['Not Started', 'Ongoing', 'Completed'];
   List projectValues = [];
 
   DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
@@ -59,7 +58,7 @@ class _FirstScreen extends State<HeatMapPage> {
 
   Widget mapWidget() {
     return GoogleMap(
-      mapType: MapType.normal,
+      mapType: MapType.terrain,
       markers: Set<Marker>.of(markers.values),
       initialCameraPosition: CameraPosition(
         target: LatLng(position.latitude, position.longitude),
@@ -77,9 +76,6 @@ class _FirstScreen extends State<HeatMapPage> {
     FirebaseFirestore.instance.collection('markers').get().then((val) {
       if (val.docs.isNotEmpty) {
         for (int i = 0; i < val.docs.length; ++i) {
-          debugPrint("-------------------------" + val.docs[i].data.toString());
-          debugPrint("-------------------------" +
-              val.docs[i].data()["projectID"].toString());
           initMarker(val.docs[i].data(), val.docs[i].id);
         }
       }
