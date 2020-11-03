@@ -42,9 +42,9 @@ class _CreatedProjectsState extends State<CreatedProjects> {
         actions: <Widget>[
           new GestureDetector(
             onTap: () => Navigator.of(context).pop(false),
-            child: Text("NO"),
+            child: Text("NO",style: TextStyle(fontSize: 16),),
           ),
-          SizedBox(height: 16),
+          SizedBox(width: 15),
           new GestureDetector(
             onTap: () async{
 
@@ -97,7 +97,7 @@ class _CreatedProjectsState extends State<CreatedProjects> {
                     Navigator.of(context).pop();
                      
             },
-            child: Text("YES"),
+            child: Text("YES" ,style: TextStyle(fontSize: 16),),
           ),
         ],
       ),

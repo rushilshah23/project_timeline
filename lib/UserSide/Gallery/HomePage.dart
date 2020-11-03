@@ -116,7 +116,7 @@ class _DbTestingState extends State<DbTesting> {
         ),
       );
     } else {
-      return Scaffold(body: CircularProgressIndicator());
+      return Scaffold(body: Center(child:CircularProgressIndicator()));
     }
   }
 }

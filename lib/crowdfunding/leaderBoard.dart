@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:groovin_widgets/groovin_widgets.dart';
+import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:project_timeline/crowdfunding/userDetailModel.dart';
 
 import 'ApiRazorPay.dart';
@@ -64,14 +65,7 @@ class _boardState extends State<board> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: HexColor("#02b9f3"),
-        title: Text(
-          "Charity Leader Board",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-        ),
-        centerTitle: true,
-      ),
+     appBar: plainAppBar(context: context, title: 'Charity Leader Board'),
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -118,32 +112,17 @@ class _boardState extends State<board> {
               Container(
                 height: MediaQuery.of(context).size.height * 0.075,
                 width: 290,
-                child: RaisedButton(
-                  elevation: 3,
-                  color: Color(0xff02b9f3),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.all(12),
-                    decoration: new BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(
-                      "Donate Now",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 20,
-                          color: Color(0xffe2f3fb)),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ApiRazorPay(null)));
-                  },
-                ),
+               child:Center(
+                      child: FlatButton(
+                        child: buttonContainers(400, 'Donate Now', 18),
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ApiRazorPay(null)));
+                          },
+                      ),
+                    )
               ),
               SizedBox(
                 height: 15,

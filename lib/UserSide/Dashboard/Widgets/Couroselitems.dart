@@ -16,14 +16,18 @@ class Item1 extends StatelessWidget {
                 Container(
                   decoration: carousel1,
                 ),
-                Center(
-                    child: Text(
-                  'Hello',
+                Align(
+                    alignment: FractionalOffset.bottomLeft,
+                    child:  Container(
+                      
+                      padding: EdgeInsets.all(15),
+                      child:Text(
+                  'Conserve water, conserve life.',
                   style: TextStyle(
-                      fontSize: 45,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: corouseltextColor),
-                ))
+                )))
               ],
             );
           })
@@ -46,14 +50,18 @@ class Item2 extends StatelessWidget {
                 Container(
                   decoration: carousel2,
                 ),
-                Center(
+                 Align(
+                    alignment: FractionalOffset.bottomLeft,
+                    child:  Container(
+                      
+                      padding: EdgeInsets.all(15),
                     child: Text(
-                  'Welcome ',
+                  'You never know the worth of water until the well runs dry. ',
                   style: TextStyle(
-                      fontSize: 28,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: corouseltextColor),
-                ))
+                )))
               ],
             );
           })
