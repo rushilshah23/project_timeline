@@ -21,7 +21,7 @@ class HomeWidgetState extends State with SingleTickerProviderStateMixin {
       text: "About IAHV",
     ),
     new Tab(
-      text: "About Developers",
+      text: "About SAKEC",
     )
   ];
 
