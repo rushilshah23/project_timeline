@@ -303,7 +303,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
         //   ),
         // ),
         body: Container(
-          margin: EdgeInsets.fromLTRB(32, 8, 32, 8),
+          margin: EdgeInsets.fromLTRB(18, 8, 18, 8),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListView(

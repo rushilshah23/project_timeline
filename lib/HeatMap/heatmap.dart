@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:project_timeline/admin/CommonWidgets.dart';
 
 void main() => runApp(new HeatMap());
 
@@ -48,10 +49,7 @@ class _FirstScreen extends State<HeatMapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Heat Map'),
-        backgroundColor: Color(0xff02b9f3),
-      ),
+      appBar: plainAppBar(context: context, title: 'Heat Map'),
       body: _child,
     );
   }
