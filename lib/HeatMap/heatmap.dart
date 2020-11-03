@@ -6,8 +6,6 @@ import 'package:firebase_database/firebase_database.dart';
 
 void main() => runApp(new HeatMap());
 
-
-
 class HeatMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -69,11 +67,9 @@ class _FirstScreen extends State<HeatMapPage> {
         bearing: 15.0,
         tilt: 75.0,
       ),
-      
       onMapCreated: (GoogleMapController controller) {
         _controller = controller;
       },
-    
     );
   }
 
@@ -81,45 +77,76 @@ class _FirstScreen extends State<HeatMapPage> {
     FirebaseFirestore.instance.collection('markers').get().then((val) {
       if (val.docs.isNotEmpty) {
         for (int i = 0; i < val.docs.length; ++i) {
-          debugPrint("-------------------------"+val.docs[i].data.toString());
-           debugPrint("-------------------------"+val.docs[i].data()["projectID"].toString());
+          debugPrint("-------------------------" + val.docs[i].data.toString());
+          debugPrint("-------------------------" +
+              val.docs[i].data()["projectID"].toString());
           initMarker(val.docs[i].data(), val.docs[i].id);
         }
       }
     });
   }
 
-  void initMarker(request, requestId) async{
-
+  void initMarker(request, requestId) async {
     Map projectMap;
     projectValues.clear();
     //projectValues
-   await  databaseReference.child("projects").once().then((DataSnapshot snapshot) {   
-          projectMap=snapshot.value;
-  });
-
-  debugPrint("-----------------------------"+projectMap[request['projectID']]["projectStatus"].toString());
-  debugPrint("-----------------------------"+request['location'].latitude.toString());
-
-                                       
-      final MarkerId markerId = MarkerId(requestId);
-   
-      Marker marker = Marker(   
-      markerId: markerId,
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),       
-      position:
-          LatLng(request['location'].latitude, request['location'].longitude),
-      infoWindow:
-          InfoWindow(title: request['place'],
-          snippet: "STATUS: "+projectMap[request['projectID']]["projectStatus"].toString(),
-          ),
-    );
-  
-    setState(() {
-      markers[markerId] = marker;
-      
+    await databaseReference
+        .child("projects")
+        .once()
+        .then((DataSnapshot snapshot) {
+      projectMap = snapshot.value;
     });
 
+    final MarkerId markerId = MarkerId(requestId);
 
+    if (projectMap[request['projectID']]["projectStatus"].toString() ==
+        'Not Started') {
+      Marker marker = Marker(
+        markerId: markerId,
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+        position:
+            LatLng(request['location'].latitude, request['location'].longitude),
+        infoWindow: InfoWindow(
+          title: projectMap[request['projectID']]["projectName"].toString(),
+          snippet: "Not Started",
+        ),
+      );
+
+      setState(() {
+        markers[markerId] = marker;
+      });
+    } else if (projectMap[request['projectID']]["projectStatus"].toString() ==
+        'Ongoing') {
+      Marker marker = Marker(
+        markerId: markerId,
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+        position:
+            LatLng(request['location'].latitude, request['location'].longitude),
+        infoWindow: InfoWindow(
+          title: projectMap[request['projectID']]["projectName"].toString(),
+          snippet: "Progress: " +
+              projectMap[request['projectID']]["progressPercent"].toString() +
+              "%",
+        ),
+      );
+
+      setState(() {
+        markers[markerId] = marker;
+      });
+    } else {
+      Marker marker = Marker(
+        markerId: markerId,
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+        position:
+            LatLng(request['location'].latitude, request['location'].longitude),
+        infoWindow: InfoWindow(
+            title: projectMap[request['projectID']]["projectName"].toString(),
+            snippet: "Completed"),
+      );
+
+      setState(() {
+        markers[markerId] = marker;
+      });
+    }
   }
 }
