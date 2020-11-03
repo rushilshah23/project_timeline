@@ -614,7 +614,26 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                     width: double.infinity,
                     height: 50,
                     child: FlatButton(
-                      onPressed: () => submitForm(),
+                      onPressed: () async{
+                           await databaseReference
+                          .child("projects").child(projectID)
+                          .once()
+                          .then((DataSnapshot dataSnapshot) {
+                        Map data = dataSnapshot.value;  
+
+                          if(data.containsKey("progress"))
+                          {
+                            if(Map.from( data["progress"]).containsKey(todaysDate))
+                              if(Map.from(data["progress"][todaysDate]).containsKey(workerID))
+                              {
+                                  debugPrint("----------------------------------true");
+                                  showToast("Work Already Submitted");
+                              }
+                              else submitForm();
+                          }
+
+                        });
+                      },
                       child:
                           buttonContainers(double.infinity, 'Submit', 18),
                     ),
