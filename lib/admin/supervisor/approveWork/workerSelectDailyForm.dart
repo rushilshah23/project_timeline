@@ -623,14 +623,20 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
 
                           if(data.containsKey("progress"))
                           {
+                            debugPrint("======1");
+                            debugPrint("======1"+selectedWorker.split(",")[0].toString()+"       "+todaysDate.toString());
                             if(Map.from( data["progress"]).containsKey(todaysDate))
-                              if(Map.from(data["progress"][todaysDate]).containsKey(workerID))
+                            {debugPrint("======2");
+                              if(Map.from(data["progress"][todaysDate]).containsKey(selectedWorker.split(",")[0]))
                               {
                                   debugPrint("----------------------------------true");
                                   showToast("Work Already Submitted");
                               }
                               else submitForm();
+                            }  
+                            else submitForm();
                           }
+                           else submitForm();
 
                         });
                       },
