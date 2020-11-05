@@ -116,22 +116,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                 letterSpacing: 2.0,
                 fontWeight: FontWeight.normal,
                 fontSize: 25,
-                foreground: Paint()
-                  ..style = PaintingStyle.stroke
-                  ..strokeWidth = 2
-                  ..color = popupthankutextColor,
-                shadows: [
-                  Shadow(
-                    color: popupthankutextColor,
-                    blurRadius: 3.0,
-                    offset: Offset(2.0, 2.0),
-                  ),
-                  Shadow(
-                    color: popupthankushadowColor,
-                    blurRadius: 4.0,
-                    offset: Offset(-4.0, 4.0),
-                  ),
-                ],
+                color:darkestColor,
               ),
             ),
           ),
