@@ -122,7 +122,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ThemeAppbar("Our Project", context),
+     appBar: plainAppBar(context: context, title: "Our Project"),
       body: Padding(
         padding: const EdgeInsets.only(right: 20.0, left: 20),
         child: ListView(
