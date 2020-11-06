@@ -464,7 +464,12 @@ class _TestState extends State<Test> {
 
     if(progressPercent<=100)
     {
-    if (ourExcavtn == 0.0) {
+      if (progressPercent==100) {
+      setState(() {
+        status = 'Completed';
+      });
+      }
+      else if (ourExcavtn == 0.0) {
       setState(() {
         status = 'Not Started';
       });
@@ -472,11 +477,8 @@ class _TestState extends State<Test> {
       setState(() {
         status = 'Ongoing';
       });
-    } else if (ourExcavtn > volume) {
-      setState(() {
-        status = 'Completed';
-      });
-    }
+    } 
+    
 
     debugPrint("our excavation" + ourExcavtn.toString());
     debugPrint(volume.toString());

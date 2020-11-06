@@ -575,9 +575,35 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                     width: double.infinity,
                     height: 50,
                     child: FlatButton(
-                      onPressed:(){
+                      onPressed:() async{
+
+
+                         await databaseReference
+                          .child("projects").child(projectID)
+                          .once()
+                          .then((DataSnapshot dataSnapshot) {
+                        Map data = dataSnapshot.value;  
+
+                          if(data.containsKey("progress"))
+                          {
+                            if(Map.from( data["progress"]).containsKey(todaysDate))
+                            {
+                              debugPrint("======="+workerID.toString());
+                              if(Map.from(data["progress"][todaysDate]).containsKey(workerID))
+                              {
+                                  debugPrint("----------------------------------true");
+                                  showToast("Work Already Submitted");
+                              }
+                              else submitForm();
+                            }  
+                              else submitForm();
+                          
+                          }
+                           else submitForm();
+
+                        });
                         
-                        submitForm();
+                        
                       } ,
                       child: Container(
                         height: 50,

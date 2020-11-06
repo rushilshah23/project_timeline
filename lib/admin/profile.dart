@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
   final String uid, userType;
@@ -61,6 +62,8 @@ class _ProfilePageState extends State<ProfilePage> {
           'age':ageController.text,
             
         });
+
+        await _setData();
       
         showToast("Edited Successfully");
         
@@ -70,6 +73,17 @@ class _ProfilePageState extends State<ProfilePage> {
        showToast("Failed");
      }
         
+  }
+
+
+  
+  _setData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+
+    prefs.setString('email', emailController.text);
+    prefs.setString('name', nameController.text);
+    prefs.setString('mobile', mobileController.text);
   }
 
 

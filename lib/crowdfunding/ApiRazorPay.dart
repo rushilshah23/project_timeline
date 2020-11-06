@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'OrderApi.dart';
 import 'SuccesPage.dart';
@@ -364,39 +365,24 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
                                     ),
                                   ),
                                 ),
-                          SizedBox(height: 50),
-                          RaisedButton(
-                            elevation: 3,
-                            color: Color(0xff02b9f3),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              padding: EdgeInsets.all(20),
-                              decoration: new BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Text(
-                                "Donate Now",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontStyle: FontStyle.italic,
-                                    fontSize: 18,
-                                    color: Color(0xffe2f3fb)),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            onPressed: () async {
-                              if (_formKey.currentState.validate()) {
-                                final OrderApi order =
-                                    await createOrder('$amount', idd);
-                                openCheckout();
-                              } else {
-                                setState(() {
-                                  _autoValidate = true;
-                                });
-                              }
-                              //openCheckout();
-                            },
-                          ),
+                          SizedBox(height: 30),
+                          Center(
+                                child: FlatButton(
+                                  child: buttonContainers(400, 'Register', 18),
+                                 onPressed: () async {
+                                        if (_formKey.currentState.validate()) {
+                                          final OrderApi order =
+                                              await createOrder('$amount', idd);
+                                          openCheckout();
+                                        } else {
+                                          setState(() {
+                                            _autoValidate = true;
+                                          });
+                                        }
+                                        //openCheckout();
+                                      },
+                                ),
+                              )
                         ],
                       ),
                     ),

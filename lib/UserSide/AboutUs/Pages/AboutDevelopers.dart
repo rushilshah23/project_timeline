@@ -5,6 +5,7 @@ import 'package:link/link.dart';
 import 'package:project_timeline/UserSide/AboutUs/MainPage/HomeScreen.dart';
 import 'package:project_timeline/UserSide/Feedback/TextPages/DevelopersText.dart';
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
+import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DevelopersPage extends StatefulWidget {
@@ -198,14 +199,7 @@ class _DevelopersPageState extends State<DevelopersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'About Developers',
-          style: TextStyle(color: darkestColor),
-        ),
-        backgroundColor: appbarColor,
-
-      ),
+         appBar: plainAppBar(context: context, title: 'About SAKEC'),
       body: IntroSlider(
         isShowSkipBtn: false,
         isShowPrevBtn: true,

@@ -116,22 +116,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                 letterSpacing: 2.0,
                 fontWeight: FontWeight.normal,
                 fontSize: 25,
-                foreground: Paint()
-                  ..style = PaintingStyle.stroke
-                  ..strokeWidth = 2
-                  ..color = popupthankutextColor,
-                shadows: [
-                  Shadow(
-                    color: popupthankutextColor,
-                    blurRadius: 3.0,
-                    offset: Offset(2.0, 2.0),
-                  ),
-                  Shadow(
-                    color: popupthankushadowColor,
-                    blurRadius: 4.0,
-                    offset: Offset(-4.0, 4.0),
-                  ),
-                ],
+                color:darkestColor,
               ),
             ),
           ),
@@ -261,8 +246,10 @@ class _LocalFeedbackState extends State<LocalFeedback> {
           // Map resultMap = result;
           // if(resultMap.containsKey("progress")){
           projectsDropdwnItems.add(
+            
             DropdownMenuItem(
               child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 10),
                   child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -301,7 +288,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
         //   ),
         // ),
         body: Container(
-          margin: EdgeInsets.fromLTRB(32, 8, 32, 8),
+          margin: EdgeInsets.fromLTRB(18, 8, 18, 8),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListView(
@@ -453,10 +440,10 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                         ),
                         Builder(
                           builder: (BuildContext context) => Container(
-                            child: RaisedButton(
-                              elevation: 5,
-                              color: feedbackbuttonColor,
-                              onPressed: () {
+                            child: Center(
+                              child: FlatButton(
+                                child: buttonContainers(MediaQuery.of(context).size.width-10, 'Submit', 18),
+                               onPressed: () {
                                 if (_formKey.currentState.validate()) {
                                   try {
                                     submitLocalFeedback();
@@ -490,33 +477,8 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                                   return feedbackText[26];
                                 }
                               },
-                              textColor: Colors.black,
-                              padding: const EdgeInsets.all(20.0),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30)),
-                              child: Container(
-                                width: double.infinity,
-                                // color: feedbackbuttonColor,
-                                decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  color: Color(0xff02b9f3),
-                                ),
-                                // padding:
-                                //     const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                                child: Center(
-                                  child: Text(
-                                    feedbackText[27],
-                                    style: TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.w500,
-                                        fontStyle: FontStyle.italic,
-                                        color: commonBGColor),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
                               ),
-                            ),
+                            )
                           ),
                         ),
                       ],

@@ -113,11 +113,11 @@ class _MyHomeState extends State<MyHome> {
                 //     topLeft: Radius.circular(10),
                 //     bottomRight: Radius.circular(10)),
                 padding: EdgeInsets.only(left: 8, right: 8),
-                decoration: BoxDecoration(
-                    color: commonBGColor,
-                    borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(20),
-                        topLeft: Radius.circular(20))),
+                // decoration: BoxDecoration(
+                //     color: commonBGColor,
+                //     borderRadius: BorderRadius.only(
+                //         bottomRight: Radius.circular(20),
+                //         topLeft: Radius.circular(20))),
                 child: FlipCard(
                     onFlipDone: (isFront) {
                       Navigator.push(

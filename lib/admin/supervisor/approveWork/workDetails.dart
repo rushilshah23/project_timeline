@@ -84,6 +84,7 @@ class _WorkDetailsState extends State<WorkDetails> {
 
       await databaseReference.child("projects").child(widget.projectID).update({
         'approvedImages': allApprovedImages,
+         'projectStatus': totalProgress.ceil()>= 100?"Completed": totalProgress.ceil()< 100?"Ongoing":'Not Started',
         'volumeExcavated': totalVol.ceil().toString(),
         'progressPercent': totalProgress.ceil().toString(),
       });

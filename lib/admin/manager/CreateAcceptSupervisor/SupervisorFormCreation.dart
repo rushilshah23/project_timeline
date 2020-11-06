@@ -230,6 +230,7 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                     ),
                     SizedBox(height: 15),
                     TextFormField(
+                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         labelText: "Phone no",
                         fillColor: Colors.white,

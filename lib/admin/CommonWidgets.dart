@@ -22,7 +22,7 @@ showToast(String msg) {
       fontSize: 18.0);
 }
 
-Future<bool> _onBackPressed(BuildContext context) {
+Future<bool> onBackPressed(BuildContext context) {
   return showDialog(
         context: context,
         builder: (context) => new AlertDialog(
@@ -33,7 +33,7 @@ Future<bool> _onBackPressed(BuildContext context) {
               padding: const EdgeInsets.all(12.0),
               child: new GestureDetector(
                 onTap: () => Navigator.of(context).pop(false),
-                child: Text("NO"),
+                child: Text("NO" ,style: TextStyle(fontSize: 16),),
               ),
             ),
             SizedBox(height: 16),
@@ -53,7 +53,7 @@ Future<bool> _onBackPressed(BuildContext context) {
                   ), (Route route) => false);
                   showToast("Successful Logout");
                 },
-                child: Text("YES"),
+                child: Text("YES",style: TextStyle(fontSize: 16),),
               ),
             ),
           ],
@@ -90,7 +90,7 @@ Widget ThemeAppbar(String title, BuildContext context) {
       IconButton(
           icon: Icon(Icons.exit_to_app),
           onPressed: () async {
-            _onBackPressed(context);
+            onBackPressed(context);
           })
     ],
     iconTheme: IconThemeData(

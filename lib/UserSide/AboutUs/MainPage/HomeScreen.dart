@@ -21,7 +21,7 @@ class HomeWidgetState extends State with SingleTickerProviderStateMixin {
       text: "About IAHV",
     ),
     new Tab(
-      text: "About Developers",
+      text: "About SAKEC",
     )
   ];
 
@@ -44,16 +44,18 @@ class HomeWidgetState extends State with SingleTickerProviderStateMixin {
     return Scaffold(
       backgroundColor: commonBGColor,
       appBar: AppBar(
-        title: Text('ABOUT US',
-            style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22),
-            textAlign: TextAlign.center),
-        centerTitle: true,
-        backgroundColor: appbarColor,
+       iconTheme: IconThemeData(
+      color: Color(0xff005c9d),
+      ),
+      title: Text("About Us",
+          style: TextStyle(
+            color: Color(0xff005c9d),
+          )),
+      backgroundColor: Colors.white ,
         bottom: TabBar(
           unselectedLabelColor: bubbleindicatorColor,
           indicator: new BubbleTabIndicator(
-            indicatorHeight: 30.0,
+            indicatorHeight: 35.0,
             indicatorColor: bubbleindicatorColor,
             tabBarIndicatorSize: TabBarIndicatorSize.tab,
           ),

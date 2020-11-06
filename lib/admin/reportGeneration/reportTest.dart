@@ -514,6 +514,7 @@ class _ReportGenerationTestingState extends State<ReportGenerationTesting> {
             projectsDropdwnItems.add(
               DropdownMenuItem(
                 child: Container(
+                 margin: EdgeInsets.symmetric(vertical: 10),
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

@@ -4,6 +4,7 @@ import 'package:intro_slider/slide_object.dart';
 import 'package:project_timeline/UserSide/AboutUs/MainPage/HomeScreen.dart';
 import 'package:project_timeline/UserSide/Feedback/TextPages/IAHVText.dart';
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
+import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AboutIAHV extends StatefulWidget {
@@ -274,14 +275,7 @@ class _AboutIAHVState extends State<AboutIAHV> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'About IAHV',
-          style: TextStyle(color: darkestColor),
-        ),
-        centerTitle: true,
-        backgroundColor: appbarColor,
-      ),
+      appBar: plainAppBar(context: context, title: 'About IAHV'),
       body: IntroSlider(
         isShowSkipBtn: false,
         isShowPrevBtn: true,

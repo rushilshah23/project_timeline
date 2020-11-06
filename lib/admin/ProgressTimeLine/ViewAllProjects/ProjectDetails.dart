@@ -24,6 +24,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
   int w, s;
   bool isUser = false;
   List feedbackList = List();
+  int feebackDisplayLimit=1;
 
   @override
   void initState() {
@@ -34,10 +35,13 @@ class _ProjectDetailsState extends State<ProjectDetails> {
     ////debugPrint(images.toString());
     ///
 
+    if(widget.projectDetails.containsKey("localFeedback"))
+    {
     Map feedback = widget.projectDetails["localFeedback"];
     setState(() {
       feedbackList = feedback.values.toList();
     });
+    }
 
     if (images == null) {
       setState(() {
@@ -64,6 +68,24 @@ class _ProjectDetailsState extends State<ProjectDetails> {
         workers.length = 0;
       });
     }
+  }
+
+
+  seeMoreFeedback()
+  {
+      if((feebackDisplayLimit +2)<=feedbackList.length)
+      {
+          setState(() {
+            feebackDisplayLimit=feebackDisplayLimit+2;
+          });
+      }
+      else if((feebackDisplayLimit +1)<=feedbackList.length)
+      {
+          setState(() {
+            feebackDisplayLimit=feebackDisplayLimit+1;
+          });
+      }
+      else showToast("No more feedback");
   }
 
   _loadData() async {
@@ -411,18 +433,18 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                   height: 20,
                 ),
 
-                Text('Feedback',
+                feedbackList.length!=0?Text('Feedback',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                       color: Color(0xff005c9d),
                       fontStyle: FontStyle.italic,
-                    )),
+                    )):Container(),
 
-                Container(
+                feedbackList.length!=0? Container(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: List.generate(feedbackList.length, (index) {
+                    children: List.generate(feebackDisplayLimit, (index) {
                       return Container(
                         color: Colors.grey.withOpacity(0.1),
                         margin: EdgeInsets.only(top: 5, bottom: 5),
@@ -462,14 +484,28 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                              
                               ),
                               
-                               Icon(Icons.keyboard_arrow_right_sharp),
+                               Icon(Icons.keyboard_arrow_right),
                             ]),
                           ],
                         ),
                       );
                     }),
                   ),
-                ),
+                ):Container(),
+
+                   feedbackList.length!=0?GestureDetector(
+                              onTap:() {
+                                
+                                  seeMoreFeedback();
+                              },
+                              child:Container(
+                                margin: EdgeInsets.symmetric(vertical:10),
+                                child:Text("See More",style: TextStyle(  
+                                  color: Colors.lightBlue,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold)))
+                             
+                              ):Container(),
 
                 SizedBox(
                   height: 20,
