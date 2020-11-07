@@ -6,6 +6,7 @@ import 'package:project_timeline/UserSide/Dashboard/Widgets/BottomNav.dart';
 import 'package:project_timeline/UserSide/Feedback/TextPages/feedbackText.dart';
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
+import 'package:project_timeline/multilingual/app_localizations.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -116,7 +117,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                 letterSpacing: 2.0,
                 fontWeight: FontWeight.normal,
                 fontSize: 25,
-                color:darkestColor,
+                color: darkestColor,
               ),
             ),
           ),
@@ -246,20 +247,19 @@ class _LocalFeedbackState extends State<LocalFeedback> {
           // Map resultMap = result;
           // if(resultMap.containsKey("progress")){
           projectsDropdwnItems.add(
-            
             DropdownMenuItem(
               child: Container(
                   margin: EdgeInsets.symmetric(vertical: 10),
                   child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(result['projectName']),
-                  Text(
-                    result['siteAddress'],
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ],
-              )),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(result['projectName']),
+                      Text(
+                        result['siteAddress'],
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ],
+                  )),
               value: result['projectID'],
             ),
           );
@@ -272,7 +272,9 @@ class _LocalFeedbackState extends State<LocalFeedback> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: plainAppBar(context: context, title: 'Feedback'),
+        appBar: plainAppBar(
+            context: context,
+            title: AppLocalizations.of(context).translate('fb1')),
         // appBar: ThemeAppbar('Feedback', context),
         // appBar: AppBar(
         //   automaticallyImplyLeading: false,
@@ -440,10 +442,13 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                         ),
                         Builder(
                           builder: (BuildContext context) => Container(
-                            child: Center(
-                              child: FlatButton(
-                                child: buttonContainers(MediaQuery.of(context).size.width-10, 'Submit', 18),
-                               onPressed: () {
+                              child: Center(
+                            child: FlatButton(
+                              child: buttonContainers(
+                                  MediaQuery.of(context).size.width - 10,
+                                  'Submit',
+                                  18),
+                              onPressed: () {
                                 if (_formKey.currentState.validate()) {
                                   try {
                                     submitLocalFeedback();
@@ -477,9 +482,8 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                                   return feedbackText[26];
                                 }
                               },
-                              ),
-                            )
-                          ),
+                            ),
+                          )),
                         ),
                       ],
                     ))
