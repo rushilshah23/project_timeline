@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:groovin_widgets/groovin_widgets.dart';
+import 'package:project_timeline/UserSide/UI/Widgets/cards.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:project_timeline/crowdfunding/userDetailModel.dart';
 
@@ -114,7 +115,23 @@ class _boardState extends State<board> {
                 width: 290,
                child:Center(
                       child: FlatButton(
-                        child: buttonContainers(400, 'Donate Now', 18),
+                        child: Container(
+                          width: 200,
+                          height: 50,
+                          padding: EdgeInsets.all(15),
+                          decoration: new BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color(0xff018abd),
+                          ),
+                          child: Text(
+                            "Donate Now",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 17,
+                                color: Colors.white),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                           onPressed: () {
                             Navigator.pushReplacement(
                                 context,
@@ -137,7 +154,7 @@ class _boardState extends State<board> {
               Container(
                 margin: EdgeInsets.all(10),
                 //padding: EdgeInsets.all(10),
-                height: MediaQuery.of(context).size.height * 0.38,
+                height: MediaQuery.of(context).size.height * 0.46,
                 width: MediaQuery.of(context).size.width / 0.2,
                 child: ListView(
                   children: [
