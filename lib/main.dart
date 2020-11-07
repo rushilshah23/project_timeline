@@ -7,6 +7,7 @@ import 'package:project_timeline/admin/DocumentManager/core/models/usermodel.dar
 import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
 import 'package:project_timeline/multilingual/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'UserSide/Dashboard/Widgets/BottomNav.dart';
 import 'admin/manager/createNewProject/test.dart';
 import 'package:geocoder/geocoder.dart';
@@ -28,6 +29,12 @@ class MyApp extends StatelessWidget {
     "Local": Geocoder.local,
     "Google (distant)": Geocoder.google("<API-KEY>"),
   };
+
+  setLanguage({@required String language}) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString('language', language);
+    print(sharedPreferences.getString('language'));
+  }
 
   // This widget is the root of your application.
   @override
@@ -61,9 +68,11 @@ class MyApp extends StatelessWidget {
             for (var supportedLocale in supportedLocales) {
               if (supportedLocale.languageCode == locale.languageCode &&
                   supportedLocale.countryCode == locale.countryCode) {
+                setLanguage(language: locale.languageCode);
                 return supportedLocale;
               }
             }
+            setLanguage(language: supportedLocales.first.languageCode);
             return supportedLocales.first;
           },
           debugShowCheckedModeBanner: false,

@@ -26,70 +26,76 @@ class _MainAOLPageState extends State<MainAOLPage> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/waterimg.jpg'),
-                colorFilter: ColorFilter.mode(
-                    Colors.grey.withOpacity(0.7), BlendMode.dstATop),
+                // colorFilter: ColorFilter.mode(
+                //     Colors.grey.withOpacity(0.7), BlendMode.dstATop),
+                fit: BoxFit.fitHeight,
               ),
             ),
-            padding: EdgeInsets.all(10),
-            child: Column(
-              children: [
-                Text(
-                  AOLText[1],
-                  style: TextStyle(
-                    color: Colors.white70,
-                    fontSize: 25.0,
-                    fontFamily: 'DancingScript',
-                    fontWeight: FontWeight.w700,
-                    fontStyle: FontStyle.italic,
+            padding: EdgeInsets.all(15),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Text(
+                    AOLText[1],
+                    style: TextStyle(
+                      // color: Colors.white70,
+                      color: darkestColor,
+
+                      fontSize: 25.0,
+                      fontFamily: 'DancingScript',
+                      fontWeight: FontWeight.w700,
+                      fontStyle: FontStyle.italic,
+                    ),
+                    maxLines: 2,
                   ),
-                  maxLines: 2,
-                ),
-                Container(
-                    width: 250.0,
-                    height: 170.0,
-                    decoration: new BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        shape: BoxShape.rectangle,
-                        image: new DecorationImage(
-                            fit: BoxFit.fill,
-                            image: AssetImage('assets/logo.jpg')))),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          AOLText[2],
-                          textAlign: TextAlign.justify,
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w300,
-                              fontStyle: FontStyle.italic),
-                        ),
-                        SizedBox(height: 5),
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: FlatButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => AOLPage()));
-                              },
-                              child: Text('Read More...',
-                                  style: TextStyle(
-                                      color: readMoreColor,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold))),
-                        )
-                      ],
+                  Container(
+                      width: 250.0,
+                      height: 170.0,
+                      decoration: new BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          shape: BoxShape.rectangle,
+                          image: new DecorationImage(
+                              fit: BoxFit.fill,
+                              image: AssetImage('assets/logo.jpg')))),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            AOLText[2],
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w300,
+                                fontStyle: FontStyle.italic),
+                          ),
+                          SizedBox(height: 5),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: FlatButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => AOLPage()));
+                                },
+                                child: Text('Read More...',
+                                    style: TextStyle(
+                                        color: readMoreColor,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold))),
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             )));
   }
 }
