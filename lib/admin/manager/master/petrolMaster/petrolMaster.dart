@@ -83,7 +83,7 @@ class _PetrolMasterState extends State<PetrolMaster> {
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                fontStyle: FontStyle.italic
+                                //fontStyle: FontStyle.italic
                             ),
                           ),
                           SizedBox(

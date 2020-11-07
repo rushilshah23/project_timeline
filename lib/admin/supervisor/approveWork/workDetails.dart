@@ -165,27 +165,27 @@ class _WorkDetailsState extends State<WorkDetails> {
                 height: 10,
               ),
               Text("Volume Excavated: " +
-                  widget.data["volumeExcavated"].toString()),
+                  widget.data["volumeExcavated"].toString()+" m3"),
               SizedBox(
                 height: 10,
               ),
-              Text("Hours Worked: " + widget.data["hoursWorked"].toString()),
+              Text("Hours Worked: " + widget.data["hoursWorked"].toString()+" hrs"),
               SizedBox(
                 height: 10,
               ),
               Text("Length: " +
-                  widget.data["length"].toString() +
-                  " " +
+                  widget.data["length"].toString() + " m"
+                  "    " +
                   "Depth: " +
-                  widget.data["depth"].toString()),
+                  widget.data["depth"].toString() + " m"),
               SizedBox(
                 height: 10,
               ),
               Text("Upper Width: " +
-                  widget.data["upperWidth"].toString() +
-                  " " +
+                  widget.data["upperWidth"].toString() + " m" 
+                  "   " +
                   "Lower Width: " +
-                  widget.data["lowerWidth"].toString()),
+                  widget.data["lowerWidth"].toString()+ " m"),
               SizedBox(
                 height: 30,
               ),

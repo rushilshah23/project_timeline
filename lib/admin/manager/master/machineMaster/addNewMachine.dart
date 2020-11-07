@@ -479,6 +479,7 @@ class _AddNewMachineState extends State<AddNewMachine> {
                               Text(
                                 'Vendor Details',
                                 style: TextStyle(
+                                  fontWeight: FontWeight.bold,
                                     color: Colors.black, fontSize: 16),
                               ),
                               SizedBox(height: 5),
@@ -532,7 +533,7 @@ class _AddNewMachineState extends State<AddNewMachine> {
                                 },
                               ),
 
-                              SizedBox(height: 10),
+                               SizedBox(height: 20),
 
                               Center(
                                 child: FlatButton(

@@ -916,7 +916,7 @@ class LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         SizedBox(
-                          height: 9,
+                          height: 20,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -926,8 +926,8 @@ class LoginPageState extends State<LoginPage> {
                               style: GoogleFonts.merriweather(
                                   fontWeight: FontWeight.w400, fontSize: 18),
                             ),
-                            FlatButton(
-                              onPressed: () {
+                            GestureDetector(
+                              onTap: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

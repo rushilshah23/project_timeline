@@ -204,7 +204,7 @@ class _DashBoardState extends State<DashBoard> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
-                            fontSize: 12)),
+                            fontSize: 16)),
                   ],
                 ),
                 Container(
@@ -226,7 +226,7 @@ class _DashBoardState extends State<DashBoard> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
-                            fontSize: 12)),
+                            fontSize: 16)),
                   ],
                 ),
 
@@ -234,7 +234,7 @@ class _DashBoardState extends State<DashBoard> {
             ),
             SizedBox(height: 35),
             Text(
-              'Statistics..',
+              'Statistics',
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,

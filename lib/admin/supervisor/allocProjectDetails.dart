@@ -165,7 +165,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                               fontWeight: FontWeight.bold,
                               fontSize: 21,
                               color: Color(0xff005c9d),
-                              fontStyle: FontStyle.italic,
+                              //fontStyle: FontStyle\.italic,
                             )),
                         SizedBox(height: 8),
                         Text(
@@ -185,7 +185,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
                                       color: Color(0xff005c9d),
-                                      fontStyle: FontStyle.italic,
+                                      //fontStyle: FontStyle\.italic,
                                     )),
                                 SizedBox(height: 8),
                                 Text(
@@ -212,7 +212,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
                                       color: Color(0xff005c9d),
-                                      fontStyle: FontStyle.italic,
+                                      //fontStyle: FontStyle\.italic,
                                     )),
                                 SizedBox(height: 8),
                                 Text(
@@ -238,7 +238,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
                                       color: Color(0xff005c9d),
-                                      fontStyle: FontStyle.italic,
+                                      //fontStyle: FontStyle\.italic,
                                     )),
                                 SizedBox(height: 8),
                                 Text(
@@ -264,7 +264,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
                                       color: Color(0xff005c9d),
-                                      fontStyle: FontStyle.italic,
+                                      //fontStyle: FontStyle\.italic,
                                     )),
                                 SizedBox(height: 8),
                                 Text(
@@ -285,12 +285,15 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                   ],
                 ),
 
+              SizedBox(height: 20),
+
+
                 Text('Site Address',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                       color: Color(0xff005c9d),
-                      fontStyle: FontStyle.italic,
+                      //fontStyle: FontStyle\.italic,
                     )),
 
 
@@ -314,7 +317,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                 //       fontWeight: FontWeight.bold,
                 //       fontSize: 18,
                 //       color: Color(0xff005c9d),
-                //       fontStyle: FontStyle.italic,
+                //       //fontStyle: FontStyle\.italic,
                 //     )
                 // ),
                 // Text(
@@ -331,7 +334,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                       color: Color(0xff005c9d),
-                      fontStyle: FontStyle.italic,
+                      //fontStyle: FontStyle\.italic,
                     )),
 
                 Container(
@@ -370,7 +373,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
                                   color: Color(0xff005c9d),
-                                  fontStyle: FontStyle.italic,
+                                  //fontStyle: FontStyle\.italic,
                                 )),
                             Container(
                               height: MediaQuery.of(context).size.height / 4,
@@ -407,7 +410,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
                                   color: Color(0xff005c9d),
-                                  fontStyle: FontStyle.italic,
+                                  //fontStyle: FontStyle\.italic,
                                 )),
                             Container(
                               height: MediaQuery.of(context).size.height / 4,
@@ -440,7 +443,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                       color: Color(0xff005c9d),
-                      fontStyle: FontStyle.italic,
+                      //fontStyle: FontStyle\.italic,
                     )),
 
                 buildGridView(),
