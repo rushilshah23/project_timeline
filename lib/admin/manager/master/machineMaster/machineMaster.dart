@@ -72,7 +72,8 @@ class _MachineMasterState extends State<MachineMaster> {
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
-                                          fontStyle: FontStyle.italic),
+                                          //fontStyle: FontStyle.italic
+                                          ),
                                     ),
                                     SizedBox(height: 4,),
                                     Text(

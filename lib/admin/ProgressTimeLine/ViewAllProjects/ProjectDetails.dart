@@ -172,7 +172,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                               fontWeight: FontWeight.bold,
                               fontSize: 21,
                               color: Color(0xff005c9d),
-                              fontStyle: FontStyle.italic,
+                              //fontStyle: FontStyle\.italic,
                             )),
                         SizedBox(height: 8),
                         Text(
@@ -192,7 +192,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
                                       color: Color(0xff005c9d),
-                                      fontStyle: FontStyle.italic,
+                                      //fontStyle: FontStyle\.italic,
                                     )),
                                 SizedBox(height: 8),
                                 Text(
@@ -219,7 +219,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
                                       color: Color(0xff005c9d),
-                                      fontStyle: FontStyle.italic,
+                                      //fontStyle: FontStyle\.italic,
                                     )),
                                 SizedBox(height: 8),
                                 Text(
@@ -245,7 +245,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
                                       color: Color(0xff005c9d),
-                                      fontStyle: FontStyle.italic,
+                                      //fontStyle: FontStyle\.italic,
                                     )),
                                 SizedBox(height: 8),
                                 Text(
@@ -271,7 +271,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
                                       color: Color(0xff005c9d),
-                                      fontStyle: FontStyle.italic,
+                                      //fontStyle: FontStyle\.italic,
                                     )),
                                 SizedBox(height: 8),
                                 Text(
@@ -292,12 +292,13 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                   ],
                 ),
 
+                SizedBox(height: 20),
                 Text('Site Address',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                       color: Color(0xff005c9d),
-                      fontStyle: FontStyle.italic,
+                      //fontStyle: FontStyle\.italic,
                     )),
                 Container(
                   // width: 160,
@@ -318,7 +319,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                 //       fontWeight: FontWeight.bold,
                 //       fontSize: 18,
                 //       color: Color(0xff005c9d),
-                //       fontStyle: FontStyle.italic,
+                //       //fontStyle: FontStyle\.italic,
                 //     )
                 // ),
                 // Text(
@@ -349,7 +350,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18,
                                         color: Color(0xff005c9d),
-                                        fontStyle: FontStyle.italic,
+                                        //fontStyle: FontStyle\.italic,
                                       )),
                                   Container(
                                     height:
@@ -388,7 +389,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18,
                                         color: Color(0xff005c9d),
-                                        fontStyle: FontStyle.italic,
+                                        //fontStyle: FontStyle\.italic,
                                       )),
                                   Container(
                                     height:
@@ -424,7 +425,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                       color: Color(0xff005c9d),
-                      fontStyle: FontStyle.italic,
+                      //fontStyle: FontStyle\.italic,
                     )),
 
                 buildGridView(),
@@ -438,7 +439,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                       color: Color(0xff005c9d),
-                      fontStyle: FontStyle.italic,
+                      //fontStyle: FontStyle\.italic,
                     )):Container(),
 
                 feedbackList.length!=0? Container(
@@ -454,16 +455,19 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                               feedbackList[index]["timestamp"] +
                               " hrs"),
                           children: <Widget>[
-                            
+
+                            Container(
+                                  padding: EdgeInsets.symmetric(horizontal:8),
+                                  child:
                             Row(children: <Widget>[
                               Icon(Icons.arrow_right),
                               Flexible(
                                 child: Text( feedbackList[index]["feedback"] ,
                                     maxLines: 10,
-                                   ),
-                              ),
+                                   )),
+                              
                              
-                            ]),
+                            ])),
                             SizedBox(height: 10,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,

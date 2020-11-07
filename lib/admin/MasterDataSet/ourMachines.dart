@@ -62,7 +62,7 @@ class _OurMachinesState extends State<OurMachines> {
                                       softWrap: false,
                                       style: TextStyle(
                                         fontSize: 15,
-                                        fontStyle: FontStyle.italic,
+                                        //fontStyle: FontStyle.italic,
                                         fontWeight: FontWeight.w900
                                       ),
                                     ),

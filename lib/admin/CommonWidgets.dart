@@ -137,7 +137,7 @@ titleStyles(String text, double size) {
         fontWeight: FontWeight.bold,
         fontSize: size,
         color: Color(0xff005c9d),
-        fontStyle: FontStyle.italic,
+       // fontStyle: FontStyle.italic,
       ));
 }
 
@@ -154,7 +154,7 @@ Widget buttonContainers(double width, String text, double size) {
       text,
       style: TextStyle(
           fontWeight: FontWeight.w500,
-          fontStyle: FontStyle.italic,
+         // fontStyle: FontStyle.italic,
           fontSize: size,
           color: Colors.white),
       textAlign: TextAlign.center,

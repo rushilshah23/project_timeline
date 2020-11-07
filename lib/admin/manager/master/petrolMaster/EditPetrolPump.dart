@@ -218,6 +218,7 @@ class _EditPetrolPumpState extends State<EditPetrolPump> {
                           }
                         },
                         controller: petrolPumpPinCodeController,
+                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           labelText: "Pin Code",
                           border: OutlineInputBorder(),
@@ -229,14 +230,15 @@ class _EditPetrolPumpState extends State<EditPetrolPump> {
                     Flexible(
                       child: TextFormField(
                         minLines: 1,
-                        validator: (String content) {
-                          if (content.length == 0) {
-                            return "Enter Phone No";
-                          } else {
-                            return null;
-                          }
-                        },
+                         validator: (val) {
+          if (val.isEmpty) return 'Enter Phone Number';
+          if (val.length < 10 || val.length > 10)
+            return 'Enter a valid Phone Number';
+          else
+            return null;
+        },
                         controller: petrolPumpPhoneNumberController,
+                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           labelText: "Contact No.",
                           border: OutlineInputBorder(),

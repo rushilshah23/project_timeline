@@ -134,7 +134,7 @@ class _CreatedProjectsState extends State<CreatedProjects> {
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic
+                                   //fontStyle: FontStyle\.italic,
                                   ),
                                 ),
                                 Text(
@@ -184,7 +184,7 @@ class _CreatedProjectsState extends State<CreatedProjects> {
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold,
-                                        fontStyle: FontStyle.italic
+                                       //fontStyle: FontStyle\.italic,
                                       ),
                                     ),
                                     Text(
@@ -209,7 +209,7 @@ class _CreatedProjectsState extends State<CreatedProjects> {
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold,
-                                        fontStyle: FontStyle.italic
+                                       //fontStyle: FontStyle\.italic,
                                       ),
                                     ),
                                     Text(

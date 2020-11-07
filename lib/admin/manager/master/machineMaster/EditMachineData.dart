@@ -563,6 +563,7 @@ class _EditMachineDataState extends State<EditMachineData> {
                               Text(
                                 'Vendor Details',
                                 style: TextStyle(
+                                  fontWeight: FontWeight.bold,
                                     color: Colors.black, fontSize: 16),
                               ),
                               SizedBox(height: 5),
@@ -616,7 +617,7 @@ class _EditMachineDataState extends State<EditMachineData> {
                                 },
                               ),
 
-                              SizedBox(height: 10),
+                              SizedBox(height: 20),
 
                               Row(
                                // mainAxisAlignment: MainAxisAlignment.center,
