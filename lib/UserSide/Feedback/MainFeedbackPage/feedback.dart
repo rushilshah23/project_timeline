@@ -324,7 +324,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                                 isDense: false,
                                 isExpanded: true,
                                 hint: Text(
-                                  'Select Projects',
+                                  AppLocalizations.of(context).translate('fb3'),
                                   style: TextStyle(
                                       color: Colors.black54, fontSize: 14),
                                 ),
@@ -336,7 +336,9 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                           height: 20,
                         ),
                         fields(
-                            labelText: feedbackText[0],
+                            // labelText: feedbackText[0],
+                            labelText:
+                                AppLocalizations.of(context).translate('fb2'),
                             decorationText: feedbackText[10],
                             controllername: _name,
                             validateFunction: nameValidator,
@@ -345,7 +347,10 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                           height: 20,
                         ),
                         fields(
-                          labelText: feedbackText[1],
+                          labelText:
+                              AppLocalizations.of(context).translate('fb4'),
+
+                          // labelText: feedbackText[1],
                           keyboard: TextInputType.number,
                           decorationText: feedbackText[11],
                           controllername: _contactNumber,
