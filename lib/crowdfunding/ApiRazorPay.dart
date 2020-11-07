@@ -213,7 +213,7 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
                                     if (arg.length < 3)
                                       return 'Name must be more than 2 character';
                                     else if (arg.length > 20) {
-                                      return 'Characters exceeded Max.20 Allowed ';
+                                      return 'Characters exceeded Max.20 allowed ';
                                     } else
                                       return null;
                                   },
@@ -280,7 +280,7 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
                                   ),
                                 ),
                                 labelText: 'Amount',
-                                hintText: 'Please Enter Amount'),
+                                hintText: 'Please enter amount'),
                             keyboardType: TextInputType.number,
                             onChanged: (value) {
                               if (num.parse(value) >= 10000) {
@@ -302,26 +302,33 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
                               }
                             },
                           ),
-                          SizedBox(
-                            height: 20,
-                          ),
+
                           greaterthan10000
-                              ? TextFormField(
-                                  validator: validatePAN,
-                                  textCapitalization:
-                                      TextCapitalization.characters,
-                                  controller: _pancardController,
-                                  decoration: InputDecoration(
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0xff02b9f3),
-                                        ),
-                                      ),
-                                      labelText: 'Pan Card Number',
-                                      hintText: 'Pan Card Number'),
+                              ? Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    TextFormField(
+                                      validator: validatePAN,
+                                      textCapitalization:
+                                          TextCapitalization.characters,
+                                      controller: _pancardController,
+                                      decoration: InputDecoration(
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0xff02b9f3),
+                                            ),
+                                          ),
+                                          labelText: 'Pan Card Number',
+                                          hintText: 'Pan Card Number'),
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                  ],
                                 )
-                              : Text(""),
-                          SizedBox(
+                              : SizedBox(
                             height: 20,
                           ),
                           projectnameknown
@@ -354,35 +361,51 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
                                       });
                                     },
                                     validator: (value) =>
-                                        value == null ? 'field required' : null,
+                                        value == null ? 'Please select project you wish to donate in' : null,
                                     value: selectedProject,
                                     isDense: false,
                                     isExpanded: true,
                                     hint: Text(
                                       'Select Projects',
                                       style: TextStyle(
-                                          color: Colors.black54, fontSize: 14),
+                                          color: Colors.black54, fontSize: 18),
                                     ),
                                   ),
                                 ),
                           SizedBox(height: 30),
                           Center(
-                                child: FlatButton(
-                                  child: buttonContainers(400, 'Register', 18),
-                                 onPressed: () async {
-                                        if (_formKey.currentState.validate()) {
-                                          final OrderApi order =
-                                              await createOrder('$amount', idd);
-                                          openCheckout();
-                                        } else {
-                                          setState(() {
-                                            _autoValidate = true;
-                                          });
-                                        }
-                                        //openCheckout();
-                                      },
+                            child: FlatButton(
+                              child: Container(
+                                width: 300,
+                                height: 50,
+                                padding: EdgeInsets.all(15),
+                                decoration: new BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Color(0xff018abd),
                                 ),
-                              )
+                                child: Text(
+                                  "Donate Now",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 17,
+                                      color: Colors.white),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              onPressed: () async {
+                                if (_formKey.currentState.validate()) {
+                                  final OrderApi order =
+                                      await createOrder('$amount', idd);
+                                  openCheckout();
+                                } else {
+                                  setState(() {
+                                    _autoValidate = true;
+                                  });
+                                }
+                                //openCheckout();
+                              },
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -401,7 +424,7 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regex = new RegExp(pattern);
     if (!regex.hasMatch(value))
-      return 'Enter Valid Email';
+      return 'Enter valid email';
     else
       return null;
   }
@@ -410,14 +433,14 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
     Pattern pattern = "[A-Z]{5}[0-9]{4}[A-Z]{1}";
     RegExp regex = new RegExp(pattern);
     if (!regex.hasMatch(value))
-      return 'Enter correct Pan Card number.';
+      return 'Enter correct PAN number.';
     else
       return null;
   }
 
   String validateMobile(String value) {
     if (value.length != 10)
-      return 'Mobile Number must be of 10 digit';
+      return 'Mobile No. must be of 10 digit';
     else
       return null;
   }
