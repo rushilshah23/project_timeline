@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
+import 'package:project_timeline/admin/headings.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -40,11 +41,11 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
         if(isAssng.contains(" ")||isAssng.contains("No project assigned"))
         {
           color = Colors.green[700];
-          status= "No project assigned";
+          status= superText2[24];
         }
         else  {
           color = Colors.blue[700];
-          status= "Project assigned";
+          status= superText2[25];
           }
         setState(() {
 
@@ -118,7 +119,7 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
       prevSelected.forEach((prevWorker) async {
         await workers
             .doc(prevWorker)
-            .update({"assignedProject": "No project assigned"});
+            .update({"assignedProject": superText2[26]});
       });
       await databaseReference
           .child("projects")
@@ -140,10 +141,10 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
           "mobile": workersList[i].mobile,
         });
       });
-      showToast("Added successfully");
+      showToast(superText2[27]);
       Navigator.of(context).pop();
     } catch (e) {
-      showToast("Failed. Check your Internet");
+      showToast(superText2[28]);
     }
   }
 
@@ -163,7 +164,7 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
   Widget build(BuildContext context) {
     if (items.length > 0)
       return Scaffold(
-          appBar: ThemeAppbar("Add Workers", context),
+          appBar: ThemeAppbar(superText2[29], context),
           body: Container(
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
             child: ListView(
@@ -173,7 +174,7 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
                   children: [
                     SizedBox(height: 10),
                     Center(
-                      child: titleStyles('Add Workers', 18),
+                      child: titleStyles(superText2[29], 18),
                     ),
                     SizedBox(height: 10),
                     Center(
@@ -182,9 +183,9 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
                         selectedItems: selectedItems,
                         hint: Padding(
                           padding: const EdgeInsets.all(12.0),
-                          child: Text("Select any"),
+                          child: Text(superText2[30]),
                         ),
-                        searchHint: "Select any",
+                        searchHint: superText2[30],
                         onChanged: (value) {
                           setState(() {
                             selectedItems = value;
@@ -194,7 +195,7 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
                         closeButton: (selectedItems) {
                           return (selectedItems.isNotEmpty
                               ? "Save ${selectedItems.length == 1 ? '"' + items[selectedItems.first].value.toString() + '"' : '(' + selectedItems.length.toString() + ')'}"
-                              : "Save without selection");
+                              : superText3[0]);
                         },
                         isExpanded: true,
                       ),
@@ -209,7 +210,7 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
                         ),
                         child: Center(
                           child: Text(
-                            'Save',
+                            superText3[1],
                             style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
                         ),

@@ -5,6 +5,7 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:project_timeline/admin/ProgressTimeLine/theme.dart';
+import 'package:project_timeline/admin/headings.dart';
 import 'package:project_timeline/crowdfunding/ApiRazorPay.dart';
 
 class AllocProjDetails extends StatefulWidget {
@@ -124,7 +125,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ThemeAppbar("Our Project", context),
+      appBar: ThemeAppbar(superText[10], context),
       body: Padding(
         padding: const EdgeInsets.only(right:20.0,left: 20),
         child: ListView(
@@ -160,7 +161,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                     Column(
                       children: [
                         SizedBox(height: 8),
-                        Text('Project Name',
+                        Text(superText[11],
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 21,
@@ -180,7 +181,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                           children: [
                             Column(
                               children: [
-                                Text('Duration',
+                                Text(superText[12],
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
@@ -191,7 +192,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                                 Text(
                                   widget.projectDetails["projectDuration"]
                                           .toString() +
-                                      " days",
+                                      superText[13],
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500,
@@ -207,7 +208,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                             )),
                             Column(
                               children: [
-                                Text('Excavation',
+                                Text(superText[14],
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
@@ -233,7 +234,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                           children: [
                             Column(
                               children: [
-                                Text('Status',
+                                Text(superText[15],
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
@@ -259,7 +260,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                             )),
                             Column(
                               children: [
-                                Text('Goals',
+                                Text(superText[16],
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
@@ -288,7 +289,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
               SizedBox(height: 20),
 
 
-                Text('Site Address',
+                Text(superText[17],
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -329,7 +330,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                 //   ),
                 // ),
 
-                Text('Machines Provided',
+                Text(superText[18],
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -345,8 +346,8 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                           color:  Colors.grey.withOpacity(0.1),
                           margin: EdgeInsets.only(top:10,bottom:10),
                           child:ListTile(  
-                            title:Text("Name:  "+ machinesNameModel[index]["machineName"]),
-                            subtitle:  Text("Usage/day:  "+ machinesNameModel[index]["usagePerDay"] +" hrs"),
+                            title:Text(superText[19]+ machinesNameModel[index]["machineName"]),
+                            subtitle:  Text(superText[20]+ machinesNameModel[index]["usagePerDay"] +" hrs"),
                             ));
                            
                          
@@ -368,7 +369,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             //SizedBox(height: 10),
-                            Text('Our Supervisors',
+                            Text(superText[21],
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
@@ -405,7 +406,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Our Workers',
+                            Text(superText[22],
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
@@ -438,7 +439,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                   ),
                 ),
                 SizedBox(height: 30),
-                Text('Images',
+                Text(superText[23],
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,

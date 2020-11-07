@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:project_timeline/admin/headings.dart';
 
 import '../../CommonWidgets.dart';
 
@@ -98,7 +99,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
         .child(worker["key"])
         .remove()
         .then((value) {
-      showToast("Declined successfully");
+      showToast(superText3[2]);
     });
   }
 
@@ -125,7 +126,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
                             height: 10,
                           ),
                           Text(
-                            "Name: " + allWorkerRequest[index]["name"],
+                            superText3[3] + allWorkerRequest[index]["name"],
                             overflow: TextOverflow.clip,
                             maxLines: 1,
                             softWrap: false,
@@ -138,7 +139,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
                           ),
                           if (allWorkerRequest[index]["email"] != null)
                             Text(
-                              "Email :" + allWorkerRequest[index]["email"],
+                              superText3[4] + allWorkerRequest[index]["email"],
                               overflow: TextOverflow.clip,
                               maxLines: 2,
                               softWrap: false,
@@ -147,14 +148,14 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
                           if (allWorkerRequest[index]["signInMethod"] !=
                               "email")
                             Text(
-                              "Sign In method : OTP",
+                              superText3[5],
                               overflow: TextOverflow.clip,
                               maxLines: 2,
                               softWrap: false,
                               style: TextStyle(fontSize: 14),
                             ),
                           Text(
-                            "Address: " + allWorkerRequest[index]["address"],
+                            superText3[6] + allWorkerRequest[index]["address"],
                             overflow: TextOverflow.clip,
                             maxLines: 2,
                             softWrap: false,
@@ -163,7 +164,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
                           Row(
                             children: <Widget>[
                               Text(
-                                "Age: " + allWorkerRequest[index]["age"],
+                                superText3[7] + allWorkerRequest[index]["age"],
                                 overflow: TextOverflow.clip,
                                 maxLines: 2,
                                 softWrap: false,
@@ -173,7 +174,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
                                 width: 10,
                               ),
                               Text(
-                                "Phone no: " +
+                                superText3[8] +
                                     allWorkerRequest[index]["phoneNo"],
                                 overflow: TextOverflow.clip,
                                 maxLines: 2,
@@ -196,7 +197,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
                           ),
                           FlatButton(
                             color: Color.fromRGBO(204, 255, 153, 1),
-                            child: Text("Accept"),
+                            child: Text(superText3[9]),
                             onPressed: () {
                               setState(() {
                                 acceptRequest(allWorkerRequest[index]);
@@ -208,7 +209,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
                           ),
                           FlatButton(
                             color: Color.fromRGBO(244, 137, 137, 1),
-                            child: Text("Decline"),
+                            child: Text(superText3[10]),
                             onPressed: () {
                               setState(() {
                                 declineRequest(allWorkerRequest[index]);
@@ -250,7 +251,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
                   height: 10,
                 ),
                 Center(
-                  child: titleStyles('Worker Request List', 18),
+                  child: titleStyles(superText3[11], 18),
                 ),
                 SizedBox(
                   height: 20,
@@ -270,7 +271,7 @@ class _WorkerRequestListState extends State<WorkerRequestList> {
               !snap.hasError &&
               snap.data.snapshot.value == null) {
             return Center(
-              child: Text("No request found"),
+              child: Text(superText3[12]),
             );
           } else {
             return Center(

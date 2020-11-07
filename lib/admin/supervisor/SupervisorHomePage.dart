@@ -5,6 +5,7 @@ import 'package:project_timeline/admin/DocumentManager/core/services/pathnavigat
 import 'package:project_timeline/admin/DocumentManager/ui/screens/home/drive.dart';
 import 'package:project_timeline/admin/DocumentManager/ui/screens/home/shared.dart';
 import 'package:project_timeline/admin/DocumentManager/wrapper.dart';
+import 'package:project_timeline/admin/headings.dart';
 import 'package:project_timeline/admin/login.dart';
 import 'package:provider/provider.dart';
 
@@ -30,7 +31,7 @@ class SupervisorHomePage extends StatefulWidget {
 
 class SupervisorHomePageState extends State<SupervisorHomePage> {
   int _selectedDrawerIndex = 0;
-  String appbartitle = "Dashboard";
+  String appbartitle = superText[0];
 
   String name = '',
       lname = '',
@@ -122,7 +123,7 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
         case 7:
         return new SharedPage();
       default:
-        return new Text("Error");
+        return new Text(superText[1]);
     }
   }
 
@@ -178,88 +179,88 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
                 ListTile(
                     title: Row(children: <Widget>[
                       Icon(Icons.home),
-                      Text(" Dashboard")
+                      Text(superText[0])
                     ]),
                     onTap: () {
                       _onSelectItem(0);
-                      appbartitle = "Dashboard";
+                      appbartitle = superText[0];
                     }),
                 ExpansionTile(
                   title: Row(children: <Widget>[
                     Icon(Icons.add_box),
-                    Text("Our Resources")
+                    Text(superText[2])
                   ]),
                   children: <Widget>[
                     ListTile(
                         title: Row(children: <Widget>[
                           Icon(Icons.arrow_right),
-                          Text("Our Petrol Pump")
+                          Text(superText[3])
                         ]),
                         onTap: () {
                           _onSelectItem(1);
 
-                          appbartitle = "Our Petrol Pumps";
+                          appbartitle = superText[3];
                         }),
                     ListTile(
                         title: Row(children: <Widget>[
                           Icon(Icons.arrow_right),
-                          Text("Our Machines")
+                          Text(superText[4])
                         ]),
                         onTap: () {
                           _onSelectItem(2);
 
-                          appbartitle = "Our Machines";
+                          appbartitle = superText[4];
                         }),
                   ],
                 ),
                 ListTile(
                     title: Row(children: <Widget>[
                       Icon(Icons.grade),
-                      Text(" Our Projects")
+                      Text(superText[5])
                     ]),
                     onTap: () {
                       _onSelectItem(3);
-                      appbartitle = "Our Projects";
+                      appbartitle = superText[5];
                     }),
 
                      assignedProject.contains(" ")||assignedProject.contains("No project assigned")?Container(): 
                       ListTile(
                     title: Row(children: <Widget>[
                       Icon(Icons.work),
-                      Text(" Your Allocated Projects")
+                      Text(superText[6])
                     ]),
                     onTap: () {
                       _onSelectItem(4);
-                      appbartitle = "Your Allocated Projects";
+                      appbartitle = superText[6];
                     }),
              
                 ListTile(
                     title: Row(children: <Widget>[
                       Icon(Icons.people),
-                      Text(" Create/Accept Workers")
+                      Text(superText[7])
                     ]),
                     onTap: () {
                       _onSelectItem(5);
-                      appbartitle = "Create/Accept Workers";
+                      appbartitle = superText[7];
                     }),
                  ListTile(
                     title: Row(children: <Widget>[
                       Icon(Icons.description),
-                      Text(" My Documents")
+                      Text(superText[8])
                     ]),
                     onTap: () {
                       _onSelectItem(6);
-                      appbartitle = "My Documents";
+                      appbartitle = superText[8];
                     }),
 
                       ListTile(
                     title: Row(children: <Widget>[
                       Icon(Icons.description),
-                      Text(" Shared With Me")
+                      Text(superText[9])
                     ]),
                     onTap: () {
                       _onSelectItem(7);
-                      appbartitle = "Shared With Me";
+                      appbartitle = superText[9];
                     }),
 
               ],
