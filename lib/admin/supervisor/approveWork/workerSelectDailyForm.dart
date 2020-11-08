@@ -487,7 +487,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                                 keyboardType: TextInputType.number,
                                 validator: (String value) {
                                   if (value.length == 0) {
-                                    return "Please enter Length";
+                                    return "Please enter the length";
                                   } else {
                                     return null;
                                   }
@@ -615,30 +615,34 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                     width: double.infinity,
                     height: 50,
                     child: FlatButton(
-                      onPressed: () async{
-                           await databaseReference
-                          .child("projects").child(projectID)
-                          .once()
-                          .then((DataSnapshot dataSnapshot) {
-                        Map data = dataSnapshot.value;  
+                      onPressed: () async {
+                        await databaseReference
+                            .child("projects")
+                            .child(projectID)
+                            .once()
+                            .then((DataSnapshot dataSnapshot) {
+                          Map data = dataSnapshot.value;
 
-                          if(data.containsKey("progress"))
-                          {
+                          if (data.containsKey("progress")) {
                             debugPrint("======1");
-                            debugPrint("======1"+selectedWorker.split(",")[0].toString()+"       "+todaysDate.toString());
-                            if(Map.from( data["progress"]).containsKey(todaysDate))
-                            {debugPrint("======2");
-                              if(Map.from(data["progress"][todaysDate]).containsKey(selectedWorker.split(",")[0]))
-                              {
-                                  debugPrint("----------------------------------true");
-                                  showToast(superText5[11]);
-                              }
-                              else submitForm();
-                            }  
-                            else submitForm();
-                          }
-                           else submitForm();
-
+                            debugPrint("======1" +
+                                selectedWorker.split(",")[0].toString() +
+                                "       " +
+                                todaysDate.toString());
+                            if (Map.from(data["progress"])
+                                .containsKey(todaysDate)) {
+                              debugPrint("======2");
+                              if (Map.from(data["progress"][todaysDate])
+                                  .containsKey(selectedWorker.split(",")[0])) {
+                                debugPrint(
+                                    "----------------------------------true");
+                                showToast(superText5[11]);
+                              } else
+                                submitForm();
+                            } else
+                              submitForm();
+                          } else
+                            submitForm();
                         });
                       },
                       child:
@@ -709,7 +713,7 @@ class _WorkIntervalsState extends State<WorkIntervals> {
                       fontSize: 15,
                       color: Colors.deepOrange,
                     ),
-                    itemHeight: 20,
+                    itemHeight: 30,
                     spacing: 0,
                     minutesInterval: 15,
                     is24HourMode: false,
@@ -740,7 +744,7 @@ class _WorkIntervalsState extends State<WorkIntervals> {
                       fontSize: 15,
                       color: Colors.deepOrange,
                     ),
-                    itemHeight: 20,
+                    itemHeight: 30,
                     spacing: 0,
                     minutesInterval: 15,
                     is24HourMode: false,

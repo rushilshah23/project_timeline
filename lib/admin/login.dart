@@ -18,7 +18,6 @@ import 'manager/ManagerHomePage.dart';
 import 'supervisor/SupervisorHomePage.dart';
 import 'worker/WorkerHomePage.dart';
 
-
 class LoginPage extends StatefulWidget {
   @override
   State createState() => new LoginPageState();
@@ -56,7 +55,6 @@ class LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
-
   _setData(String name, String email, String mobile, String uid,
       String assignedProject) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -77,7 +75,6 @@ class LoginPageState extends State<LoginPage> {
         phoneNumber: phone,
         timeout: Duration(seconds: 120),
         verificationCompleted: (AuthCredential credential) async {
-         
           print(credential);
           print("`````````````````````````````````````````");
           print("Verification Complete");
@@ -173,7 +170,7 @@ class LoginPageState extends State<LoginPage> {
                 // print(element.data()["mobile"]);
                 // print(element.data()["name"]);
                 // print(element.data()["assignedProject"]);
-                 showToast("Login Successful");
+                showToast("Login Successful");
                 // print("```````````````````````````");
                 Navigator.push(
                   context,
@@ -334,7 +331,7 @@ class LoginPageState extends State<LoginPage> {
                 // print(element.data()["mobile"]);
                 // print(element.data()["name"]);
                 // print(element.data()["assignedProject"]);
-                 showToast("Login Successful");
+                showToast("Login Successful");
                 // print("```````````````````````````");
                 users.doc(user.uid).set({
                   "assignedProject": "No project assigned",
@@ -375,7 +372,7 @@ class LoginPageState extends State<LoginPage> {
                   // print(element.data()["mobile"]);
                   // print(element.data()["name"]);
                   // print(element.data()["assignedProject"]);
-                   showToast("Login Successful");
+                  showToast("Login Successful");
                   // print("```````````````````````````");
                   _setData(
                       element.data()["name"],
@@ -417,7 +414,7 @@ class LoginPageState extends State<LoginPage> {
                 // print(element.data()["mobile"]);
                 // print(element.data()["name"]);
                 // print(element.data()["assignedProject"]);
-                 showToast("Login Successful");
+                showToast("Login Successful");
                 // print("```````````````````````````");
                 supervisor.doc(user.uid).set({
                   "assignedProject": "No project assigned",
@@ -459,7 +456,7 @@ class LoginPageState extends State<LoginPage> {
                   // print(element.data()["mobile"]);
                   // print(element.data()["name"]);
                   // print(element.data()["assignedProject"]);
-                   showToast("Login Successful");
+                  showToast("Login Successful");
                   // print("```````````````````````````");
                   _setData(
                       element.data()["name"],
@@ -504,7 +501,7 @@ class LoginPageState extends State<LoginPage> {
                 // print(element.data()["mobile"]);
                 // print(element.data()["name"]);
                 // print(element.data()["assignedProject"]);
-                 showToast("Login Successful");
+                showToast("Login Successful");
                 // print("```````````````````````````");
                 workers.doc(user.uid).set({
                   "assignedProject": "No project assigned",
@@ -552,7 +549,7 @@ class LoginPageState extends State<LoginPage> {
                   // print(element.data()["mobile"]);
                   // print(element.data()["name"]);
                   // print(element.data()["assignedProject"]);
-                   showToast("Login Successful");
+                  showToast("Login Successful");
                   // print("```````````````````````````");
                   _setData(
                       element.data()["name"],
@@ -593,7 +590,7 @@ class LoginPageState extends State<LoginPage> {
                 // print(element.data()["mobile"]);
                 // print(element.data()["name"]);
                 // print(element.data()["assignedProject"]);
-                 showToast("Login Successful");
+                showToast("Login Successful");
                 // print("```````````````````````````");
                 manager.doc(user.uid).set({
                   "assignedProject": "No project assigned",
@@ -653,7 +650,7 @@ class LoginPageState extends State<LoginPage> {
             });
           });
           if (flag == 0) {
-               pr.hide();
+            pr.hide();
             showToast("Account not accepted");
           }
         } else {
@@ -677,12 +674,12 @@ class LoginPageState extends State<LoginPage> {
               _email = value;
             });
           },
-          validator: (val) => val.isEmpty ? 'Enter email' : null,
+          validator: (val) => val.isEmpty ? 'Enter your email ID' : null,
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.email),
             hintText: 'Email',
-             labelText: 'Email',
+            labelText: 'Email',
             contentPadding: EdgeInsets.all(20.0),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
@@ -701,11 +698,11 @@ class LoginPageState extends State<LoginPage> {
               _password = value;
             });
           },
-          validator: (val) => val.isEmpty ? 'Enter password' : null,
+          validator: (val) => val.isEmpty ? 'Enter your password' : null,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.vpn_key),
             hintText: 'Password',
-             labelText: "Password",
+            labelText: "Password",
             contentPadding: EdgeInsets.all(20.0),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
@@ -728,19 +725,18 @@ class LoginPageState extends State<LoginPage> {
               _email = value;
             });
           },
-           validator: (val) {
-         
-          if(val.isEmpty) return 'Enter Phone Number';
-           if (val.length<10|| val.length>10)
-          return 'Enter a valid Phone Number';
-          else
-            return null;
-        },  
+          validator: (val) {
+            if (val.isEmpty) return 'Enter your phone number';
+            if (val.length < 10 || val.length > 10)
+              return 'Enter a valid phone pumber';
+            else
+              return null;
+          },
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.phone),
             hintText: 'Mobile Number',
-             labelText: "Mobile Number",
+            labelText: "Mobile Number",
             contentPadding: EdgeInsets.all(20.0),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
@@ -753,13 +749,11 @@ class LoginPageState extends State<LoginPage> {
     ];
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     final ProgressDialog pr = ProgressDialog(context);
     // TODO: implement build
-     return Scaffold(
+    return Scaffold(
         backgroundColor: Colors.white,
         //resizeToAvoidBottomInset: false,
         body: Background(

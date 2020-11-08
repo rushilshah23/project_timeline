@@ -30,7 +30,7 @@ class _AddNewMachineState extends State<AddNewMachine> {
       operatingWeight,
       modelName,
       vendorContact,
-       amountOfExavation;
+      amountOfExavation;
 
   final databaseReference = FirebaseDatabase.instance.reference();
 
@@ -67,7 +67,7 @@ class _AddNewMachineState extends State<AddNewMachine> {
             'name': vendorName,
             'contactNo': vendorContact,
           },
-          'amountOfExcavation':int.parse(amountOfExavation),
+          'amountOfExcavation': int.parse(amountOfExavation),
           // 'excavation': {
           //   for (int i = 0; i < amountOfExavationCount; i++)
           //     '$i': {
@@ -78,9 +78,7 @@ class _AddNewMachineState extends State<AddNewMachine> {
         });
         showToast("Machine added Successfully");
 
-
         Navigator.of(context).pop();
-
       } catch (e) {
         showToast("Failed. check your internet!");
       }
@@ -151,7 +149,7 @@ class _AddNewMachineState extends State<AddNewMachine> {
                                   ),
                                 ),
                                 validator: (val) =>
-                                    val.isEmpty ? 'Enter Model name' : null,
+                                    val.isEmpty ? 'Enter model name' : null,
                                 onChanged: (val) {
                                   setState(() => modelName = val);
                                 },
@@ -237,7 +235,7 @@ class _AddNewMachineState extends State<AddNewMachine> {
                                         ),
                                       ),
                                       validator: (val) => val.isEmpty
-                                          ? 'Engine Power capacity'
+                                          ? 'Engine power capacity'
                                           : null,
                                       onChanged: (val) {
                                         setState(() => enginePower = val);
@@ -263,7 +261,7 @@ class _AddNewMachineState extends State<AddNewMachine> {
                                         ),
                                       ),
                                       validator: (val) => val.isEmpty
-                                          ? 'Enter Operating Weight'
+                                          ? 'Enter operating weight'
                                           : null,
                                       onChanged: (val) {
                                         setState(() => operatingWeight = val);
@@ -330,29 +328,28 @@ class _AddNewMachineState extends State<AddNewMachine> {
 
                               SizedBox(height: 10),
 
-
-                               TextFormField(
-                                      keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
-                                        labelText: "Amount of Excavation",
-                                        hintText: "m3/hr",
-                                        fillColor: Colors.white,
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              color: Colors.blue, width: 2.0),
-                                          borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(10),
-                                              topLeft: Radius.circular(10),
-                                              bottomRight: Radius.circular(10),
-                                              bottomLeft: Radius.circular(10)),
-                                        ),
-                                      ),
-                                      validator: (val) =>
-                                          val.isEmpty ? 'Enter Excavation' : null,
-                                      onChanged: (val) {
-                                        setState(() => amountOfExavation = val);
-                                      },
-                                    ),
+                              TextFormField(
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  labelText: "Amount of Excavation",
+                                  hintText: "m3/hr",
+                                  fillColor: Colors.white,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: Colors.blue, width: 2.0),
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(10),
+                                        topLeft: Radius.circular(10),
+                                        bottomRight: Radius.circular(10),
+                                        bottomLeft: Radius.circular(10)),
+                                  ),
+                                ),
+                                validator: (val) =>
+                                    val.isEmpty ? 'Enter excavation' : null,
+                                onChanged: (val) {
+                                  setState(() => amountOfExavation = val);
+                                },
+                              ),
 //                      Text(
 //                        'Fuel Consumption (litre/hr)',
 //                        style: TextStyle(color: Colors.black, fontSize: 16),
@@ -479,8 +476,9 @@ class _AddNewMachineState extends State<AddNewMachine> {
                               Text(
                                 'Vendor Details',
                                 style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                    color: Colors.black, fontSize: 16),
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 16),
                               ),
                               SizedBox(height: 5),
                               TextFormField(
@@ -498,7 +496,7 @@ class _AddNewMachineState extends State<AddNewMachine> {
                                   ),
                                 ),
                                 validator: (val) =>
-                                    val.isEmpty ? 'Enter Name' : null,
+                                    val.isEmpty ? 'Enter name' : null,
                                 onChanged: (val) {
                                   setState(() => vendorName = val);
                                 },
@@ -507,15 +505,14 @@ class _AddNewMachineState extends State<AddNewMachine> {
                               TextFormField(
                                 keyboardType: TextInputType.phone,
                                 validator: (val) {
-                                if (val.isEmpty) return 'Enter Phone Number';
-                                if (val.length < 10 || val.length > 10)
-                                  return 'Enter a valid Phone Number';
-                                else
-                                  return null;
-                              },
+                                  if (val.isEmpty) return 'Enter phone number';
+                                  if (val.length < 10 || val.length > 10)
+                                    return 'Enter a valid phone number';
+                                  else
+                                    return null;
+                                },
                                 decoration: InputDecoration(
                                   labelText: "Contact No",
-                                  
                                   fillColor: Colors.white,
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: const BorderSide(
@@ -527,29 +524,29 @@ class _AddNewMachineState extends State<AddNewMachine> {
                                         bottomLeft: Radius.circular(10)),
                                   ),
                                 ),
-                              
                                 onChanged: (val) {
                                   setState(() => vendorContact = val);
                                 },
                               ),
 
-                               SizedBox(height: 20),
+                              SizedBox(height: 20),
 
                               Center(
                                 child: FlatButton(
                                   child: Container(
                                     height: 50,
-                                    width: MediaQuery.of(context).size.width-100,
+                                    width:
+                                        MediaQuery.of(context).size.width - 100,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       color: Color(0xff018abd),
                                     ),
-                                      child: Center(child:Text(
-                                        'Add Machine',
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 17),
-                                      )),
-                                    
+                                    child: Center(
+                                        child: Text(
+                                      'Add Machine',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 17),
+                                    )),
                                   ),
                                   onPressed: () {
                                     if (_formKey.currentState.validate()) {

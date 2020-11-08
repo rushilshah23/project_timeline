@@ -101,7 +101,8 @@ class _CreateNewProjectState extends State<CreateNewProject> {
                     ),
                   ),
                   controller: pnameControl,
-                  validator: (val) => val.isEmpty ? 'Enter project name' : null,
+                  validator: (val) =>
+                      val.isEmpty ? 'Enter your project name' : null,
                   onChanged: (val) {
                     setState(() => pname = val);
                   },
@@ -122,7 +123,8 @@ class _CreateNewProjectState extends State<CreateNewProject> {
                     ),
                   ),
                   controller: saddrControl,
-                  validator: (val) => val.isEmpty ? 'Enter site address' : null,
+                  validator: (val) =>
+                      val.isEmpty ? 'Enter your site address' : null,
                   onChanged: (val) {
                     setState(() => saddr = val);
                   },

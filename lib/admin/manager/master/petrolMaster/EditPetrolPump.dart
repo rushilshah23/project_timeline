@@ -47,7 +47,6 @@ class _EditPetrolPumpState extends State<EditPetrolPump> {
     });
   }
 
-
   deletePetrolPump(keyNode) async {
     try {
       await databaseReference
@@ -57,8 +56,7 @@ class _EditPetrolPumpState extends State<EditPetrolPump> {
           .remove();
       showToast("Deleted Successfully");
 
-     Navigator.of(context).pop();
-
+      Navigator.of(context).pop();
     } catch (e) {
       debugPrint("This is the error " + e.toString());
       showToast("Failed. check your internet!");
@@ -100,197 +98,181 @@ class _EditPetrolPumpState extends State<EditPetrolPump> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ThemeAppbar("Edit Details", context),
-            body: Center(child: Container(
-      
-      // Center is a layout widget. It takes a single child and positions it
-      // in the middle of the parent.
-      padding: EdgeInsets.all(20),
+        appBar: ThemeAppbar("Edit Details", context),
+        body: Center(
+            child: Container(
+          // Center is a layout widget. It takes a single child and positions it
+          // in the middle of the parent.
+          padding: EdgeInsets.all(20),
 
-      child: Form(
-        key: _formKey,
-        child: ListView(
-          children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+          child: Form(
+            key: _formKey,
+            child: ListView(
               children: <Widget>[
-                titleStyles('Edit Details', 18),
-                SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  minLines: 1,
-                  validator: (String content) {
-                    if (content.length == 0) {
-                      return "Please Enter Petrol Pump Name";
-                    } else {
-                      return null;
-                    }
-                  },
-                  controller: petrolPumpNameController,
-                  decoration: InputDecoration(
-                    labelText: "Petrol Pump Name",
-                    border: OutlineInputBorder(),
-                    //hintText: "Enter Petrol Pump Name",
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  minLines: 1,
-                  maxLines: 3,
-                  validator: (String content) {
-                    if (content.length == 0) {
-                      return "Please Enter Petrol Pump Address";
-                    } else {
-                      return null;
-                    }
-                  },
-                  controller: petrolPumpAddressController,
-                  decoration: InputDecoration(
-                    labelText: "Petrol Pump Address",
-                    border: OutlineInputBorder(),
-                    //hintText: "Enter Petrol Pump Address",
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-
-                Row(
-                  children: [
-                    Flexible(
-                      child: TextFormField(
-                        minLines: 1,
-                        validator: (String content) {
-                          if (content.length == 0) {
-                            return "Enter District";
-                          } else {
-                            return null;
-                          }
-                        },
-                        controller: petrolPumpDistrictController,
-                        decoration: InputDecoration(
-                          labelText: "District",
-                          border: OutlineInputBorder(),
-
-                        ),
-                      ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    titleStyles('Edit Details', 18),
+                    SizedBox(
+                      height: 20,
                     ),
-                    SizedBox(width: 10,),
-                    Flexible(
-                      child: TextFormField(
-                        minLines: 1,
-                        validator: (String content) {
-                          if (content.length == 0) {
-                            return "Town";
-                          } else {
-                            return null;
-                          }
-                        },
-                        controller: petrolPumpTownController,
-                        decoration: InputDecoration(
-                          labelText: "Town",
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                    ),
-
-                  ],
-                ),
-
-                SizedBox(
-                  height: 20,
-                ),
-
-
-                Row(
-                  children: [
-                    Flexible(
-                      child:  TextFormField(
-                        minLines: 1,
-                        validator: (String content) {
-                          if (content.length == 0) {
-                            return " Enter Pin Code";
-                          } else {
-                            return null;
-                          }
-                        },
-                        controller: petrolPumpPinCodeController,
-                         keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: "Pin Code",
-                          border: OutlineInputBorder(),
-
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10,),
-                    Flexible(
-                      child: TextFormField(
-                        minLines: 1,
-                         validator: (val) {
-          if (val.isEmpty) return 'Enter Phone Number';
-          if (val.length < 10 || val.length > 10)
-            return 'Enter a valid Phone Number';
-          else
-            return null;
-        },
-                        controller: petrolPumpPhoneNumberController,
-                         keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: "Contact No.",
-                          border: OutlineInputBorder(),
-
-                        ),
-                      ),
-                    ),
-
-                  ],
-                ),
-
-                SizedBox(
-                  height: 20,
-                ),
-
-
-
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-
-                    FlatButton(
-                      child: buttonContainers(100, 'Save', 17),
-                      onPressed: () {
-                        updatePetrolPump();
-                        // debugPrint(widget.data["key"].toString());
+                    TextFormField(
+                      minLines: 1,
+                      validator: (String content) {
+                        if (content.length == 0) {
+                          return "Please enter petrol pump name";
+                        } else {
+                          return null;
+                        }
                       },
-                    ),
-
-                    FlatButton(
-                      child: buttonContainers(100, 'Delete', 17),
-                        onPressed: () {
-                          updatePetrolPump();
-                          // debugPrint(widget.data["key"].toString());
-
-                          deletePetrolPump(
-                            widget.data["petrolPumpID"],
-                          );
-                        },
+                      controller: petrolPumpNameController,
+                      decoration: InputDecoration(
+                        labelText: "Petrol Pump Name",
+                        border: OutlineInputBorder(),
+                        //hintText: "Enter Petrol Pump Name",
                       ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      minLines: 1,
+                      maxLines: 3,
+                      validator: (String content) {
+                        if (content.length == 0) {
+                          return "Please enter petrol pump address";
+                        } else {
+                          return null;
+                        }
+                      },
+                      controller: petrolPumpAddressController,
+                      decoration: InputDecoration(
+                        labelText: "Petrol Pump Address",
+                        border: OutlineInputBorder(),
+                        //hintText: "Enter Petrol Pump Address",
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: TextFormField(
+                            minLines: 1,
+                            validator: (String content) {
+                              if (content.length == 0) {
+                                return "Enter district";
+                              } else {
+                                return null;
+                              }
+                            },
+                            controller: petrolPumpDistrictController,
+                            decoration: InputDecoration(
+                              labelText: "District",
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Flexible(
+                          child: TextFormField(
+                            minLines: 1,
+                            validator: (String content) {
+                              if (content.length == 0) {
+                                return "Town";
+                              } else {
+                                return null;
+                              }
+                            },
+                            controller: petrolPumpTownController,
+                            decoration: InputDecoration(
+                              labelText: "Town",
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: TextFormField(
+                            minLines: 1,
+                            validator: (String content) {
+                              if (content.length == 0) {
+                                return " Enter pin code";
+                              } else {
+                                return null;
+                              }
+                            },
+                            controller: petrolPumpPinCodeController,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              labelText: "Pin Code",
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Flexible(
+                          child: TextFormField(
+                            minLines: 1,
+                            validator: (val) {
+                              if (val.isEmpty) return 'Enter phone number';
+                              if (val.length < 10 || val.length > 10)
+                                return 'Enter a valid phone number';
+                              else
+                                return null;
+                            },
+                            controller: petrolPumpPhoneNumberController,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              labelText: "Contact No.",
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        FlatButton(
+                          child: buttonContainers(100, 'Save', 17),
+                          onPressed: () {
+                            updatePetrolPump();
+                            // debugPrint(widget.data["key"].toString());
+                          },
+                        ),
+                        FlatButton(
+                          child: buttonContainers(100, 'Delete', 17),
+                          onPressed: () {
+                            updatePetrolPump();
+                            // debugPrint(widget.data["key"].toString());
 
+                            deletePetrolPump(
+                              widget.data["petrolPumpID"],
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ],
                 ),
-
-
-
               ],
             ),
-          ],
-        ),
-      ),
-    )));
+          ),
+        )));
   }
 }

@@ -340,7 +340,7 @@ class _RegisterState extends State<Register> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerAddress,
-        validator: (val) => val.isEmpty ? 'Enter your Address' : null,
+        validator: (val) => val.isEmpty ? 'Enter your address' : null,
         onChanged: (val) {
           setState(() => address = val);
         },
@@ -362,7 +362,7 @@ class _RegisterState extends State<Register> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerAge,
-        validator: (val) => val.isEmpty ? 'Enter your Age' : null,
+        validator: (val) => val.isEmpty ? 'Enter your age' : null,
         onChanged: (val) {
           setState(() => age = val);
         },
@@ -385,7 +385,7 @@ class _RegisterState extends State<Register> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerPassword,
-        validator: (val) => val.isEmpty ? 'Enter Password' : null,
+        validator: (val) => val.isEmpty ? 'Enter your password' : null,
         onChanged: (val) {
           setState(() => password = val);
         },
@@ -411,7 +411,7 @@ class _RegisterState extends State<Register> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerName,
-        validator: (val) => val.isEmpty ? 'Enter your Name' : null,
+        validator: (val) => val.isEmpty ? 'Enter your name' : null,
         onChanged: (val) {
           setState(() => name = val);
         },
@@ -434,7 +434,7 @@ class _RegisterState extends State<Register> {
         controller: controllerPhoneNo,
         keyboardType: TextInputType.number,
         validator: (val) {
-          if (val.isEmpty) return 'Enter Phone Number';
+          if (val.isEmpty) return 'Enter your phone number';
           if (val.length < 10 || val.length > 10)
             return 'Enter a valid Phone Number';
           else
@@ -460,7 +460,7 @@ class _RegisterState extends State<Register> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerAddress,
-        validator: (val) => val.isEmpty ? 'Enter your Address' : null,
+        validator: (val) => val.isEmpty ? 'Enter your address' : null,
         onChanged: (val) {
           setState(() => address = val);
         },
@@ -482,7 +482,7 @@ class _RegisterState extends State<Register> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerAge,
-        validator: (val) => val.isEmpty ? 'Enter your Age' : null,
+        validator: (val) => val.isEmpty ? 'Enter your age' : null,
         onChanged: (val) {
           setState(() => age = val);
         },
@@ -514,8 +514,7 @@ class _RegisterState extends State<Register> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Center(
-                        child: titleStyles('Fill Your Details', 18)),
+                    Center(child: titleStyles('Fill Your Details', 18)),
                     SizedBox(height: 15),
                     Row(
                       children: [
