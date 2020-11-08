@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 
+import '../../headings.dart';
+
 class FeedBackDetails extends StatefulWidget {
   final Map feedBackData;
   FeedBackDetails({
@@ -28,43 +30,43 @@ class _FeedBackDetailsState extends State<FeedBackDetails> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Center(
-                    child: titleStyles('Feedback given by:', 18),
+                    child: titleStyles(proText[22], 18),
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  Text("Name: " + widget.feedBackData["name"].toString()),
+                  Text(proText[17] + widget.feedBackData["name"].toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Groundwater level before: " +
+                  Text(proText[23] +
                       widget.feedBackData["groundwater level before"]
                           .toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Groundwater level after: " +
+                  Text(proText[24] +
                       widget.feedBackData["groundwater level after"]
                           .toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Crop production before: " +
+                  Text(proText[25] +
                       widget.feedBackData["crop production before"].toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Crop production after: " +
+                  Text(proText[26] +
                       widget.feedBackData["crop production after"].toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Feedback: " +
+                  Text(proText[27] +
                       widget.feedBackData["feedback"].toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Suggestions: " +
+                  Text(proText[28] +
                       widget.feedBackData["suggestions"].toString()),
                   SizedBox(
                     height: 10,

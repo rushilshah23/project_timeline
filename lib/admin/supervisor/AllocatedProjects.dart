@@ -21,10 +21,6 @@ import 'package:pdf/widgets.dart' as pw;
 import 'approveWork/WorkApproveModule.dart';
 
 
-
-
-
-
 class YourAllocatedProjects extends StatefulWidget {
   String name , email,  mobile , password,uid, userType,assignedProject;
   YourAllocatedProjects({Key key, this.name, this.email, this.mobile, this.assignedProject, this.userType, this.uid}) : super(key: key);

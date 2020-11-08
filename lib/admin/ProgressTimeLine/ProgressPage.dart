@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:project_timeline/admin/headings.dart';
 import 'ViewAllProjects/ViewAllProjects.dart';
 
 // void main() {
@@ -87,7 +88,7 @@ class _ProgressPageState extends State<ProgressPage> {
                         progressColor: Colors.blue[800],
                       ),
                       SizedBox(height: 10),
-                      Text('Completed',
+                      Text(proText[0],
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.grey[600],
@@ -110,7 +111,7 @@ class _ProgressPageState extends State<ProgressPage> {
                         progressColor: Colors.blue[600],
                       ),
                       SizedBox(height: 10),
-                      Text('Ongoing',
+                      Text(proText[1],
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.grey[600],
@@ -133,7 +134,7 @@ class _ProgressPageState extends State<ProgressPage> {
                         progressColor: Colors.blue[300],
                       ),
                       SizedBox(height: 10),
-                      Text('Not Started',
+                      Text(proText[2],
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.grey[600],

@@ -9,7 +9,7 @@ import '../main.dart';
 import 'Register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'CommonWidgets.dart';
-
+import 'package:project_timeline/admin/headings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -94,7 +94,7 @@ class LoginPageState extends State<LoginPage> {
               barrierDismissible: true,
               builder: (context) {
                 return AlertDialog(
-                  title: Text("Give the code?"),
+                  title: Text(logregText[0]),
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
@@ -105,7 +105,7 @@ class LoginPageState extends State<LoginPage> {
                   ),
                   actions: <Widget>[
                     FlatButton(
-                      child: Text("Confirm"),
+                      child: Text(logregText[1]),
                       textColor: Colors.white,
                       color: Colors.blue,
                       onPressed: () async {
@@ -170,7 +170,7 @@ class LoginPageState extends State<LoginPage> {
                 // print(element.data()["mobile"]);
                 // print(element.data()["name"]);
                 // print(element.data()["assignedProject"]);
-                showToast("Login Successful");
+                showToast(logregText[2]);
                 // print("```````````````````````````");
                 Navigator.push(
                   context,
@@ -180,7 +180,7 @@ class LoginPageState extends State<LoginPage> {
             }
           });
         });
-        if (flag == 0) showToast("Account is not Accepted");
+        if (flag == 0) showToast(logregText[3]);
       } else if (_requestType == supervisorType) {
         print("supervisor");
         await supervisor.get().then((value) {
@@ -203,7 +203,7 @@ class LoginPageState extends State<LoginPage> {
                 print(element.data()["mobile"]);
                 print(element.data()["name"]);
                 print(element.data()["assignedProject"]);
-                showToast("Login Successful");
+                showToast(logregText[2]);
                 print("```````````````````````````");
                 _setData(
                     element.data()["name"],
@@ -219,7 +219,7 @@ class LoginPageState extends State<LoginPage> {
             }
           });
         });
-        if (flag == 0) showToast("Account is not Accepted");
+        if (flag == 0) showToast(logregText[3]);
       } else if (_requestType == workerType) {
         print("worker");
         await workers.get().then((value) {
@@ -242,7 +242,7 @@ class LoginPageState extends State<LoginPage> {
                 print(element.data()["mobile"]);
                 print(element.data()["name"]);
                 print(element.data()["assignedProject"]);
-                showToast("Login Successful");
+                showToast(logregText[2]);
                 print("```````````````````````````");
                 _setData(
                     element.data()["name"],
@@ -258,7 +258,7 @@ class LoginPageState extends State<LoginPage> {
             }
           });
         });
-        if (flag == 0) showToast("Account is not Accepted");
+        if (flag == 0) showToast(logregText[3]);
       } else if (_requestType == managerType) {
         print("manager");
         await manager.get().then((value) {
@@ -281,7 +281,7 @@ class LoginPageState extends State<LoginPage> {
                 print(element.data()["mobile"]);
                 print(element.data()["name"]);
                 print(element.data()["assignedProject"]);
-                showToast("Login Successful");
+                showToast(logregText[2]);
                 print("```````````````````````````");
                 _setData(
                     element.data()["name"],
@@ -297,7 +297,7 @@ class LoginPageState extends State<LoginPage> {
             }
           });
         });
-        if (flag == 0) showToast("Account is not Accepted");
+        if (flag == 0) showToast(logregText[3]);
       } else {
         print("error");
       }
@@ -331,7 +331,7 @@ class LoginPageState extends State<LoginPage> {
                 // print(element.data()["mobile"]);
                 // print(element.data()["name"]);
                 // print(element.data()["assignedProject"]);
-                showToast("Login Successful");
+                showToast(logregText[2]);
                 // print("```````````````````````````");
                 users.doc(user.uid).set({
                   "assignedProject": "No project assigned",
@@ -372,7 +372,7 @@ class LoginPageState extends State<LoginPage> {
                   // print(element.data()["mobile"]);
                   // print(element.data()["name"]);
                   // print(element.data()["assignedProject"]);
-                  showToast("Login Successful");
+                  showToast(logregText[2]);
                   // print("```````````````````````````");
                   _setData(
                       element.data()["name"],
@@ -391,7 +391,7 @@ class LoginPageState extends State<LoginPage> {
           });
           if (flag == 0) {
             await pr.hide();
-            showToast("Account not accepted");
+            showToast(logregText[3]);
           }
         } else {
           await newPhoneUser.doc(_email).delete();
@@ -414,7 +414,7 @@ class LoginPageState extends State<LoginPage> {
                 // print(element.data()["mobile"]);
                 // print(element.data()["name"]);
                 // print(element.data()["assignedProject"]);
-                showToast("Login Successful");
+                showToast(logregText[2]);
                 // print("```````````````````````````");
                 supervisor.doc(user.uid).set({
                   "assignedProject": "No project assigned",
@@ -456,7 +456,7 @@ class LoginPageState extends State<LoginPage> {
                   // print(element.data()["mobile"]);
                   // print(element.data()["name"]);
                   // print(element.data()["assignedProject"]);
-                  showToast("Login Successful");
+                  showToast(logregText[2]);
                   // print("```````````````````````````");
                   _setData(
                       element.data()["name"],
@@ -475,7 +475,7 @@ class LoginPageState extends State<LoginPage> {
           });
           if (flag == 0) {
             await pr.hide();
-            showToast("Account not accepted");
+            showToast(logregText[3]);
           }
         } else {
           await newPhoneUser.doc(_email).delete();
@@ -501,7 +501,7 @@ class LoginPageState extends State<LoginPage> {
                 // print(element.data()["mobile"]);
                 // print(element.data()["name"]);
                 // print(element.data()["assignedProject"]);
-                showToast("Login Successful");
+                showToast(logregText[2]);
                 // print("```````````````````````````");
                 workers.doc(user.uid).set({
                   "assignedProject": "No project assigned",
@@ -549,7 +549,7 @@ class LoginPageState extends State<LoginPage> {
                   // print(element.data()["mobile"]);
                   // print(element.data()["name"]);
                   // print(element.data()["assignedProject"]);
-                  showToast("Login Successful");
+                  showToast(logregText[2]);
                   // print("```````````````````````````");
                   _setData(
                       element.data()["name"],
@@ -567,7 +567,7 @@ class LoginPageState extends State<LoginPage> {
           });
           if (flag == 0) {
             pr.hide();
-            showToast("Account not accepted");
+            showToast(logregText[3]);
           }
         } else {
           await newPhoneUser.doc(_email).delete();
@@ -590,7 +590,7 @@ class LoginPageState extends State<LoginPage> {
                 // print(element.data()["mobile"]);
                 // print(element.data()["name"]);
                 // print(element.data()["assignedProject"]);
-                showToast("Login Successful");
+                showToast(logregText[2]);
                 // print("```````````````````````````");
                 manager.doc(user.uid).set({
                   "assignedProject": "No project assigned",
@@ -632,7 +632,7 @@ class LoginPageState extends State<LoginPage> {
                   // print(element.data()["mobile"]);
                   // print(element.data()["name"]);
                   // print(element.data()["assignedProject"]);
-                  showToast("Login Successful");
+                  showToast(logregText[2]);
                   // print("```````````````````````````");
                   _setData(
                       element.data()["name"],
@@ -651,7 +651,7 @@ class LoginPageState extends State<LoginPage> {
           });
           if (flag == 0) {
             pr.hide();
-            showToast("Account not accepted");
+            showToast(logregText[3]);
           }
         } else {
           await newPhoneUser.doc(_email).delete();
@@ -674,12 +674,12 @@ class LoginPageState extends State<LoginPage> {
               _email = value;
             });
           },
-          validator: (val) => val.isEmpty ? 'Enter your email ID' : null,
+          validator: (val) => val.isEmpty ? logregText[4] : null,
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.email),
-            hintText: 'Email',
-            labelText: 'Email',
+            hintText: logregText[5],
+            labelText: logregText[5],
             contentPadding: EdgeInsets.all(20.0),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
@@ -698,11 +698,11 @@ class LoginPageState extends State<LoginPage> {
               _password = value;
             });
           },
-          validator: (val) => val.isEmpty ? 'Enter your password' : null,
+          validator: (val) => val.isEmpty ? logregText[6] : null,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.vpn_key),
-            hintText: 'Password',
-            labelText: "Password",
+            hintText: logregText[7],
+            labelText: logregText[7],
             contentPadding: EdgeInsets.all(20.0),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
@@ -726,17 +726,17 @@ class LoginPageState extends State<LoginPage> {
             });
           },
           validator: (val) {
-            if (val.isEmpty) return 'Enter your phone number';
+            if (val.isEmpty) return logregText[8];
             if (val.length < 10 || val.length > 10)
-              return 'Enter a valid phone pumber';
+              return logregText[9];
             else
               return null;
           },
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.phone),
-            hintText: 'Mobile Number',
-            labelText: "Mobile Number",
+            hintText: logregText[10],
+            labelText: logregText[10],
             contentPadding: EdgeInsets.all(20.0),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
@@ -766,7 +766,7 @@ class LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "Login",
+                    logregText[11],
                     style: GoogleFonts.playfairDisplay(
                         fontStyle: FontStyle.italic,
                         fontWeight: FontWeight.w700,
@@ -792,7 +792,7 @@ class LoginPageState extends State<LoginPage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              "Signed In Method: ",
+                              logregText[12],
                               style: GoogleFonts.merriweather(
                                   fontWeight: FontWeight.w700, fontSize: 14),
                             ),
@@ -808,7 +808,7 @@ class LoginPageState extends State<LoginPage> {
                                       });
                                     }),
                                 Text(
-                                  "Email",
+                                  logregText[5],
                                   style: GoogleFonts.merriweather(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 15),
@@ -827,7 +827,7 @@ class LoginPageState extends State<LoginPage> {
                                       });
                                     }),
                                 Text(
-                                  "OTP",
+                                  logregText[13],
                                   style: GoogleFonts.merriweather(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 15),
@@ -840,7 +840,7 @@ class LoginPageState extends State<LoginPage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              "User Type: ",
+                              logregText[14],
                               style: GoogleFonts.merriweather(
                                   fontWeight: FontWeight.w700, fontSize: 14),
                             ),
@@ -848,7 +848,7 @@ class LoginPageState extends State<LoginPage> {
                               width: 30,
                             ),
                             DropdownButton(
-                                hint: Text("Select User Type"),
+                                hint: Text(logregText[15]),
                                 value: _requestType,
                                 items: _type.map((String usertype) {
                                   return DropdownMenuItem<String>(
@@ -901,7 +901,7 @@ class LoginPageState extends State<LoginPage> {
                                   color: Color(0xff005c9d),
                                   borderRadius: BorderRadius.circular(12.0)),
                               child: Text(
-                                "LOGIN",
+                                logregText[16],
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.merriweather(
                                     fontWeight: FontWeight.w400, fontSize: 18),
@@ -916,7 +916,7 @@ class LoginPageState extends State<LoginPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Don't have an account?",
+                              logregText[17],
                               style: GoogleFonts.merriweather(
                                   fontWeight: FontWeight.w400, fontSize: 18),
                             ),
@@ -929,7 +929,7 @@ class LoginPageState extends State<LoginPage> {
                                 );
                               },
                               child: Text(
-                                'Register',
+                                logregText[18],
                                 style: GoogleFonts.merriweather(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,

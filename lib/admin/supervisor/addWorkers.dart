@@ -41,11 +41,11 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
         if(isAssng.contains(" ")||isAssng.contains("No project assigned"))
         {
           color = Colors.green[700];
-          status= superText2[24];
+          status= 'No project assigned';
         }
         else  {
           color = Colors.blue[700];
-          status= superText2[25];
+          status= "Project assigned";
           }
         setState(() {
 
@@ -119,7 +119,7 @@ class _SearchWorkerPageState extends State<SearchWorkerPage> {
       prevSelected.forEach((prevWorker) async {
         await workers
             .doc(prevWorker)
-            .update({"assignedProject": superText2[26]});
+            .update({"assignedProject": 'No project assigned'});
       });
       await databaseReference
           .child("projects")

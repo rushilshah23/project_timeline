@@ -157,7 +157,7 @@ class SupervisorHomePageState extends State<SupervisorHomePage> {
               children: <Widget>[
                 UserAccountsDrawerHeader(
                   decoration: BoxDecoration(gradient: gradients()),
-                  accountName: Text("Supervisor"),
+                  accountName: Text(superText5[16]),
                   accountEmail: Text(email),
                   currentAccountPicture: InkWell(
                     onTap: () {

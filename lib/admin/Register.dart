@@ -6,7 +6,7 @@ import 'package:project_timeline/admin/DocumentManager/core/services/authenticat
 import 'package:project_timeline/admin/DocumentManager/core/services/database.dart';
 import 'package:project_timeline/admin/DocumentManager/wrapper.dart';
 import 'package:project_timeline/admin/login.dart';
-
+import 'package:project_timeline/admin/headings.dart';
 import 'CommonWidgets.dart';
 
 class Register extends StatefulWidget {
@@ -89,7 +89,7 @@ class _RegisterState extends State<Register> {
               );
 
               AuthenticationService().userfromAuthentication(user);
-              showToast("Request Successfully Sent");
+              showToast(logregText[19]);
             });
           });
         });
@@ -150,7 +150,7 @@ class _RegisterState extends State<Register> {
                 barrierDismissible: true,
                 builder: (context) {
                   return AlertDialog(
-                    title: Text("Give the code?"),
+                    title: Text(logregText[0]),
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
@@ -164,7 +164,7 @@ class _RegisterState extends State<Register> {
                     ),
                     actions: <Widget>[
                       FlatButton(
-                        child: Text("Confirm"),
+                        child: Text(logregText[1]),
                         textColor: Colors.white,
                         color: Colors.blue,
                         onPressed: () async {
@@ -229,12 +229,12 @@ class _RegisterState extends State<Register> {
           'age': age,
           'signInMethod': "otp"
         }).then((value) {
-          showToast("Request successfully sent");
+          showToast(logregText[19]);
         });
       });
       Navigator.pop(context);
     } catch (e) {
-      showToast("Failed. Check your Internet !");
+      showToast(logregText[20]);
     }
   }
 
@@ -242,7 +242,7 @@ class _RegisterState extends State<Register> {
     return [
       TextFormField(
         decoration: InputDecoration(
-          labelText: "Name",
+          labelText: logregText[21],
           fillColor: Colors.white,
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.blue, width: 2.0),
@@ -255,7 +255,7 @@ class _RegisterState extends State<Register> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerName,
-        validator: (val) => val.isEmpty ? 'Enter your Name' : null,
+        validator: (val) => val.isEmpty ? logregText[22] : null,
         onChanged: (val) {
           setState(() => name = val);
         },
@@ -264,7 +264,7 @@ class _RegisterState extends State<Register> {
       TextFormField(
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
-          labelText: "Email",
+          labelText: logregText[5],
           fillColor: Colors.white,
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.blue, width: 2.0),
@@ -283,9 +283,9 @@ class _RegisterState extends State<Register> {
               r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
               r"{0,253}[a-zA-Z0-9])?)*$";
           RegExp regex = new RegExp(pattern);
-          if (val.isEmpty) return 'Enter Email';
+          if (val.isEmpty) return logregText[4];
           if (!regex.hasMatch(val) || val == null)
-            return 'Enter a valid email address';
+            return logregText[23];
           else
             return null;
         },
@@ -296,7 +296,7 @@ class _RegisterState extends State<Register> {
       SizedBox(height: 15),
       TextFormField(
         decoration: InputDecoration(
-          labelText: "Mobile no",
+          labelText: logregText[10],
           fillColor: Colors.white,
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.blue, width: 2.0),
@@ -311,9 +311,9 @@ class _RegisterState extends State<Register> {
         controller: controllerPhoneNo,
         keyboardType: TextInputType.number,
         validator: (val) {
-          if (val.isEmpty) return 'Enter Phone Number';
+          if (val.isEmpty) return logregText[8];
           if (val.length < 10 || val.length > 10)
-            return 'Enter a valid Phone Number';
+            return logregText[9];
           else
             return null;
         },
@@ -327,7 +327,7 @@ class _RegisterState extends State<Register> {
         keyboardType: TextInputType.multiline,
         maxLines: null,
         decoration: InputDecoration(
-          labelText: "Address",
+          labelText: logregText[24],
           fillColor: Colors.white,
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.blue, width: 2.0),
@@ -340,7 +340,7 @@ class _RegisterState extends State<Register> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerAddress,
-        validator: (val) => val.isEmpty ? 'Enter your address' : null,
+        validator: (val) => val.isEmpty ? logregText[25] : null,
         onChanged: (val) {
           setState(() => address = val);
         },
@@ -349,7 +349,7 @@ class _RegisterState extends State<Register> {
       TextFormField(
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
-          labelText: "Age",
+          labelText: logregText[26],
           fillColor: Colors.white,
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.blue, width: 2.0),
@@ -362,7 +362,7 @@ class _RegisterState extends State<Register> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerAge,
-        validator: (val) => val.isEmpty ? 'Enter your age' : null,
+        validator: (val) => val.isEmpty ? logregText[27] : null,
         onChanged: (val) {
           setState(() => age = val);
         },
@@ -372,7 +372,7 @@ class _RegisterState extends State<Register> {
         // keyboardType: TextInputType.visiblePassword,
         obscureText: true,
         decoration: InputDecoration(
-          labelText: "Password",
+          labelText: logregText[7],
           fillColor: Colors.white,
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.blue, width: 2.0),
@@ -385,7 +385,7 @@ class _RegisterState extends State<Register> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerPassword,
-        validator: (val) => val.isEmpty ? 'Enter your password' : null,
+        validator: (val) => val.isEmpty ? logregText[6] : null,
         onChanged: (val) {
           setState(() => password = val);
         },
@@ -398,7 +398,7 @@ class _RegisterState extends State<Register> {
     return [
       TextFormField(
         decoration: InputDecoration(
-          labelText: "Name",
+          labelText: logregText[21],
           fillColor: Colors.white,
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.blue, width: 2.0),
@@ -411,7 +411,7 @@ class _RegisterState extends State<Register> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerName,
-        validator: (val) => val.isEmpty ? 'Enter your name' : null,
+        validator: (val) => val.isEmpty ? logregText[22] : null,
         onChanged: (val) {
           setState(() => name = val);
         },
@@ -419,7 +419,7 @@ class _RegisterState extends State<Register> {
       SizedBox(height: 15),
       TextFormField(
         decoration: InputDecoration(
-          labelText: "Mobile no",
+          labelText: logregText[10],
           fillColor: Colors.white,
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.blue, width: 2.0),
@@ -434,9 +434,9 @@ class _RegisterState extends State<Register> {
         controller: controllerPhoneNo,
         keyboardType: TextInputType.number,
         validator: (val) {
-          if (val.isEmpty) return 'Enter your phone number';
+          if (val.isEmpty) return logregText[8];
           if (val.length < 10 || val.length > 10)
-            return 'Enter a valid Phone Number';
+            return logregText[9];
           else
             return null;
         },
@@ -447,7 +447,7 @@ class _RegisterState extends State<Register> {
       SizedBox(height: 15),
       TextFormField(
         decoration: InputDecoration(
-          labelText: "Address",
+          labelText: logregText[24],
           fillColor: Colors.white,
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.blue, width: 2.0),
@@ -460,7 +460,7 @@ class _RegisterState extends State<Register> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerAddress,
-        validator: (val) => val.isEmpty ? 'Enter your address' : null,
+        validator: (val) => val.isEmpty ? logregText[25] : null,
         onChanged: (val) {
           setState(() => address = val);
         },
@@ -469,7 +469,7 @@ class _RegisterState extends State<Register> {
       TextFormField(
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
-          labelText: "Age",
+          labelText: logregText[26],
           fillColor: Colors.white,
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.blue, width: 2.0),
@@ -482,7 +482,7 @@ class _RegisterState extends State<Register> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
         controller: controllerAge,
-        validator: (val) => val.isEmpty ? 'Enter your age' : null,
+        validator: (val) => val.isEmpty ? logregText[27] : null,
         onChanged: (val) {
           setState(() => age = val);
         },
@@ -498,7 +498,7 @@ class _RegisterState extends State<Register> {
         iconTheme: IconThemeData(
           color: Color(0xff005c9d),
         ),
-        title: Text("Register",
+        title: Text(logregText[18],
             style: TextStyle(
               color: Color(0xff005c9d),
             )),
@@ -514,11 +514,11 @@ class _RegisterState extends State<Register> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Center(child: titleStyles('Fill Your Details', 18)),
+                    Center(child: titleStyles(logregText[28], 18)),
                     SizedBox(height: 15),
                     Row(
                       children: [
-                        Text("Sign In Method"),
+                        Text(logregText[12]),
                         SizedBox(
                           width: 20,
                         ),
@@ -536,7 +536,7 @@ class _RegisterState extends State<Register> {
                                     controllerAge.clear();
                                   });
                                 }),
-                            Text("Email ID")
+                            Text(logregText[5])
                           ],
                         ),
                         Row(
@@ -555,7 +555,7 @@ class _RegisterState extends State<Register> {
                                     controllerPassword.clear();
                                   });
                                 }),
-                            Text("OTP")
+                            Text(logregText[13])
                           ],
                         ),
                       ],
@@ -563,12 +563,12 @@ class _RegisterState extends State<Register> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text("User Type:"),
+                        Text(logregText[14]),
                         SizedBox(
                           width: 30,
                         ),
                         DropdownButton(
-                            hint: Text("Select User Type"),
+                            hint: Text(logregText[15]),
                             value: _requestType,
                             items: _type.map((String userType) {
                               return DropdownMenuItem<String>(
@@ -593,7 +593,7 @@ class _RegisterState extends State<Register> {
                     ),
                     Center(
                       child: FlatButton(
-                        child: buttonContainers(400, 'Register', 18),
+                        child: buttonContainers(400, logregText[18], 18),
                         onPressed: () {
                           _signInMethod == "email"
                               ? addUserUsingEmail()

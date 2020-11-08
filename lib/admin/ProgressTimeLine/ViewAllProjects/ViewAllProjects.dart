@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:project_timeline/admin/headings.dart';
 import '../../CommonWidgets.dart';
 import 'ProjectDetails.dart';
 
@@ -140,7 +141,7 @@ class _AllProjectsState extends State<AllProjects> {
               !snap.hasError &&
               snap.data.snapshot.value == null) {
             return Center(
-              child: Text("No projects found"),
+              child: Text(proText[3]),
             );
           } else {
             return Center(
