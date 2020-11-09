@@ -1,6 +1,9 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:project_timeline/languages/rawText/bottomNavText.dart';
+import 'package:project_timeline/languages/rawText/progressPageText.dart';
+import 'package:project_timeline/multilingual/dynamic_translation.dart';
 import 'ViewAllProjects/ViewAllProjects.dart';
 
 // void main() {
@@ -29,6 +32,7 @@ class _ProgressPageState extends State<ProgressPage> {
   double notStartedPercent = 0.0;
   double ongoingPercent = 0.0;
 
+  List<dynamic> translatedText;
   @override
   void initState() {
     super.initState();
@@ -55,6 +59,18 @@ class _ProgressPageState extends State<ProgressPage> {
         completedPercent = (completed / noOfProjects) * 100;
 
         debugPrint(ongoingPercent.toString());
+      });
+    });
+
+    loadTranslatedText();
+  }
+
+  loadTranslatedText() async {
+    await DynamicTranslation()
+        .translate(inputs: progressPageText)
+        .then((value) {
+      setState(() {
+        translatedText = value;
       });
     });
   }

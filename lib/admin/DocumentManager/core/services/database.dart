@@ -215,7 +215,11 @@ class DatabaseService {
     String folderId,
     DatabaseReference driveRef,
   }) async {
-    // deleteFolderFromdbStorage(driveRef: driveRef, folderId: folderId);
+    try {
+      await deleteFolderFromdbStorage(driveRef: driveRef, folderId: folderId);
+    } catch (e) {
+      print("cant perform deletefolder from fb storage" + e.toString());
+    }
 
     try {
       print("before folder deleted ${driveRef.path}/$folderId");
@@ -223,15 +227,6 @@ class DatabaseService {
       print("after folder deleted ${driveRef.path}/$folderId");
     } catch (e) {
       debugPrint(e.toString());
-    }
-
-    try {
-      await _dbStorage
-          .child(driveRef.reference().path)
-          .child(folderId)
-          .delete();
-    } catch (e) {
-      print(e.toString());
     }
 
     // _dbStorage.child(driveRef.reference().path).child(folderId).delete();
@@ -352,15 +347,51 @@ class DatabaseService {
 
   deleteFolderFromdbStorage(
       {DatabaseReference driveRef, String folderId}) async {
-    await driveRef.child(folderId).once().then((DataSnapshot snapshot) {
+    await driveRef
+        .child(folderId)
+        .child("inFolders")
+        .once()
+        .then((DataSnapshot snapshot) async {
+      print(driveRef.path);
+      // print("inFolders");
+      // print(folderId);
+      // print("inFolders");
       if (snapshot != null) {
         var data = snapshot.value;
         var keys = snapshot.value.keys;
+        // if (data['inFolders'] != null) {
+        print("inFOlders ");
         for (var key in keys) {
-          if (data['inFolders'] != null) {
-            print("inFOlders " + data['inFolders']);
+          if (data[key]['documentType'] == 'documentType.folder') {
+            print("in inside folder");
+            try {
+              await deleteFolderFromdbStorage(
+                  driveRef:
+                      driveRef.child(folderId).child('inFolders').reference(),
+                  folderId: key);
+            } catch (e) {
+              print("insidde folder deleting error " + e.toString());
+            }
+          } else if (data[key]['documentType'] == 'documentType.file') {
+            try {
+              print("deleting file");
+              await deleteFile(
+                      driveRef: driveRef
+                          .child(folderId)
+                          .child('inFolders')
+                          .reference(),
+                      fileId: key,
+                      fileName: data[key]['fileName'])
+                  .then((_) async {
+                await deleteFolderFromdbStorage(
+                    driveRef: driveRef, folderId: folderId);
+              });
+            } catch (e) {
+              print("unable to delete from firebbbasestorage " + e.toString());
+            }
           }
         }
+        // }
       }
     });
     // await _dbStorage.child(driveRef.reference().path).child(folderId).delete();

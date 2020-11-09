@@ -1,4 +1,5 @@
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/UserSide/Dashboard/Pages/myHomePage.dart';
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
@@ -9,7 +10,10 @@ import 'package:project_timeline/admin/manager/ManagerHomePage.dart';
 import 'package:project_timeline/admin/supervisor/SupervisorHomePage.dart';
 import 'package:project_timeline/admin/worker/WorkerHomePage.dart';
 import 'package:project_timeline/crowdfunding/ApiRazorPay.dart';
+import 'package:project_timeline/languages/rawText/bottomNavText.dart';
+import 'package:project_timeline/multilingual/dynamic_translation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:translator/translator.dart';
 
 class BottomNav extends StatefulWidget {
   @override
@@ -24,11 +28,15 @@ class _BottomNavState extends State<BottomNav> {
   SharedPreferences sharedPreferences;
   String language;
 
+  List<String> translatedText;
+
   void initState() {
     //print("in homepage");
     // _languageHome = context.read<Language>();
     super.initState();
     _loadData();
+
+    loadTranslatedText();
   }
 
   _loadData() async {
@@ -58,6 +66,18 @@ class _BottomNavState extends State<BottomNav> {
         context,
         MaterialPageRoute(builder: (context) => SupervisorHomePage()),
       );
+    }
+  }
+
+  loadTranslatedText() async {
+    try {
+      await DynamicTranslation().translate(inputs: bottomNavText).then((value) {
+        setState(() {
+          translatedText = value;
+        });
+      });
+    } catch (e) {
+      e.toString();
     }
   }
 
@@ -103,7 +123,8 @@ class _BottomNavState extends State<BottomNav> {
           tabs: [
             TabData(
                 iconData: Icons.home,
-                title: "Home",
+                // title: "Home",
+                title: translatedText[0] ?? "",
                 onclick: () {
                   final FancyBottomNavigationState fState =
                       bottomNavigationKey.currentState;
@@ -111,7 +132,8 @@ class _BottomNavState extends State<BottomNav> {
                 }),
             TabData(
                 iconData: Icons.assignment,
-                title: "Projects",
+                // title: "Projects",
+                title: translatedText[1] ?? "",
                 onclick: () {
                   final FancyBottomNavigationState fState =
                       bottomNavigationKey.currentState;
@@ -119,7 +141,8 @@ class _BottomNavState extends State<BottomNav> {
                 }),
             TabData(
                 iconData: Icons.attach_money,
-                title: "Donations",
+                // title: "Donations",
+                title: translatedText[2] ?? "",
                 onclick: () {
                   final FancyBottomNavigationState fState =
                       bottomNavigationKey.currentState;
