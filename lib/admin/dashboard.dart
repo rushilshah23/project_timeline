@@ -111,13 +111,17 @@ class _DashBoardState extends State<DashBoard> {
     if( !widget.assignedProject.contains(" ") && !widget.assignedProject.contains("No project assigned"))
     {
       if(widget.userType.contains("Supervisor"))
-      setState(() { debugPrint("trueeeeeeeeeeeeeee sssssssssssss");isSuperA= true;});
+      setState(() {
+        // debugPrint("trueeeeeeeeeeeeeee sssssssssssss");
+         isSuperA= true;});
                  
       else  if(widget.userType.contains("Worker"))
-      setState(() {debugPrint("trueeeeeeeeeeeeeee wwwwwwwwwww");isWorkerA = true;});
+      setState(() {
+        //debugPrint("trueeeeeeeeeeeeeee wwwwwwwwwww");
+        isWorkerA = true;});
                 
 
-      debugPrint("trueeeeeeeeeeeeeee");
+      //debugPrint("trueeeeeeeeeeeeeee");
       debugPrint(widget.userType);
     }
 
