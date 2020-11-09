@@ -61,7 +61,6 @@ class _ProfilePageState extends State<ProfilePage> {
         'age': ageController.text,
       });
 
-      await _setData();
 
       showToast("Edited Successfully");
     } catch (e) {
@@ -70,14 +69,14 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
-  _setData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.clear();
+  // _setData() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   prefs.clear();
 
-    prefs.setString('email', emailController.text);
-    prefs.setString('name', nameController.text);
-    prefs.setString('mobile', mobileController.text);
-  }
+  //   prefs.setString('email', emailController.text);
+  //   prefs.setString('name', nameController.text);
+  //   prefs.setString('mobile', mobileController.text);
+  // }
 
   @override
   void initState() {

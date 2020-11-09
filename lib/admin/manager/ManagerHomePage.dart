@@ -24,6 +24,9 @@ import 'master/machineMaster/machineMaster.dart';
 import 'master/petrolMaster/petrolMaster.dart';
 
 class ManagerHomePage extends StatefulWidget {
+
+   String name , email,  mobile , password,uid, userType,assignedProject;
+  ManagerHomePage({Key key, this.name, this.email, this.mobile, this.assignedProject, this.userType, this.uid}) : super(key: key);
   @override
   State createState() => ManagerHomePageState();
 }
@@ -43,15 +46,16 @@ class ManagerHomePageState extends State<ManagerHomePage> {
       userType='',
       assignedProject='';
   _loadData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    
+    
 
     setState(() {
-      email = (prefs.getString('email') ?? '');
-      name = (prefs.getString('name') ?? '');
-      mobile = (prefs.getString('mobile') ?? '');
-      uid = (prefs.getString('uid') ?? '');
-      userType = (prefs.getString('userType') ?? '');
-      assignedProject = (prefs.getString('assignedProject') ?? '');
+      email = widget.email??"";
+      name = widget.name??"";
+      mobile = widget.mobile??"";
+      uid = widget.uid??"";
+      userType =widget.userType??"";
+      assignedProject =widget.assignedProject??"" ;
 
       print(
           "inside profile=" + email + name + mobile + lname + assignedProject+ userType);

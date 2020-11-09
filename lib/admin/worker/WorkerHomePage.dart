@@ -15,6 +15,9 @@ import '../../main.dart';
 import '../profile.dart';
 
 class WorkerHomePage extends StatefulWidget {
+
+   String name , email,  mobile , password,uid, userType,assignedProject;
+  WorkerHomePage({Key key, this.name, this.email, this.mobile, this.assignedProject, this.userType, this.uid}) : super(key: key);
   @override
   State createState() => WorkerHomePageState();
 }
@@ -32,15 +35,15 @@ class WorkerHomePageState extends State<WorkerHomePage> {
       userType = '',
       assignedProject='';
   _loadData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
 
     setState(() {
-      email = (prefs.getString('email') ?? '');
-      name = (prefs.getString('name') ?? '');
-      mobile = (prefs.getString('mobile') ?? '');
-      uid = (prefs.getString('uid') ?? '');
-      userType = (prefs.getString('userType') ?? '');
-      assignedProject = (prefs.getString('assignedProject') ?? '');
+       email = widget.email??"";
+      name = widget.name??"";
+      mobile = widget.mobile??"";
+      uid = widget.uid??"";
+      userType =widget.userType??"";
+      assignedProject =widget.assignedProject??"" ;
+
       print(
           "inside profile=" + email + name + mobile + lname + assignedProject);
     });

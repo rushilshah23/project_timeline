@@ -59,14 +59,50 @@ class LoginPageState extends State<LoginPage> {
       String assignedProject) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
-
-    prefs.setString('email', email);
-    prefs.setString('name', name);
-    prefs.setString('mobile', mobile);
-    prefs.setString('uid', uid);
-    prefs.setString('assignedProject', assignedProject);
     prefs.setString('userType', _requestType);
     prefs.setBool("isLoggedIn", true);
+
+    
+
+    if (_requestType == managerType) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ManagerHomePage(
+          name: name,
+          email: email,
+          uid: uid,
+          assignedProject: assignedProject,
+          mobile: mobile,
+          userType: managerType,
+        )),
+      );
+    }
+    if (_requestType == workerType) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => WorkerHomePage(
+          name: name,
+          email: email,
+          uid: uid,
+          assignedProject: assignedProject,
+          mobile: mobile,
+          userType: workerType,
+        )),
+      );
+    }
+    if (_requestType == supervisorType) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => SupervisorHomePage(
+          name: name,
+          email: email,
+          uid: uid,
+          assignedProject: assignedProject,
+          mobile: mobile,
+          userType: supervisorType,
+        )),
+      );
+    }
   }
 
   Future checkOTP(String phone, BuildContext context, pr) async {
@@ -211,10 +247,10 @@ class LoginPageState extends State<LoginPage> {
                     element.data()["mobile"],
                     element.data()["uid"],
                     element.data()["assignedProject"]);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SupervisorHomePage()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => SupervisorHomePage()),
+                // );
               }
             }
           });
@@ -250,10 +286,10 @@ class LoginPageState extends State<LoginPage> {
                     element.data()["mobile"],
                     element.data()["uid"],
                     element.data()["assignedProject"]);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => WorkerHomePage()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => WorkerHomePage()),
+                // );
               }
             }
           });
@@ -289,10 +325,10 @@ class LoginPageState extends State<LoginPage> {
                     element.data()["mobile"],
                     element.data()["uid"],
                     element.data()["assignedProject"]);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ManagerHomePage()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => ManagerHomePage()),
+                // );
               }
             }
           });
@@ -345,11 +381,11 @@ class LoginPageState extends State<LoginPage> {
                   await newPhoneUser.doc(_email).delete().then((value) {
                     _setData(element["name"], element["email"],
                         element["mobile"], user.uid, "No project assigned");
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ManagerHomePage()),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => ManagerHomePage()),
+                    // );
                   });
                 });
               }
@@ -381,10 +417,10 @@ class LoginPageState extends State<LoginPage> {
                       element.data()["uid"],
                       element.data()["assignedProject"]);
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ManagerHomePage()),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => ManagerHomePage()),
+                  // );
                 }
               }
             });
@@ -428,11 +464,11 @@ class LoginPageState extends State<LoginPage> {
                   await newPhoneUser.doc(_email).delete().then((value) {
                     _setData(element["name"], element["email"],
                         element["mobile"], user.uid, "No project assigned");
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ManagerHomePage()),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => ManagerHomePage()),
+                    // );
                   });
                 });
               }
@@ -464,11 +500,11 @@ class LoginPageState extends State<LoginPage> {
                       element.data()["mobile"],
                       element.data()["uid"],
                       element.data()["assignedProject"]);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SupervisorHomePage()),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) => SupervisorHomePage()),
+                  // );
                 }
               }
             });
@@ -515,11 +551,11 @@ class LoginPageState extends State<LoginPage> {
                   _setData(element["name"], element["email"], element["mobile"],
                       user.uid, "No project assigned");
                   await newPhoneUser.doc(_email).delete().then((value) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ManagerHomePage()),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => ManagerHomePage()),
+                    // );
                   });
                 });
               }
@@ -557,10 +593,10 @@ class LoginPageState extends State<LoginPage> {
                       element.data()["mobile"],
                       element.data()["uid"],
                       element.data()["assignedProject"]);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => WorkerHomePage()),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => WorkerHomePage()),
+                  // );
                 }
               }
             });
@@ -604,11 +640,11 @@ class LoginPageState extends State<LoginPage> {
                   await newPhoneUser.doc(_email).delete().then((value) {
                     _setData(element["name"], element["email"],
                         element["mobile"], user.uid, "No project assigned");
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ManagerHomePage()),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => ManagerHomePage()),
+                    // );
                   });
                 });
               }
@@ -641,10 +677,10 @@ class LoginPageState extends State<LoginPage> {
                       element.data()["uid"],
                       element.data()["assignedProject"]);
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ManagerHomePage()),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => ManagerHomePage()),
+                  // );
                 }
               }
             });

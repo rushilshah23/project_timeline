@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:project_timeline/UserSide/Dashboard/Pages/myHomePage.dart';
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
@@ -18,11 +21,20 @@ class BottomNav extends StatefulWidget {
 
 class _BottomNavState extends State<BottomNav> {
   bool isLoggedIn = false;
-  String userType;
   int currentPage = 0;
   GlobalKey bottomNavigationKey = GlobalKey();
   SharedPreferences sharedPreferences;
   String language;
+  ProgressDialog pr;
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  String name = '',
+      email = '',
+      mobile = '',
+      uid = '',
+      userType = '',
+      assignedProject = '';
 
   void initState() {
     //print("in homepage");
@@ -40,61 +52,137 @@ class _BottomNavState extends State<BottomNav> {
     });
   }
 
-  void goToHomePage() {
+  Future<bool> _getUserData(String userType) async {
+    bool returnbool = false;
+
+    try {
+      await pr.show();
+      final userUid = auth.currentUser.uid;
+      await FirebaseFirestore.instance
+          .collection(userType)
+          .doc(userUid)
+          .get()
+          .then((myDocuments) {
+        Map myData = myDocuments.data();
+
+        debugPrint(
+            "-----------nnnnnnnnnnnnnn---------------" + myData.toString());
+        if (myData != null) {
+          setState(() {
+            name = myData["name"] ?? "";
+            email = myData["email"] ?? "";
+            mobile = myData["mobile"] ?? "";
+            assignedProject = myData["assignedProject"] ?? "";
+            uid = userUid;
+          });
+          returnbool = true;
+        } else {
+          returnbool = false;
+        }
+      });
+    } catch (e) {
+      returnbool = false;
+    }
+
+    await pr.hide();
+    if (returnbool == false) showToast("Failed! Check your Internet");
+    return returnbool;
+  }
+
+  void goToHomePage() async {
+    bool status;
+
     if (userType == managerType) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => ManagerHomePage()),
-      );
+      status = await _getUserData("manager");
+      debugPrint("--------------------------" + status.toString());
+      if (status == true)
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ManagerHomePage(
+                    name: name,
+                    email: email,
+                    uid: uid,
+                    assignedProject: assignedProject,
+                    mobile: mobile,
+                    userType: managerType,
+                  )),
+        );
     }
     if (userType == workerType) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => WorkerHomePage()),
-      );
+      status = await _getUserData("workers");
+      debugPrint("--------------------------" + status.toString());
+      if (status == true)
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => WorkerHomePage(
+                    name: name,
+                    email: email,
+                    uid: uid,
+                    assignedProject: assignedProject,
+                    mobile: mobile,
+                    userType: workerType,
+                  )),
+        );
     }
     if (userType == supervisorType) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => SupervisorHomePage()),
-      );
+      status = await _getUserData("supervisor");
+
+      debugPrint("--------------------------" + status.toString());
+      if (status == true)
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => SupervisorHomePage(
+                    name: name,
+                    email: email,
+                    uid: uid,
+                    assignedProject: assignedProject,
+                    mobile: mobile,
+                    userType: supervisorType,
+                  )),
+        );
+    }
+    else{
+       Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    pr = ProgressDialog(context);
     return Scaffold(
-        appBar: withoutLogoutAppbar(
-          context: context,
-          goto: goToHomePage,
-          isLoggedIn: isLoggedIn,
-          title: "IAHV",
+        appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: Color(0xff005c9d),
+          ),
+          title: Text("IAHV",
+              style: TextStyle(
+                color: Color(0xff005c9d),
+              )),
+          backgroundColor: Colors.white,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.person,
+              ),
+              onPressed: () async {
+                await _loadData();
+                // do something
+                isLoggedIn == false
+                    ? Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                      )
+                    : goToHomePage();
+              },
+            )
+          ],
         ),
-        // AppBar(
-        //   iconTheme: IconThemeData(
-        //     color: Color(0xff005c9d),
-        //   ),
-        //   title: Text("IAHV",
-        //       style: TextStyle(
-        //         color: Color(0xff005c9d),
-        //       )),
-        //   backgroundColor: Colors.white,
-        //   actions: <Widget>[
-        //     IconButton(
-        //       icon: Icon(
-        //         Icons.person,
-        //       ),
-        //       onPressed: () {
-        //         // do something
-        //         isLoggedIn==false?Navigator.push(
-        //           context,
-        //           MaterialPageRoute(
-        //               builder: (context) => LoginPage()),
-        //         ):goToHomePage();
-        //       },
-        //     )
-        //   ],
-        // ),
         body: getPage(currentPage),
         bottomNavigationBar: FancyBottomNavigation(
           circleColor: bottomnavColor,
