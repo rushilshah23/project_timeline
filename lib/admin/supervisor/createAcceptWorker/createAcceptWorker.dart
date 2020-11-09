@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_timeline/admin/headings.dart';
 import 'package:project_timeline/admin/supervisor/createAcceptWorker/workerRequestList.dart';
 
 import 'WorkerCreationForm.dart';
@@ -71,8 +72,8 @@ class _CreateAcceptWorkerState extends State<CreateAcceptWorker> with SingleTick
     return TabBar(
       labelColor: Colors.blue,
       tabs: <Widget>[
-        Tab(text: "Create",),
-        Tab(text: "Accept"),
+        Tab(text: superText3[28],),
+        Tab(text: superText3[29]),
       ],
       controller: tabController,
     );

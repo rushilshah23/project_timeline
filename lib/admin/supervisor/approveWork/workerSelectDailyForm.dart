@@ -7,6 +7,7 @@ import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:project_timeline/admin/headings.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
@@ -98,7 +99,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
 
   Future<void> loadAssets() async {
     List<Asset> resultList = List<Asset>();
-    String error = 'No Error Dectected';
+    String error = superText4[19];
 
     try {
       resultList = await MultiImagePicker.pickImages(
@@ -327,12 +328,12 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
       });
 
       pr.hide().then((isHidden) {
-        showToast("Added successfully");
+        showToast(superText4[20]);
         //Navigator.of(context).pop();
       });
     } catch (e) {
       pr.hide().then((isHidden) {
-        showToast("Failed. Check your Internet");
+        showToast(superText4[21]);
       });
     }
   }
@@ -363,13 +364,13 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
               child: ListView(
                 children: <Widget>[
                   Center(
-                    child: titleStyles('Update For Workers', 18),
+                    child: titleStyles(superText4[22], 18),
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   Center(
-                    child: titleStyles('For :' + todaysDate, 16),
+                    child: titleStyles(superText4[23] + todaysDate, 16),
                   ),
                   SizedBox(
                     height: 10,
@@ -377,8 +378,8 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                   SearchableDropdown.single(
                     items: workers,
                     value: selectedWorker,
-                    hint: "Select one",
-                    searchHint: "Select one",
+                    hint: superText4[24],
+                    searchHint: superText4[24],
                     onChanged: (value) {
                       setState(() {
                         selectedWorker = value;
@@ -393,8 +394,8 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                   SearchableDropdown.single(
                     items: machines,
                     value: selectedMachine,
-                    hint: "Select one",
-                    searchHint: "Select one",
+                    hint: superText4[24],
+                    searchHint: superText4[24],
                     onChanged: (value) {
                       setState(() {
                         selectedMachine = value;
@@ -424,7 +425,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Hours Worked',
+                              superText4[25],
                               style: TextStyle(
                                 fontSize: 16,
                               ),
@@ -472,7 +473,7 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                     child: Column(
                       children: [
                         Text(
-                          'Digging Dimensions',
+                          superText4[26],
                           style: TextStyle(
                               fontSize: 15, fontStyle: FontStyle.italic),
                         ),
@@ -486,15 +487,15 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                                 keyboardType: TextInputType.number,
                                 validator: (String value) {
                                   if (value.length == 0) {
-                                    return "Please enter Length";
+                                    return "Please enter the length";
                                   } else {
                                     return null;
                                   }
                                 },
                                 decoration: InputDecoration(
-                                  labelText: "Length ",
+                                  labelText: superText4[27],
                                   border: OutlineInputBorder(),
-                                  hintText: "Enter LengthController",
+                                  hintText: superText4[28],
                                 ),
                               ),
                             ),
@@ -507,15 +508,15 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                                 keyboardType: TextInputType.number,
                                 validator: (String value) {
                                   if (value.length == 0) {
-                                    return "Please Enter Depth";
+                                    return superText4[29];
                                   } else {
                                     return null;
                                   }
                                 },
                                 decoration: InputDecoration(
-                                  labelText: "Depth",
+                                  labelText: superText4[30],
                                   border: OutlineInputBorder(),
-                                  hintText: "Enter Depth",
+                                  hintText: superText5[0],
                                 ),
                               ),
                             ),
@@ -531,15 +532,15 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                                 keyboardType: TextInputType.number,
                                 validator: (String value) {
                                   if (value.length == 0) {
-                                    return "Please Enter Upper Width";
+                                    return superText5[1];
                                   } else {
                                     return null;
                                   }
                                 },
                                 decoration: InputDecoration(
-                                  labelText: "Upper Width",
+                                  labelText: superText5[2],
                                   border: OutlineInputBorder(),
-                                  hintText: "Enter Upper Width",
+                                  hintText: superText5[3],
                                 ),
                               ),
                             ),
@@ -552,15 +553,15 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                                 keyboardType: TextInputType.number,
                                 validator: (String value) {
                                   if (value.length == 0) {
-                                    return "Please Enter Lower Width";
+                                    return superText5[4];
                                   } else {
                                     return null;
                                   }
                                 },
                                 decoration: InputDecoration(
-                                  labelText: "Lower Width",
+                                  labelText: superText5[5],
                                   border: OutlineInputBorder(),
-                                  hintText: "Enter Lower Width",
+                                  hintText: superText5[6],
                                 ),
                               ),
                             ),
@@ -579,14 +580,14 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                     maxLines: 5,
                     validator: (String value) {
                       if (value.length == 0) {
-                        value = "No comment";
+                        value = superText5[7];
                         return null;
                       } else {
                         return null;
                       }
                     },
                     decoration: InputDecoration(
-                      labelText: "(Optional) Comment",
+                      labelText: superText5[8],
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -596,9 +597,9 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Upload Photos"),
+                      Text(superText5[9]),
                       RaisedButton(
-                        child: Text("Pick images"),
+                        child: Text(superText5[10]),
                         onPressed: loadAssets,
                       )
                     ],
@@ -614,34 +615,38 @@ class _SpecialWorkerFormPageState extends State<SpecialWorkerFormPage> {
                     width: double.infinity,
                     height: 50,
                     child: FlatButton(
-                      onPressed: () async{
-                           await databaseReference
-                          .child("projects").child(projectID)
-                          .once()
-                          .then((DataSnapshot dataSnapshot) {
-                        Map data = dataSnapshot.value;  
+                      onPressed: () async {
+                        await databaseReference
+                            .child("projects")
+                            .child(projectID)
+                            .once()
+                            .then((DataSnapshot dataSnapshot) {
+                          Map data = dataSnapshot.value;
 
-                          if(data.containsKey("progress"))
-                          {
+                          if (data.containsKey("progress")) {
                             debugPrint("======1");
-                            debugPrint("======1"+selectedWorker.split(",")[0].toString()+"       "+todaysDate.toString());
-                            if(Map.from( data["progress"]).containsKey(todaysDate))
-                            {debugPrint("======2");
-                              if(Map.from(data["progress"][todaysDate]).containsKey(selectedWorker.split(",")[0]))
-                              {
-                                  debugPrint("----------------------------------true");
-                                  showToast("Work Already Submitted");
-                              }
-                              else submitForm();
-                            }  
-                            else submitForm();
-                          }
-                           else submitForm();
-
+                            debugPrint("======1" +
+                                selectedWorker.split(",")[0].toString() +
+                                "       " +
+                                todaysDate.toString());
+                            if (Map.from(data["progress"])
+                                .containsKey(todaysDate)) {
+                              debugPrint("======2");
+                              if (Map.from(data["progress"][todaysDate])
+                                  .containsKey(selectedWorker.split(",")[0])) {
+                                debugPrint(
+                                    "----------------------------------true");
+                                showToast(superText5[11]);
+                              } else
+                                submitForm();
+                            } else
+                              submitForm();
+                          } else
+                            submitForm();
                         });
                       },
                       child:
-                          buttonContainers(double.infinity, 'Submit', 18),
+                          buttonContainers(double.infinity, superText5[12], 18),
                     ),
                   )
                 ],
@@ -688,7 +693,7 @@ class _WorkIntervalsState extends State<WorkIntervals> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           widget.index != 0
-              ? Container(child: Center(child: Text("BREAK")))
+              ? Container(child: Center(child: Text(superText5[13])))
               : Container(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -696,7 +701,7 @@ class _WorkIntervalsState extends State<WorkIntervals> {
               Column(
                 children: [
                   Text(
-                    "START",
+                    superText5[14],
                     style: TextStyle(fontSize: 12),
                   ),
                   TimePickerSpinner(
@@ -708,7 +713,7 @@ class _WorkIntervalsState extends State<WorkIntervals> {
                       fontSize: 15,
                       color: Colors.deepOrange,
                     ),
-                    itemHeight: 20,
+                    itemHeight: 30,
                     spacing: 0,
                     minutesInterval: 15,
                     is24HourMode: false,
@@ -727,7 +732,7 @@ class _WorkIntervalsState extends State<WorkIntervals> {
               Column(
                 children: [
                   Text(
-                    "END",
+                    superText5[15],
                     style: TextStyle(fontSize: 12),
                   ),
                   TimePickerSpinner(
@@ -739,7 +744,7 @@ class _WorkIntervalsState extends State<WorkIntervals> {
                       fontSize: 15,
                       color: Colors.deepOrange,
                     ),
-                    itemHeight: 20,
+                    itemHeight: 30,
                     spacing: 0,
                     minutesInterval: 15,
                     is24HourMode: false,

@@ -223,14 +223,14 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                       ),
                       controller: controllerName,
                       validator: (val) =>
-                          val.isEmpty ? 'Enter your Name' : null,
+                          val.isEmpty ? 'Enter your name' : null,
                       onChanged: (val) {
                         setState(() => name = val);
                       },
                     ),
                     SizedBox(height: 15),
                     TextFormField(
-                       keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         labelText: "Phone no",
                         fillColor: Colors.white,
@@ -246,9 +246,9 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                       ),
                       controller: controllerPhoneNo,
                       validator: (val) {
-                        if (val.isEmpty) return 'Enter Phone Number';
+                        if (val.isEmpty) return 'Enter your phone number';
                         if (val.length < 10 || val.length > 10)
-                          return 'Enter a valid Phone Number';
+                          return 'Enter a valid phone number';
                         else
                           return null;
                       },
@@ -276,7 +276,7 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                       ),
                       controller: controllerAddress,
                       validator: (val) =>
-                          val.isEmpty ? 'Enter your Address' : null,
+                          val.isEmpty ? 'Enter your address' : null,
                       onChanged: (val) {
                         setState(() => address = val);
                       },
@@ -297,7 +297,7 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
                         ),
                       ),
                       controller: controllerAge,
-                      validator: (val) => val.isEmpty ? 'Enter your Age' : null,
+                      validator: (val) => val.isEmpty ? 'Enter your age' : null,
                       onChanged: (val) {
                         setState(() => age = val);
                       },
@@ -342,8 +342,7 @@ class _SupervisorFormCreationState extends State<SupervisorFormCreation> {
 //                            ),
 //                          ),
 //                        ),
-                        child:
-                            buttonContainers(400, 'Create Supervisor', 18),
+                        child: buttonContainers(400, 'Create Supervisor', 18),
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
                             setState(() {

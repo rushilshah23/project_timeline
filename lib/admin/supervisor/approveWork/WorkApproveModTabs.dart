@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_timeline/admin/headings.dart';
 
 import '../../CommonWidgets.dart';
 import 'WorkApproveModule.dart';
@@ -81,9 +82,9 @@ class _WorkApproveModTabsState extends State<WorkApproveModTabs>
       labelColor: Colors.blue,
       tabs: <Widget>[
         Tab(
-          text: "Approve",
+          text: superText4[0],
         ),
-        Tab(text: "Update Work"),
+        Tab(text: superText4[1]),
       ],
       controller: tabController,
     );
@@ -99,7 +100,7 @@ class _WorkApproveModTabsState extends State<WorkApproveModTabs>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ThemeAppbar("Approve Work", context),
+      appBar: ThemeAppbar(superText4[2], context),
       body: SafeArea(
         child: ListView(
           children: <Widget>[

@@ -2,8 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:project_timeline/languages/rawText/viewAllProjectsText.dart';
-import 'package:project_timeline/multilingual/dynamic_translation.dart';
+import 'package:project_timeline/admin/headings.dart';
 import '../../CommonWidgets.dart';
 import 'ProjectDetails.dart';
 
@@ -21,15 +20,15 @@ class _AllProjectsState extends State<AllProjects> {
     super.initState();
   }
 
-  loadTranslatedText() async {
-    await DynamicTranslation()
-        .translate(inputs: viewAllProjectsText)
-        .then((value) {
-      setState(() {
-        translatedText = value;
-      });
-    });
-  }
+  // loadTranslatedText() async {
+  //   await DynamicTranslation()
+  //       .translate(inputs: viewAllProjectsText)
+  //       .then((value) {
+  //     setState(() {
+  //       translatedText = value;
+  //     });
+  //   });
+  // }
 
   Widget displayProject(int index, allProjects) {
     return Container(
@@ -150,7 +149,7 @@ class _AllProjectsState extends State<AllProjects> {
               !snap.hasError &&
               snap.data.snapshot.value == null) {
             return Center(
-              child: Text("No projects found"),
+              child: Text(proText[3]),
             );
           } else {
             return Center(

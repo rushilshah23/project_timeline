@@ -4,6 +4,7 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:project_timeline/admin/ProgressTimeLine/theme.dart';
+import 'package:project_timeline/admin/headings.dart';
 import 'package:project_timeline/crowdfunding/ApiRazorPay.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -85,7 +86,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
             feebackDisplayLimit=feebackDisplayLimit+1;
           });
       }
-      else showToast("No more feedback");
+      else showToast(proText[4]);
   }
 
   _loadData() async {
@@ -122,7 +123,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar: plainAppBar(context: context, title: "Our Project"),
+     appBar: plainAppBar(context: context, title: logregText[5]),
       body: Padding(
         padding: const EdgeInsets.only(right: 20.0, left: 20),
         child: ListView(
@@ -167,7 +168,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                     Column(
                       children: [
                         SizedBox(height: 8),
-                        Text('Project Name',
+                        Text(proText[6],
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 21,
@@ -187,7 +188,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                           children: [
                             Column(
                               children: [
-                                Text('Duration',
+                                Text(proText[7],
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
@@ -198,7 +199,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                 Text(
                                   widget.projectDetails["projectDuration"]
                                           .toString() +
-                                      " days",
+                                      proText[8],
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500,
@@ -214,7 +215,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                             )),
                             Column(
                               children: [
-                                Text('Excavation',
+                                Text(proText[9],
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
@@ -240,7 +241,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                           children: [
                             Column(
                               children: [
-                                Text('Status',
+                                Text(proText[10],
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
@@ -266,7 +267,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                             )),
                             Column(
                               children: [
-                                Text('Goals',
+                                Text(proText[11],
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
@@ -293,7 +294,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                 ),
 
                 SizedBox(height: 20),
-                Text('Site Address',
+                Text(proText[12],
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -345,7 +346,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   //SizedBox(height: 10),
-                                  Text('Our Supervisors',
+                                  Text(proText[13],
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18,
@@ -384,7 +385,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Our Workers',
+                                  Text(proText[14],
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18,
@@ -420,7 +421,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                       )
                     : Container(),
                 SizedBox(height: 30),
-                Text('Images',
+                Text(proText[15],
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -434,7 +435,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                   height: 20,
                 ),
 
-                feedbackList.length!=0?Text('Feedback',
+                feedbackList.length!=0?Text(proText[16],
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -450,8 +451,8 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                         color: Colors.grey.withOpacity(0.1),
                         margin: EdgeInsets.only(top: 5, bottom: 5),
                         child: ExpansionTile(
-                          title: Text("Name:  " + feedbackList[index]["name"]),
-                          subtitle: Text("Time:  " +                   
+                          title: Text(proText[17] + feedbackList[index]["name"]),
+                          subtitle: Text(proText[18] +
                               feedbackList[index]["timestamp"] +
                               " hrs"),
                           children: <Widget>[
@@ -481,7 +482,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                       feedBackData: feedbackList[index]),
                                 );  
                               },
-                              child:Text("Read More",style: TextStyle(
+                              child:Text(proText[19],style: TextStyle(
                                   color: Colors.lightBlue,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold))
@@ -504,7 +505,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                               },
                               child:Container(
                                 margin: EdgeInsets.symmetric(vertical:10),
-                                child:Text("See More",style: TextStyle(  
+                                child:Text(proText[20],style: TextStyle(
                                   color: Colors.lightBlue,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold)))
@@ -516,7 +517,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                 ),
 
                 FlatButton(
-                  child: buttonContainers(double.infinity, 'Donate', 18),
+                  child: buttonContainers(double.infinity, proText[21], 18),
                   onPressed: () {
                     Navigator.push(
                         context,

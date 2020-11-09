@@ -7,6 +7,7 @@ import 'package:project_timeline/admin/MasterDataSet/ourMachines.dart';
 import 'package:project_timeline/admin/MasterDataSet/ourPetrolPump.dart';
 import 'package:project_timeline/admin/ProgressTimeLine/ProgressPage.dart';
 import 'package:project_timeline/admin/dashboard.dart';
+import 'package:project_timeline/admin/headings.dart';
 import 'package:project_timeline/admin/worker/updateWork.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,13 +15,16 @@ import '../../main.dart';
 import '../profile.dart';
 
 class WorkerHomePage extends StatefulWidget {
+
+   String name , email,  mobile , password,uid, userType,assignedProject;
+  WorkerHomePage({Key key, this.name, this.email, this.mobile, this.assignedProject, this.userType, this.uid}) : super(key: key);
   @override
   State createState() => WorkerHomePageState();
 }
 
 class WorkerHomePageState extends State<WorkerHomePage> {
   int _selectedDrawerIndex = 0;
-  String appbartitle = "Dashboard";
+  String appbartitle = workerText[8];
 
   String name = '',
       lname = '',
@@ -31,15 +35,15 @@ class WorkerHomePageState extends State<WorkerHomePage> {
       userType = '',
       assignedProject='';
   _loadData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
 
     setState(() {
-      email = (prefs.getString('email') ?? '');
-      name = (prefs.getString('name') ?? '');
-      mobile = (prefs.getString('mobile') ?? '');
-      uid = (prefs.getString('uid') ?? '');
-      userType = (prefs.getString('userType') ?? '');
-      assignedProject = (prefs.getString('assignedProject') ?? '');
+       email = widget.email??"";
+      name = widget.name??"";
+      mobile = widget.mobile??"";
+      uid = widget.uid??"";
+      userType =widget.userType??"";
+      assignedProject =widget.assignedProject??"" ;
+
       print(
           "inside profile=" + email + name + mobile + lname + assignedProject);
     });
@@ -93,7 +97,7 @@ class WorkerHomePageState extends State<WorkerHomePage> {
         );
     
       default:
-        return new Text("Error");
+        return new Text(workerText2[24]);
     }
   }
 
@@ -115,7 +119,7 @@ class WorkerHomePageState extends State<WorkerHomePage> {
                   children: <Widget>[
                     UserAccountsDrawerHeader(
                       decoration: BoxDecoration(gradient: gradients()),
-                      accountName: Text("Worker"),
+                      accountName: Text(workerText2[25]),
                       accountEmail: Text(email),
                       currentAccountPicture: InkWell(
                         onTap: () {
@@ -142,56 +146,56 @@ class WorkerHomePageState extends State<WorkerHomePage> {
                     ListTile(
                         title: Row(children: <Widget>[
                           Icon(Icons.home),
-                          Text(" Dashboard")
+                          Text(workerText[8])
                         ]),
                         onTap: () {
                           _onSelectItem(0);
-                          appbartitle = "Dashboard";
+                          appbartitle = workerText[8];
                         }),
                     ExpansionTile(
                       title: Row(children: <Widget>[
                         Icon(Icons.check_circle),
-                        Text(" Our Resources")
+                        Text(workerText2[25])
                       ]),
                       children: <Widget>[
                         ListTile(
                             title: Row(children: <Widget>[
                               Icon(Icons.arrow_right),
-                              Text("Our Petrol Pump")
+                              Text(workerText2[26])
                             ]),
                             onTap: () {
                               _onSelectItem(1);
 
-                              appbartitle = "Our Petrol Pumps";
+                              appbartitle = workerText2[26];
                             }),
                         ListTile(
                             title: Row(children: <Widget>[
                               Icon(Icons.arrow_right),
-                              Text("Our Machines")
+                              Text(workerText2[27])
                             ]),
                             onTap: () {
                               _onSelectItem(2);
 
-                              appbartitle = "Our Machines";
+                              appbartitle = workerText2[27];
                             }),
                       ],
                     ),
                     ListTile(
                         title: Row(children: <Widget>[
                           Icon(Icons.grade),
-                          Text(" Our Projects")
+                          Text(workerText2[28])
                         ]),
                         onTap: () {
                           _onSelectItem(3);
-                          appbartitle = "Our Projects";
+                          appbartitle = workerText2[28];
                         }),
                     assignedProject.contains(" ") ||
-                            assignedProject.contains("No project assigned")
+                            assignedProject.contains(workerText2[29])
                         ? Container()
                         : ListTile(
                             title: Row(children: <Widget>[
                               Icon(Icons.work),
-                              Text(" Update Your Work")
+                              Text(workerText[7])
                             ]),
                             onTap: () {
                              // _onSelectItem(4);

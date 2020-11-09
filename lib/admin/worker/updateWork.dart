@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
+import 'package:project_timeline/admin/headings.dart';
 
 import 'workerDaily.dart';
 import 'workerForm.dart';
@@ -44,9 +45,9 @@ class _UpdateWorkState extends State<UpdateWork>
       labelColor: Color(0xff005c9d),
       tabs: <Widget>[
         Tab(
-          text: "Update",
+          text: workerText[11],
         ),
-        Tab(text: "Approvals"),
+        Tab(text: workerText[12]),
       ],
       controller: tabController,
     );
@@ -62,7 +63,7 @@ class _UpdateWorkState extends State<UpdateWork>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ThemeAppbar("Update Your Work", context),
+      appBar: ThemeAppbar(workerText[13], context),
       body: SafeArea(
         child: ListView(
           children: <Widget>[

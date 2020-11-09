@@ -6,6 +6,7 @@ import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:project_timeline/admin/headings.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
@@ -109,7 +110,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
 
   Future<void> loadAssets() async {
     List<Asset> resultList = List<Asset>();
-    String error = 'No Error Dectected';
+    String error = workerText[23];
 
     try {
       resultList = await MultiImagePicker.pickImages(
@@ -119,8 +120,8 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
         materialOptions: MaterialOptions(
           actionBarColor: "#abcdef",
-          actionBarTitle: "Example App",
-          allViewTitle: "All Photos",
+          actionBarTitle: workerText[24],
+          allViewTitle: workerText[25],
           useDetailsView: false,
           selectCircleStrokeColor: "#000000",
         ),
@@ -245,8 +246,8 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
         }
       } else {
         pr.hide();
-        if (selectedMachine != null) showToast("Please add machines");
-        if (hoursWorked > 0) showToast("Please enter positive time interval");
+        if (selectedMachine != null) showToast(workerText[26]);
+        if (hoursWorked > 0) showToast(workerText[27]);
       }
     }
   }
@@ -288,11 +289,11 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
       });
 
       pr.hide().then((isHidden) {
-        showToast("Added successfully");
+        showToast(workerText[28]);
       });
     } catch (e) {
       pr.hide().then((isHidden) {
-        showToast("Failed. Check your Internet");
+        showToast(workerText[29]);
       });
     }
   }
@@ -323,7 +324,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
               child: ListView(
                 children: <Widget>[
                   Center(
-                    child: titleStyles('For :' + todaysDate, 18),
+                    child: titleStyles(workerText[30] + todaysDate, 18),
                   ),
                   SizedBox(
                     height: 10,
@@ -333,15 +334,15 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                     value: selectedMachine,
                     hint: Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: Text("Select any"),
+                      child: Text(workerText[31]),
                     ),
-                    searchHint: "Select any",
+                    searchHint: workerText[31],
                     onChanged: (value) {
                       setState(() {
                         selectedMachine = value;
                       });
                     },
-                    doneButton: "Done",
+                    doneButton: workerText2[0],
                     displayItem: (item, selected) {
                       return (Row(children: [
                         selected
@@ -382,7 +383,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Hours Worked',
+                              workerText2[1],
                               style: TextStyle(
                                 fontSize: 16,
                               ),
@@ -430,7 +431,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                     child: Column(
                       children: [
                         Text(
-                          'Digging Dimensions',
+                          workerText2[2],
                           style: TextStyle(
                               fontSize: 15, fontStyle: FontStyle.italic),
                         ),
@@ -444,15 +445,15 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                                 keyboardType: TextInputType.number,
                                 validator: (String value) {
                                   if (value.length == 0) {
-                                    return "Please enter Length";
+                                    return workerText2[3];
                                   } else {
                                     return null;
                                   }
                                 },
                                 decoration: InputDecoration(
-                                  labelText: "Length ",
+                                  labelText: workerText2[4],
                                   border: OutlineInputBorder(),
-                                  hintText: "Enter LengthController",
+                                  hintText: workerText2[5],
                                 ),
                               ),
                             ),
@@ -465,15 +466,15 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                                 keyboardType: TextInputType.number,
                                 validator: (String value) {
                                   if (value.length == 0) {
-                                    return "Please Enter Depth";
+                                    return workerText2[6];
                                   } else {
                                     return null;
                                   }
                                 },
                                 decoration: InputDecoration(
-                                  labelText: "Depth",
+                                  labelText: workerText2[7],
                                   border: OutlineInputBorder(),
-                                  hintText: "Enter Depth",
+                                  hintText: workerText2[8],
                                 ),
                               ),
                             ),
@@ -489,15 +490,15 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                                 keyboardType: TextInputType.number,
                                 validator: (String value) {
                                   if (value.length == 0) {
-                                    return "Please Enter Upper Width";
+                                    return workerText2[9];
                                   } else {
                                     return null;
                                   }
                                 },
                                 decoration: InputDecoration(
-                                  labelText: "Upper Width",
+                                  labelText: workerText2[10],
                                   border: OutlineInputBorder(),
-                                  hintText: "Enter Upper Width",
+                                  hintText: workerText2[11],
                                 ),
                               ),
                             ),
@@ -510,15 +511,15 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                                 keyboardType: TextInputType.number,
                                 validator: (String value) {
                                   if (value.length == 0) {
-                                    return "Please Enter Lower Width";
+                                    return workerText2[12];
                                   } else {
                                     return null;
                                   }
                                 },
                                 decoration: InputDecoration(
-                                  labelText: "Lower Width",
+                                  labelText: workerText2[13],
                                   border: OutlineInputBorder(),
-                                  hintText: "Enter Lower Width",
+                                  hintText: workerText2[14],
                                 ),
                               ),
                             ),
@@ -537,14 +538,14 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                     maxLines: 5,
                     validator: (String value) {
                       if (value.length == 0) {
-                        value = "No comment";
+                        value = workerText2[15];
                         return null;
                       } else {
                         return null;
                       }
                     },
                     decoration: InputDecoration(
-                      labelText: "(Optional) Comment",
+                      labelText: workerText2[16],
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -554,12 +555,12 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Upload Photos"),
+                      Text(workerText2[17]),
                       RaisedButton(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)
                         ),
-                        child: Text("Pick images"),
+                        child: Text(workerText2[18]),
                         onPressed: loadAssets,
                       )
                     ],
@@ -592,7 +593,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                               if(Map.from(data["progress"][todaysDate]).containsKey(workerID))
                               {
                                   debugPrint("----------------------------------true");
-                                  showToast("Work Already Submitted");
+                                  showToast(workerText2[19]);
                               }
                               else submitForm();
                             }  
@@ -615,7 +616,7 @@ class _WorkerFormPageState extends State<WorkerFormPage> {
                         ),
                         child: Center(
                           child: Text(
-                            "Submit",
+                            workerText2[20],
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
@@ -660,7 +661,7 @@ class _WorkIntervalsState extends State<WorkIntervals> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           widget.index != 0
-              ? Container(child: Center(child: Text("BREAK")))
+              ? Container(child: Center(child: Text(workerText2[21])))
               : Container(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -668,7 +669,7 @@ class _WorkIntervalsState extends State<WorkIntervals> {
               Column(
                 children: [
                   Text(
-                    "START",
+                    workerText2[22],
                     style: TextStyle(fontSize: 12),
                   ),
                   SizedBox(
@@ -702,7 +703,7 @@ class _WorkIntervalsState extends State<WorkIntervals> {
               Column(
                 children: [
                   Text(
-                    "END",
+                    workerText2[23],
                     style: TextStyle(fontSize: 12),
                   ),
                   SizedBox(

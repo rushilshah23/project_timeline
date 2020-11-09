@@ -32,65 +32,53 @@ class _EditMachineDataState extends State<EditMachineData> {
       bucketCapacity,
       operatingWeight,
       modelName,
-      vendorContact, amountOfExavation;
+      vendorContact,
+      amountOfExavation;
   String machineID;
   List allProjects = List();
- int noOfProjects = 0;
+  int noOfProjects = 0;
   final databaseReference = FirebaseDatabase.instance.reference();
 
-  deleteMachine() async{
-    bool isthere=false;
-   try {
+  deleteMachine() async {
+    bool isthere = false;
+    try {
+      await databaseReference
+          .child("projects")
+          .once()
+          .then((DataSnapshot dataSnapshot) {
+        Map data = dataSnapshot.value;
+        allProjects = [];
+        allProjects = data.values.toList();
+      });
 
-       await databaseReference
-        .child("projects")
-        .once()
-        .then((DataSnapshot dataSnapshot) {
-          Map data = dataSnapshot.value;
-          allProjects = [];
-          allProjects = data.values.toList();
-        });
-
-        for(int i=0;i<allProjects.length;i++)
-        {
-          List machinesSelected = allProjects[i]["machinesSelected"];
-          for(int j=0;j<machinesSelected.length;j++)
-          {
-            if(machinesSelected[j]["machineID"]==machineID)
-            {
-              isthere=true;
-              break;
-            }
+      for (int i = 0; i < allProjects.length; i++) {
+        List machinesSelected = allProjects[i]["machinesSelected"];
+        for (int j = 0; j < machinesSelected.length; j++) {
+          if (machinesSelected[j]["machineID"] == machineID) {
+            isthere = true;
+            break;
           }
         }
+      }
 
-        if(isthere)
-        {
-          showToast("Machine is or was used in some projects.\nHence it cannot be deleted in order to maintain records ");
-         Navigator.of(context).pop();
-
-        }
-        else{
-          
-          databaseReference
-        .child("masters")
-        .child("machineMaster")
-        .child(machineID)
-        .remove();
+      if (isthere) {
+        showToast(
+            "Machine is or was used in some projects.\nHence it cannot be deleted in order to maintain records ");
+        Navigator.of(context).pop();
+      } else {
+        databaseReference
+            .child("masters")
+            .child("machineMaster")
+            .child(machineID)
+            .remove();
 
         showToast("Removed Sucessfully");
         Navigator.of(context).pop();
-      
-        }
-     
-
-
-  
-   }
-   catch(e){
-     debugPrint(e.toString());
-     showToast("Check your internet");
-   }
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      showToast("Check your internet");
+    }
   }
 
   addDynamic() {
@@ -118,7 +106,7 @@ class _EditMachineDataState extends State<EditMachineData> {
             'name': vendorName,
             'contactNo': vendorContact,
           },
-          'amountOfExcavation':amountOfExavation.toString(),
+          'amountOfExcavation': amountOfExavation.toString(),
           // 'excavation': {
           //   for (int i = 0; i < amountOfExavationCount; i++)
           //     '$i': {
@@ -128,7 +116,7 @@ class _EditMachineDataState extends State<EditMachineData> {
           // },
         });
         showToast("Details Edited Successfully");
-          Navigator.of(context).pop();
+        Navigator.of(context).pop();
       } catch (e) {
         showToast("Failed. check your internet!");
       }
@@ -149,7 +137,8 @@ class _EditMachineDataState extends State<EditMachineData> {
       operatingWeight = widget.machineDetails["operatingWeight"];
       fuelConsumption = widget.machineDetails["fuelConsumption"];
       machineRent = widget.machineDetails["machineRent"];
-       amountOfExavation = widget.machineDetails["amountOfExcavation"].toString();
+      amountOfExavation =
+          widget.machineDetails["amountOfExcavation"].toString();
       machineID = widget.machineDetails["machineID"];
       vendorName = widget.machineDetails["vendor"]["name"];
       vendorContact = widget.machineDetails["vendor"]["contactNo"];
@@ -229,7 +218,7 @@ class _EditMachineDataState extends State<EditMachineData> {
                                   ),
                                 ),
                                 validator: (val) =>
-                                    val.isEmpty ? 'Enter Model name' : null,
+                                    val.isEmpty ? 'Enter model name' : null,
                                 onChanged: (val) {
                                   setState(() => modelName = val);
                                 },
@@ -318,7 +307,7 @@ class _EditMachineDataState extends State<EditMachineData> {
                                         ),
                                       ),
                                       validator: (val) => val.isEmpty
-                                          ? 'Engine Power capacity'
+                                          ? 'Engine power capacity'
                                           : null,
                                       onChanged: (val) {
                                         setState(() => enginePower = val);
@@ -345,7 +334,7 @@ class _EditMachineDataState extends State<EditMachineData> {
                                         ),
                                       ),
                                       validator: (val) => val.isEmpty
-                                          ? 'Enter Operating Weight'
+                                          ? 'Enter operating weight'
                                           : null,
                                       onChanged: (val) {
                                         setState(() => operatingWeight = val);
@@ -416,27 +405,27 @@ class _EditMachineDataState extends State<EditMachineData> {
 
                               TextFormField(
                                 initialValue: amountOfExavation,
-                                      keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
-                                        labelText: "Amount of Excavation",
-                                        hintText: "m3/hr",
-                                        fillColor: Colors.white,
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              color: Colors.blue, width: 2.0),
-                                          borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(10),
-                                              topLeft: Radius.circular(10),
-                                              bottomRight: Radius.circular(10),
-                                              bottomLeft: Radius.circular(10)),
-                                        ),
-                                      ),
-                                      validator: (val) =>
-                                          val.isEmpty ? 'Enter Excavation' : null,
-                                      onChanged: (val) {
-                                        setState(() => amountOfExavation = val);
-                                      },
-                                    ),
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  labelText: "Amount of Excavation",
+                                  hintText: "m3/hr",
+                                  fillColor: Colors.white,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: Colors.blue, width: 2.0),
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(10),
+                                        topLeft: Radius.circular(10),
+                                        bottomRight: Radius.circular(10),
+                                        bottomLeft: Radius.circular(10)),
+                                  ),
+                                ),
+                                validator: (val) =>
+                                    val.isEmpty ? 'Enter excavation' : null,
+                                onChanged: (val) {
+                                  setState(() => amountOfExavation = val);
+                                },
+                              ),
 //                      Text(
 //                        'Fuel Consumption (litre/hr)',
 //                        style: TextStyle(color: Colors.black, fontSize: 16),
@@ -563,8 +552,9 @@ class _EditMachineDataState extends State<EditMachineData> {
                               Text(
                                 'Vendor Details',
                                 style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                    color: Colors.black, fontSize: 16),
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 16),
                               ),
                               SizedBox(height: 5),
                               TextFormField(
@@ -583,7 +573,7 @@ class _EditMachineDataState extends State<EditMachineData> {
                                   ),
                                 ),
                                 validator: (val) =>
-                                    val.isEmpty ? 'Enter Name' : null,
+                                    val.isEmpty ? 'Enter name' : null,
                                 onChanged: (val) {
                                   setState(() => vendorName = val);
                                 },
@@ -591,12 +581,12 @@ class _EditMachineDataState extends State<EditMachineData> {
                               SizedBox(height: 10),
                               TextFormField(
                                 validator: (val) {
-                                if (val.isEmpty) return 'Enter Phone Number';
-                                if (val.length < 10 || val.length > 10)
-                                  return 'Enter a valid Phone Number';
-                                else
-                                  return null;
-                              },
+                                  if (val.isEmpty) return 'Enter phone number';
+                                  if (val.length < 10 || val.length > 10)
+                                    return 'Enter a valid phone number';
+                                  else
+                                    return null;
+                                },
                                 initialValue: vendorContact,
                                 decoration: InputDecoration(
                                   labelText: "Contact No",
@@ -611,7 +601,6 @@ class _EditMachineDataState extends State<EditMachineData> {
                                         bottomLeft: Radius.circular(10)),
                                   ),
                                 ),
-                             
                                 onChanged: (val) {
                                   setState(() => vendorContact = val);
                                 },
@@ -620,7 +609,7 @@ class _EditMachineDataState extends State<EditMachineData> {
                               SizedBox(height: 20),
 
                               Row(
-                               // mainAxisAlignment: MainAxisAlignment.center,
+                                // mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
 //                                  RaisedButton(
 //                                      child: Text(
@@ -637,7 +626,11 @@ class _EditMachineDataState extends State<EditMachineData> {
 //                                    ),
                                   FlatButton(
                                     child: buttonContainers(
-                                         MediaQuery.of(context).size.width/2.5-25, 'Save', 17),
+                                        MediaQuery.of(context).size.width /
+                                                2.5 -
+                                            25,
+                                        'Save',
+                                        17),
                                     onPressed: () {
                                       if (_formKey.currentState.validate()) {
                                         debugPrint("true");
@@ -646,11 +639,13 @@ class _EditMachineDataState extends State<EditMachineData> {
                                     },
                                   ),
 
-
-                            
                                   FlatButton(
                                     child: buttonContainers(
-                                         MediaQuery.of(context).size.width/2.5-25, 'Delete', 17),
+                                        MediaQuery.of(context).size.width /
+                                                2.5 -
+                                            25,
+                                        'Delete',
+                                        17),
                                     onPressed: () {
                                       deleteMachine();
                                     },

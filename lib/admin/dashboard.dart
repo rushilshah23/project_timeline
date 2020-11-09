@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:project_timeline/admin/headings.dart';
 import 'package:project_timeline/admin/reportGeneration/reportTest.dart';
 import 'package:project_timeline/admin/supervisor/AllocatedProjects.dart';
 import 'package:project_timeline/admin/worker/updateWork.dart';
@@ -110,13 +111,17 @@ class _DashBoardState extends State<DashBoard> {
     if( !widget.assignedProject.contains(" ") && !widget.assignedProject.contains("No project assigned"))
     {
       if(widget.userType.contains("Supervisor"))
-      setState(() { debugPrint("trueeeeeeeeeeeeeee sssssssssssss");isSuperA= true;});
+      setState(() {
+        // debugPrint("trueeeeeeeeeeeeeee sssssssssssss");
+         isSuperA= true;});
                  
       else  if(widget.userType.contains("Worker"))
-      setState(() {debugPrint("trueeeeeeeeeeeeeee wwwwwwwwwww");isWorkerA = true;});
+      setState(() {
+        //debugPrint("trueeeeeeeeeeeeeee wwwwwwwwwww");
+        isWorkerA = true;});
                 
 
-      debugPrint("trueeeeeeeeeeeeeee");
+      //debugPrint("trueeeeeeeeeeeeeee");
       debugPrint(widget.userType);
     }
 
@@ -157,7 +162,7 @@ class _DashBoardState extends State<DashBoard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Welcome',
+                          workerText[0],
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w500,
@@ -194,7 +199,7 @@ class _DashBoardState extends State<DashBoard> {
               children: [
                 Column(
                   children: [
-                    Text('Projects',
+                    Text(workerText[1],
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
@@ -216,7 +221,7 @@ class _DashBoardState extends State<DashBoard> {
                     )),
                 Column(
                   children: [
-                    Text('Team',
+                    Text(workerText[2],
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
@@ -234,7 +239,7 @@ class _DashBoardState extends State<DashBoard> {
             ),
             SizedBox(height: 35),
             Text(
-              'Statistics',
+              workerText[3],
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -260,7 +265,7 @@ class _DashBoardState extends State<DashBoard> {
                       progressColor: Colors.blue[800],
                     ),
                     SizedBox(height: 10),
-                    Text('Completed',
+                    Text(workerText[4],
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
@@ -283,7 +288,7 @@ class _DashBoardState extends State<DashBoard> {
                       progressColor: Colors.blue[600],
                     ),
                     SizedBox(height: 10),
-                    Text('Ongoing',
+                    Text(workerText[5],
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
@@ -306,7 +311,7 @@ class _DashBoardState extends State<DashBoard> {
                       progressColor: Colors.blue[300],
                     ),
                     SizedBox(height: 10),
-                    Text('Not Started',
+                    Text(workerText[6],
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
@@ -322,7 +327,7 @@ class _DashBoardState extends State<DashBoard> {
                 ? Center(
                     child: FlatButton(
                       child: buttonContainers(
-                          double.infinity, 'Get Report', 18),
+                          double.infinity, workerText[10], 18),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -339,7 +344,7 @@ class _DashBoardState extends State<DashBoard> {
                 ? Center(
                     child: FlatButton(
                       child: buttonContainers(
-                          double.infinity, 'Approve Work', 18),
+                          double.infinity, workerText[9], 18),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -363,7 +368,7 @@ class _DashBoardState extends State<DashBoard> {
                 ? Center(
                     child: FlatButton(
                       child: buttonContainers(
-                          double.infinity, 'Update Your Work', 18),
+                          double.infinity, workerText[7], 18),
                       onPressed: () {
                          Navigator.push(
                                 context,

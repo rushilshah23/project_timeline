@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:project_timeline/admin/headings.dart';
 
 class WorkDetails extends StatefulWidget {
   Map data;
@@ -155,49 +156,49 @@ class _WorkDetailsState extends State<WorkDetails> {
 //                            style: titlestyles(18, Colors.orange)
 //                        ),
 
-                child: titleStyles('Work Details:', 18),
+                child: titleStyles(superText4[4], 18),
               ),
               SizedBox(
                 height: 20,
               ),
-              Text("Worker Name: " + widget.data["workerName"].toString()),
+              Text(superText4[5] + widget.data["workerName"].toString()),
               SizedBox(
                 height: 10,
               ),
-              Text("Volume Excavated: " +
+              Text(superText4[6] +
                   widget.data["volumeExcavated"].toString()+" m3"),
               SizedBox(
                 height: 10,
               ),
-              Text("Hours Worked: " + widget.data["hoursWorked"].toString()+" hrs"),
+              Text(superText4[7] + widget.data["hoursWorked"].toString()+" hrs"),
               SizedBox(
                 height: 10,
               ),
-              Text("Length: " +
+              Text(superText4[8] +
                   widget.data["length"].toString() + " m"
                   "    " +
-                  "Depth: " +
+                  superText4[9] +
                   widget.data["depth"].toString() + " m"),
               SizedBox(
                 height: 10,
               ),
-              Text("Upper Width: " +
+              Text(superText4[10] +
                   widget.data["upperWidth"].toString() + " m" 
                   "   " +
-                  "Lower Width: " +
+                  superText4[11] +
                   widget.data["lowerWidth"].toString()+ " m"),
               SizedBox(
                 height: 30,
               ),
-              Text("Work difference: " + workdiff.toInt().toString() + " %"),
+              Text(superText4[12] + workdiff.toInt().toString() + " %"),
               SizedBox(
                 height: 15,
               ),
-              Text("Approval status: " + widget.data["status"].toString()),
+              Text(superText4[13] + widget.data["status"].toString()),
               SizedBox(
                 height: 25,
               ),
-              Text("Images: "),
+              Text(superText4[14]),
               buildGridView(),
               SizedBox(
                 height: 20,
@@ -216,12 +217,12 @@ class _WorkDetailsState extends State<WorkDetails> {
 //                                ),
 //                                  child: Center(child: Text("Approve",style: titlestyles(18, Colors.white),))
 //                              ),
-                      child: buttonContainers(150, 'Approve', 18),
+                      child: buttonContainers(150, superText4[15], 18),
                       onPressed: () {
                         if(widget.data["status"].toString().contains("Accepted"))
                         
                         { 
-                          showToast("Already Accepted");
+                          showToast(superText4[16]);
                           Navigator.of(context).pop();
                         }
                         else
@@ -239,11 +240,11 @@ class _WorkDetailsState extends State<WorkDetails> {
 //                                    borderRadius: BorderRadius.circular(5)
 //                                ),
 //                                child: Center(child: Text("Reject",style: titlestyles(18, Colors.white),))),
-                      child: buttonContainers(150, 'Reject', 18),
+                      child: buttonContainers(150, superText4[17], 18),
                       onPressed: () {
                          if(widget.data["status"].toString().contains("Declined"))
                          { Navigator.of(context).pop();
-                        showToast("Already Declined");
+                        showToast(superText4[18]);
                          }
                         else
                         repondToWork("Declined");

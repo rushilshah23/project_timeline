@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:project_timeline/admin/headings.dart';
 import 'package:project_timeline/admin/reportGeneration/reportPreviewTesting.dart';
 import '../CommonWidgets.dart';
 import 'allocProjectDetails.dart';
@@ -18,10 +19,6 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import 'approveWork/WorkApproveModule.dart';
-
-
-
-
 
 
 class YourAllocatedProjects extends StatefulWidget {
@@ -138,7 +135,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
         return <pw.Widget>[
           pw.Center(
               child: pw.Text(
-                  'Report is generated on ' +
+                  superText[24] +
                       formatterForTime.format(date).toString(),
                   style: pw.TextStyle(
                     color: headerColor,
@@ -149,7 +146,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
           pw.Header(
             level: 0,
             child: pw.Center(
-                child: pw.Text("Project name: " + projectData["projectName"],
+                child: pw.Text(superText[25] + projectData["projectName"],
                     style: pw.TextStyle(
                       color: headerColor,
                       fontWeight: pw.FontWeight.bold,
@@ -157,7 +154,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                     ))),
           ),
           pw.Center(
-              child: pw.Text('Site Address: ' + projectData["siteAddress"],
+              child: pw.Text(superText[26] + projectData["siteAddress"],
                   style: pw.TextStyle(
                     color: header2Color,
                     fontSize: header2FontSize,
@@ -172,7 +169,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                       pw.Row(
                           mainAxisAlignment: pw.MainAxisAlignment.end,
                           children: [
-                            pw.Text('Soil Type: ',
+                            pw.Text(superText[27],
                                 style: pw.TextStyle(
                                   color: textColor,
                                   fontSize: textFontSize,
@@ -186,7 +183,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                       pw.SizedBox(height: 40),
                       pw.Row(children: [
                         pw.Column(children: [
-                          pw.Text('Excavation Goals: ',
+                          pw.Text(superText[28],
                               style: pw.TextStyle(
                                 color: textColor,
                                 fontSize: textFontSize,
@@ -200,13 +197,13 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                         ]),
                         pw.SizedBox(width: 40),
                         pw.Column(children: [
-                          pw.Text('Estimated Duration: ',
+                          pw.Text(superText[29],
                               style: pw.TextStyle(
                                 color: textColor,
                                 fontSize: textFontSize,
                               )),
                           pw.SizedBox(height: 2),
-                          pw.Text(projectData["projectDuration"] + " days",
+                          pw.Text(projectData["projectDuration"] + superText[30],
                               style: pw.TextStyle(
                                 color: text2Color,
                                 fontSize: text3FontSize,
@@ -219,13 +216,13 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                         // mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
                           children: [
                             pw.Column(children: [
-                              pw.Text('Estimated Rent: ',
+                              pw.Text(superText2[0],
                                   style: pw.TextStyle(
                                     color: textColor,
                                     fontSize: textFontSize,
                                   )),
                               pw.SizedBox(height: 2),
-                              pw.Text(projectData["totalMachineRent"] + " rs",
+                              pw.Text(projectData["totalMachineRent"] + superText2[1],
                                   style: pw.TextStyle(
                                     color: text2Color,
                                     fontSize: text3FontSize,
@@ -234,14 +231,14 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                             pw.SizedBox(width: 50),
                             pw.Column(children: [
 
-                              pw.Text('Estimated Fuel : ',
+                              pw.Text(superText2[2],
                                   style: pw.TextStyle(
                                     color: textColor,
                                     fontSize: textFontSize,
                                   )),
 
                               pw.Text(
-                                  projectData["totalFuelConsumption"] + " litre",
+                                  projectData["totalFuelConsumption"] + superText2[3],
                                   style: pw.TextStyle(
                                     color: text2Color,
                                     fontSize: text3FontSize,
@@ -250,7 +247,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                           ]),
                       pw.SizedBox(height: 20),
                       pw.Column(children: [
-                        pw.Text('Completion Percent: ',
+                        pw.Text(superText2[4],
                             style: pw.TextStyle(
                               color: textColor,
                               fontSize: textFontSize,
@@ -264,7 +261,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                       pw.SizedBox(height: 10),
                       pw.Center(
                         child: pw.Column(children: [
-                          pw.Text('Approved Excavation: ',
+                          pw.Text(superText2[5],
                               style: pw.TextStyle(
                                 color: textColor,
                                 fontSize: text2FontSize,
@@ -359,7 +356,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
           ),
           pw.SizedBox(height: 25),
           pw.Center(
-              child: pw.Text('Project Supervisors Details: ',
+              child: pw.Text(superText2[6],
                   style: pw.TextStyle(
                     color: textColor,
                     fontSize: textFontSize,
@@ -378,8 +375,8 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
 
             data: <List<String>>[
               <String>[
-                'Name',
-                'Contact no',
+                superText2[7],
+                superText2[8],
               ],
               ...supervisors.map((msg) => [msg["name"], msg["mobile"]])
             ],
@@ -398,7 +395,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                         height: 20,
                       ),
                       pw.Center(
-                          child: pw.Text('Work Details of ' + allDates[index],
+                          child: pw.Text(superText2[9] + allDates[index],
                               style: pw.TextStyle(
                                 color: textColor,
                                 fontSize: textFontSize,
@@ -407,7 +404,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                         height: 10,
                       ),
                       pw.Text(
-                          'Approved Excavation: ' +
+                          superText2[10] +
                               allDatesApprovedVolume[index].toString(),
                           style: pw.TextStyle(
                             color: textColor,
@@ -426,11 +423,11 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
 
                           data: <List<dynamic>>[
                             <String>[
-                              'Worker Name',
-                              'Hours Worked',
-                              'Machine used',
-                              'Volume Excavated',
-                              'Approval Status'
+                              superText2[11],
+                              superText2[12],
+                              superText2[13],
+                              superText2[14],
+                              superText2[15]
                             ],
                             ...allDaysReport[index].map((msg) => [
                               msg["workerName"],
@@ -561,7 +558,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                   ));
 
         }
-        else showToast("Work is not yet started\n Hence report cannot be generated");
+        else showToast(superText2[16]);
   
   }
 
@@ -687,7 +684,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                               progressColor: Color(0xff93e1ed),
                             ),
                             Text(
-                              'Project Completion',
+                              superText2[17],
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500,
@@ -721,7 +718,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                 Column(
                   children: [
                     Text(
-                        'Goals',
+                        superText[16],
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
@@ -743,7 +740,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                 Column(
                   children: [
                     Text(
-                        'Machines',
+                        superText2[18],
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
@@ -766,7 +763,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                 Column(
                   children: [
                     Text(
-                        'Workers',
+                        superText2[19],
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
@@ -811,7 +808,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                                 children: [
                                   Icon(Icons.description,size: 50, color: Colors.grey,),
                                   SizedBox(height:10),
-                                  Text("Project Details"),
+                                  Text(superText2[20]),
                                 ],
                               ),
                       ),
@@ -837,7 +834,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                                 children: [
                                   Icon(Icons.people,size: 50, color: Colors.grey,),
                                   SizedBox(height:10),
-                                  Text("Add Workers"),
+                                  Text(superText2[21]),
                                 ],
                               ),
 
@@ -875,7 +872,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                                 children: [
                                   Icon(Icons.check_circle_outline,size: 50, color: Colors.grey,),
                                   SizedBox(height:10),
-                                  Text("Approve Work"),
+                                  Text(superText2[22]),
                                 ],
                               ),
                       ),
@@ -896,7 +893,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                                 children: [
                                   Icon(Icons.insert_drive_file,size: 50, color: Colors.grey,),
                                   SizedBox(height:10),
-                                  Text("Project Report"),
+                                  Text(superText2[23]),
                                 ],
                               ),
 

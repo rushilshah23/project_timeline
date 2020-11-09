@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
+import 'package:project_timeline/admin/headings.dart';
 import 'package:random_string/random_string.dart';
 
 class WorkerCreationForm extends StatefulWidget {
@@ -66,13 +67,13 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
             "password": password,
             "signInMethod": 'email',
           }).then((value) async {
-            showToast("Added successfully");
+            showToast(superText3[13]);
           });
         });
 
         // Navigator.pop(context);
       } catch (e) {
-        showToast("Failed. Check your Internet !");
+        showToast(superText3[14]);
       }
     }
   }
@@ -89,10 +90,10 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
           "assignedProject": 'No project assigned',
           "signInMethod": 'otp',
         }).then((value) async {
-          showToast("Added successfully");
+          showToast(superText3[13]);
         });
       } catch (e) {
-        showToast("Failed. Check your Internet !");
+        showToast(superText3[14]);
       }
     }
   }
@@ -101,7 +102,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
     return [
       TextFormField(
         decoration: InputDecoration(
-          labelText: "Email",
+          labelText: superText3[15],
           fillColor: Colors.white,
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.blue, width: 2.0),
@@ -120,9 +121,9 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
               r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
               r"{0,253}[a-zA-Z0-9])?)*$";
           RegExp regex = new RegExp(pattern);
-          if (val.isEmpty) return 'Enter Email';
+          if (val.isEmpty) return superText3[16];
           if (!regex.hasMatch(val) || val == null)
-            return 'Enter a valid email address';
+            return superText3[17];
           else
             return null;
         },
@@ -153,12 +154,12 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Center(
-                      child: titleStyles('Make worker form', 18),
+                      child: titleStyles(superText3[18], 18),
                     ),
                     SizedBox(height: 15),
                     Row(
                       children: [
-                        Text("Sign In Method"),
+                        Text(superText3[19]),
                         SizedBox(
                           width: 20,
                         ),
@@ -176,7 +177,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                                     controllerAge.clear();
                                   });
                                 }),
-                            Text("Email ID")
+                            Text(superText3[20])
                           ],
                         ),
                         Row(
@@ -195,7 +196,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                                     controllerPassword.clear();
                                   });
                                 }),
-                            Text("OTP")
+                            Text(superText3[21])
                           ],
                         ),
                       ],
@@ -220,7 +221,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                       ),
                       controller: controllerName,
                       validator: (val) =>
-                          val.isEmpty ? 'Enter your Name' : null,
+                          val.isEmpty ? superText3[22] : null,
                       onChanged: (val) {
                         setState(() => name = val);
                       },
@@ -243,9 +244,9 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                       ),
                       controller: controllerPhoneNo,
                       validator: (val) {
-                        if (val.isEmpty) return 'Enter Phone Number';
+                        if (val.isEmpty) return superText3[23];
                         if (val.length < 10 || val.length > 10)
-                          return 'Enter a valid Phone Number';
+                          return superText3[24];
                         else
                           return null;
                       },
@@ -273,7 +274,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                       ),
                       controller: controllerAddress,
                       validator: (val) =>
-                          val.isEmpty ? 'Enter your Address' : null,
+                          val.isEmpty ? superText3[25] : null,
                       onChanged: (val) {
                         setState(() => address = val);
                       },
@@ -294,7 +295,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
                         ),
                       ),
                       controller: controllerAge,
-                      validator: (val) => val.isEmpty ? 'Enter your Age' : null,
+                      validator: (val) => val.isEmpty ? superText3[26] : null,
                       onChanged: (val) {
                         setState(() => age = val);
                       },
@@ -339,7 +340,7 @@ class _WorkerCreationFormState extends State<WorkerCreationForm> {
 //                            ),
 //                          ),
 //                        ),
-                        child: buttonContainers(400, 'Create Worker', 18),
+                        child: buttonContainers(400, superText3[27], 18),
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
                             setState(() {
