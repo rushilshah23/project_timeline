@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project_timeline/admin/headings.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -104,7 +105,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ThemeAppbar("Edit Profile", context),
+      appBar: ThemeAppbar(forgotPassText[0], context),
       body: status
           ? Center(
               child: Container(
@@ -118,7 +119,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: <Widget>[
                     Column(
                       children: <Widget>[
-                        titleStyles('Edit Your Details', 20),
+                        titleStyles(forgotPassText[1], 20),
                         SizedBox(
                           height: 20,
                         ),
@@ -127,14 +128,14 @@ class _ProfilePageState extends State<ProfilePage> {
 
                           validator: (String content) {
                             if (content.isEmpty) {
-                              return "Please enter your name";
+                              return forgotPassText[2];
                             } else {
                               return null;
                             }
                           },
                           controller: nameController,
                           decoration: InputDecoration(
-                            labelText: "Your Name",
+                            labelText: forgotPassText[3],
                             border: OutlineInputBorder(),
                             //hintText: "Enter Petrol Pump Name",
                           ),
@@ -152,7 +153,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   RegExp regex = new RegExp(pattern);
 
                                   if (!regex.hasMatch(val))
-                                    return 'Enter a valid email address';
+                                    return forgotPassText[4];
                                   else
                                     return null;
                                 },
@@ -162,7 +163,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         : true,
                                 controller: emailController,
                                 decoration: InputDecoration(
-                                  labelText: "Your Email",
+                                  labelText: forgotPassText[5],
                                   border: OutlineInputBorder(),
                                   //hintText: "Enter Petrol Pump Address",
                                 ),
@@ -177,14 +178,14 @@ class _ProfilePageState extends State<ProfilePage> {
                               : true,
                           validator: (val) {
                             if (val.length < 10 || val.length > 10)
-                              return 'Enter a valid phone number';
+                              return forgotPassText[6];
                             else
                               return null;
                           },
                           keyboardType: TextInputType.number,
                           controller: mobileController,
                           decoration: InputDecoration(
-                            labelText: "Your Mobile",
+                            labelText: forgotPassText[7],
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -195,14 +196,14 @@ class _ProfilePageState extends State<ProfilePage> {
                           maxLines: 5,
                           validator: (String content) {
                             if (content.isEmpty) {
-                              return "Please enter the address";
+                              return forgotPassText[8];
                             } else {
                               return null;
                             }
                           },
                           controller: addressController,
                           decoration: InputDecoration(
-                            labelText: "Your Address",
+                            labelText: forgotPassText[9],
                             border: OutlineInputBorder(),
                             //hintText: "Enter Petrol Pump Town",
                           ),
@@ -213,14 +214,14 @@ class _ProfilePageState extends State<ProfilePage> {
                         TextFormField(
                           validator: (String content) {
                             if (content.isEmpty) {
-                              return "Please enter your age";
+                              return forgotPassText[10];
                             } else {
                               return null;
                             }
                           },
                           controller: ageController,
                           decoration: InputDecoration(
-                            labelText: "Your Age",
+                            labelText: forgotPassText[11],
                             border: OutlineInputBorder(),
                             //hintText: "Enter Petrol Pump Town",
                           ),
@@ -245,7 +246,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 child: Center(
                                     child: Text(
-                                  "Edit Data",
+                                  forgotPassText[12],
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -271,7 +272,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       ),
                                       child: Center(
                                           child: Text(
-                                        "Forgot Password",
+                                        forgotPassText[13],
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
@@ -284,8 +285,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                             .sendPasswordResetEmail(
                                                 email: emailController.text)
                                             .then((value) {
-                                          showToast(
-                                              "Password reset link sent to email");
+                                          showToast(forgotPassText[14]);
                                         });
                                     },
                                   )
