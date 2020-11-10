@@ -44,7 +44,13 @@ Future<bool> onBackPressed(BuildContext context) {
                   await AuthenticationService().signoutEmailId();
                   SharedPreferences _sharedpreferences =
                       await SharedPreferences.getInstance();
-                  _sharedpreferences.clear();
+
+                    _sharedpreferences.getKeys();
+                      for(String key in _sharedpreferences.getKeys()) {
+                        if(key != "userType" && key!= "isLoggedIn") {
+                          _sharedpreferences.remove(key);
+                        }
+                      }
                   Navigator.pushAndRemoveUntil(context, PageRouteBuilder(
                     pageBuilder: (BuildContext context, Animation animation,
                         Animation secondaryAnimation) {

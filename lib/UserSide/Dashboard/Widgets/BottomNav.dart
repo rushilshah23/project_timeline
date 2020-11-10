@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:project_timeline/UserSide/Dashboard/Pages/myHomePage.dart';
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
+import 'package:project_timeline/UserSide/selectLanguage.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:project_timeline/admin/ProgressTimeLine/ProgressPage.dart';
 import 'package:project_timeline/admin/login.dart';
@@ -198,6 +199,19 @@ class _BottomNavState extends State<BottomNav> {
                         MaterialPageRoute(builder: (context) => LoginPage()),
                       )
                     : goToHomePage();
+              },
+            ),
+
+             IconButton(
+              icon: Icon(
+                Icons.language_sharp,
+              ),
+              onPressed: () async {
+                     Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SelectLanguage()),
+                      );
+                   
               },
             )
           ],

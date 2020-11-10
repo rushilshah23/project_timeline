@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:translator/translator.dart';
 
@@ -18,13 +19,24 @@ class DynamicTranslation {
       await translator
           .translate(inputs[i], from: 'en', to: language)
           .then((value) {
-        print("translated text is " + value.toString());
+        debugPrint("translated text is " + value.toString());
         String text = value.toString();
         translatedText.add(text);
-        print("see here " + translatedText[0]);
+        debugPrint("see here " + translatedText[0]);
       });
     }
-    print("outer loop " + translatedText[1]);
+    debugPrint("outer loop " + translatedText[1]);
     return translatedText;
   }
 }
+
+
+
+
+
+
+
+
+
+
+

@@ -6,12 +6,13 @@ import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:project_timeline/admin/ProgressTimeLine/theme.dart';
 import 'package:project_timeline/admin/headings.dart';
 import 'package:project_timeline/crowdfunding/ApiRazorPay.dart';
+import 'package:project_timeline/multilingual/dynamic_translation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'feedbackDetails.dart';
 
 class ProjectDetails extends StatefulWidget {
-  Map projectDetails;
+  final Map projectDetails;
   ProjectDetails({this.projectDetails});
 
   @override
@@ -30,6 +31,8 @@ class _ProjectDetailsState extends State<ProjectDetails> {
   @override
   void initState() {
     super.initState();
+
+     
 
     _loadData();
     images = widget.projectDetails["approvedImages"];
@@ -69,6 +72,19 @@ class _ProjectDetailsState extends State<ProjectDetails> {
         workers.length = 0;
       });
     }
+
+    loadTranslatedText();
+  }
+
+  loadTranslatedText() async {
+    await DynamicTranslation()
+        .translate(inputs: proText)
+        .then((value) {
+      setState(() {
+        proText = value;
+      });
+    });
+    
   }
 
 
@@ -123,7 +139,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar: plainAppBar(context: context, title: logregText[5]),
+     appBar: plainAppBar(context: context, title: proText[5]),
       body: Padding(
         padding: const EdgeInsets.only(right: 20.0, left: 20),
         child: ListView(
