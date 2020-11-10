@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,6 +27,8 @@ class _ProfilePageState extends State<ProfilePage> {
   Map myData;
   bool status = false;
   String usertype, signinMethod;
+
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
   _loadData() async {
     await FirebaseFirestore.instance
@@ -60,7 +63,6 @@ class _ProfilePageState extends State<ProfilePage> {
         'address': addressController.text,
         'age': ageController.text,
       });
-
 
       showToast("Edited Successfully");
     } catch (e) {
@@ -229,29 +231,66 @@ class _ProfilePageState extends State<ProfilePage> {
                         SizedBox(
                           height: 20,
                         ),
-                        FlatButton(
-                          child: Container(
-                            height: 45,
-                            width: 120,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
-                              color: Color(0xff018abd),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FlatButton(
+                              child: Container(
+                                height: 45,
+                                width: 120,
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5.0)),
+                                  color: Color(0xff018abd),
+                                ),
+                                child: Center(
+                                    child: Text(
+                                  "Edit Data",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
+                                )),
+                              ),
+                              onPressed: () {
+                                if (_formKey.currentState.validate()) {
+                                  editData();
+                                }
+                              },
                             ),
-                            child: Center(
-                                child: Text(
-                              "Edit Data",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 17),
-                            )),
-                          ),
-                          onPressed: () {
-                            if (_formKey.currentState.validate()) {
-                              editData();
-                            }
-                          },
+                            signinMethod.toLowerCase().contains("email")
+                                ? FlatButton(
+                                    child: Container(
+                                      height: 45,
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 12),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5.0)),
+                                        color: Color(0xff018abd),
+                                      ),
+                                      child: Center(
+                                          child: Text(
+                                        "Forgot Password",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 17),
+                                      )),
+                                    ),
+                                    onPressed: () {
+                                      if (emailController.text != "")
+                                        _auth
+                                            .sendPasswordResetEmail(
+                                                email: emailController.text)
+                                            .then((value) {
+                                          showToast(
+                                              "Password reset link sent to email");
+                                        });
+                                    },
+                                  )
+                                : Container(),
+                          ],
                         ),
                       ],
                     ),

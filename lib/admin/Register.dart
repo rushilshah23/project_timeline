@@ -64,7 +64,6 @@ class _RegisterState extends State<Register> {
             "uid": result.user.uid,
             "address": address,
             "age": age,
-            "password": password,
             'signInMethod': "email"
           }).then((value) async {
             await databaseReference
@@ -78,7 +77,6 @@ class _RegisterState extends State<Register> {
               'phoneNo': phoneNo,
               'address': address,
               'age': age,
-              'password': password,
               'signInMethod': "email"
             }).then((value) async {
               User user = result.user;

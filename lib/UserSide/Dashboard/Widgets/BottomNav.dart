@@ -103,60 +103,59 @@ class _BottomNavState extends State<BottomNav> {
     if (userType == managerType) {
       status = await _getUserData("manager");
       debugPrint("--------------------------" + status.toString());
-      if (status == true)
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ManagerHomePage(
-                    name: name,
-                    email: email,
-                    uid: uid,
-                    assignedProject: assignedProject,
-                    mobile: mobile,
-                    userType: managerType,
-                  )),
-        );
+      // if (status == true)
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ManagerHomePage(
+                  name: name,
+                  email: email,
+                  uid: uid,
+                  assignedProject: assignedProject,
+                  mobile: mobile,
+                  userType: managerType,
+                )),
+      );
     }
     if (userType == workerType) {
       status = await _getUserData("workers");
       debugPrint("--------------------------" + status.toString());
-      if (status == true)
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => WorkerHomePage(
-                    name: name,
-                    email: email,
-                    uid: uid,
-                    assignedProject: assignedProject,
-                    mobile: mobile,
-                    userType: workerType,
-                  )),
-        );
+      //if (status == true)
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => WorkerHomePage(
+                  name: name,
+                  email: email,
+                  uid: uid,
+                  assignedProject: assignedProject,
+                  mobile: mobile,
+                  userType: workerType,
+                )),
+      );
     }
     if (userType == supervisorType) {
       status = await _getUserData("supervisor");
 
       debugPrint("--------------------------" + status.toString());
-      if (status == true)
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => SupervisorHomePage(
-                    name: name,
-                    email: email,
-                    uid: uid,
-                    assignedProject: assignedProject,
-                    mobile: mobile,
-                    userType: supervisorType,
-                  )),
-        );
-    }
-    else{
-       Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginPage()),
-                      );
+      // if (status == true)
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => SupervisorHomePage(
+                  name: name,
+                  email: email,
+                  uid: uid,
+                  assignedProject: assignedProject,
+                  mobile: mobile,
+                  userType: supervisorType,
+                )),
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
     }
   }
 
@@ -201,17 +200,15 @@ class _BottomNavState extends State<BottomNav> {
                     : goToHomePage();
               },
             ),
-
-             IconButton(
+            IconButton(
               icon: Icon(
                 Icons.language_sharp,
               ),
               onPressed: () async {
-                     Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SelectLanguage()),
-                      );
-                   
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SelectLanguage()),
+                );
               },
             )
           ],
