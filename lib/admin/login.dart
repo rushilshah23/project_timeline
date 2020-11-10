@@ -748,6 +748,114 @@ class LoginPageState extends State<LoginPage> {
         ),
       ),
       SizedBox(
+        height: 10,
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          GestureDetector(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (_) {
+                  return Center(
+                    child: Material(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width / 1.3,
+                        child: Container(
+                          padding: EdgeInsets.all(25),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Center(
+                                child: Text(
+                                  logregText[31],
+                                  style: GoogleFonts.merriweather(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.blue[900]),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              TextFormField(
+                                controller: forgotController,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _forgot = value;
+                                  });
+                                },
+                                validator: (val) =>
+                                    val.isEmpty ? logregText[4] : null,
+                                keyboardType: TextInputType.emailAddress,
+                                decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.email),
+                                  hintText: logregText[5],
+                                  labelText: logregText[5],
+                                  contentPadding: EdgeInsets.all(20.0),
+                                  border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(12.0)),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Center(
+                                child: RaisedButton(
+                                  onPressed: () {
+                                    _auth
+                                        .sendPasswordResetEmail(email: _forgot)
+                                        .then((value) {
+                                      showToast(forgotPassText[14]);
+                                    });
+                                  },
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  textColor: Colors.white,
+                                  padding: EdgeInsets.all(0),
+                                  child: Container(
+                                    width: 200,
+                                    padding: EdgeInsets.all(15),
+                                    decoration: new BoxDecoration(
+                                        color: Color(0xff005c9d),
+                                        borderRadius:
+                                            BorderRadius.circular(12.0)),
+                                    child: Text(
+                                      logregText[30],
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.merriweather(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 18),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+            child: Text(
+              logregText[29],
+              style: GoogleFonts.merriweather(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.blue[900]),
+            ),
+          )
+        ],
+      ),
+      SizedBox(
         height: 20,
       ),
     ];
@@ -977,148 +1085,6 @@ class LoginPageState extends State<LoginPage> {
                             )
                           ],
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              logregText[29],
-                              style: GoogleFonts.merriweather(
-                                  fontWeight: FontWeight.w400, fontSize: 18),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (_) {
-                                    return Center(
-                                      child: Material(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10.0)),
-                                        child: Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              1.3,
-                                          child: Container(
-                                            padding: EdgeInsets.all(25),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Center(
-                                                  child: Text(
-                                                    logregText[31],
-                                                    style: GoogleFonts
-                                                        .merriweather(
-                                                            fontSize: 18,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontStyle: FontStyle
-                                                                .italic,
-                                                            color: Colors
-                                                                .blue[900]),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 20,
-                                                ),
-                                                TextFormField(
-                                                  controller: forgotController,
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      _forgot = value;
-                                                    });
-                                                  },
-                                                  validator: (val) =>
-                                                      val.isEmpty
-                                                          ? logregText[4]
-                                                          : null,
-                                                  keyboardType: TextInputType
-                                                      .emailAddress,
-                                                  decoration: InputDecoration(
-                                                    prefixIcon:
-                                                        Icon(Icons.email),
-                                                    hintText: logregText[5],
-                                                    labelText: logregText[5],
-                                                    contentPadding:
-                                                        EdgeInsets.all(20.0),
-                                                    border: OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    12.0)),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 20,
-                                                ),
-                                                Center(
-                                                  child: RaisedButton(
-                                                    onPressed: () {
-                                                      _auth
-                                                          .sendPasswordResetEmail(
-                                                              email: _forgot)
-                                                          .then((value) {
-                                                        showToast(
-                                                            forgotPassText[14]);
-                                                      });
-                                                    },
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12),
-                                                    ),
-                                                    textColor: Colors.white,
-                                                    padding: EdgeInsets.all(0),
-                                                    child: Container(
-                                                      width: 200,
-                                                      padding:
-                                                          EdgeInsets.all(15),
-                                                      decoration:
-                                                          new BoxDecoration(
-                                                              color: Color(
-                                                                  0xff005c9d),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          12.0)),
-                                                      child: Text(
-                                                        logregText[30],
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: GoogleFonts
-                                                            .merriweather(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                fontSize: 18),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                              child: Text(
-                                logregText[30],
-                                style: GoogleFonts.merriweather(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.blue[900]),
-                              ),
-                            )
-                          ],
-                        )
                       ],
                     ),
                   ),

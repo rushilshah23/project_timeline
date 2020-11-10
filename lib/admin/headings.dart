@@ -252,7 +252,7 @@ List<String> logregText = [
   'Age',
   "Enter your age",
   'Fill Your Details',
-  "Want to reset your password ? ",
+  "Reset your password",
   'Reset',
   "Enter email ID to reset"
 ];
