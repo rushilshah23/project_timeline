@@ -5,13 +5,95 @@ import 'package:translator/translator.dart';
 class DynamicTranslation {
   var translator = GoogleTranslator();
   String language;
-  List<String> translatedText = List<String>();
+
   getLanguage() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     language = sharedPreferences.getString('language');
   }
 
-  Future<List<String>> translate({List<String> inputs}) async {
+  Future<String> stringTranslate({String data}) async {
+    String translatedString;
+    getLanguage();
+    translatedString =
+        (await translator.translate(data, from: 'en', to: language)).toString();
+    debugPrint("deep translation " + translatedString);
+    return translatedString;
+  }
+
+  // multiTranslation({dynamic data}) async {
+  //   int no;
+  //   if (data.runtimeType == Map<String, List>()) {
+  //     no = 1;
+  //     // TODO MAP OF LISTS
+  //   } else if (data.runtimeType == Map<String, Map>()) {
+  //     no = 2;
+  //     // TODO MAP OF MAPS
+  //   } else if (data.runtimeType == Map<String, String>()) {
+  //     no = 3;
+  //     // TODO MAP OF STRINGS
+  //   } else if (data.runtimeType == List<List>()) {
+  //     no = 4;
+  //     // TODO LIST OF LISTS
+  //   } else if (data.runtimeType == List<Map>()) {
+  //     no = 5;
+  //     // TODO LIST OF MAPS
+  //   } else if (data.runtimeType == List<String>()) {
+  //     no = 6;
+  //     // TODO LIST OF STRINGS
+  //   }
+
+  //   switch (no) {
+  //     case 1:
+  //       break;
+  //     default:
+  //   }
+  // }
+
+  Future<Map> mapTranslation({Map<String, dynamic> data}) async {
+    Map mainMap = new Map();
+
+    data.forEach((key, value) async {
+      if (value.runtimeType == List) {
+        List subList = new List();
+        subList = await listTranslation(data: value);
+        // mainMap.updateAll((key, value) => subList);
+        mainMap.update(key, (value) => subList);
+      } else if (value.runtimeType == Map) {
+        Map subMap = new Map();
+        subMap = (await mapTranslation(data: value));
+        mainMap.update(key, (value) => subMap);
+      } else if (value.runtimeType == String) {
+        String subString;
+        subString = await stringTranslate(data: value);
+        mainMap.update(key, (value) => subString);
+      }
+    });
+    return mainMap;
+  }
+
+  Future<List> listTranslation({List<dynamic> data}) async {
+    List mainList = new List();
+
+    data.forEach((element) async {
+      if (element.runtimeType == List) {
+        List subList = new List();
+        subList = await listTranslation(data: element);
+        mainList.add(subList);
+      } else if (element.runtimeType == Map) {
+        Map subMap = new Map();
+        subMap = await mapTranslation(data: element);
+        mainList.add(subMap);
+      } else if (element.runtimeType == String) {
+        String subString;
+        subString = await stringTranslate(data: element);
+        mainList.add(subString);
+      }
+    });
+    return mainList;
+  }
+
+  Future<List<String>> listtranslate({List<String> inputs}) async {
+    List<String> translatedText = List<String>();
     translatedText.clear();
     await getLanguage();
 
@@ -22,21 +104,9 @@ class DynamicTranslation {
         debugPrint("translated text is " + value.toString());
         String text = value.toString();
         translatedText.add(text);
-        debugPrint("see here " + translatedText[0]);
       });
     }
-    debugPrint("outer loop " + translatedText[1]);
+
     return translatedText;
   }
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -42,12 +42,34 @@ class _BottomNavState extends State<BottomNav> {
 
   List<String> translatedText;
 
+  List l1 = ['garden', 'forest', 'industry', 'trees'];
+  String s1 = "garden";
+  Map testStringMap = {
+    'a': {
+      'a1': 'Home',
+      'a2': 'School',
+      'a3': 'Garden',
+    },
+    'b': {
+      'b1': 'Country',
+      'b2': 'World',
+      'b3': 'Island',
+    },
+    'c': {
+      'c1': ['cricket', 'badminton', 'volleyball', 'football'],
+      'c2': ['trees', 'plants', 'creepers', 'mangroves'],
+      'c3': ['elephant', 'kangaroo', 'rabbits', 'eagle'],
+    }
+  };
+
   void initState() {
     //print("in homepage");
     // _languageHome = context.read<Language>();
     super.initState();
     _loadData();
-
+    // loadListMapTranslation();
+    // loadStringListTranslation();
+    DynamicTranslation().stringTranslate(data: s1);
     loadTranslatedText();
   }
 
@@ -151,18 +173,51 @@ class _BottomNavState extends State<BottomNav> {
                     userType: supervisorType,
                   )),
         );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
     }
-    else{
-       Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginPage()),
-                      );
+  }
+
+  loadStringListTranslation() async {
+    try {
+      var getl1 = await DynamicTranslation().listTranslation(data: l1);
+      getl1.forEach((element) {
+        debugPrint(element);
+      });
+    } catch (e) {
+      debugPrint("load string from map trnaslation failed " + e.toString());
+    }
+  }
+
+  loadListMapTranslation() async {
+    try {
+      debugPrint("----------Original tEXT ----------");
+      // debugPrint(testStringMap['a']);
+      // debugPrint(testStringMap['b']);
+      // debugPrint(testStringMap['c']);
+
+      // testStringMap.forEach((key, value) {
+      //   debugPrint(key + " " + value);
+      // });
+      debugPrint("----------translated text ----------");
+      var getMap =
+          await DynamicTranslation().mapTranslation(data: testStringMap);
+      getMap.forEach((key, value) {
+        debugPrint(key + ":" + value);
+      });
+    } catch (e) {
+      debugPrint("not able to translate " + e.toString());
     }
   }
 
   loadTranslatedText() async {
     try {
-      await DynamicTranslation().translate(inputs: bottomNavText).then((value) {
+      await DynamicTranslation()
+          .listtranslate(inputs: bottomNavText)
+          .then((value) {
         setState(() {
           translatedText = value;
         });
@@ -201,17 +256,15 @@ class _BottomNavState extends State<BottomNav> {
                     : goToHomePage();
               },
             ),
-
-             IconButton(
+            IconButton(
               icon: Icon(
                 Icons.language_sharp,
               ),
               onPressed: () async {
-                     Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SelectLanguage()),
-                      );
-                   
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SelectLanguage()),
+                );
               },
             )
           ],

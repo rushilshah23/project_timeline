@@ -26,25 +26,22 @@ class _ProjectDetailsState extends State<ProjectDetails> {
   int w, s;
   bool isUser = false;
   List feedbackList = List();
-  int feebackDisplayLimit=1;
+  int feebackDisplayLimit = 1;
 
   @override
   void initState() {
     super.initState();
-
-     
 
     _loadData();
     images = widget.projectDetails["approvedImages"];
     ////debugPrint(images.toString());
     ///
 
-    if(widget.projectDetails.containsKey("localFeedback"))
-    {
-    Map feedback = widget.projectDetails["localFeedback"];
-    setState(() {
-      feedbackList = feedback.values.toList();
-    });
+    if (widget.projectDetails.containsKey("localFeedback")) {
+      Map feedback = widget.projectDetails["localFeedback"];
+      setState(() {
+        feedbackList = feedback.values.toList();
+      });
     }
 
     if (images == null) {
@@ -77,32 +74,24 @@ class _ProjectDetailsState extends State<ProjectDetails> {
   }
 
   loadTranslatedText() async {
-    await DynamicTranslation()
-        .translate(inputs: proText)
-        .then((value) {
+    await DynamicTranslation().listtranslate(inputs: proText).then((value) {
       setState(() {
         proText = value;
       });
     });
-    
   }
 
-
-  seeMoreFeedback()
-  {
-      if((feebackDisplayLimit +2)<=feedbackList.length)
-      {
-          setState(() {
-            feebackDisplayLimit=feebackDisplayLimit+2;
-          });
-      }
-      else if((feebackDisplayLimit +1)<=feedbackList.length)
-      {
-          setState(() {
-            feebackDisplayLimit=feebackDisplayLimit+1;
-          });
-      }
-      else showToast(proText[4]);
+  seeMoreFeedback() {
+    if ((feebackDisplayLimit + 2) <= feedbackList.length) {
+      setState(() {
+        feebackDisplayLimit = feebackDisplayLimit + 2;
+      });
+    } else if ((feebackDisplayLimit + 1) <= feedbackList.length) {
+      setState(() {
+        feebackDisplayLimit = feebackDisplayLimit + 1;
+      });
+    } else
+      showToast(proText[4]);
   }
 
   _loadData() async {
@@ -139,7 +128,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar: plainAppBar(context: context, title: proText[5]),
+      appBar: plainAppBar(context: context, title: proText[5]),
       body: Padding(
         padding: const EdgeInsets.only(right: 20.0, left: 20),
         child: ListView(
@@ -451,82 +440,86 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                   height: 20,
                 ),
 
-                feedbackList.length!=0?Text(proText[16],
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: Color(0xff005c9d),
-                      //fontStyle: FontStyle\.italic,
-                    )):Container(),
+                feedbackList.length != 0
+                    ? Text(proText[16],
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Color(0xff005c9d),
+                          //fontStyle: FontStyle\.italic,
+                        ))
+                    : Container(),
 
-                feedbackList.length!=0? Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: List.generate(feebackDisplayLimit, (index) {
-                      return Container(
-                        color: Colors.grey.withOpacity(0.1),
-                        margin: EdgeInsets.only(top: 5, bottom: 5),
-                        child: ExpansionTile(
-                          title: Text(proText[17] + feedbackList[index]["name"]),
-                          subtitle: Text(proText[18] +
-                              feedbackList[index]["timestamp"] +
-                              " hrs"),
-                          children: <Widget>[
-
-                            Container(
-                                  padding: EdgeInsets.symmetric(horizontal:8),
-                                  child:
-                            Row(children: <Widget>[
-                              Icon(Icons.arrow_right),
-                              Flexible(
-                                child: Text( feedbackList[index]["feedback"] ,
-                                    maxLines: 10,
-                                   )),
-                              
-                             
-                            ])),
-                            SizedBox(height: 10,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
-                            
-                            GestureDetector(
-                              onTap:() {
-                                 showDialog(
-                                  context: context,
-                                  builder: (_) => FeedBackDetails(
-                                      feedBackData: feedbackList[index]),
-                                );  
-                              },
-                              child:Text(proText[19],style: TextStyle(
-                                  color: Colors.lightBlue,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold))
-                             
+                feedbackList.length != 0
+                    ? Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: List.generate(feebackDisplayLimit, (index) {
+                            return Container(
+                              color: Colors.grey.withOpacity(0.1),
+                              margin: EdgeInsets.only(top: 5, bottom: 5),
+                              child: ExpansionTile(
+                                title: Text(
+                                    proText[17] + feedbackList[index]["name"]),
+                                subtitle: Text(proText[18] +
+                                    feedbackList[index]["timestamp"] +
+                                    " hrs"),
+                                children: <Widget>[
+                                  Container(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 8),
+                                      child: Row(children: <Widget>[
+                                        Icon(Icons.arrow_right),
+                                        Flexible(
+                                            child: Text(
+                                          feedbackList[index]["feedback"],
+                                          maxLines: 10,
+                                        )),
+                                      ])),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: <Widget>[
+                                        GestureDetector(
+                                            onTap: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (_) => FeedBackDetails(
+                                                    feedBackData:
+                                                        feedbackList[index]),
+                                              );
+                                            },
+                                            child: Text(proText[19],
+                                                style: TextStyle(
+                                                    color: Colors.lightBlue,
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.bold))),
+                                        Icon(Icons.keyboard_arrow_right),
+                                      ]),
+                                ],
                               ),
-                              
-                               Icon(Icons.keyboard_arrow_right),
-                            ]),
-                          ],
+                            );
+                          }),
                         ),
-                      );
-                    }),
-                  ),
-                ):Container(),
+                      )
+                    : Container(),
 
-                   feedbackList.length!=0?GestureDetector(
-                              onTap:() {
-                                
-                                  seeMoreFeedback();
-                              },
-                              child:Container(
-                                margin: EdgeInsets.symmetric(vertical:10),
-                                child:Text(proText[20],style: TextStyle(
-                                  color: Colors.lightBlue,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold)))
-                             
-                              ):Container(),
+                feedbackList.length != 0
+                    ? GestureDetector(
+                        onTap: () {
+                          seeMoreFeedback();
+                        },
+                        child: Container(
+                            margin: EdgeInsets.symmetric(vertical: 10),
+                            child: Text(proText[20],
+                                style: TextStyle(
+                                    color: Colors.lightBlue,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold))))
+                    : Container(),
 
                 SizedBox(
                   height: 20,
