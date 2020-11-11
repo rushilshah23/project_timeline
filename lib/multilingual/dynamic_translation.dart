@@ -101,7 +101,7 @@ class DynamicTranslation {
       await translator
           .translate(inputs[i], from: 'en', to: language)
           .then((value) {
-        debugPrint("translated text is " + value.toString());
+       // debugPrint("translated text is " + value.toString());
         String text = value.toString();
         translatedText.add(text);
       });

@@ -160,21 +160,6 @@ class _BottomNavState extends State<BottomNav> {
       status = await _getUserData("supervisor");
 
       debugPrint("--------------------------" + status.toString());
-<<<<<<< HEAD
-      if (status == true)
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => SupervisorHomePage(
-                    name: name,
-                    email: email,
-                    uid: uid,
-                    assignedProject: assignedProject,
-                    mobile: mobile,
-                    userType: supervisorType,
-                  )),
-        );
-=======
       // if (status == true)
       Navigator.push(
         context,
@@ -188,47 +173,11 @@ class _BottomNavState extends State<BottomNav> {
                   userType: supervisorType,
                 )),
       );
->>>>>>> 552589c618c6352cb315c61d6b2744e9611b56e6
     } else {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => LoginPage()),
       );
-<<<<<<< HEAD
-    }
-  }
-
-  loadStringListTranslation() async {
-    try {
-      var getl1 = await DynamicTranslation().listTranslation(data: l1);
-      getl1.forEach((element) {
-        debugPrint(element);
-      });
-    } catch (e) {
-      debugPrint("load string from map trnaslation failed " + e.toString());
-    }
-  }
-
-  loadListMapTranslation() async {
-    try {
-      debugPrint("----------Original tEXT ----------");
-      // debugPrint(testStringMap['a']);
-      // debugPrint(testStringMap['b']);
-      // debugPrint(testStringMap['c']);
-
-      // testStringMap.forEach((key, value) {
-      //   debugPrint(key + " " + value);
-      // });
-      debugPrint("----------translated text ----------");
-      var getMap =
-          await DynamicTranslation().mapTranslation(data: testStringMap);
-      getMap.forEach((key, value) {
-        debugPrint(key + ":" + value);
-      });
-    } catch (e) {
-      debugPrint("not able to translate " + e.toString());
-=======
->>>>>>> 552589c618c6352cb315c61d6b2744e9611b56e6
     }
   }
 
