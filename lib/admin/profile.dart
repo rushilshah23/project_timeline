@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project_timeline/admin/headings.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -26,6 +28,8 @@ class _ProfilePageState extends State<ProfilePage> {
   Map myData;
   bool status = false;
   String usertype, signinMethod;
+
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
   _loadData() async {
     await FirebaseFirestore.instance
@@ -60,7 +64,6 @@ class _ProfilePageState extends State<ProfilePage> {
         'address': addressController.text,
         'age': ageController.text,
       });
-
 
       showToast("Edited Successfully");
     } catch (e) {
@@ -102,7 +105,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ThemeAppbar("Edit Profile", context),
+      appBar: ThemeAppbar(forgotPassText[0], context),
       body: status
           ? Center(
               child: Container(
@@ -116,7 +119,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: <Widget>[
                     Column(
                       children: <Widget>[
-                        titleStyles('Edit Your Details', 20),
+                        titleStyles(forgotPassText[1], 20),
                         SizedBox(
                           height: 20,
                         ),
@@ -125,14 +128,14 @@ class _ProfilePageState extends State<ProfilePage> {
 
                           validator: (String content) {
                             if (content.isEmpty) {
-                              return "Please enter your name";
+                              return forgotPassText[2];
                             } else {
                               return null;
                             }
                           },
                           controller: nameController,
                           decoration: InputDecoration(
-                            labelText: "Your Name",
+                            labelText: forgotPassText[3],
                             border: OutlineInputBorder(),
                             //hintText: "Enter Petrol Pump Name",
                           ),
@@ -150,7 +153,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   RegExp regex = new RegExp(pattern);
 
                                   if (!regex.hasMatch(val))
-                                    return 'Enter a valid email address';
+                                    return forgotPassText[4];
                                   else
                                     return null;
                                 },
@@ -160,7 +163,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         : true,
                                 controller: emailController,
                                 decoration: InputDecoration(
-                                  labelText: "Your Email",
+                                  labelText: forgotPassText[5],
                                   border: OutlineInputBorder(),
                                   //hintText: "Enter Petrol Pump Address",
                                 ),
@@ -175,14 +178,14 @@ class _ProfilePageState extends State<ProfilePage> {
                               : true,
                           validator: (val) {
                             if (val.length < 10 || val.length > 10)
-                              return 'Enter a valid phone number';
+                              return forgotPassText[6];
                             else
                               return null;
                           },
                           keyboardType: TextInputType.number,
                           controller: mobileController,
                           decoration: InputDecoration(
-                            labelText: "Your Mobile",
+                            labelText: forgotPassText[7],
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -193,14 +196,14 @@ class _ProfilePageState extends State<ProfilePage> {
                           maxLines: 5,
                           validator: (String content) {
                             if (content.isEmpty) {
-                              return "Please enter the address";
+                              return forgotPassText[8];
                             } else {
                               return null;
                             }
                           },
                           controller: addressController,
                           decoration: InputDecoration(
-                            labelText: "Your Address",
+                            labelText: forgotPassText[9],
                             border: OutlineInputBorder(),
                             //hintText: "Enter Petrol Pump Town",
                           ),
@@ -211,14 +214,14 @@ class _ProfilePageState extends State<ProfilePage> {
                         TextFormField(
                           validator: (String content) {
                             if (content.isEmpty) {
-                              return "Please enter your age";
+                              return forgotPassText[10];
                             } else {
                               return null;
                             }
                           },
                           controller: ageController,
                           decoration: InputDecoration(
-                            labelText: "Your Age",
+                            labelText: forgotPassText[11],
                             border: OutlineInputBorder(),
                             //hintText: "Enter Petrol Pump Town",
                           ),
@@ -229,29 +232,65 @@ class _ProfilePageState extends State<ProfilePage> {
                         SizedBox(
                           height: 20,
                         ),
-                        FlatButton(
-                          child: Container(
-                            height: 45,
-                            width: 120,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
-                              color: Color(0xff018abd),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FlatButton(
+                              child: Container(
+                                height: 45,
+                                width: 120,
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5.0)),
+                                  color: Color(0xff018abd),
+                                ),
+                                child: Center(
+                                    child: Text(
+                                  forgotPassText[12],
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
+                                )),
+                              ),
+                              onPressed: () {
+                                if (_formKey.currentState.validate()) {
+                                  editData();
+                                }
+                              },
                             ),
-                            child: Center(
-                                child: Text(
-                              "Edit Data",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 17),
-                            )),
-                          ),
-                          onPressed: () {
-                            if (_formKey.currentState.validate()) {
-                              editData();
-                            }
-                          },
+                            signinMethod.toLowerCase().contains("email")
+                                ? FlatButton(
+                                    child: Container(
+                                      height: 45,
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 12),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5.0)),
+                                        color: Color(0xff018abd),
+                                      ),
+                                      child: Center(
+                                          child: Text(
+                                        forgotPassText[13],
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 17),
+                                      )),
+                                    ),
+                                    onPressed: () {
+                                      if (emailController.text != "")
+                                        _auth
+                                            .sendPasswordResetEmail(
+                                                email: emailController.text)
+                                            .then((value) {
+                                          showToast(forgotPassText[14]);
+                                        });
+                                    },
+                                  )
+                                : Container(),
+                          ],
                         ),
                       ],
                     ),

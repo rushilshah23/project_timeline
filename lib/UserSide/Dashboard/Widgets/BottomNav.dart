@@ -125,41 +125,42 @@ class _BottomNavState extends State<BottomNav> {
     if (userType == managerType) {
       status = await _getUserData("manager");
       debugPrint("--------------------------" + status.toString());
-      if (status == true)
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ManagerHomePage(
-                    name: name,
-                    email: email,
-                    uid: uid,
-                    assignedProject: assignedProject,
-                    mobile: mobile,
-                    userType: managerType,
-                  )),
-        );
+      // if (status == true)
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ManagerHomePage(
+                  name: name,
+                  email: email,
+                  uid: uid,
+                  assignedProject: assignedProject,
+                  mobile: mobile,
+                  userType: managerType,
+                )),
+      );
     }
     if (userType == workerType) {
       status = await _getUserData("workers");
       debugPrint("--------------------------" + status.toString());
-      if (status == true)
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => WorkerHomePage(
-                    name: name,
-                    email: email,
-                    uid: uid,
-                    assignedProject: assignedProject,
-                    mobile: mobile,
-                    userType: workerType,
-                  )),
-        );
+      //if (status == true)
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => WorkerHomePage(
+                  name: name,
+                  email: email,
+                  uid: uid,
+                  assignedProject: assignedProject,
+                  mobile: mobile,
+                  userType: workerType,
+                )),
+      );
     }
     if (userType == supervisorType) {
       status = await _getUserData("supervisor");
 
       debugPrint("--------------------------" + status.toString());
+<<<<<<< HEAD
       if (status == true)
         Navigator.push(
           context,
@@ -173,11 +174,27 @@ class _BottomNavState extends State<BottomNav> {
                     userType: supervisorType,
                   )),
         );
+=======
+      // if (status == true)
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => SupervisorHomePage(
+                  name: name,
+                  email: email,
+                  uid: uid,
+                  assignedProject: assignedProject,
+                  mobile: mobile,
+                  userType: supervisorType,
+                )),
+      );
+>>>>>>> 552589c618c6352cb315c61d6b2744e9611b56e6
     } else {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => LoginPage()),
       );
+<<<<<<< HEAD
     }
   }
 
@@ -210,6 +227,8 @@ class _BottomNavState extends State<BottomNav> {
       });
     } catch (e) {
       debugPrint("not able to translate " + e.toString());
+=======
+>>>>>>> 552589c618c6352cb315c61d6b2744e9611b56e6
     }
   }
 

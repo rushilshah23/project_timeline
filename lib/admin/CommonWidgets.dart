@@ -33,7 +33,10 @@ Future<bool> onBackPressed(BuildContext context) {
               padding: const EdgeInsets.all(12.0),
               child: new GestureDetector(
                 onTap: () => Navigator.of(context).pop(false),
-                child: Text("NO" ,style: TextStyle(fontSize: 16),),
+                child: Text(
+                  "NO",
+                  style: TextStyle(fontSize: 16),
+                ),
               ),
             ),
             SizedBox(height: 16),
@@ -45,12 +48,12 @@ Future<bool> onBackPressed(BuildContext context) {
                   SharedPreferences _sharedpreferences =
                       await SharedPreferences.getInstance();
 
-                    _sharedpreferences.getKeys();
-                      for(String key in _sharedpreferences.getKeys()) {
-                        if(key != "userType" && key!= "isLoggedIn") {
-                          _sharedpreferences.remove(key);
-                        }
-                      }
+                  _sharedpreferences.getKeys();
+                  for (String key in _sharedpreferences.getKeys()) {
+                    if (key == "userType" || key == "isLoggedIn") {
+                      _sharedpreferences.remove(key);
+                    }
+                  }
                   Navigator.pushAndRemoveUntil(context, PageRouteBuilder(
                     pageBuilder: (BuildContext context, Animation animation,
                         Animation secondaryAnimation) {
@@ -59,7 +62,10 @@ Future<bool> onBackPressed(BuildContext context) {
                   ), (Route route) => false);
                   showToast("Successful Logout");
                 },
-                child: Text("YES",style: TextStyle(fontSize: 16),),
+                child: Text(
+                  "YES",
+                  style: TextStyle(fontSize: 16),
+                ),
               ),
             ),
           ],
@@ -143,7 +149,7 @@ titleStyles(String text, double size) {
         fontWeight: FontWeight.bold,
         fontSize: size,
         color: Color(0xff005c9d),
-       // fontStyle: FontStyle.italic,
+        // fontStyle: FontStyle.italic,
       ));
 }
 
@@ -160,7 +166,7 @@ Widget buttonContainers(double width, String text, double size) {
       text,
       style: TextStyle(
           fontWeight: FontWeight.w500,
-         // fontStyle: FontStyle.italic,
+          // fontStyle: FontStyle.italic,
           fontSize: size,
           color: Colors.white),
       textAlign: TextAlign.center,

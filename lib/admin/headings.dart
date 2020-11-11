@@ -240,7 +240,7 @@ List<String> logregText = [
   'User Type: ',
   'Select User Type',
   'LOGIN',
-  "Don't have an account?",
+  "Don't have an account? ",
   'Register',
   'Request Successfully Sent',
   'Failed. Check your Internet !',
@@ -252,6 +252,9 @@ List<String> logregText = [
   'Age',
   "Enter your age",
   'Fill Your Details',
+  "Reset your password",
+  'Reset',
+  "Enter email ID to reset"
 ];
 
 List<String> proText = [
@@ -284,4 +287,22 @@ List<String> proText = [
   'Crop production after: ',
   "Feedback: ",
   'Suggestions: ',
+];
+
+List<String> forgotPassText = [
+  "Edit Profile",
+  'Edit Your Details',
+  "Please enter your name",
+  "Your Name",
+  'Enter a valid email address',
+  "Your Email",
+  'Enter a valid phone number',
+  "Your Mobile",
+  "Please enter the address",
+  "Your Address",
+  "Please enter your age",
+  "Your Age",
+  "Edit Data",
+  'Reset Password',
+  "Password reset link sent to email",
 ];

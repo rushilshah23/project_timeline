@@ -15,9 +15,16 @@ import '../../main.dart';
 import '../profile.dart';
 
 class WorkerHomePage extends StatefulWidget {
-
-   String name , email,  mobile , password,uid, userType,assignedProject;
-  WorkerHomePage({Key key, this.name, this.email, this.mobile, this.assignedProject, this.userType, this.uid}) : super(key: key);
+  String name, email, mobile, password, uid, userType, assignedProject;
+  WorkerHomePage(
+      {Key key,
+      this.name,
+      this.email,
+      this.mobile,
+      this.assignedProject,
+      this.userType,
+      this.uid})
+      : super(key: key);
   @override
   State createState() => WorkerHomePageState();
 }
@@ -33,16 +40,15 @@ class WorkerHomePageState extends State<WorkerHomePage> {
       password = '',
       uid = '',
       userType = '',
-      assignedProject='';
+      assignedProject = '';
   _loadData() async {
-
     setState(() {
-       email = widget.email??"";
-      name = widget.name??"";
-      mobile = widget.mobile??"";
-      uid = widget.uid??"";
-      userType =widget.userType??"";
-      assignedProject =widget.assignedProject??"" ;
+      email = widget.email ?? "";
+      name = widget.name ?? "";
+      mobile = widget.mobile ?? "";
+      uid = widget.uid ?? "";
+      userType = widget.userType ?? "";
+      assignedProject = widget.assignedProject ?? "";
 
       print(
           "inside profile=" + email + name + mobile + lname + assignedProject);
@@ -62,8 +68,6 @@ class WorkerHomePageState extends State<WorkerHomePage> {
     print(index);
     // Navigator.pop(context);
   }
-
- 
 
   _getDrawerItemWidget(int pos) {
     switch (pos) {
@@ -95,7 +99,7 @@ class WorkerHomePageState extends State<WorkerHomePage> {
           mobile: mobile,
           userType: userType,
         );
-    
+
       default:
         return new Text(workerText2[24]);
     }
@@ -104,9 +108,8 @@ class WorkerHomePageState extends State<WorkerHomePage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () =>  onBackPressed(context),
+        onWillPop: () => onBackPressed(context),
         child: Scaffold(
-         
           appBar: ThemeAppbar(appbartitle, context),
 
           drawer: ClipRRect(
@@ -198,7 +201,7 @@ class WorkerHomePageState extends State<WorkerHomePage> {
                               Text(workerText[7])
                             ]),
                             onTap: () {
-                             // _onSelectItem(4);
+                              // _onSelectItem(4);
 
                               Navigator.push(
                                 context,
