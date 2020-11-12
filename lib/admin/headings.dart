@@ -254,7 +254,7 @@ List<String> logregText = [
   'Fill Your Details',
   "Reset your password",
   'Reset',
-  "Enter email ID to reset"
+  "Enter email ID to reset",
 ];
 
 List<String> proText = [
@@ -305,4 +305,14 @@ List<String> forgotPassText = [
   "Edit Data",
   'Reset Password',
   "Password reset link sent to email",
+  'Your old password',
+  'Enter your old password',
+  'Your new password',
+  'Enter your new password',
+  'Retype your new password',
+  'Enter your new password again',
+  "New password does not match",
+  "Change Password",
+  "Succesfull changed password",
+  "Password can't be changed"
 ];

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/headings.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
+import 'package:project_timeline/admin/changePass.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -28,8 +29,6 @@ class _ProfilePageState extends State<ProfilePage> {
   Map myData;
   bool status = false;
   String usertype, signinMethod;
-
-  FirebaseAuth _auth = FirebaseAuth.instance;
 
   _loadData() async {
     await FirebaseFirestore.instance
@@ -272,7 +271,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       ),
                                       child: Center(
                                           child: Text(
-                                        forgotPassText[13],
+                                        forgotPassText[22],
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
@@ -280,13 +279,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                       )),
                                     ),
                                     onPressed: () {
-                                      if (emailController.text != "")
-                                        _auth
-                                            .sendPasswordResetEmail(
-                                                email: emailController.text)
-                                            .then((value) {
-                                          showToast(forgotPassText[14]);
-                                        });
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ChangePass()),
+                                      );
                                     },
                                   )
                                 : Container(),
