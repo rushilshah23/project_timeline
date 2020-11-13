@@ -26,8 +26,8 @@ class _MainAOLPageState extends State<MainAOLPage> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/waterimg.jpg'),
-                // colorFilter: ColorFilter.mode(
-                //     Colors.grey.withOpacity(0.7), BlendMode.dstATop),
+                colorFilter: ColorFilter.mode(
+                    Colors.black.withOpacity(0.7), BlendMode.dstATop),
                 fit: BoxFit.fitHeight,
               ),
             ),
@@ -36,29 +36,34 @@ class _MainAOLPageState extends State<MainAOLPage> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  Text(
-                    AOLText[1],
-                    style: TextStyle(
-                      // color: Colors.white70,
-                      color: darkestColor,
-
-                      fontSize: 25.0,
-                      fontFamily: 'DancingScript',
-                      fontWeight: FontWeight.w700,
-                      fontStyle: FontStyle.italic,
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Text(
+                      AOLText[1],
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 25.0,
+                        fontFamily: 'DancingScript',
+                        fontWeight: FontWeight.w700,
+                        fontStyle: FontStyle.italic,
+                      ),
+                      maxLines: 2,
                     ),
-                    maxLines: 2,
                   ),
-                  Container(
-                      width: 250.0,
-                      height: 170.0,
-                      decoration: new BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          shape: BoxShape.rectangle,
-                          image: new DecorationImage(
-                              fit: BoxFit.fill,
-                              image: AssetImage('assets/logo.jpg')))),
-                  Center(
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                        width: 250.0,
+                        height: 170.0,
+                        decoration: new BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            shape: BoxShape.rectangle,
+                            image: new DecorationImage(
+                                fit: BoxFit.fill,
+                                image: AssetImage('assets/logo.jpg')))),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                       child: Column(

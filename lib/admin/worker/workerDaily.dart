@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:project_timeline/admin/CommonWidgets.dart';
 
 class WorkerDaily extends StatefulWidget {
   String name, email, mobile, password, uid, userType, assignedProject;

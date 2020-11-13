@@ -2,7 +2,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
-import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:project_timeline/admin/headings.dart';
 import 'workDetails.dart';
 
@@ -102,11 +101,12 @@ class _ApproveWorkState extends State<ApproveWork> {
                 }
                 //debugPrint(finalDisplayList.toString());
 
-                finalDisplayList.sort((a,b) {
+                finalDisplayList.sort((a, b) {
                   var adate = a['date']; //before -> var adate = a.expiry;
                   var bdate = b['date']; //before -> var bdate = b.expiry;
-                  return adate.compareTo(bdate); //to get the order other way just switch `adate & bdate`
-                  });
+                  return adate.compareTo(
+                      bdate); //to get the order other way just switch `adate & bdate`
+                });
               }
               return new GroupedListView<dynamic, String>(
                 groupBy: (element) => element['date'],

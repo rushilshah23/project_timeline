@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/DocumentManager/core/models/usermodel.dart';
-import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
 import 'package:project_timeline/admin/DocumentManager/ui/screens/home/shared.dart';
 import 'package:project_timeline/admin/DocumentManager/ui/shared/constants.dart';
 import 'package:project_timeline/admin/DocumentManager/ui/widgets/loading.dart';
-import 'package:project_timeline/admin/DocumentManager/wrapper.dart';
 import 'package:provider/provider.dart';
 
 Widget homeDrawer(BuildContext context) {
   var user = Provider.of<UserModel>(context, listen: false);
   isLoading = false;
-  final AuthenticationService _auth = AuthenticationService();
+  // final AuthenticationService _auth = AuthenticationService();
   return isLoading
       ? Loading()
       : Drawer(

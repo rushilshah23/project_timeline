@@ -32,20 +32,26 @@ class _MainDevelopersPageState extends State<MainDevelopersPage> {
           image: DecorationImage(
         image: AssetImage('assets/waterimg.jpg'),
         colorFilter:
-            ColorFilter.mode(Colors.grey.withOpacity(0.7), BlendMode.dstATop),
+            ColorFilter.mode(Colors.black.withOpacity(0.7), BlendMode.dstATop),
+        fit: BoxFit.fitHeight,
       )),
       padding: EdgeInsets.all(10),
       child: Column(
         children: [
-          Container(
-              width: 250.0,
-              height: 200.0,
-              decoration: new BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: new DecorationImage(
-                      fit: BoxFit.fill,
-                      image: AssetImage('assets/sakeclogo.jpg')))),
-          Center(
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+                width: 250.0,
+                height: 200.0,
+                decoration: new BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: new DecorationImage(
+                        fit: BoxFit.fill,
+                        image: AssetImage('assets/sakeclogo.jpg')))),
+          ),
+          SizedBox(height: 10),
+          Align(
+            alignment: Alignment.center,
             child: Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 20.0),
               child: Column(

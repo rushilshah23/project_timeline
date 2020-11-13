@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
-import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
-import 'package:project_timeline/admin/DocumentManager/wrapper.dart';
 import 'package:project_timeline/admin/MasterDataSet/ourMachines.dart';
 import 'package:project_timeline/admin/MasterDataSet/ourPetrolPump.dart';
 import 'package:project_timeline/admin/ProgressTimeLine/ProgressPage.dart';
 import 'package:project_timeline/admin/dashboard.dart';
 import 'package:project_timeline/admin/headings.dart';
 import 'package:project_timeline/admin/worker/updateWork.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../main.dart';
 import '../profile.dart';
 
 class WorkerHomePage extends StatefulWidget {
@@ -57,7 +52,6 @@ class WorkerHomePageState extends State<WorkerHomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _loadData();
   }

@@ -1,11 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project_timeline/UserSide/Dashboard/Widgets/BottomNav.dart';
 import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
 import 'package:project_timeline/admin/DocumentManager/core/services/database.dart';
-import 'package:project_timeline/admin/DocumentManager/wrapper.dart';
-import '../main.dart';
 import 'Register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'CommonWidgets.dart';
@@ -898,7 +895,6 @@ class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final ProgressDialog pr = ProgressDialog(context);
-    // TODO: implement build
     return Scaffold(
         backgroundColor: Colors.white,
         //resizeToAvoidBottomInset: false,

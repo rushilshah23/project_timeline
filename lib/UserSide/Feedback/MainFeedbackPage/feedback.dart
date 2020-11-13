@@ -2,7 +2,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:project_timeline/UserSide/Dashboard/Widgets/BottomNav.dart';
 import 'package:project_timeline/UserSide/Feedback/TextPages/feedbackText.dart';
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
@@ -112,7 +111,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
           title: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-               AppLocalizations.of(context).translate('fb28'),
+              AppLocalizations.of(context).translate('fb28'),
               style: TextStyle(
                 letterSpacing: 2.0,
                 fontWeight: FontWeight.normal,
@@ -127,7 +126,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
               children: <Widget>[
                 Center(
                   child: Text(
-                     AppLocalizations.of(context).translate('fb29'),
+                    AppLocalizations.of(context).translate('fb29'),
                     style: TextStyle(
                         color: Colors.black87, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
@@ -143,7 +142,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
               // hoverColor: Colors.red[400],
               color: commonBGColor,
               child: Text(
-                 AppLocalizations.of(context).translate('fb30'),
+                AppLocalizations.of(context).translate('fb30'),
                 style: TextStyle(color: feedbackbuttonColor),
               ),
               onPressed: () {
@@ -161,14 +160,14 @@ class _LocalFeedbackState extends State<LocalFeedback> {
 
   String nameValidator(value) {
     if (value.isEmpty) {
-      return  AppLocalizations.of(context).translate('fb16');
+      return AppLocalizations.of(context).translate('fb16');
     } else
       return null;
   }
 
   String contactValidator(value) {
     if (value.isEmpty) {
-      return  AppLocalizations.of(context).translate('fb17');
+      return AppLocalizations.of(context).translate('fb17');
     }
     final n = num.tryParse(value);
     if (n == null) {
@@ -311,8 +310,10 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                             padding: const EdgeInsets.all(4.0),
                             child: Center(
                               child: new DropdownButtonFormField(
-                                validator: (value) =>
-                                    value == null ?  AppLocalizations.of(context).translate('fb31') : null,
+                                validator: (value) => value == null
+                                    ? AppLocalizations.of(context)
+                                        .translate('fb31')
+                                    : null,
                                 items: projectsDropdwnItems,
                                 onChanged: (selectedAccountType) {
                                   setState(() {
@@ -324,7 +325,8 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                                 isDense: false,
                                 isExpanded: true,
                                 hint: Text(
-                                  AppLocalizations.of(context).translate('fb31'),
+                                  AppLocalizations.of(context)
+                                      .translate('fb31'),
                                   style: TextStyle(
                                       color: Colors.black54, fontSize: 14),
                                 ),
@@ -339,7 +341,8 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                             // labelText: feedbackText[0],
                             labelText:
                                 AppLocalizations.of(context).translate('fb0'),
-                            decorationText: AppLocalizations.of(context).translate('fb10'),
+                            decorationText:
+                                AppLocalizations.of(context).translate('fb10'),
                             controllername: _name,
                             validateFunction: nameValidator,
                             compulsory: "*"),
@@ -352,7 +355,8 @@ class _LocalFeedbackState extends State<LocalFeedback> {
 
                           // labelText: feedbackText[1],
                           keyboard: TextInputType.number,
-                          decorationText: AppLocalizations.of(context).translate('fb11'),
+                          decorationText:
+                              AppLocalizations.of(context).translate('fb11'),
                           controllername: _contactNumber,
                           // validateFunction: contactValidator,
                           numFormatter: [
@@ -366,8 +370,10 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                           height: 20,
                         ),
                         fields(
-                            labelText: AppLocalizations.of(context).translate('fb2'),
-                            decorationText: AppLocalizations.of(context).translate('fb12'),
+                            labelText:
+                                AppLocalizations.of(context).translate('fb2'),
+                            decorationText:
+                                AppLocalizations.of(context).translate('fb12'),
                             controllername: _email,
                             validateFunction: emailValidator,
                             compulsory: ""),
@@ -385,8 +391,10 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                           height: 20,
                         ),
                         fields(
-                            labelText: AppLocalizations.of(context).translate('fb4'),
-                            decorationText: AppLocalizations.of(context).translate('fb4'),
+                            labelText:
+                                AppLocalizations.of(context).translate('fb4'),
+                            decorationText:
+                                AppLocalizations.of(context).translate('fb4'),
                             controllername: _groundWater1,
                             maxlen: 150,
                             maxlines: 3,
@@ -395,8 +403,10 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                           height: 20,
                         ),
                         fields(
-                            labelText:AppLocalizations.of(context).translate('fb5'),
-                            decorationText:AppLocalizations.of(context).translate('fb5'),
+                            labelText:
+                                AppLocalizations.of(context).translate('fb5'),
+                            decorationText:
+                                AppLocalizations.of(context).translate('fb5'),
                             controllername: _groundWater2,
                             maxlen: 150,
                             maxlines: 3,
@@ -405,8 +415,10 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                           height: 20,
                         ),
                         fields(
-                            labelText:AppLocalizations.of(context).translate('fb6'),
-                            decorationText:AppLocalizations.of(context).translate('fb6'),
+                            labelText:
+                                AppLocalizations.of(context).translate('fb6'),
+                            decorationText:
+                                AppLocalizations.of(context).translate('fb6'),
                             controllername: _crop1,
                             maxlen: 150,
                             maxlines: 2,
@@ -415,8 +427,10 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                           height: 20,
                         ),
                         fields(
-                            labelText: AppLocalizations.of(context).translate('fb7'),
-                            decorationText: AppLocalizations.of(context).translate('fb7'),
+                            labelText:
+                                AppLocalizations.of(context).translate('fb7'),
+                            decorationText:
+                                AppLocalizations.of(context).translate('fb7'),
                             controllername: _crop2,
                             maxlen: 150,
                             maxlines: 2,
@@ -425,8 +439,10 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                           height: 20,
                         ),
                         fields(
-                            labelText: AppLocalizations.of(context).translate('fb8'),
-                            decorationText: AppLocalizations.of(context).translate('fb14'),
+                            labelText:
+                                AppLocalizations.of(context).translate('fb8'),
+                            decorationText:
+                                AppLocalizations.of(context).translate('fb14'),
                             controllername: _feedback,
                             validateFunction: feedbackValidator,
                             maxlen: 300,
@@ -436,9 +452,11 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                           height: 20,
                         ),
                         fields(
-                            labelText: AppLocalizations.of(context).translate('fb9'),
+                            labelText:
+                                AppLocalizations.of(context).translate('fb9'),
                             controllername: _suggestions,
-                            decorationText:AppLocalizations.of(context).translate('fb15'),
+                            decorationText:
+                                AppLocalizations.of(context).translate('fb15'),
                             maxlen: 300,
                             maxlines: 5,
                             compulsory: ""),
@@ -451,7 +469,8 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                             child: FlatButton(
                               child: buttonContainers(
                                   MediaQuery.of(context).size.width - 10,
-                                  AppLocalizations.of(context).translate('fb27'),
+                                  AppLocalizations.of(context)
+                                      .translate('fb27'),
                                   18),
                               onPressed: () {
                                 if (_formKey.currentState.validate()) {
@@ -474,17 +493,24 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                                     //     content: Text("Feedback recorded")));
                                   } catch (error) {
                                     Scaffold.of(context).showSnackBar(SnackBar(
-                                        content: Text( AppLocalizations.of(context).translate('fb32'))));
-                                    return AppLocalizations.of(context).translate('fb24');
+                                        content: Text(
+                                            AppLocalizations.of(context)
+                                                .translate('fb32'))));
+                                    return AppLocalizations.of(context)
+                                        .translate('fb24');
                                   }
 
                                   // return null;
                                 } else {
                                   Scaffold.of(context).showSnackBar(SnackBar(
-                                    content: Text(AppLocalizations.of(context).translate('fb25'),),
+                                    content: Text(
+                                      AppLocalizations.of(context)
+                                          .translate('fb25'),
+                                    ),
                                     duration: Duration(seconds: 1),
                                   ));
-                                  return AppLocalizations.of(context).translate('fb26');
+                                  return AppLocalizations.of(context)
+                                      .translate('fb26');
                                 }
                               },
                             ),

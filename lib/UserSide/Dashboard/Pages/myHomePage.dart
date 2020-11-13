@@ -6,7 +6,6 @@ import 'package:project_timeline/UserSide/AboutUs/MainPage/HomeScreen.dart';
 import 'package:project_timeline/UserSide/Dashboard/Widgets/Couroselitems.dart';
 import 'package:project_timeline/UserSide/Feedback/MainFeedbackPage/feedback.dart';
 import 'package:project_timeline/UserSide/Gallery/HomePage.dart';
-import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
 import 'package:project_timeline/UserSide/UI/Widgets/cards.dart';
 import 'package:project_timeline/crowdfunding/leaderBoard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -56,17 +55,17 @@ class _MyHomeState extends State<MyHome> {
                     child: Column(children: [
                       CarouselSlider(
                         options: CarouselOptions(
+                          enlargeCenterPage: true,
                           height: 300,
                           aspectRatio: 3,
                           viewportFraction: 10,
                           initialPage: 0,
                           enableInfiniteScroll: true,
-                          reverse: false,
+                          reverse: true,
                           autoPlay: true,
                           autoPlayInterval: Duration(seconds: 3),
                           autoPlayAnimationDuration:
                               Duration(milliseconds: 800),
-                          enlargeCenterPage: false,
                           scrollDirection: Axis.horizontal,
                           onPageChanged: (index, reason) {
                             setState(() {
@@ -169,7 +168,7 @@ class _MyHomeState extends State<MyHome> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HeatMapPage()));    //Heatmap
+                              builder: (context) => HeatMapPage())); //Heatmap
                     },
                     direction: FlipDirection.HORIZONTAL,
                     front: card2(),

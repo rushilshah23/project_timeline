@@ -3,7 +3,6 @@ import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:project_timeline/UserSide/AboutUs/MainPage/HomeScreen.dart';
 import 'package:project_timeline/UserSide/Feedback/TextPages/AOLText.dart';
-import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 
 class AOLPage extends StatefulWidget {
@@ -312,7 +311,6 @@ class _AOLPageState extends State<AOLPage> {
                   ),
                 ),
                 SizedBox(height: 20),
-
               ],
             ),
           ),
@@ -320,13 +318,15 @@ class _AOLPageState extends State<AOLPage> {
           backgroundOpacity: 0.7),
     );
   }
+
   void onDonePress() {
     // Do what you want
     Navigator.pop(
       context,
-      MaterialPageRoute(builder: (context) =>  HomeScreen()),
+      MaterialPageRoute(builder: (context) => HomeScreen()),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

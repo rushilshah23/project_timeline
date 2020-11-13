@@ -2,8 +2,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 
-import 'petrolMaster.dart';
-
 class EditPetrolPump extends StatefulWidget {
   Map data;
   EditPetrolPump({Key key, this.data}) : super(key: key);

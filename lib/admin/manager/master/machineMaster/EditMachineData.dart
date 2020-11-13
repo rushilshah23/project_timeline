@@ -5,8 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 
-import 'machineMaster.dart';
-
 String machineType = 'One';
 List<String> soilTypeSelected = List.generate(74, (i) => 'None');
 List<TextEditingController> excavationAmount =

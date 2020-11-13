@@ -11,95 +11,88 @@ import 'allocProjectDetails.dart';
 import 'approveWork/WorkApproveModTabs.dart';
 import 'addWorkers.dart';
 
-
-
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-import 'approveWork/WorkApproveModule.dart';
-
-
 class YourAllocatedProjects extends StatefulWidget {
-  String name , email,  mobile , password,uid, userType,assignedProject;
-  YourAllocatedProjects({Key key, this.name, this.email, this.mobile, this.assignedProject, this.userType, this.uid}) : super(key: key);
+  String name, email, mobile, password, uid, userType, assignedProject;
+  YourAllocatedProjects(
+      {Key key,
+      this.name,
+      this.email,
+      this.mobile,
+      this.assignedProject,
+      this.userType,
+      this.uid})
+      : super(key: key);
   @override
   _YourAllocatedProjectsState createState() => _YourAllocatedProjectsState();
 }
 
 class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
-
   Map allMachinesData;
 
   final databaseReference = FirebaseDatabase.instance.reference();
 
-  bool allocated= false;
-  bool isLoading= true;
+  bool allocated = false;
+  bool isLoading = true;
 
-   List supervisors=List() ;
+  List supervisors = List();
 
-  List machines=[];
-  List workers=[];
+  List machines = [];
+  List workers = [];
 
- List graphPoints= [];
-    List allDaysReport=List();
-  List allDates=List();
-  List allDatesApprovedVolume= [];
-  List perDayExcavation=List();
-    double approvedVol=0;
+  List graphPoints = [];
+  List allDaysReport = List();
+  List allDates = List();
+  List allDatesApprovedVolume = [];
+  List perDayExcavation = List();
+  double approvedVol = 0;
 
-
-     Map projectData;
-
+  Map projectData;
 
   final pdf = pw.Document();
   final DateTime date = DateTime.now();
   final DateFormat formatter = DateFormat('dd-MM-yyyy');
-  String todaysDate="12-09-2020";
+  String todaysDate = "12-09-2020";
   final DateFormat formatterForTime = DateFormat('dd-MM-yyyy hh:mm:ss');
 
-
-
-  void initState(){
+  void initState() {
     super.initState();
     loadMachines();
     getProjDetails();
   }
 
-
- void loadMachines() async {
+  void loadMachines() async {
     await databaseReference
         .child("masters")
         .child("machineMaster")
         .once()
         .then((snapshot) {
-      allMachinesData=snapshot.value;
+      allMachinesData = snapshot.value;
     });
   }
 
-
-  getProjDetails() async
-  {
+  getProjDetails() async {
     //debugPrint("----------------"+widget.assignedProject.toString());
-    await databaseReference.child("projects").child(widget.assignedProject).once().then((
-            DataSnapshot dataSnapshot) {
-          //debugPrint(dataSnapshot.value.toString());
-          setState(() {
-            projectData = dataSnapshot.value;
-            machines= projectData["machinesSelected"];
+    await databaseReference
+        .child("projects")
+        .child(widget.assignedProject)
+        .once()
+        .then((DataSnapshot dataSnapshot) {
+      //debugPrint(dataSnapshot.value.toString());
+      setState(() {
+        projectData = dataSnapshot.value;
+        machines = projectData["machinesSelected"];
 
-            if(projectData.containsKey("workers"))
-            {
-                Map wrks=projectData["workers"];
-                 workers= wrks.keys.toList();
-            }
-           
-          
-          });
-        });
+        if (projectData.containsKey("workers")) {
+          Map wrks = projectData["workers"];
+          workers = wrks.keys.toList();
+        }
+      });
+    });
   }
-
 
   Future savePDFOverall() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
@@ -108,25 +101,19 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
     file.writeAsBytesSync(pdf.save());
   }
 
-
-  
   createOverallPdf() async {
+    PdfColor tableHeaderColor = PdfColors.cyan100;
+    PdfColor headerColor = PdfColors.cyan600;
+    double headerFontSize = 20;
+    PdfColor header2Color = PdfColors.grey600;
+    double header2FontSize = 18;
+    PdfColor textColor = PdfColors.grey600;
+    double textFontSize = 17;
+    PdfColor text2Color = PdfColors.black;
+    double text2FontSize = 15;
+    double text3FontSize = 18;
 
-   PdfColor tableHeaderColor = PdfColors.cyan100;
-   PdfColor headerColor = PdfColors.cyan600;
-   double headerFontSize = 20;
-   PdfColor header2Color = PdfColors.grey600;
-   double header2FontSize = 18;
-   PdfColor textColor = PdfColors.grey600;
-   double textFontSize = 17;
-   PdfColor text2Color = PdfColors.black;
-   double text2FontSize = 15;
-   double text3FontSize = 18;
-
-  
-   PdfColor _redColor = PdfColors.grey700;
-  
-
+    PdfColor _redColor = PdfColors.grey700;
 
     pdf.addPage(pw.MultiPage(
       pageFormat: PdfPageFormat.a4,
@@ -135,8 +122,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
         return <pw.Widget>[
           pw.Center(
               child: pw.Text(
-                  superText[24] +
-                      formatterForTime.format(date).toString(),
+                  superText[24] + formatterForTime.format(date).toString(),
                   style: pw.TextStyle(
                     color: headerColor,
                     fontSize: 16,
@@ -203,7 +189,8 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                                 fontSize: textFontSize,
                               )),
                           pw.SizedBox(height: 2),
-                          pw.Text(projectData["projectDuration"] + superText[30],
+                          pw.Text(
+                              projectData["projectDuration"] + superText[30],
                               style: pw.TextStyle(
                                 color: text2Color,
                                 fontSize: text3FontSize,
@@ -213,7 +200,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                       pw.SizedBox(height: 20),
                       // pw.SizedBox(height: 20),
                       pw.Row(
-                        // mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
+                          // mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
                           children: [
                             pw.Column(children: [
                               pw.Text(superText2[0],
@@ -222,7 +209,9 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                                     fontSize: textFontSize,
                                   )),
                               pw.SizedBox(height: 2),
-                              pw.Text(projectData["totalMachineRent"] + superText2[1],
+                              pw.Text(
+                                  projectData["totalMachineRent"] +
+                                      superText2[1],
                                   style: pw.TextStyle(
                                     color: text2Color,
                                     fontSize: text3FontSize,
@@ -230,15 +219,14 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                             ]),
                             pw.SizedBox(width: 50),
                             pw.Column(children: [
-
                               pw.Text(superText2[2],
                                   style: pw.TextStyle(
                                     color: textColor,
                                     fontSize: textFontSize,
                                   )),
-
                               pw.Text(
-                                  projectData["totalFuelConsumption"] + superText2[3],
+                                  projectData["totalFuelConsumption"] +
+                                      superText2[3],
                                   style: pw.TextStyle(
                                     color: text2Color,
                                     fontSize: text3FontSize,
@@ -267,13 +255,11 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                                 fontSize: text2FontSize,
                               )),
                           pw.SizedBox(height: 2),
-
                           pw.Text(projectData["volumeExcavated"] + " m3",
                               style: pw.TextStyle(
                                 color: text2Color,
                                 fontSize: text3FontSize,
                               )),
-
                         ]),
                       ),
                     ]),
@@ -287,7 +273,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                       pw.Center(
                         child: pw.Text(
                           (double.parse(projectData["progressPercent"]))
-                              .toString() +
+                                  .toString() +
                               '%',
                           style: pw.TextStyle(
                             color: textColor,
@@ -297,9 +283,13 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                         ),
                       ),
                       pw.CircularProgressIndicator(
-                        value:
-                      double.parse(projectData["progressPercent"])<100? double.parse(projectData["progressPercent"])>0?
-                              double.parse(projectData["progressPercent"])/ 100:0:1,
+                        value: double.parse(projectData["progressPercent"]) <
+                                100
+                            ? double.parse(projectData["progressPercent"]) > 0
+                                ? double.parse(projectData["progressPercent"]) /
+                                    100
+                                : 0
+                            : 1,
                         backgroundColor: PdfColors.grey300,
                         color: PdfColors.cyan600,
                         strokeWidth: 10,
@@ -345,7 +335,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                   color: PdfColors.cyan,
                   data: List<pw.LineChartValue>.generate(
                     graphPoints.length,
-                        (i) {
+                    (i) {
                       final num v = graphPoints[i][1];
                       return pw.LineChartValue(i.toDouble(), v.toDouble());
                     },
@@ -364,15 +354,11 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
           pw.SizedBox(height: 25),
           pw.Table.fromTextArray(
             context: context,
-
             headerDecoration: pw.BoxDecoration(
               borderRadius: 2,
               color: tableHeaderColor,
             ),
-
             border: pw.TableBorder(color: PdfColors.grey400),
-
-
             data: <List<String>>[
               <String>[
                 superText2[7],
@@ -380,7 +366,6 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
               ],
               ...supervisors.map((msg) => [msg["name"], msg["mobile"]])
             ],
-
           ),
           // ]),
           pw.SizedBox(height: 25),
@@ -420,7 +405,6 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                             borderRadius: 2,
                             color: tableHeaderColor,
                           ),
-
                           data: <List<dynamic>>[
                             <String>[
                               superText2[11],
@@ -430,12 +414,12 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
                               superText2[15]
                             ],
                             ...allDaysReport[index].map((msg) => [
-                              msg["workerName"],
-                              msg["hoursWorked"].toString(),
-                              msg["MachineUsed"],
-                              msg["volumeExcavated"].toString(),
-                              msg["status"]
-                            ])
+                                  msg["workerName"],
+                                  msg["hoursWorked"].toString(),
+                                  msg["MachineUsed"],
+                                  msg["volumeExcavated"].toString(),
+                                  msg["status"]
+                                ])
                           ]),
                     ]);
               }),
@@ -444,263 +428,246 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
     ));
   }
 
- 
-
-
- void generateOverallReport() async
-  {
-    bool state=false;
+  void generateOverallReport() async {
+    bool state = false;
     allDaysReport.clear();
     allDates.clear();
-    approvedVol=0;
+    approvedVol = 0;
     allDatesApprovedVolume.clear();
-     graphPoints.clear();
-    await databaseReference.child("projects").child(widget.assignedProject).once().then((DataSnapshot dataSnapshot) {
+    graphPoints.clear();
+    await databaseReference
+        .child("projects")
+        .child(widget.assignedProject)
+        .once()
+        .then((DataSnapshot dataSnapshot) {
+      projectData = dataSnapshot.value;
 
-      projectData= dataSnapshot.value;
-
-      if(projectData.containsKey("progress"))
-      {
-      
-     
-      state=true;
-      Map supMap= dataSnapshot.value["supervisors"];
-      supervisors=supMap.values.toList();
-
+      if (projectData.containsKey("progress")) {
+        state = true;
+        Map supMap = dataSnapshot.value["supervisors"];
+        supervisors = supMap.values.toList();
 
         Map progdata = dataSnapshot.value["progress"];
-    
-      var sortedEntries = progdata.entries.toList()..sort((e1, e2) {
-      return e2.key.compareTo(e1.key);
-        });
 
-        Map data1= Map();
+        var sortedEntries = progdata.entries.toList()
+          ..sort((e1, e2) {
+            return e2.key.compareTo(e1.key);
+          });
 
-        for(int i=0;i<sortedEntries.length;i++)
+        Map data1 = Map();
+
+        for (int i = 0; i < sortedEntries.length; i++)
           data1.putIfAbsent(sortedEntries[i].key, () => sortedEntries[i].value);
 
+        allDates = data1.keys.toList();
+        List allDatesData = data1.values.toList();
 
-      allDates= data1.keys.toList();
-      List allDatesData= data1.values.toList();
+        allDatesApprovedVolume = List.generate(allDates.length, (i) => 0.0);
+        graphPoints = List.generate(allDates.length, (i) => [allDates[i], 0.0]);
 
-      allDatesApprovedVolume =List.generate(allDates.length, (i) =>0.0);
-       graphPoints =List.generate(allDates.length, (i) =>[allDates[i],0.0]);
+        //debugPrint(allDatesData.toString());
 
-      //debugPrint(allDatesData.toString());
+        for (int i = 0; i < allDates.length; i++) {
+          Map todaysDataMap = allDatesData[i];
+          //debugPrint(todaysDataMap.values.toList().toString());
+          allDaysReport.add(todaysDataMap.values.toList());
+        }
 
-      for(int i=0;i<allDates.length;i++)
-      {
-        Map todaysDataMap= allDatesData[i];
-        //debugPrint(todaysDataMap.values.toList().toString());
-        allDaysReport.add(todaysDataMap.values.toList());
-      }
+        //debugPrint(allDaysReport.toString());
 
-      //debugPrint(allDaysReport.toString());
+        for (int i = 0; i < allDaysReport.length; i++) {
+          //debugPrint(allDaysReport[i].toString());
 
-      for (int i = 0; i < allDaysReport.length; i++) {
-        //debugPrint(allDaysReport[i].toString());
+          List todaysWorkersDataList = allDaysReport[i];
 
-        List todaysWorkersDataList = allDaysReport[i];
+          for (int j = 0; j < todaysWorkersDataList.length; j++) {
+            if (todaysWorkersDataList[j]["status"] == "Accepted") {
+              //debugPrint(todaysWorkersDataList[j]["workerName"].toString());
+              allDatesApprovedVolume[i] = allDatesApprovedVolume[i] +
+                  double.parse(
+                      todaysWorkersDataList[j]["volumeExcavated"].toString());
+              approvedVol = approvedVol +
+                  double.parse(
+                      todaysWorkersDataList[j]["volumeExcavated"].toString());
 
+              graphPoints[i][1] = graphPoints[i][1] +
+                  double.parse(
+                      todaysWorkersDataList[j]["volumeExcavated"].toString());
 
-        for(int j=0;j<todaysWorkersDataList.length;j++)
-        {
-          if(todaysWorkersDataList[j]["status"]=="Accepted")
-          {
-            //debugPrint(todaysWorkersDataList[j]["workerName"].toString());
-            allDatesApprovedVolume[i]=allDatesApprovedVolume[i]+double.parse(todaysWorkersDataList[j]["volumeExcavated"].toString());
-            approvedVol= approvedVol+double.parse(todaysWorkersDataList[j]["volumeExcavated"].toString());
+              //debugPrint("------------"+todaysWorkersDataList[j].toString());
 
-               graphPoints[i][1]=graphPoints[i][1]+double.parse(todaysWorkersDataList[j]["volumeExcavated"].toString());
+            }
 
-            //debugPrint("------------"+todaysWorkersDataList[j].toString());
-
-
-          }
-
-          if(allMachinesData.containsKey(todaysWorkersDataList[j]["MachineUsed"]))
-          {           
-            String machineModel=allMachinesData[todaysWorkersDataList[j]["MachineUsed"]]["machineName"]+"\n"+allMachinesData[todaysWorkersDataList[j]["MachineUsed"]]["modelName"];
-            allDaysReport[i][j]["MachineUsed"]=machineModel;
+            if (allMachinesData
+                .containsKey(todaysWorkersDataList[j]["MachineUsed"])) {
+              String machineModel =
+                  allMachinesData[todaysWorkersDataList[j]["MachineUsed"]]
+                          ["machineName"] +
+                      "\n" +
+                      allMachinesData[todaysWorkersDataList[j]["MachineUsed"]]
+                          ["modelName"];
+              allDaysReport[i][j]["MachineUsed"] = machineModel;
+            }
           }
         }
       }
 
-      
-      }
-
-
-       graphPoints.sort((a,b) {
-                  var adate = a[0]; //before -> var adate = a.expiry;
-                  var bdate = b[0]; //before -> var bdate = b.expiry;
-                  return adate.compareTo(bdate); //to get the order other way just switch `adate & bdate`
-                  });
-   
+      graphPoints.sort((a, b) {
+        var adate = a[0]; //before -> var adate = a.expiry;
+        var bdate = b[0]; //before -> var bdate = b.expiry;
+        return adate.compareTo(
+            bdate); //to get the order other way just switch `adate & bdate`
+      });
 
       //debugPrint(allDatesApprovedVolume.toString());
-    }
-    );
+    });
 
-        if(state)
-        {
-               await createOverallPdf();
-              await savePDFOverall();
+    if (state) {
+      await createOverallPdf();
+      await savePDFOverall();
 
-              Directory documentDirectory =
-              await getApplicationDocumentsDirectory();
-              String documentPath = documentDirectory.path;
-              String fullPath = "$documentPath/overallProgress.pdf";
+      Directory documentDirectory = await getApplicationDocumentsDirectory();
+      String documentPath = documentDirectory.path;
+      String fullPath = "$documentPath/overallProgress.pdf";
 
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ReportPreviewTesting(path: fullPath),
-                  ));
-
-        }
-        else showToast(superText2[16]);
-  
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ReportPreviewTesting(path: fullPath),
+          ));
+    } else
+      showToast(superText2[16]);
   }
-
 
   @override
   Widget build(BuildContext context) {
     //debugPrint(allocated.toString());
 
-      
-      
-        if (projectData != null) {
-          return Scaffold(
-
-              body: StreamBuilder(
-             stream:databaseReference.child("projects").child(widget.assignedProject).onValue,
-               builder: (context, snap) {
-            
+    if (projectData != null) {
+      return Scaffold(
+        body: StreamBuilder(
+            stream: databaseReference
+                .child("projects")
+                .child(widget.assignedProject)
+                .onValue,
+            builder: (context, snap) {
               getProjDetails();
-                 
-              if (snap.hasData &&
-                !snap.hasError &&
-                snap.data.snapshot.value != null) {
-                  return ListView(
-                children: <Widget>[
-                  _myAppBar2(),
-                  _body()
-                ],
-              );}
-              else{
-                return Scaffold(
-                  body: Center(child: CircularProgressIndicator(),),
-                );
 
+              if (snap.hasData &&
+                  !snap.hasError &&
+                  snap.data.snapshot.value != null) {
+                return ListView(
+                  children: <Widget>[_myAppBar2(), _body()],
+                );
+              } else {
+                return Scaffold(
+                  body: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
               }
             }),
-          );
-        }
-        else{
-      return Scaffold(
-        body: Center(child: CircularProgressIndicator(),),
       );
-
+    } else {
+      return Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
     }
-
   }
 
   Widget _myAppBar2() {
     return Container(
-      padding: EdgeInsets.only(bottom:25),
+      padding: EdgeInsets.only(bottom: 25),
       //height: MediaQuery.of(context).size.height/3.5,
-      width: MediaQuery
-          .of(context)
-          .size
-          .width,
+      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
 //        gradient: LinearGradient(
 //            colors: [ Colors.orange[200],Colors.orange[400],Colors.orange[600],Colors.orange[800],Colors.deepOrange[600]],
 //            begin: Alignment.centerRight,
 //            end: Alignment(-1.0,-2.0)
 //        ),// Gradient
-          gradient: gradients()
-
-      ),
+          gradient: gradients()),
       child: Padding(
-        padding: const EdgeInsets.only(top: 5,left: 30),
+        padding: const EdgeInsets.only(top: 5, left: 30),
         child: Container(
-
             child: Column(
-              children: [
-                SizedBox(height: 35),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-
-                    SizedBox(width: 15),
-                    Expanded(
-                      flex: 5,
-                      child:Container(
-                        child:Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              projectData["projectName"].toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18.0
-                              ),
-                            ),
-                            Text(
-                              projectData["siteAddress"].toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14.0
-                              ),
-                            ),
-                          ],
+          children: [
+            SizedBox(height: 35),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                SizedBox(width: 15),
+                Expanded(
+                  flex: 5,
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          projectData["projectName"].toString(),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18.0),
                         ),
-                      ),
-                    ),
-
-                    Expanded(
-                      flex: 5,
-                      child:Container(
-                        child:Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CircularPercentIndicator(
-                              backgroundColor: Colors.grey[200],
-                              radius: MediaQuery.of(context).size.height/6,
-                              lineWidth: 13.0,
-                              animation: true,
-                              percent: double.parse(projectData["progressPercent"])<100? double.parse(projectData["progressPercent"])>0?
-                              double.parse(projectData["progressPercent"])/ 100:0:1,
-                              center: new Text(
-                                projectData["progressPercent"] + "%",
-                                style: new TextStyle(
-                                  color: Color(0xff93e1ed),
-                                    fontWeight: FontWeight.bold, fontSize: 20.0),
-                              ),
-                              circularStrokeCap: CircularStrokeCap.round,
-                              progressColor: Color(0xff93e1ed),
-                            ),
-                            Text(
-                              superText2[17],
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 15.0
-                              ),
-                            ),
-                          ],
+                        Text(
+                          projectData["siteAddress"].toString(),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14.0),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-
+                Expanded(
+                  flex: 5,
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CircularPercentIndicator(
+                          backgroundColor: Colors.grey[200],
+                          radius: MediaQuery.of(context).size.height / 6,
+                          lineWidth: 13.0,
+                          animation: true,
+                          percent: double.parse(
+                                      projectData["progressPercent"]) <
+                                  100
+                              ? double.parse(projectData["progressPercent"]) > 0
+                                  ? double.parse(
+                                          projectData["progressPercent"]) /
+                                      100
+                                  : 0
+                              : 1,
+                          center: new Text(
+                            projectData["progressPercent"] + "%",
+                            style: new TextStyle(
+                                color: Color(0xff93e1ed),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0),
+                          ),
+                          circularStrokeCap: CircularStrokeCap.round,
+                          progressColor: Color(0xff93e1ed),
+                        ),
+                        Text(
+                          superText2[17],
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15.0),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
-            )
-        ),
+            ),
+          ],
+        )),
       ),
     );
   }
@@ -708,7 +675,7 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
   Widget _body() {
     return Container(
       child: Padding(
-        padding: const EdgeInsets.only(top: 20.0,left: 20,right: 20),
+        padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -717,130 +684,133 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
               children: [
                 Column(
                   children: [
-                    Text(
-                        superText[16],
+                    Text(superText[16],
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
-                            fontSize: 18
-                        )
-                    ),
+                            fontSize: 18)),
                     SizedBox(height: 10),
-                    Text(
-                        projectData["volumeToBeExcavated"].toString()+" m3",
+                    Text(projectData["volumeToBeExcavated"].toString() + " m3",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
-                            fontSize: 12
-                        )
-                    ),
+                            fontSize: 12)),
                   ],
                 ),
-                Container(height: 60, child: VerticalDivider(color: Colors.grey[400],width: 20,thickness: 2,)),
+                Container(
+                    height: 60,
+                    child: VerticalDivider(
+                      color: Colors.grey[400],
+                      width: 20,
+                      thickness: 2,
+                    )),
                 Column(
                   children: [
-                    Text(
-                        superText2[18],
+                    Text(superText2[18],
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
-                            fontSize: 18
-                        )
-                    ),
+                            fontSize: 18)),
                     SizedBox(height: 10),
-                    Text(
-                        machines.length.toString(),
+                    Text(machines.length.toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
-                            fontSize: 12
-                        )
-                    ),
-
+                            fontSize: 12)),
                   ],
                 ),
-                Container(height: 60, child: VerticalDivider(color: Colors.grey[400],width: 20,thickness: 2,)),
+                Container(
+                    height: 60,
+                    child: VerticalDivider(
+                      color: Colors.grey[400],
+                      width: 20,
+                      thickness: 2,
+                    )),
                 Column(
                   children: [
-                    Text(
-                        superText2[19],
+                    Text(superText2[19],
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
-                            fontSize: 18
-                        )
-                    ),
+                            fontSize: 18)),
                     SizedBox(height: 10),
-                    Text(
-                        workers.length.toString(),
+                    Text(workers.length.toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[600],
-                            fontSize: 12
-                        )
-                    ),
+                            fontSize: 12)),
                   ],
                 ),
               ],
             ),
             SizedBox(height: 35),
 
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>  AllocProjDetails(projectDetails: projectData,)),
+                            builder: (context) => AllocProjDetails(
+                                  projectDetails: projectData,
+                                )),
                       );
                     },
-                    child:Card(
+                    child: Card(
                       elevation: 2,
-                      child:Container(
-                         
-                           width: MediaQuery.of(context).size.width/2-30,
-                         padding: EdgeInsets.symmetric(vertical: 35),
-                          child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.description,size: 50, color: Colors.grey,),
-                                  SizedBox(height:10),
-                                  Text(superText2[20]),
-                                ],
-                              ),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width / 2 - 30,
+                        padding: EdgeInsets.symmetric(vertical: 35),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.description,
+                              size: 50,
+                              color: Colors.grey,
+                            ),
+                            SizedBox(height: 10),
+                            Text(superText2[20]),
+                          ],
+                        ),
                       ),
                     )),
-
                 GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => SearchWorkerPage(name: widget.name,email: widget.email, uid: widget.uid,
-                              assignedProject: widget.assignedProject,mobile: widget.mobile,userType: widget.userType,)),
+                            builder: (context) => SearchWorkerPage(
+                                  name: widget.name,
+                                  email: widget.email,
+                                  uid: widget.uid,
+                                  assignedProject: widget.assignedProject,
+                                  mobile: widget.mobile,
+                                  userType: widget.userType,
+                                )),
                       );
                     },
-                    child:Card(
+                    child: Card(
                       elevation: 2,
-                      child:Container(
-                          
-                           width: MediaQuery.of(context).size.width/2-30,
-                         padding: EdgeInsets.symmetric(vertical: 35),
-                          child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.people,size: 50, color: Colors.grey,),
-                                  SizedBox(height:10),
-                                  Text(superText2[21]),
-                                ],
-                              ),
-
+                      child: Container(
+                        width: MediaQuery.of(context).size.width / 2 - 30,
+                        padding: EdgeInsets.symmetric(vertical: 35),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.people,
+                              size: 50,
+                              color: Colors.grey,
+                            ),
+                            SizedBox(height: 10),
+                            Text(superText2[21]),
+                          ],
+                        ),
                       ),
                     )),
-
               ],
             ),
 
@@ -848,61 +818,65 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>  WorkApproveModTabs(
+                          builder: (context) => WorkApproveModTabs(
                             name: widget.name,
                             email: widget.email,
                             uid: widget.uid,
                             assignedProject: widget.assignedProject,
                             mobile: widget.mobile,
                             userType: widget.userType,
-                          ),),
+                          ),
+                        ),
                       );
                     },
                     child: Card(
                       elevation: 2,
-                      child:Container(
-                         width: MediaQuery.of(context).size.width/2-30,
-                         padding: EdgeInsets.symmetric(vertical: 35),
-                          child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.check_circle_outline,size: 50, color: Colors.grey,),
-                                  SizedBox(height:10),
-                                  Text(superText2[22]),
-                                ],
-                              ),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width / 2 - 30,
+                        padding: EdgeInsets.symmetric(vertical: 35),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.check_circle_outline,
+                              size: 50,
+                              color: Colors.grey,
+                            ),
+                            SizedBox(height: 10),
+                            Text(superText2[22]),
+                          ],
+                        ),
                       ),
                     )),
-
                 GestureDetector(
-                    onTap: (){
-                        generateOverallReport();
+                    onTap: () {
+                      generateOverallReport();
                     },
-                    child:Card(
+                    child: Card(
                       elevation: 2,
-                      child:Container(
-                          
-                           width: MediaQuery.of(context).size.width/2-30,
-                         padding: EdgeInsets.symmetric(vertical: 35),
-                          child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.insert_drive_file,size: 50, color: Colors.grey,),
-                                  SizedBox(height:10),
-                                  Text(superText2[23]),
-                                ],
-                              ),
-
+                      child: Container(
+                        width: MediaQuery.of(context).size.width / 2 - 30,
+                        padding: EdgeInsets.symmetric(vertical: 35),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.insert_drive_file,
+                              size: 50,
+                              color: Colors.grey,
+                            ),
+                            SizedBox(height: 10),
+                            Text(superText2[23]),
+                          ],
+                        ),
                       ),
                     )),
-
               ],
             ),
-
 
             // SizedBox(height: 70),
             // Center(
@@ -938,5 +912,4 @@ class _YourAllocatedProjectsState extends State<YourAllocatedProjects> {
       ),
     );
   }
-
 }

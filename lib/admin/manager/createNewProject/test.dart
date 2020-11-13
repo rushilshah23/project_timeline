@@ -1,13 +1,11 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:uuid/uuid.dart';
 import 'package:geocoder/services/base.dart';
 import '../../CommonWidgets.dart';
-import 'projects.dart';
 
 List<String> machineTypeSelected = [];
 List<TextEditingController> usagePerDay = [];
@@ -133,8 +131,7 @@ class _TestState extends State<Test> {
   }
 
   sendToDb() async {
-
-    int errorType=0;
+    int errorType = 0;
 
     final CollectionReference supervisor =
         FirebaseFirestore.instance.collection("supervisor");
@@ -147,13 +144,13 @@ class _TestState extends State<Test> {
       var results = await geocoding.findAddressesFromQuery(siteAddress);
       print("``````````````````````");
 
-      errorType=1;
+      errorType = 1;
       debugPrint(results[0].coordinates.toString());
       this.setState(() {
         coordinates.add(results[0].coordinates);
       });
 
-      errorType=2;
+      errorType = 2;
       FirebaseFirestore.instance.collection("markers").doc(uniqueID).set({
         'location':
             new GeoPoint(coordinates[0].latitude, coordinates[0].longitude),
@@ -186,7 +183,7 @@ class _TestState extends State<Test> {
             },
         },
       });
-      errorType=3;
+      errorType = 3;
       selectedSupervisors.forEach((i) async {
         debugPrint(supervisorList[i].uid);
         await supervisor
@@ -204,72 +201,63 @@ class _TestState extends State<Test> {
       });
       showToast("Project added Successfully");
 
-
-     Navigator.of(context).pop();
       Navigator.of(context).pop();
-
-
+      Navigator.of(context).pop();
     } catch (e) {
       print(e);
-     
 
-      if(errorType==0)
-          showToast("Enter Valid Address");
-       if(errorType==1)
-           showToast("Failed. check your internet!");
+      if (errorType == 0) showToast("Enter Valid Address");
+      if (errorType == 1) showToast("Failed. check your internet!");
     }
   }
 
   Future<void> getData() async {
     await supervisors.get().then((querySnapshot) {
       querySnapshot.docs.forEach((result) {
-
         Color color;
-        String status='';
-        String isAssng= result["assignedProject"];
-        if(isAssng.contains(" ")||isAssng.contains("No project assigned"))
-        {
+        String status = '';
+        String isAssng = result["assignedProject"];
+        if (isAssng.contains(" ") || isAssng.contains("No project assigned")) {
           color = Colors.green[700];
-          status= "No project assigned";
-        }
-        else  {
+          status = "No project assigned";
+        } else {
           color = Colors.blue[700];
-          status= "Project assigned";
-          }
+          status = "Project assigned";
+        }
 
-       
         setState(() {
           supervisorDropdwnItems.add(
             DropdownMenuItem(
               child: Container(
-                //color: color,
-                padding: EdgeInsets.all(10),
+                  //color: color,
+                  padding: EdgeInsets.all(10),
                   child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(result['name']),
-                  
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                    result.data().containsKey("email")?Text(
-                    result['email'].toString(),
-                    style: TextStyle(color: Colors.grey),
-                  ):Container(),
-                   result.data().containsKey("mobile")? Text(
-                    result['mobile'],
-                    style: TextStyle(color: Colors.grey),
-                  ):Container(),
+                      Text(result['name']),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          result.data().containsKey("email")
+                              ? Text(
+                                  result['email'].toString(),
+                                  style: TextStyle(color: Colors.grey),
+                                )
+                              : Container(),
+                          result.data().containsKey("mobile")
+                              ? Text(
+                                  result['mobile'],
+                                  style: TextStyle(color: Colors.grey),
+                                )
+                              : Container(),
+                        ],
+                      ),
+                      Text(
+                        status,
+                        style: TextStyle(color: color),
+                      )
                     ],
-                  ),
-
-                  Text(
-                    status,
-                    style: TextStyle(color:color),
-                  )
-                 
-                ],
-              )),
+                  )),
               value: result['name'],
             ),
           );
@@ -434,11 +422,11 @@ class _TestState extends State<Test> {
   }
 
   Future<bool> estimate2() async {
-    totalRent=0;
-    totalfuel=0;
-    ourExcavtn=0;
-    days=0;
-    
+    totalRent = 0;
+    totalfuel = 0;
+    ourExcavtn = 0;
+    days = 0;
+
     volume = 0.5 *
         double.parse(length) *
         double.parse(depth) *
@@ -461,176 +449,169 @@ class _TestState extends State<Test> {
       progressPercent = (excavationDone / volume) * 100;
     });
 
-
-    if(progressPercent<=100)
-    {
-      if (progressPercent==100) {
-      setState(() {
-        status = 'Completed';
-      });
+    if (progressPercent <= 100) {
+      if (progressPercent == 100) {
+        setState(() {
+          status = 'Completed';
+        });
+      } else if (ourExcavtn == 0.0) {
+        setState(() {
+          status = 'Not Started';
+        });
+      } else if (ourExcavtn > 0.0) {
+        setState(() {
+          status = 'Ongoing';
+        });
       }
-      else if (ourExcavtn == 0.0) {
-      setState(() {
-        status = 'Not Started';
-      });
-    } else if (ourExcavtn > 0.0) {
-      setState(() {
-        status = 'Ongoing';
-      });
-    } 
-    
 
-    debugPrint("our excavation" + ourExcavtn.toString());
-    debugPrint(volume.toString());
+      debugPrint("our excavation" + ourExcavtn.toString());
+      debugPrint(volume.toString());
 
-    List perhramountofExca = [];
-    List perhrFuelConsump = [];
-    List renthrday = [];
+      List perhramountofExca = [];
+      List perhrFuelConsump = [];
+      List renthrday = [];
 
-    double sumfuel = 0;
-    double sumRent = 0;
-    double sumExcavtn = 0;
-    double sumUsagePrDay = 0;
+      double sumfuel = 0;
+      double sumRent = 0;
+      double sumExcavtn = 0;
+      double sumUsagePrDay = 0;
 
-    double beyondMeansumExcavtn = 0.0;
-    double beyondMeanExcasumRent = 0.0;
-    double beyondMeansumfuel = 0.0;
+      double beyondMeansumExcavtn = 0.0;
+      double beyondMeanExcasumRent = 0.0;
+      double beyondMeansumfuel = 0.0;
 
-    List actualperdayamountofExca = [];
-    List actualperdayFuelConsump = [];
-    List actualrentPerday = [];
+      List actualperdayamountofExca = [];
+      List actualperdayFuelConsump = [];
+      List actualrentPerday = [];
 
-    for (int i = 0; i < machinesCount; i++) {
-      debugPrint(machineTypeSelected[i].toString());
-      debugPrint(usagePerDay[i].text);
+      for (int i = 0; i < machinesCount; i++) {
+        debugPrint(machineTypeSelected[i].toString());
+        debugPrint(usagePerDay[i].text);
 
-      for (int j = 0; j < machineDetailsList.length; j++) {
-        if (machineTypeSelected[i] == machineDetailsList[j].machineID) {
-          sumExcavtn = sumExcavtn +
-              double.parse(machineDetailsList[j].amountOfExcavation.toString())*double.parse(usagePerDay[i].text);
-          sumUsagePrDay = sumUsagePrDay + double.parse(usagePerDay[i].text);
-          sumfuel = sumfuel +
-              double.parse(machineDetailsList[j].fuelConsumption.toString())*double.parse(usagePerDay[i].text);
-          sumRent = sumRent +
-              double.parse(machineDetailsList[j].rentPerHour.toString())*double.parse(usagePerDay[i].text);
+        for (int j = 0; j < machineDetailsList.length; j++) {
+          if (machineTypeSelected[i] == machineDetailsList[j].machineID) {
+            sumExcavtn = sumExcavtn +
+                double.parse(
+                        machineDetailsList[j].amountOfExcavation.toString()) *
+                    double.parse(usagePerDay[i].text);
+            sumUsagePrDay = sumUsagePrDay + double.parse(usagePerDay[i].text);
+            sumfuel = sumfuel +
+                double.parse(machineDetailsList[j].fuelConsumption.toString()) *
+                    double.parse(usagePerDay[i].text);
+            sumRent = sumRent +
+                double.parse(machineDetailsList[j].rentPerHour.toString()) *
+                    double.parse(usagePerDay[i].text);
 
-          perhramountofExca.add(double.parse(
-              machineDetailsList[j].amountOfExcavation.toString()));
-          perhrFuelConsump.add(
-              double.parse(machineDetailsList[j].fuelConsumption.toString()));
-          renthrday
-              .add(double.parse(machineDetailsList[j].rentPerHour.toString()));
-              break;
+            perhramountofExca.add(double.parse(
+                machineDetailsList[j].amountOfExcavation.toString()));
+            perhrFuelConsump.add(
+                double.parse(machineDetailsList[j].fuelConsumption.toString()));
+            renthrday.add(
+                double.parse(machineDetailsList[j].rentPerHour.toString()));
+            break;
+          }
         }
       }
-    }
 
-    //excavation of machines whose usage time is greater than mean hours
+      //excavation of machines whose usage time is greater than mean hours
 
-    for (int i = 0; i < machinesCount; i++) {
-      debugPrint(machineTypeSelected[i].toString());
-      debugPrint(usagePerDay[i].text);
-      double mean =(sumUsagePrDay / machinesCount);
-     
-      if ((sumUsagePrDay / machinesCount) < double.parse(usagePerDay[i].text)) {
-        beyondMeansumExcavtn = beyondMeansumExcavtn + perhramountofExca[i];
-        beyondMeanExcasumRent = beyondMeanExcasumRent + renthrday[i];
-        beyondMeansumfuel = beyondMeansumfuel + perhrFuelConsump[i];
+      for (int i = 0; i < machinesCount; i++) {
+        debugPrint(machineTypeSelected[i].toString());
+        debugPrint(usagePerDay[i].text);
+        // double mean = (sumUsagePrDay / machinesCount);
+
+        if ((sumUsagePrDay / machinesCount) <
+            double.parse(usagePerDay[i].text)) {
+          beyondMeansumExcavtn = beyondMeansumExcavtn + perhramountofExca[i];
+          beyondMeanExcasumRent = beyondMeanExcasumRent + renthrday[i];
+          beyondMeansumfuel = beyondMeansumfuel + perhrFuelConsump[i];
+        }
       }
-    }
 
-    debugPrint("sum " + sumExcavtn.toString());
-     debugPrint("sum " + sumfuel.toString());
-    debugPrint((sumUsagePrDay / machinesCount).toString());
-    debugPrint(beyondMeansumExcavtn.toString());
+      debugPrint("sum " + sumExcavtn.toString());
+      debugPrint("sum " + sumfuel.toString());
+      debugPrint((sumUsagePrDay / machinesCount).toString());
+      debugPrint(beyondMeansumExcavtn.toString());
 
-    for (int i = 1; ourExcavtn < volume; i++) {
-        days =(i);
-      debugPrint("------------------------------"+ourExcavtn.toString());
-      if (ourExcavtn + sumExcavtn > volume && ourExcavtn < volume) {
-        double temp = volume - ourExcavtn;
-        double percent = ((temp / volume));
-
-        ourExcavtn = ourExcavtn + temp;
-        debugPrint("came here--------------");
-        totalfuel = sumfuel * percent + totalfuel;
-        totalRent = sumRent + totalRent;
-
-        actualperdayamountofExca.add(temp);
-        actualperdayFuelConsump.add(sumfuel * percent);
-        actualrentPerday.add(sumRent);
-
-        debugPrint("here the exca--" + (sumExcavtn * percent).toString());
-        break;
-      } 
-      else if(ourExcavtn + sumExcavtn == volume && ourExcavtn < volume)
-      {
-        ourExcavtn=ourExcavtn+sumExcavtn;
-         totalfuel = sumfuel +totalfuel;
-          totalRent = sumRent +  totalRent;
-        actualperdayamountofExca.add(sumExcavtn);
-        actualperdayFuelConsump.add(sumfuel );
-        actualrentPerday.add(sumRent);
-
-      }
-      else if (ourExcavtn + sumExcavtn < volume && ourExcavtn < volume) {
-        ourExcavtn = ourExcavtn + sumExcavtn;
-        if(beyondMeansumExcavtn>0.0)
-        {
-          if (beyondMeansumExcavtn + ourExcavtn > volume && ourExcavtn < volume) {
-          debugPrint("ourExcavtn" + ourExcavtn.toString());
+      for (int i = 1; ourExcavtn < volume; i++) {
+        days = (i);
+        debugPrint("------------------------------" + ourExcavtn.toString());
+        if (ourExcavtn + sumExcavtn > volume && ourExcavtn < volume) {
           double temp = volume - ourExcavtn;
-          double percent = ((temp / sumExcavtn));
+          double percent = ((temp / volume));
+
           ourExcavtn = ourExcavtn + temp;
+          debugPrint("came here--------------");
+          totalfuel = sumfuel * percent + totalfuel;
+          totalRent = sumRent + totalRent;
 
-          totalfuel = sumfuel + beyondMeansumfuel * percent + totalfuel;
-          totalRent = sumRent + beyondMeanExcasumRent + totalRent;
+          actualperdayamountofExca.add(temp);
+          actualperdayFuelConsump.add(sumfuel * percent);
+          actualrentPerday.add(sumRent);
 
-          debugPrint("temp" + temp.toString());
-
-          actualperdayamountofExca.add(temp + sumExcavtn);
-          actualperdayFuelConsump.add(sumfuel + beyondMeansumfuel * percent);
-          actualrentPerday.add(sumRent + beyondMeanExcasumRent);
+          debugPrint("here the exca--" + (sumExcavtn * percent).toString());
           break;
-        } else {
-          ourExcavtn = ourExcavtn + beyondMeansumExcavtn;
+        } else if (ourExcavtn + sumExcavtn == volume && ourExcavtn < volume) {
+          ourExcavtn = ourExcavtn + sumExcavtn;
+          totalfuel = sumfuel + totalfuel;
+          totalRent = sumRent + totalRent;
+          actualperdayamountofExca.add(sumExcavtn);
+          actualperdayFuelConsump.add(sumfuel);
+          actualrentPerday.add(sumRent);
+        } else if (ourExcavtn + sumExcavtn < volume && ourExcavtn < volume) {
+          ourExcavtn = ourExcavtn + sumExcavtn;
+          if (beyondMeansumExcavtn > 0.0) {
+            if (beyondMeansumExcavtn + ourExcavtn > volume &&
+                ourExcavtn < volume) {
+              debugPrint("ourExcavtn" + ourExcavtn.toString());
+              double temp = volume - ourExcavtn;
+              double percent = ((temp / sumExcavtn));
+              ourExcavtn = ourExcavtn + temp;
 
-          totalfuel = sumfuel + beyondMeansumfuel + totalfuel;
-          totalRent = sumRent + beyondMeanExcasumRent + totalRent;
+              totalfuel = sumfuel + beyondMeansumfuel * percent + totalfuel;
+              totalRent = sumRent + beyondMeanExcasumRent + totalRent;
 
-          actualperdayamountofExca.add(beyondMeansumExcavtn + sumExcavtn);
-          actualperdayFuelConsump.add(sumfuel + beyondMeansumfuel);
-          actualrentPerday.add(sumRent + beyondMeanExcasumRent);
+              debugPrint("temp" + temp.toString());
+
+              actualperdayamountofExca.add(temp + sumExcavtn);
+              actualperdayFuelConsump
+                  .add(sumfuel + beyondMeansumfuel * percent);
+              actualrentPerday.add(sumRent + beyondMeanExcasumRent);
+              break;
+            } else {
+              ourExcavtn = ourExcavtn + beyondMeansumExcavtn;
+
+              totalfuel = sumfuel + beyondMeansumfuel + totalfuel;
+              totalRent = sumRent + beyondMeanExcasumRent + totalRent;
+
+              actualperdayamountofExca.add(beyondMeansumExcavtn + sumExcavtn);
+              actualperdayFuelConsump.add(sumfuel + beyondMeansumfuel);
+              actualrentPerday.add(sumRent + beyondMeanExcasumRent);
+            }
+          } else {
+            totalfuel = sumfuel + totalfuel;
+            totalRent = sumRent + totalRent;
+          }
         }
-        }
-       else{
-           totalfuel = sumfuel +totalfuel;
-          totalRent = sumRent +  totalRent;
-       }
       }
-     
 
-    
-    }
+      debugPrint(
+          "--------------------------------------" + ourExcavtn.toString());
+      debugPrint(days.toString());
+      debugPrint("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-------xxxxxxxxxxxxxxxxxx" +
+          actualperdayamountofExca.toString());
+      // debugPrint(actualperdayFuelConsump.toString());
+      // debugPrint(actualrentPerday.toString());
+      // debugPrint(totalRent.toString());
+      // debugPrint(totalfuel.toString());
 
-    debugPrint(
-        "--------------------------------------" + ourExcavtn.toString());
-    debugPrint(days.toString());
-    debugPrint("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-------xxxxxxxxxxxxxxxxxx"+actualperdayamountofExca.toString());
-    // debugPrint(actualperdayFuelConsump.toString());
-    // debugPrint(actualrentPerday.toString());
-    // debugPrint(totalRent.toString());
-    // debugPrint(totalfuel.toString());
-
-    return true;
-    }
-
-    else return false;
-
+      return true;
+    } else
+      return false;
   }
 
   showAlertDialog(BuildContext context) async {
-    var state= await estimate2();
+    var state = await estimate2();
     // set up the buttons
 
     // set up the AlertDialog
@@ -645,7 +626,7 @@ class _TestState extends State<Test> {
       content: Builder(builder: (context) {
         // Get available height and width of the build area of this widget. Make a choice depending on the size.
         var height = MediaQuery.of(context).size.height;
-        var width = MediaQuery.of(context).size.width;
+        // var width = MediaQuery.of(context).size.width;
         return Container(
             height: height / 1.8,
             child: Column(
@@ -658,13 +639,13 @@ class _TestState extends State<Test> {
                   children: [
                     Text(
                       "Total Volume: ",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700, fontSize: 15),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
                     ),
                     Text(
                       ourExcavtn.ceil().toString() + "m3",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400, fontSize: 15),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w400, fontSize: 15),
                     ),
                   ],
                 ),
@@ -675,13 +656,13 @@ class _TestState extends State<Test> {
                   children: [
                     Text(
                       "No of Days: ",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700, fontSize: 15),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
                     ),
                     Text(
                       days.toString(),
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400, fontSize: 15),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w400, fontSize: 15),
                     ),
                   ],
                 ),
@@ -692,13 +673,13 @@ class _TestState extends State<Test> {
                   children: [
                     Text(
                       "Total Rent of Machines Used: ",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700, fontSize: 14),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
                     ),
                     Text(
                       totalRent.ceil().toString() + " Rs",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400, fontSize: 14),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
                     ),
                   ],
                 ),
@@ -709,24 +690,23 @@ class _TestState extends State<Test> {
                   children: [
                     Text(
                       "Total Fuel requires: ",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700, fontSize: 14),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
                     ),
                     Text(
                       totalfuel.ceil().toString() + " litre",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400, fontSize: 14),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
                     ),
                   ],
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height/10,
+                  height: MediaQuery.of(context).size.height / 10,
                 ),
                 Center(
                   child: Text(
                     "Do you want to create this project?",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500, fontSize: 15),
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
                   ),
                 ),
                 Row(
@@ -734,8 +714,7 @@ class _TestState extends State<Test> {
                   children: <Widget>[
                     RaisedButton(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)
-                      ),
+                          borderRadius: BorderRadius.circular(8)),
                       color: Color(0xFF005c9d),
                       onPressed: () {
                         debugPrint('Create Project');
@@ -746,8 +725,7 @@ class _TestState extends State<Test> {
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 18,
-                          color: Colors.white
-                        ),
+                            color: Colors.white),
                       ),
                     ),
                   ],
@@ -757,31 +735,30 @@ class _TestState extends State<Test> {
       }),
     );
 
-
-     AlertDialog alert2 = AlertDialog(
+    AlertDialog alert2 = AlertDialog(
       title: Text("Dear User"),
       content: Builder(builder: (context) {
         // Get available height and width of the build area of this widget. Make a choice depending on the size.
         var height = MediaQuery.of(context).size.height;
-      
+
         return Container(
-            height: height /3,
+            height: height / 3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 SizedBox(
                   height: 10,
                 ),
-                Text("The work is already completed and the completed work is greater than the project goals."),
+                Text(
+                    "The work is already completed and the completed work is greater than the project goals."),
                 SizedBox(
                   height: 10,
                 ),
                 Text("Hence the progress is > 100% which is not true."),
-                 SizedBox(
+                SizedBox(
                   height: 10,
                 ),
                 Text("Thus put proper goals."),
-               
               ],
             ));
       }),
@@ -791,8 +768,7 @@ class _TestState extends State<Test> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return state?alert:alert2;
-
+        return state ? alert : alert2;
       },
     );
   }
@@ -802,7 +778,7 @@ class _TestState extends State<Test> {
         type: ProgressDialogType.Normal, isDismissible: true, showLogs: true);
 
     return Scaffold(
-        appBar: ThemeAppbar("Create Project",context),
+        appBar: ThemeAppbar("Create Project", context),
         body: SingleChildScrollView(
           child: Form(
             key: _formKeyValue,
@@ -815,7 +791,6 @@ class _TestState extends State<Test> {
                     child: titleStyles('Create  Project', 24),
                   ),
                   SizedBox(height: 20),
-
                   TextFormField(
                     textInputAction: TextInputAction.newline,
                     keyboardType: TextInputType.multiline,
@@ -1108,8 +1083,6 @@ class _TestState extends State<Test> {
                       ),
                     ),
                   ),
-
-
                   SizedBox(
                     height: 20,
                   ),
@@ -1138,8 +1111,7 @@ class _TestState extends State<Test> {
                   SizedBox(height: 40.0),
                   RaisedButton(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)
-                    ),
+                        borderRadius: BorderRadius.circular(10)),
                     color: Color(0xff018abd),
 //                    child: Padding(
 //                      padding:
@@ -1171,18 +1143,14 @@ class _TestState extends State<Test> {
                         }
                         if (isFormValid)
                           showAlertDialog(context);
-                        else
-                        {
-                          if(machineDetailsList.length==0)
-                          {
-                            showToast("Please first add machines to the system");
-                          }
-                          else{
+                        else {
+                          if (machineDetailsList.length == 0) {
+                            showToast(
+                                "Please first add machines to the system");
+                          } else {
                             showToast("Incomplete form");
                           }
-                          
                         }
-                         
                       }
                     },
                   ),
@@ -1256,8 +1224,8 @@ class _SelectMachinesState extends State<SelectMachines> {
                 flex: 3,
                 child: DropdownButtonFormField<String>(
                   value: machineTypeSelected[widget.index],
-                    isDense: false,
-                        isExpanded: true,
+                  isDense: false,
+                  isExpanded: true,
                   //icon: Icon(Icons.arrow_downward),
                   hint: Text(
                     'Select Machine',
@@ -1275,10 +1243,15 @@ class _SelectMachinesState extends State<SelectMachines> {
                       .map<DropdownMenuItem<String>>((var value) {
                     return DropdownMenuItem<String>(
                       value: value.machineID,
-                      child:Container(child: Column(children: [
-                        Text(value.machineName),
-                         Text(value.modelName,style: TextStyle(color: Colors.grey)),
-                      ],),),
+                      child: Container(
+                        child: Column(
+                          children: [
+                            Text(value.machineName),
+                            Text(value.modelName,
+                                style: TextStyle(color: Colors.grey)),
+                          ],
+                        ),
+                      ),
                     );
                   }).toList(),
                 ),

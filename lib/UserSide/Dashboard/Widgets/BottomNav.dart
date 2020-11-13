@@ -16,7 +16,6 @@ import 'package:project_timeline/crowdfunding/ApiRazorPay.dart';
 import 'package:project_timeline/languages/rawText/bottomNavText.dart';
 import 'package:project_timeline/multilingual/dynamic_translation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:translator/translator.dart';
 
 class BottomNav extends StatefulWidget {
   @override

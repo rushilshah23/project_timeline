@@ -6,7 +6,6 @@ import 'package:photo_view/photo_view.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:project_timeline/admin/ProgressTimeLine/theme.dart';
 import 'package:project_timeline/admin/headings.dart';
-import 'package:project_timeline/crowdfunding/ApiRazorPay.dart';
 
 class AllocProjDetails extends StatefulWidget {
   Map projectDetails;
@@ -21,42 +20,42 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
   List workers = List();
   List images = List();
   List machines = List();
-   List machinesNameModel = List();
+  List machinesNameModel = List();
   int w, s;
 
   final databaseReference = FirebaseDatabase.instance.reference();
-    Map allMachinesData;
-  
+  Map allMachinesData;
+
   void loadMachines() async {
     machinesNameModel.clear();
     machines.clear();
 
-
     machines = widget.projectDetails["machinesSelected"];
 
-     debugPrint(machines.toString());
+    debugPrint(machines.toString());
     await databaseReference
         .child("masters")
         .child("machineMaster")
         .once()
         .then((snapshot) {
-      allMachinesData=snapshot.value;
+      allMachinesData = snapshot.value;
     });
 
-
-    for(int i=0;i<machines.length;i++)
-    {
-          if(allMachinesData.containsKey(machines[i]["machineID"]))
-          {
-            String machineModel=allMachinesData[machines[i]["machineID"]]["machineName"]+"\n"+allMachinesData[machines[i]["machineID"]]["modelName"];
-            machinesNameModel.add({"machineName":machineModel,"usagePerDay":machines[i]["usagePerDay"]});
-
-          }
-
+    for (int i = 0; i < machines.length; i++) {
+      if (allMachinesData.containsKey(machines[i]["machineID"])) {
+        String machineModel = allMachinesData[machines[i]["machineID"]]
+                ["machineName"] +
+            "\n" +
+            allMachinesData[machines[i]["machineID"]]["modelName"];
+        machinesNameModel.add({
+          "machineName": machineModel,
+          "usagePerDay": machines[i]["usagePerDay"]
+        });
+      }
     }
     setState(() {});
 
-    debugPrint("----------------"+machinesNameModel.toString());
+    debugPrint("----------------" + machinesNameModel.toString());
   }
 
   @override
@@ -64,7 +63,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
     super.initState();
     loadMachines();
     images = widget.projectDetails["approvedImages"];
-    
+
     ////debugPrint(images.toString());
 
     if (images == null) {
@@ -92,11 +91,6 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
         workers.length = 0;
       });
     }
-
-
-
-    
-     
   }
 
   Widget buildGridView() {
@@ -127,7 +121,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
     return Scaffold(
       appBar: ThemeAppbar(superText[10], context),
       body: Padding(
-        padding: const EdgeInsets.only(right:20.0,left: 20),
+        padding: const EdgeInsets.only(right: 20.0, left: 20),
         child: ListView(
           children: [
             Column(
@@ -144,8 +138,17 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                           radius: 140.0,
                           lineWidth: 10.0,
                           animation: true,
-                       percent: double.parse(widget.projectDetails["progressPercent"])<100? double.parse(widget.projectDetails["progressPercent"])>0?
-                              double.parse(widget.projectDetails["progressPercent"])/ 100:0:1,
+                          percent: double.parse(widget
+                                      .projectDetails["progressPercent"]) <
+                                  100
+                              ? double.parse(widget
+                                          .projectDetails["progressPercent"]) >
+                                      0
+                                  ? double.parse(widget
+                                          .projectDetails["progressPercent"]) /
+                                      100
+                                  : 0
+                              : 1,
                           center: new Text(
                             widget.projectDetails["progressPercent"]
                                     .toString() +
@@ -286,8 +289,7 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                   ],
                 ),
 
-              SizedBox(height: 20),
-
+                SizedBox(height: 20),
 
                 Text(superText[17],
                     style: TextStyle(
@@ -296,7 +298,6 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                       color: Color(0xff005c9d),
                       //fontStyle: FontStyle\.italic,
                     )),
-
 
                 Container(
                   //width: MediaQuery.of(context).size.width-50,
@@ -339,19 +340,20 @@ class _ProjectDetailsState extends State<AllocProjDetails> {
                     )),
 
                 Container(
-                    child: Column( 
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: List.generate(machinesNameModel.length, (index) {
-                        return   Container(
-                          color:  Colors.grey.withOpacity(0.1),
-                          margin: EdgeInsets.only(top:10,bottom:10),
-                          child:ListTile(  
-                            title:Text(superText[19]+ machinesNameModel[index]["machineName"]),
-                            subtitle:  Text(superText[20]+ machinesNameModel[index]["usagePerDay"] +" hrs"),
-                            ));
-                           
-                         
-                      }),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: List.generate(machinesNameModel.length, (index) {
+                      return Container(
+                          color: Colors.grey.withOpacity(0.1),
+                          margin: EdgeInsets.only(top: 10, bottom: 10),
+                          child: ListTile(
+                            title: Text(superText[19] +
+                                machinesNameModel[index]["machineName"]),
+                            subtitle: Text(superText[20] +
+                                machinesNameModel[index]["usagePerDay"] +
+                                " hrs"),
+                          ));
+                    }),
                   ),
                 ),
 

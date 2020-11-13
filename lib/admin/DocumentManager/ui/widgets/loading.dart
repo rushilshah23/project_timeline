@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Loading extends StatelessWidget {
   @override
@@ -15,9 +14,10 @@ class Loading extends StatelessWidget {
     //   ),
     // );
 
-     return Scaffold(body: Center(
-                  child: CircularProgressIndicator(
-                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
-                  )));
+    return Scaffold(
+        body: Center(
+            child: CircularProgressIndicator(
+      valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+    )));
   }
 }

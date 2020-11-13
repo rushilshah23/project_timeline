@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'OrderApi.dart';
 import 'SuccesPage.dart';
@@ -302,7 +301,6 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
                               }
                             },
                           ),
-
                           greaterthan10000
                               ? Column(
                                   children: [
@@ -329,8 +327,8 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
                                   ],
                                 )
                               : SizedBox(
-                            height: 20,
-                          ),
+                                  height: 20,
+                                ),
                           projectnameknown
                               ? TextFormField(
                                   readOnly: true,
@@ -360,8 +358,9 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
                                         selectedProject = selectedAccountType;
                                       });
                                     },
-                                    validator: (value) =>
-                                        value == null ? 'Please select project you wish to donate in' : null,
+                                    validator: (value) => value == null
+                                        ? 'Please select project you wish to donate in'
+                                        : null,
                                     value: selectedProject,
                                     isDense: false,
                                     isExpanded: true,

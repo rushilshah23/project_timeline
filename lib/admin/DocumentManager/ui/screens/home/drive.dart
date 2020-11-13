@@ -1,8 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-import 'package:project_timeline/UserSide/UI/Widgets/cards.dart';
-import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:project_timeline/admin/DocumentManager/core/models/filemodel.dart';
 import 'package:project_timeline/admin/DocumentManager/core/models/foldermodel.dart';
 import 'package:project_timeline/admin/DocumentManager/core/models/usermodel.dart';
@@ -10,7 +7,6 @@ import 'package:project_timeline/admin/DocumentManager/core/services/database.da
 import 'package:project_timeline/admin/DocumentManager/core/viewmodels/file.dart';
 import 'package:project_timeline/admin/DocumentManager/core/viewmodels/folders.dart';
 import 'package:project_timeline/admin/DocumentManager/ui/shared/constants.dart';
-import 'package:project_timeline/admin/DocumentManager/ui/widgets/drawer.dart';
 import 'package:project_timeline/admin/DocumentManager/ui/widgets/loading.dart';
 import 'package:provider/provider.dart';
 

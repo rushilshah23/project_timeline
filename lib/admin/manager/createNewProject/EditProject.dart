@@ -561,7 +561,7 @@ class _EditProjectState extends State<EditProject> {
       content: Builder(builder: (context) {
         // Get available height and width of the build area of this widget. Make a choice depending on the size.
         var height = MediaQuery.of(context).size.height;
-        var width = MediaQuery.of(context).size.width;
+        // var width = MediaQuery.of(context).size.width;
         return Container(
             height: height / 1.8,
             child: Column(

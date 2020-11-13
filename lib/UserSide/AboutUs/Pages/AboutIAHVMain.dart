@@ -31,23 +31,46 @@ class _MainIAHVPageState extends State<MainIAHVPage> {
       decoration: BoxDecoration(
           image: DecorationImage(
         image: AssetImage('assets/waterimg.jpg'),
+        fit: BoxFit.fitHeight,
         colorFilter:
-            ColorFilter.mode(Colors.grey.withOpacity(0.7), BlendMode.dstATop),
+            ColorFilter.mode(Colors.black.withOpacity(0.7), BlendMode.dstATop),
       )),
       child: Column(
         children: [
-          Text(
-            IAHVText[1],
-            style: TextStyle(
-              color: Colors.white70,
-              fontSize: 25.0,
-              fontFamily: 'DancingScript',
-              fontWeight: FontWeight.w700,
-              fontStyle: FontStyle.italic,
+          Align(
+            alignment: Alignment.topCenter,
+            child: Text(
+              IAHVText[1],
+              style: TextStyle(
+                color: Colors.white70,
+                fontSize: 25.0,
+                fontFamily: 'DancingScript',
+                fontWeight: FontWeight.w700,
+                fontStyle: FontStyle.italic,
+              ),
+              maxLines: 2,
             ),
-            maxLines: 2,
           ),
-          Center(
+          SizedBox(
+            height: 10,
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+                width: 250.0,
+                height: 150.0,
+                decoration: new BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.rectangle,
+                    image: new DecorationImage(
+                        fit: BoxFit.fill,
+                        image: AssetImage('assets/IAHVLogo.jpg')))),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Align(
+            alignment: Alignment.center,
             child: Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 20.0),
               child: Column(
