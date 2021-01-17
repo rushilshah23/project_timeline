@@ -4,18 +4,25 @@ import 'package:translator/translator.dart';
 
 class DynamicTranslation {
   var translator = GoogleTranslator();
-  String language;
+  String toLanguage, fromLanguage;
 
   getLanguage() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    language = sharedPreferences.getString('language');
+    toLanguage = sharedPreferences.getString('toLanguage');
+    fromLanguage = sharedPreferences.getString('fromLanguage');
+    return toLanguage;
+    // return [fromLanguage, toLanguage];
+
+    // language = 'hi';
   }
 
   Future<String> stringTranslate({String data}) async {
     String translatedString;
     getLanguage();
+
     translatedString =
-        (await translator.translate(data, from: 'en', to: language)).toString();
+        (await translator.translate(data, from: fromLanguage, to: toLanguage))
+            .toString();
     debugPrint("deep translation " + translatedString);
     return translatedString;
   }
@@ -96,12 +103,14 @@ class DynamicTranslation {
     List<String> translatedText = List<String>();
     translatedText.clear();
     await getLanguage();
+    debugPrint("from language " + fromLanguage);
+    debugPrint("to language " + toLanguage);
 
     for (var i = 0; i < inputs.length; i++) {
       await translator
-          .translate(inputs[i], from: 'en', to: language)
+          .translate(inputs[i], from: fromLanguage, to: toLanguage)
           .then((value) {
-       // debugPrint("translated text is " + value.toString());
+        // debugPrint("translated text is " + value.toString());
         String text = value.toString();
         translatedText.add(text);
       });

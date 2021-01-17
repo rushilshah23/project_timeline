@@ -6,14 +6,14 @@ import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:project_timeline/admin/ProgressTimeLine/theme.dart';
 import 'package:project_timeline/admin/headings.dart';
 import 'package:project_timeline/crowdfunding/ApiRazorPay.dart';
-import 'package:project_timeline/multilingual/dynamicTranslation2.dart';
-import 'package:project_timeline/multilingual/dynamic_translation.dart';
+import 'package:project_timeline/multilingual/dynamicTranslation3.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'feedbackDetails.dart';
 
 class ProjectDetails extends StatefulWidget {
-   Map projectDetails;
+  final Map projectDetails;
   ProjectDetails({this.projectDetails});
 
   @override
@@ -28,12 +28,11 @@ class _ProjectDetailsState extends State<ProjectDetails> {
   bool isUser = false;
   List feedbackList = List();
   int feebackDisplayLimit = 1;
+  dynamic output;
 
   @override
   void initState() {
     super.initState();
-
-    
 
     _loadData();
     images = widget.projectDetails["approvedImages"];
@@ -73,22 +72,22 @@ class _ProjectDetailsState extends State<ProjectDetails> {
       });
     }
 
-    
     loadTranslatedText();
   }
 
   loadTranslatedText() async {
-    await DynamicTranslation().listtranslate(inputs: proText).then((value) {
+    // await DynamicTranslation().listtranslate(inputs: proText).then((value) {
+    //   setState(() {
+    //     proText = value;
+    //   });
+    // });
+
+    await DynamicTranslate().getTranslatedValue(testStringMap).then((value) {
       setState(() {
         proText = value;
       });
+      print("--------------DONE=====-------------" + output.toString());
     });
-
-    
-
-     final dynamicTranslate = DynamicTranslate()..translateFunction = getTranslatedValue;
-      dynamic output = await dynamicTranslate.translateFunction(testStringMap);      
-     await print("--------------DONE=====-------------" + output.toString());
   }
 
   seeMoreFeedback() {

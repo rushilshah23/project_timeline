@@ -68,7 +68,7 @@ class _BottomNavState extends State<BottomNav> {
     _loadData();
     // loadListMapTranslation();
     // loadStringListTranslation();
-    DynamicTranslation().stringTranslate(data: s1);
+    // DynamicTranslation().stringTranslate(data: s1);
     loadTranslatedText();
   }
 
@@ -182,6 +182,9 @@ class _BottomNavState extends State<BottomNav> {
 
   loadTranslatedText() async {
     try {
+      // SharedPreferences sharedPreferences =
+      //     await SharedPreferences.getInstance();
+      // sharedPreferences.setString('fromLanguage', 'en');
       await DynamicTranslation()
           .listtranslate(inputs: bottomNavText)
           .then((value) {

@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:project_timeline/admin/DocumentManager/core/models/usermodel.dart';
 import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
 import 'package:project_timeline/multilingual/app_localizations.dart';
+import 'package:project_timeline/multilingual/dynamic_translation.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'UserSide/Dashboard/Widgets/BottomNav.dart';
@@ -22,7 +23,12 @@ void main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   final Geocoding geocoding = Geocoder.local;
 
   final Map<String, Geocoding> modes = {
@@ -30,13 +36,28 @@ class MyApp extends StatelessWidget {
     "Google (distant)": Geocoder.google("<API-KEY>"),
   };
 
+  String toLanguage;
+
   setLanguage({@required String language}) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString('language', language);
-    print(sharedPreferences.getString('language'));
+
+    sharedPreferences.setString('toLanguage', language);
+    print("in main " + sharedPreferences.getString('toLanguage'));
   }
 
-  // This widget is the root of your application.
+  void initState() {
+    // getLanguage();R
+
+    super.initState();
+  }
+
+  getLanguage() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    toLanguage = sharedPreferences.getString('toLanguage');
+    // toLanguage = await DynamicTranslation().getLanguage()[1];
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -66,13 +87,24 @@ class MyApp extends StatelessWidget {
           ],
           localeResolutionCallback: (locale, supportedLocales) {
             for (var supportedLocale in supportedLocales) {
-              if (supportedLocale.languageCode == locale.languageCode &&
+              if (supportedLocale.languageCode == locale.languageCode
+                  // supportedLocale.languageCode == toLanguage
+
+                  &&
                   supportedLocale.countryCode == locale.countryCode) {
-                setLanguage(language: locale.languageCode);
+                // debugPrint("language detected inside " + toLanguage);
+
+                // setLanguage(language: locale.languageCode);
+
                 return supportedLocale;
               }
             }
-            setLanguage(language: supportedLocales.first.languageCode);
+            // debugPrint("language detected outside " + toLanguage);
+
+            // setLanguage(language: supportedLocales.first.languageCode);
+            // setLanguage(language: toLanguage);
+            // setLanguage(language: );
+
             return supportedLocales.first;
           },
           debugShowCheckedModeBanner: false,
