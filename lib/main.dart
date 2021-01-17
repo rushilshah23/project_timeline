@@ -42,6 +42,8 @@ class _MyAppState extends State<MyApp> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     sharedPreferences.setString('toLanguage', language);
+    // sharedPreferences.setString('fromLanguage', language);
+
     print("in main " + sharedPreferences.getString('toLanguage'));
   }
 

@@ -8,8 +8,8 @@ class DynamicTranslation {
 
   getLanguage() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    toLanguage = sharedPreferences.getString('toLanguage');
-    fromLanguage = sharedPreferences.getString('fromLanguage');
+    toLanguage = sharedPreferences.getString('toLanguage') ?? 'en';
+    fromLanguage = sharedPreferences.getString('fromLanguage') ?? 'en';
     return toLanguage;
     // return [fromLanguage, toLanguage];
 
