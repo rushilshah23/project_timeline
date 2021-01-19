@@ -36,30 +36,6 @@ class _MyAppState extends State<MyApp> {
     "Google (distant)": Geocoder.google("<API-KEY>"),
   };
 
-  String toLanguage;
-
-  setLanguage({@required String language}) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-
-    sharedPreferences.setString('toLanguage', language);
-    // sharedPreferences.setString('fromLanguage', language);
-
-    print("in main " + sharedPreferences.getString('toLanguage'));
-  }
-
-  void initState() {
-    // getLanguage();R
-
-    super.initState();
-  }
-
-  getLanguage() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-
-    toLanguage = sharedPreferences.getString('toLanguage');
-    // toLanguage = await DynamicTranslation().getLanguage()[1];
-  }
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -70,10 +46,6 @@ class _MyAppState extends State<MyApp> {
     return AppState(
       mode: this.geocoding,
       child:
-          // FutureBuilder(
-          //   future: Firebase.initializeApp(),
-          //   builder: (context, snapshot) {
-          //     return
           StreamProvider<UserModel>.value(
         value: AuthenticationService().user,
         child: MaterialApp(
@@ -90,23 +62,11 @@ class _MyAppState extends State<MyApp> {
           localeResolutionCallback: (locale, supportedLocales) {
             for (var supportedLocale in supportedLocales) {
               if (supportedLocale.languageCode == locale.languageCode
-                  // supportedLocale.languageCode == toLanguage
-
                   &&
                   supportedLocale.countryCode == locale.countryCode) {
-                // debugPrint("language detected inside " + toLanguage);
-
-                // setLanguage(language: locale.languageCode);
-
                 return supportedLocale;
               }
             }
-            // debugPrint("language detected outside " + toLanguage);
-
-            // setLanguage(language: supportedLocales.first.languageCode);
-            // setLanguage(language: toLanguage);
-            // setLanguage(language: );
-
             return supportedLocales.first;
           },
           debugShowCheckedModeBanner: false,

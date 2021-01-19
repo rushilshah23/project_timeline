@@ -25,8 +25,10 @@ class _AllProjectsState extends State<AllProjects> {
     await DynamicTranslation()
         .stringTranslate(data: pName)
         .then((value) {
-         projectName = value;
+          setState(() {
+        projectName = value;
         print("------------------"+projectName);
+          });
     });
   }
 
