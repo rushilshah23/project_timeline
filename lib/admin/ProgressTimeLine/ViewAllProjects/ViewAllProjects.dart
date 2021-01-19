@@ -5,6 +5,7 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:project_timeline/admin/headings.dart';
 import '../../CommonWidgets.dart';
 import 'ProjectDetails.dart';
+import 'package:project_timeline/multilingual/dynamic_translation.dart';
 
 class AllProjects extends StatefulWidget {
   @override
@@ -14,23 +15,24 @@ class AllProjects extends StatefulWidget {
 class _AllProjectsState extends State<AllProjects> {
   final databaseReference = FirebaseDatabase.instance.reference();
   List allProjects = List();
-  List<String> translatedText;
+  String projectName;
   @override
   void initState() {
     super.initState();
   }
 
-  // loadTranslatedText() async {
-  //   await DynamicTranslation()
-  //       .translate(inputs: viewAllProjectsText)
-  //       .then((value) {
-  //     setState(() {
-  //       translatedText = value;
-  //     });
-  //   });
-  // }
+  loadTranslatedText(String pName) async {
+    await DynamicTranslation()
+        .stringTranslate(data: pName)
+        .then((value) {
+         projectName = value;
+        print("------------------"+projectName);
+    });
+  }
 
   Widget displayProject(int index, allProjects) {
+    loadTranslatedText(allProjects[index]["projectName"]);
+
     return Container(
         child: GestureDetector(
       onTap: () {

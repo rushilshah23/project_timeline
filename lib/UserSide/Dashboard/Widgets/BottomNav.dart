@@ -39,7 +39,11 @@ class _BottomNavState extends State<BottomNav> {
       userType = '',
       assignedProject = '';
 
-  List<String> translatedText;
+  List<String> translatedText=[
+  'Home',
+  'Projects',
+  'Donations',
+];
 
   List l1 = ['garden', 'forest', 'industry', 'trees'];
   String s1 = "garden";
