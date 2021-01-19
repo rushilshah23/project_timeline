@@ -39,31 +39,7 @@ class _BottomNavState extends State<BottomNav> {
       userType = '',
       assignedProject = '';
 
-  List<String> translatedText=[
-  'Home',
-  'Projects',
-  'Donations',
-];
-
-  List l1 = ['garden', 'forest', 'industry', 'trees'];
-  String s1 = "garden";
-  Map testStringMap = {
-    'a': {
-      'a1': 'Home',
-      'a2': 'School',
-      'a3': 'Garden',
-    },
-    'b': {
-      'b1': 'Country',
-      'b2': 'World',
-      'b3': 'Island',
-    },
-    'c': {
-      'c1': ['cricket', 'badminton', 'volleyball', 'football'],
-      'c2': ['trees', 'plants', 'creepers', 'mangroves'],
-      'c3': ['elephant', 'kangaroo', 'rabbits', 'eagle'],
-    }
-  };
+  List<String> bottomNavText = bottomNavTextEnglish;
 
   void initState() {
     //print("in homepage");
@@ -73,7 +49,7 @@ class _BottomNavState extends State<BottomNav> {
     // loadListMapTranslation();
     // loadStringListTranslation();
     // DynamicTranslation().stringTranslate(data: s1);
-    loadTranslatedText();
+    setLanguageText();
   }
 
   _loadData() async {
@@ -184,20 +160,16 @@ class _BottomNavState extends State<BottomNav> {
     }
   }
 
-  loadTranslatedText() async {
-    try {
-      // SharedPreferences sharedPreferences =
-      //     await SharedPreferences.getInstance();
-      // sharedPreferences.setString('fromLanguage', 'en');
-      await DynamicTranslation()
-          .listtranslate(inputs: bottomNavText)
-          .then((value) {
-        setState(() {
-          translatedText = value;
-        });
-      });
-    } catch (e) {
-      e.toString();
+  setLanguageText() async {
+    SharedPreferences _sharedPreferences =
+        await SharedPreferences.getInstance();
+    language = _sharedPreferences.getString('language') ?? "en";
+    if (language == "en") {
+      bottomNavText = bottomNavTextEnglish;
+    } else if (language == "hi") {
+      bottomNavText = bottomNavTextHindi;
+    } else if (language == "mr") {
+      bottomNavText = bottomNavTextMarathi;
     }
   }
 
@@ -252,7 +224,7 @@ class _BottomNavState extends State<BottomNav> {
             TabData(
                 iconData: Icons.home,
                 // title: "Home",
-                title: translatedText[0] ?? "",
+                title: bottomNavText[0] ?? "",
                 onclick: () {
                   final FancyBottomNavigationState fState =
                       bottomNavigationKey.currentState;
@@ -261,7 +233,7 @@ class _BottomNavState extends State<BottomNav> {
             TabData(
                 iconData: Icons.assignment,
                 // title: "Projects",
-                title: translatedText[1] ?? "",
+                title: bottomNavText[1] ?? "",
                 onclick: () {
                   final FancyBottomNavigationState fState =
                       bottomNavigationKey.currentState;
@@ -270,7 +242,7 @@ class _BottomNavState extends State<BottomNav> {
             TabData(
                 iconData: Icons.attach_money,
                 // title: "Donations",
-                title: translatedText[2] ?? "",
+                title: bottomNavText[2] ?? "",
                 onclick: () {
                   final FancyBottomNavigationState fState =
                       bottomNavigationKey.currentState;

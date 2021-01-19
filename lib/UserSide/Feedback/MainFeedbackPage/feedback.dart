@@ -2,13 +2,11 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:project_timeline/UserSide/Feedback/TextPages/feedbackText.dart';
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:project_timeline/languages/rawText/feedbackTranslation/feedbackTranslationEnglish.dart';
 import 'package:project_timeline/languages/rawText/feedbackTranslation/feedbackTranslationHindi.dart';
 import 'package:project_timeline/languages/rawText/feedbackTranslation/feedbackTranslationMarathi.dart';
-import 'package:project_timeline/multilingual/app_localizations.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -58,7 +56,9 @@ class _LocalFeedbackState extends State<LocalFeedback> {
 
   @override
   void initState() {
+    feedbackText = feedbackTextEnglish;
     getProjectsData();
+    setLanguageText();
     super.initState();
   }
 
@@ -197,7 +197,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
 
   String emailValidator(value) {
     if (value.isEmpty) {
-      // return feedbackText[19];
+      // return feedbackText[19] ;
       return null;
     } else if (value.toString().contains('@') &&
         value.toString().contains('.')) {
@@ -293,7 +293,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
         // appBar: AppBar(
         //   automaticallyImplyLeading: false,
         //   backgroundColor: appbarColor,
-        //   title: Text(feedbackText[8]),
+        //   title: Text(feedbackText[8] ?? feedbackTextEnglish[8]),
         //   centerTitle: true,
         //   leading: GestureDetector(
         //     child: Icon(Icons.arrow_back),
@@ -350,7 +350,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                           height: 20,
                         ),
                         fields(
-                            // labelText: feedbackText[0],
+                            // labelText: feedbackText[0] ,
                             labelText: feedbackText[0],
                             decorationText: feedbackText[10],
                             controllername: _name,
@@ -362,7 +362,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                         fields(
                           labelText: feedbackText[1],
 
-                          // labelText: feedbackText[1],
+                          // labelText: feedbackText[1] ,
                           keyboard: TextInputType.number,
                           decorationText: feedbackText[11],
                           controllername: _contactNumber,
@@ -387,8 +387,8 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                           height: 20,
                         ),
                         // fields(
-                        //   labelText: feedbackText[3],
-                        //   decorationText: feedbackText[13],
+                        //   labelText: feedbackText[3] ,
+                        //   decorationText: feedbackText[13] ,
                         //   controllername: _address,
                         //   validateFunction: addressValidator,
                         //   compulsory: "*",
