@@ -21,7 +21,7 @@ class _SelectLanguageState extends State<SelectLanguage> {
 
   Future<void> changeLanguage(String lang) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.setString('toLanguage', lang);
+    await sharedPreferences.setString('language', lang);
 
     showToast("Language Changed Successfully");
   }

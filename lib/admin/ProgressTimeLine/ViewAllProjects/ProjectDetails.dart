@@ -6,7 +6,6 @@ import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:project_timeline/admin/ProgressTimeLine/theme.dart';
 import 'package:project_timeline/admin/headings.dart';
 import 'package:project_timeline/crowdfunding/ApiRazorPay.dart';
-import 'package:project_timeline/multilingual/dynamicTranslation3.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -82,12 +81,12 @@ class _ProjectDetailsState extends State<ProjectDetails> {
     //   });
     // });
 
-    await DynamicTranslate().getTranslatedValue(testStringMap).then((value) {
-      setState(() {
-        proText = value;
-      });
-      print("--------------DONE=====-------------" + output.toString());
-    });
+    //   await DynamicTranslate().getTranslatedValue(testStringMap).then((value) {
+    //     setState(() {
+    //       proText = value;
+    //     });
+    //     print("--------------DONE=====-------------" + output.toString());
+    //   });
   }
 
   seeMoreFeedback() {
