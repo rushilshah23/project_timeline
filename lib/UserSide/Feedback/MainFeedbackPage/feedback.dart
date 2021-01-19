@@ -338,7 +338,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                                 isDense: false,
                                 isExpanded: true,
                                 hint: Text(
-                                  feedbackText[30],
+                                  feedbackText[31],
                                   style: TextStyle(
                                       color: Colors.black54, fontSize: 14),
                                 ),
