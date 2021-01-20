@@ -50,9 +50,11 @@ Future<bool> onBackPressed(BuildContext context) {
                   _sharedpreferences.getKeys();
                   for (String key in _sharedpreferences.getKeys()) {
                     if (key == "userType" || key == "isLoggedIn") {
+                      debugPrint("========================"+key.toString());
                       _sharedpreferences.remove(key);
                     }
                   }
+                  
                   Navigator.pushAndRemoveUntil(context, PageRouteBuilder(
                     pageBuilder: (BuildContext context, Animation animation,
                         Animation secondaryAnimation) {

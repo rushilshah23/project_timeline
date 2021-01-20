@@ -38,8 +38,17 @@ class _BottomNavState extends State<BottomNav> {
       userType = '',
       assignedProject = '';
 
+  getLanguageText() async {
+    SharedPreferences _sharedPreferences = await SharedPreferences.getInstance();
+    String language = _sharedPreferences.getString('language') ?? "en";
+    print("------------"+language);
+    setState(() {});
+  }
+
   void initState() {
     super.initState();
+    getLanguageText();
+    setLanguageText();
     _loadData();
 
     // setLanguageText();
@@ -145,12 +154,7 @@ class _BottomNavState extends State<BottomNav> {
                   userType: supervisorType,
                 )),
       );
-    } else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
-      );
-    }
+    } 
   }
 
   @override
