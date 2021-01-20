@@ -29,13 +29,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  aws_translate:
-    dependency: "direct main"
-    description:
-      name: aws_translate
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.1"
   barcode:
     dependency: transitive
     description:
@@ -824,6 +817,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0+5"
+  translated_text:
+    dependency: "direct main"
+    description:
+      name: translated_text
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
   translator:
     dependency: "direct main"
     description:

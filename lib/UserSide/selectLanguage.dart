@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:project_timeline/languages/setLanguageText.dart';
 
 
+String selectedLanguage ='en';
+
 class SelectLanguage extends StatefulWidget {
   @override
   _SelectLanguageState createState() => _SelectLanguageState();
@@ -17,7 +19,7 @@ class _SelectLanguageState extends State<SelectLanguage> {
     "hi",
     "mr",
   ];
-  String selectedLanguage ;
+
 
   getLanguageText() async {
     SharedPreferences _sharedPreferences = await SharedPreferences.getInstance();
