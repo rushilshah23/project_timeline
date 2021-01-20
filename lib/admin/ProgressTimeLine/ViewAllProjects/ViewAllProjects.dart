@@ -5,7 +5,7 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:project_timeline/languages/setLanguageText.dart';
 import '../../CommonWidgets.dart';
 import 'ProjectDetails.dart';
-import 'package:project_timeline/multilingual/dynamic_translation.dart';
+
 
 class AllProjects extends StatefulWidget {
   @override
@@ -21,19 +21,9 @@ class _AllProjectsState extends State<AllProjects> {
     super.initState();
   }
 
-  loadTranslatedText(String pName) async {
-    await DynamicTranslation()
-        .stringTranslate(data: pName)
-        .then((value) {
-          setState(() {
-        projectName = value;
-        print("------------------"+projectName);
-          });
-    });
-  }
 
   Widget displayProject(int index, allProjects) {
-    loadTranslatedText(allProjects[index]["projectName"]);
+    
 
     return Container(
         child: GestureDetector(
