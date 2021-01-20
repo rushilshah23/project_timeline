@@ -4,7 +4,7 @@ import 'package:project_timeline/admin/manager/master/petrolMaster/petrolPumpDet
 
 import '../CommonWidgets.dart';
 
-
+import 'package:project_timeline/languages/setLanguageText.dart';
 
 class OurPetrolPumps extends StatefulWidget {
   @override
@@ -70,7 +70,7 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                "Name " +
+                                petrolPumpDataPage[0]+
                                     allPetrolPump[index]["petrolPumpName"]
                                         .toString(),
                                 overflow: TextOverflow.clip,
@@ -86,8 +86,7 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
                                 height: 5,
                               ),
                               Text(
-                                "Address" +
-                                    ": " +
+                                petrolPumpDataPage[1]+
                                     allPetrolPump[index]["petrolPumpAddress"]
                                         .toString(),
                                 overflow: TextOverflow.clip,
@@ -99,8 +98,7 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
                                 width: 10,
                               ),
                               Text(
-                                "Phone No." +
-                                    ": " +
+                                petrolPumpDataPage[2] +
                                     allPetrolPump[index]["petrolPumpPhoneNumber"],
                                 overflow: TextOverflow.clip,
                                 maxLines: 2,

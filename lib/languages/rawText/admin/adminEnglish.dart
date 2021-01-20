@@ -31,6 +31,11 @@ List<String> logregTextEnglish = [
   "Reset your password",
   'Reset',
   "Enter email ID to reset",
+  "Are you sure?",
+  'Do you want to Logout?',
+  "NO",
+  "YES",
+  "Successful Logout",
 ];
 
 
@@ -98,7 +103,13 @@ List<String> proTextEnglish = [
 //  isme https://github.com/shraddhavijay/project_timeline/blob/FinalApp1/lib/admin/MasterDataSet/ourMachinesDetailsDisplay.dart
 // file ke labels daalne hai 
 
-List machinesDataPage=[
+List machinesDataPageEnglish=[
+  "Machine Name: ",
+  "Model: ",
+  "Operating Weight: ",
+  "Engine Power: ",
+  "Fuel Consumption: ",
+  "Rent" 
     
 ];
 
@@ -106,6 +117,11 @@ List machinesDataPage=[
 //  https://github.com/shraddhavijay/project_timeline/blob/FinalApp1/lib/admin/manager/master/petrolMaster/petrolPumpDetails.dart
 // file ke labels daalne hai 
 
-List petrolPumpDataPage=[
+List petrolPumpDataPageEnglish=[
+  "Name: " ,
+  "Address: ",
+"Phone No: ",
 
 ];
+
+

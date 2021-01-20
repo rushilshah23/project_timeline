@@ -20,9 +20,9 @@ import 'package:project_timeline/languages/rawText/workerTranslation/workerMarat
 import 'package:shared_preferences/shared_preferences.dart';
 
 String language;
-List<String> homePageTranslationText, bottomNavText, feedbackText,donationPageTranslation,
+List homePageTranslationText, bottomNavText, feedbackText,donationPageTranslation,
 workerText,workerText2,
-logregText,proText,forgotPassText,
+logregText,proText,forgotPassText,machinesDataPage,petrolPumpDataPage,
 superText,superText2,superText3,superText4,superText5;
 
 
@@ -35,7 +35,7 @@ setLanguageText() async {
     feedbackText = feedbackTextEnglish;
 
     workerText=workerTextEnglish;
-    workerText2=workerTextEnglish;
+    workerText2=workerText2English;
     logregText=logregTextEnglish;
     proText=proTextEnglish;
     forgotPassText= forgotPassTextEnglish;
@@ -45,6 +45,9 @@ setLanguageText() async {
     superText4=superText4English;
     superText5=superText5English;
 
+       machinesDataPage=machinesDataPageEnglish;
+    petrolPumpDataPage=petrolPumpDataPageEnglish;
+
     donationPageTranslation = donationPageTranslationEnglish;
   } else if (language == "hi") {
     homePageTranslationText = homePageTranslationTextHindi;
@@ -52,7 +55,7 @@ setLanguageText() async {
     feedbackText = feedbackTextHindi;
 
      workerText=workerTextHindi;
-    workerText2=workerTextHindi;
+    workerText2=workerText2Hindi;
     logregText=logregTextHindi;
     proText=proTextHindi;
     forgotPassText= forgotPassTextHindi;
@@ -61,6 +64,8 @@ setLanguageText() async {
     superText3=superText3Hindi;
     superText4=superText4Hindi;
     superText5=superText5Hindi;
+    machinesDataPage=machinesDataPageHindi;
+    petrolPumpDataPage=petrolPumpDataPageHindi;
 
     donationPageTranslation = donationpageTranslationTextHindi;
   } else if (language == "mr") {
@@ -69,7 +74,7 @@ setLanguageText() async {
     feedbackText = feedbackTextMarathi;
 
       workerText=workerTextMarathi;
-    workerText2=workerTextMarathi;
+    workerText2=workerText2Marathi;
     logregText=logregTextMarathi;
     proText=proTextMarathi;
     forgotPassText= forgotPassTextMarathi;
@@ -78,6 +83,8 @@ setLanguageText() async {
     superText3=superText3Marathi;
     superText4=superText4Marathi;
     superText5=superText5Marathi;
+       machinesDataPage=machinesDataPageMarathi;
+    petrolPumpDataPage=petrolPumpDataPageMarathi;
 
     donationPageTranslation = donationPageTranslationtextMarathi;
   }

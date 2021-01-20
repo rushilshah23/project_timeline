@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:project_timeline/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
+
 
 class SelectLanguage extends StatefulWidget {
   @override
@@ -33,17 +35,17 @@ class _SelectLanguageState extends State<SelectLanguage> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.setString('language', lang);
 
-    showToast("Language Changed Successfully");
+    showToast(homePageTranslationText[9]);
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: plainAppBar(context: context, title: "Change Language"),
+        appBar: plainAppBar(context: context, title: homePageTranslationText[5]),
         body: Container(
             child: ListView(
           children: <Widget>[
             ListTile(
-              title: Text("English"),
+              title: Text(homePageTranslationText[6]),
               leading: Radio(
                 value: languages[0],
                 groupValue: selectedLanguage,
@@ -55,7 +57,7 @@ class _SelectLanguageState extends State<SelectLanguage> {
               ),
             ),
             ListTile(
-              title: Text("Hindi"),
+              title: Text(homePageTranslationText[7]),
               leading: Radio(
                 value: languages[1],
                 groupValue: selectedLanguage,
@@ -67,7 +69,7 @@ class _SelectLanguageState extends State<SelectLanguage> {
               ),
             ),
             ListTile(
-              title: Text('Marathi'),
+              title: Text(homePageTranslationText[8]),
               leading: Radio(
                 value: languages[2],
                 groupValue: selectedLanguage,
@@ -82,7 +84,7 @@ class _SelectLanguageState extends State<SelectLanguage> {
               height: 20,
             ),
             FlatButton(
-              child: buttonContainers(double.infinity, "Change Language", 18),
+              child: buttonContainers(double.infinity, homePageTranslationText[5], 18),
               onPressed: () async {
                 debugPrint(selectedLanguage.toString());
                 await changeLanguage(selectedLanguage.toString());

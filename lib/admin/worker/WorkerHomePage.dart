@@ -134,7 +134,7 @@ class WorkerHomePageState extends State<WorkerHomePage> {
                         child: CircleAvatar(
                           backgroundColor: Colors.white,
                           child: Text(
-                            "M",
+                            "W",
                             style: TextStyle(fontSize: 40.0),
                           ),
                         ),
@@ -152,42 +152,42 @@ class WorkerHomePageState extends State<WorkerHomePage> {
                     ExpansionTile(
                       title: Row(children: <Widget>[
                         Icon(Icons.check_circle),
-                        Text(workerText2[25])
+                        Text(workerText2[26])
                       ]),
                       children: <Widget>[
-                        ListTile(
-                            title: Row(children: <Widget>[
-                              Icon(Icons.arrow_right),
-                              Text(workerText2[26])
-                            ]),
-                            onTap: () {
-                              _onSelectItem(1);
-
-                              appbartitle = workerText2[26];
-                            }),
                         ListTile(
                             title: Row(children: <Widget>[
                               Icon(Icons.arrow_right),
                               Text(workerText2[27])
                             ]),
                             onTap: () {
-                              _onSelectItem(2);
+                              _onSelectItem(1);
 
                               appbartitle = workerText2[27];
+                            }),
+                        ListTile(
+                            title: Row(children: <Widget>[
+                              Icon(Icons.arrow_right),
+                              Text(workerText2[28])
+                            ]),
+                            onTap: () {
+                              _onSelectItem(2);
+
+                              appbartitle = workerText2[28];
                             }),
                       ],
                     ),
                     ListTile(
                         title: Row(children: <Widget>[
                           Icon(Icons.grade),
-                          Text(workerText2[28])
+                          Text(workerText2[29])
                         ]),
                         onTap: () {
                           _onSelectItem(3);
-                          appbartitle = workerText2[28];
+                          appbartitle = workerText2[29];
                         }),
                     assignedProject.contains(" ") ||
-                            assignedProject.contains(workerText2[29])
+                            assignedProject.contains("No project assigned")
                         ? Container()
                         : ListTile(
                             title: Row(children: <Widget>[

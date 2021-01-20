@@ -31,6 +31,11 @@ List<String> logregTextMarathi = [
   "आपला संकेतशब्द पुनर्प्रस्थापित करा",
   'रीसेट',
   "रीसेट करण्यासाठी ईमेल आयडी प्रविष्ट करा",
+  "आपणास खात्री आहे की?",
+   'तुम्हाला लॉगआउट करायचे आहे का?',
+   "नाही",
+   "होय",
+   "यशस्वी लॉगआउट",
 ];
 
 
@@ -96,3 +101,27 @@ List<String> proTextMarathi = [
   "अभिप्राय:",
   'सूचना:',
 ]; 
+
+
+//  isme https://github.com/shraddhavijay/project_timeline/blob/FinalApp1/lib/admin/MasterDataSet/ourMachinesDetailsDisplay.dart
+// file ke labels daalne hai 
+
+List machinesDataPageMarathi=[
+"मशीनचे नाव:",
+   "मॉडेल:",
+   "ऑपरेटिंग वेट:",
+   "इंजिन पॉवर:",
+   "इंधनाचा वापर: ",
+   "भाडे"
+];
+
+
+//  https://github.com/shraddhavijay/project_timeline/blob/FinalApp1/lib/admin/manager/master/petrolMaster/petrolPumpDetails.dart
+// file ke labels daalne hai 
+
+List petrolPumpDataPageMarathi=[
+"नाव:",
+   "पत्ता: ",
+"दूरध्वनी क्रमांक: ",
+
+];

@@ -31,6 +31,11 @@ List<String> logregTextHindi = [
   'अपना पासवर्ड रीसेट करें',
   'रीसेट',
   'रीसेट करने के लिए ईमेल आईडी दर्ज करें',
+  "आपको यकीन है?",
+   'क्या आप लॉगआउट करना चाहते हैं?'
+   "नहीं",
+   "हाँ",
+   "सफल लॉगआउट",
 ];
 
 List<String> forgotPassTextHindi = [
@@ -91,4 +96,29 @@ List<String> proTextHindi = [
   'फसल उत्पादन के बाद:',
   'प्रतिपुष्टि: ',
   'सुझाव:',
+];
+
+
+//  isme https://github.com/shraddhavijay/project_timeline/blob/FinalApp1/lib/admin/MasterDataSet/ourMachinesDetailsDisplay.dart
+// file ke labels daalne hai 
+
+List machinesDataPageHindi=[
+"मशीन का नाम: ",
+   "नमूना: ",
+   "ऑपरेटिंग वेट: ",
+   "इंजन की शक्ति: ",
+   "ईंधन की खपत: ",
+   "किराया"
+    
+];
+
+
+//  https://github.com/shraddhavijay/project_timeline/blob/FinalApp1/lib/admin/manager/master/petrolMaster/petrolPumpDetails.dart
+// file ke labels daalne hai 
+
+List petrolPumpDataPageHindi=[
+"नाम:",
+   "पता:",
+"फोन नंबर: ",
+
 ];
