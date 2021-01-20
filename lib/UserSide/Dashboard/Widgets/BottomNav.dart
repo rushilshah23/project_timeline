@@ -13,8 +13,8 @@ import 'package:project_timeline/admin/manager/ManagerHomePage.dart';
 import 'package:project_timeline/admin/supervisor/SupervisorHomePage.dart';
 import 'package:project_timeline/admin/worker/WorkerHomePage.dart';
 import 'package:project_timeline/crowdfunding/ApiRazorPay.dart';
-import 'package:project_timeline/languages/rawText/bottomNavText.dart';
-import 'package:project_timeline/multilingual/dynamic_translation.dart';
+
+import 'package:project_timeline/languages/setLanguageText.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BottomNav extends StatefulWidget {
@@ -26,8 +26,7 @@ class _BottomNavState extends State<BottomNav> {
   bool isLoggedIn = false;
   int currentPage = 0;
   GlobalKey bottomNavigationKey = GlobalKey();
-  SharedPreferences sharedPreferences;
-  String language;
+
   ProgressDialog pr;
 
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -39,17 +38,11 @@ class _BottomNavState extends State<BottomNav> {
       userType = '',
       assignedProject = '';
 
-  List<String> bottomNavText = bottomNavTextEnglish;
-
   void initState() {
-    //print("in homepage");
-    // _languageHome = context.read<Language>();
     super.initState();
     _loadData();
-    // loadListMapTranslation();
-    // loadStringListTranslation();
-    // DynamicTranslation().stringTranslate(data: s1);
-    setLanguageText();
+
+    // setLanguageText();
   }
 
   _loadData() async {
@@ -160,19 +153,6 @@ class _BottomNavState extends State<BottomNav> {
     }
   }
 
-  setLanguageText() async {
-    SharedPreferences _sharedPreferences =
-        await SharedPreferences.getInstance();
-    language = _sharedPreferences.getString('language') ?? "en";
-    if (language == "en") {
-      bottomNavText = bottomNavTextEnglish;
-    } else if (language == "hi") {
-      bottomNavText = bottomNavTextHindi;
-    } else if (language == "mr") {
-      bottomNavText = bottomNavTextMarathi;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     pr = ProgressDialog(context);
@@ -181,7 +161,7 @@ class _BottomNavState extends State<BottomNav> {
           iconTheme: IconThemeData(
             color: Color(0xff005c9d),
           ),
-          title: Text("IAHV",
+          title: Text(bottomNavText[3] ?? "",
               style: TextStyle(
                 color: Color(0xff005c9d),
               )),

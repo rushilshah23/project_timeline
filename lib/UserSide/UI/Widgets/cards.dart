@@ -3,6 +3,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
+import 'package:project_timeline/languages/rawText/homePageTranslation/homePageTranslationTextEnglish.dart';
+import 'package:project_timeline/languages/rawText/homePageTranslation/homePageTranslationTextHindi.dart';
+import 'package:project_timeline/languages/rawText/homePageTranslation/homePageTranslationTextMarathi.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 var card1text = "Gallery";
 var card2text = "Heat Map";
@@ -35,7 +40,7 @@ card1() {
             width: datawt,
           ),
           Text(
-            'Gallery',
+            homePageTranslationText[0],
             style: GoogleFonts.openSans(
                 textStyle: TextStyle(
                     color: Color(0xff018abd),
@@ -49,6 +54,8 @@ card1() {
 }
 
 card2() {
+  setLanguageText();
+
   return Card(
     elevation: 5,
     shape: RoundedRectangleBorder(
@@ -66,7 +73,7 @@ card2() {
             width: datawt,
           ),
           Text(
-            'Heat Map',
+            homePageTranslationText[1],
             style: GoogleFonts.openSans(
                 textStyle: TextStyle(
                     color: Color(0xff018abd),
@@ -80,6 +87,8 @@ card2() {
 }
 
 card3() {
+  setLanguageText();
+
   return Card(
     elevation: 5,
     shape: RoundedRectangleBorder(
@@ -97,7 +106,7 @@ card3() {
             width: datawt,
           ),
           Text(
-            'Feedback',
+            homePageTranslationText[2],
             style: GoogleFonts.openSans(
                 textStyle: TextStyle(
                     color: Color(0xff018abd),
@@ -111,6 +120,8 @@ card3() {
 }
 
 card4() {
+  setLanguageText();
+
   return Card(
     elevation: 5,
     shape: RoundedRectangleBorder(
@@ -128,13 +139,12 @@ card4() {
             width: datawt,
           ),
           Text(
-            'LeaderBoard',
+            homePageTranslationText[3],
             style: GoogleFonts.openSans(
                 textStyle: TextStyle(
                     color: Color(0xff018abd),
                     fontSize: 17,
-                    fontWeight:
-                    FontWeight.w700)),
+                    fontWeight: FontWeight.w700)),
           ),
         ],
       ),
@@ -143,6 +153,8 @@ card4() {
 }
 
 aboutuscard() {
+  setLanguageText();
+
   return Card(
     color: cardColor,
     shape: RoundedRectangleBorder(
@@ -162,7 +174,8 @@ aboutuscard() {
           width: 20,
         ),
         Center(
-          child: Text(aboutuscardtext,
+          child: Text(homePageTranslationText[4],
+              // aboutuscardtext,
               textAlign: textAlign,
               style: TextStyle(
                   fontSize: 20,

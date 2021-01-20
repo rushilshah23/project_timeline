@@ -4,11 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
-import 'package:project_timeline/languages/rawText/feedbackTranslation/feedbackTranslationEnglish.dart';
-import 'package:project_timeline/languages/rawText/feedbackTranslation/feedbackTranslationHindi.dart';
-import 'package:project_timeline/languages/rawText/feedbackTranslation/feedbackTranslationMarathi.dart';
 
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 
 class Feedback extends StatefulWidget {
   @override
@@ -51,28 +48,12 @@ class _LocalFeedbackState extends State<LocalFeedback> {
 
   bool feedback;
   // SharedPreferences sharedPreferences;
-  String language;
-  List feedbackText;
 
   @override
   void initState() {
-    feedbackText = feedbackTextEnglish;
     getProjectsData();
-    setLanguageText();
-    super.initState();
-  }
 
-  setLanguageText() async {
-    SharedPreferences _sharedPreferences =
-        await SharedPreferences.getInstance();
-    language = _sharedPreferences.getString('language') ?? "en";
-    if (language == "en") {
-      feedbackText = feedbackTextEnglish;
-    } else if (language == "hi") {
-      feedbackText = feedbackTextHindi;
-    } else if (language == "mr") {
-      feedbackText = feedbackTextMarathi;
-    }
+    super.initState();
   }
 
   void submitLocalFeedback() {

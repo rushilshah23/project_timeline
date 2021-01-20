@@ -5,6 +5,7 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 
 import 'package:project_timeline/admin/DocumentManager/core/models/usermodel.dart';
 import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 
 import 'package:provider/provider.dart';
 
@@ -34,6 +35,11 @@ class _MyAppState extends State<MyApp> {
     "Local": Geocoder.local,
     "Google (distant)": Geocoder.google("<API-KEY>"),
   };
+  @override
+  void initState() {
+    setLanguageText();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
