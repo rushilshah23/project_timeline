@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
 import 'package:project_timeline/admin/DocumentManager/core/services/database.dart';
-import 'package:project_timeline/languages/rawText/admin/adminEnglish.dart';
-import 'package:project_timeline/languages/rawText/admin/adminHindi.dart';
-import 'package:project_timeline/languages/rawText/admin/adminMarathi.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 import 'Register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'CommonWidgets.dart';
@@ -49,36 +47,13 @@ class LoginPageState extends State<LoginPage> {
   final CollectionReference newPhoneUser =
       FirebaseFirestore.instance.collection("newPhoneUser");
 
-   String language;
-   List logregText,forgotPassText;
+ 
 
   @override
   void initState() {
-    logregText = logregTextEnglish;
-    forgotPassText = forgotPassTextEnglish;
-    tempSelectedType = tempTypes[0];
-    
-     setLanguageText();
-    super.initState();
-  }
 
-    setLanguageText() async {
-    SharedPreferences _sharedPreferences =
-        await SharedPreferences.getInstance();
-     language = _sharedPreferences.getString('language') ?? "en";
-    if (language == "en") {
-      logregText = logregTextEnglish;
-      forgotPassText = forgotPassTextEnglish;
-    } else if (language == "hi") {
-      logregText = logregTextHindi;
-      forgotPassText = forgotPassTextHindi;
-    } else if (language == "mr") {
-      logregText = logregTextMarathi;
-      forgotPassText = forgotPassTextMarathi;
-      
-    }
-    print("=========================="+logregText.length.toString());
-    setState(() { });
+    tempSelectedType = tempTypes[0];
+    super.initState();
   }
 
   _setData(String name, String email, String mobile, String uid,
