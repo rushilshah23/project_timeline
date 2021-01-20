@@ -55,16 +55,13 @@ class _WorkerDailyState extends State<WorkerDaily> {
         .child("progress");
 
     return Scaffold(
-      /*appBar: AppBar(
-        title: Text("Daily Update"),
-      ),*/
+
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.all(10),
           child: StreamBuilder(
               stream: databaseReference.onValue,
               builder: (context, snap) {
-                print('aaaa');
                 if (!snap.hasData) {
                   return Center(
                     child: CircularProgressIndicator(),

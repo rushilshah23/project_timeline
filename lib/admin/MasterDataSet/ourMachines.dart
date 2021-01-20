@@ -192,15 +192,7 @@ class _OurMachinesState extends State<OurMachines> {
                   ));
             }
           }),
-      /*floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddNewMachine()),
-          );
-        },
-        child: Icon(Icons.add),
-      ),*/
+
     );
   }
 }

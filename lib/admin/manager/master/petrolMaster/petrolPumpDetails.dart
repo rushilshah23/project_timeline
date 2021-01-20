@@ -24,12 +24,7 @@ class _PetrolPumpDetailsState extends State<PetrolPumpDetails> {
       data = widget.data;
       indexes = widget.indexes;
     });
-    debugPrint('tasf');
-    debugPrint(
-        "data is +++++++++++++++++++++++++++++" + widget.data.toString());
-    debugPrint("key is  +++++++++++++++++++++++++++++" + widget.key.toString());
-    debugPrint(
-        "indexes is +++++++++++++++++++++++++++++" + widget.indexes.toString());
+
   }
 
   deletePetrolPump(keyNode) async {
@@ -106,25 +101,7 @@ class _PetrolPumpDetailsState extends State<PetrolPumpDetails> {
                   SizedBox(
                     height: 20,
                   ),
-//                  Row(
-//                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                    children: <Widget>[
-//                      RaisedButton(
-//                        onPressed: () {
-//                          debugPrint('Edit');
-//                          editPetrolPump(widget.data);
-//                        },
-//                        child: Text("Edit"),
-//                      ),
-//                      RaisedButton(
-//                        onPressed: () {
-//                          debugPrint("delete");
-//                          deletePetrolPump(widget.data["key"]);
-//                        },
-//                        child: Text("Delete"),
-//                      ),
-//                    ],
-//                  )
+
                 ],
               ),
             ],
