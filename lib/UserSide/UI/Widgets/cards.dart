@@ -3,11 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
-import 'package:project_timeline/languages/rawText/homePageTranslation/homePageTranslationTextEnglish.dart';
-import 'package:project_timeline/languages/rawText/homePageTranslation/homePageTranslationTextHindi.dart';
-import 'package:project_timeline/languages/rawText/homePageTranslation/homePageTranslationTextMarathi.dart';
+
 import 'package:project_timeline/languages/setLanguageText.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 var card1text = "Gallery";
 var card2text = "Heat Map";

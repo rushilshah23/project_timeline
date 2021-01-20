@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:project_timeline/languages/rawText/donationPageTranslation/donationPageTranslationTextEnglish.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'OrderApi.dart';
 import 'SuccesPage.dart';
@@ -167,7 +169,7 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
                 child: Column(
                   children: [
                     Text(
-                      "The happiest person is a giver",
+                      donationPageTranslation[0],
                       style: TextStyle(
                           fontFamily: 'DancingScript',
                           fontSize: 31,
@@ -193,8 +195,8 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
                                           color: Color(0xff02b9f3),
                                         ),
                                       ),
-                                      labelText: 'Name',
-                                      hintText: 'Name'),
+                                      labelText: donationPageTranslation[1],
+                                      hintText: donationPageTranslation[1]),
                                   enabled: false,
                                 )
                               : TextFormField(
@@ -206,13 +208,13 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
                                           color: Color(0xff02b9f3),
                                         ),
                                       ),
-                                      labelText: 'Name',
-                                      hintText: 'Name'),
+                                      labelText: donationPageTranslation[1],
+                                      hintText: donationPageTranslation[1]),
                                   validator: (String arg) {
                                     if (arg.length < 3)
-                                      return 'Name must be more than 2 character';
+                                      return donationPageTranslation[2];
                                     else if (arg.length > 20) {
-                                      return 'Characters exceeded Max.20 allowed ';
+                                      return donationPageTranslation[3];
                                     } else
                                       return null;
                                   },
@@ -229,7 +231,7 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
                                   });
                                 },
                               ),
-                              Text("Be Anonymous")
+                              Text(donationPageTranslation[4])
                             ],
                           ),
                           TextFormField(
@@ -241,8 +243,8 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
                                     color: Color(0xff02b9f3),
                                   ),
                                 ),
-                                labelText: 'Email',
-                                hintText: 'Email'),
+                                labelText: donationPageTranslation[5],
+                                hintText: donationPageTranslation[5]),
                             validator: validateEmail,
                             onSaved: (String val) {
                               _email = val;
@@ -259,8 +261,8 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
                                     color: Color(0xff02b9f3),
                                   ),
                                 ),
-                                labelText: 'Phone number',
-                                hintText: 'Phone number'),
+                                labelText: donationPageTranslation[6],
+                                hintText: donationPageTranslation[6]),
                             keyboardType: TextInputType.phone,
                             validator: validateMobile,
                             onSaved: (String val) {
@@ -278,8 +280,8 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
                                     color: Color(0xff02b9f3),
                                   ),
                                 ),
-                                labelText: 'Amount',
-                                hintText: 'Please enter amount'),
+                                labelText: donationPageTranslation[7],
+                                hintText: donationPageTranslation[8]),
                             keyboardType: TextInputType.number,
                             onChanged: (value) {
                               if (num.parse(value) >= 10000) {
@@ -294,7 +296,7 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
                             },
                             validator: (String value) {
                               if (value.isEmpty || num.parse(value) > 500000) {
-                                return 'Enter amount Min ₹.1 to Max ₹.500000';
+                                return donationPageTranslation[9];
                               } else {
                                 amount = value;
                                 return null;
@@ -318,8 +320,10 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
                                               color: Color(0xff02b9f3),
                                             ),
                                           ),
-                                          labelText: 'Pan Card Number',
-                                          hintText: 'Pan Card Number'),
+                                          labelText:
+                                              donationPageTranslation[10],
+                                          hintText:
+                                              donationPageTranslation[10]),
                                     ),
                                     SizedBox(
                                       height: 20,
@@ -359,13 +363,13 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
                                       });
                                     },
                                     validator: (value) => value == null
-                                        ? 'Please select project you wish to donate in'
+                                        ? donationPageTranslation[11]
                                         : null,
                                     value: selectedProject,
                                     isDense: false,
                                     isExpanded: true,
                                     hint: Text(
-                                      'Select Projects',
+                                      donationPageTranslation[12],
                                       style: TextStyle(
                                           color: Colors.black54, fontSize: 18),
                                     ),
@@ -383,7 +387,7 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
                                   color: Color(0xff018abd),
                                 ),
                                 child: Text(
-                                  "Donate Now",
+                                  donationPageTranslation[13],
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 17,
@@ -423,7 +427,7 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regex = new RegExp(pattern);
     if (!regex.hasMatch(value))
-      return 'Enter valid email';
+      return donationPageTranslation[14];
     else
       return null;
   }
@@ -432,14 +436,14 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
     Pattern pattern = "[A-Z]{5}[0-9]{4}[A-Z]{1}";
     RegExp regex = new RegExp(pattern);
     if (!regex.hasMatch(value))
-      return 'Enter correct PAN number.';
+      return donationPageTranslation[15];
     else
       return null;
   }
 
   String validateMobile(String value) {
     if (value.length != 10)
-      return 'Mobile No. must be of 10 digit';
+      return donationPageTranslation[16];
     else
       return null;
   }
