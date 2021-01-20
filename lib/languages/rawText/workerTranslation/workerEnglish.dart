@@ -1,4 +1,4 @@
-List<String> workerText = [
+List<String> workerTextEnglish = [
   'Welcome',
   'Projects',
   'Team',
@@ -33,7 +33,7 @@ List<String> workerText = [
   'Select any',
 ];
 
-List<String> workerText2 = [
+List<String> workerText2English = [
   'Done',
   'Hours Worked',
   'Digging Dimensions',
@@ -68,7 +68,7 @@ List<String> workerText2 = [
 ];
 
 
-List<String> logregText = [
+List<String> logregTextEnglish = [
   'Give the code?',
   'Confirm',
   'Login Successful',
@@ -104,7 +104,7 @@ List<String> logregText = [
 ];
 
 
-List<String> forgotPassText = [
+List<String> forgotPassTextEnglish = [
   "Edit Profile",
   'Edit Your Details',
   "Please enter your name",
@@ -133,7 +133,7 @@ List<String> forgotPassText = [
 ];
 
 
-List<String> proText = [
+List<String> proTextEnglish = [
   'Completed',
   'Ongoing',
   'Not Started',
