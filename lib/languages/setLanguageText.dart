@@ -8,6 +8,9 @@ import 'package:project_timeline/languages/rawText/donationPageTranslation/donat
 import 'package:project_timeline/languages/rawText/feedbackTranslation/feedbackTranslationEnglish.dart';
 import 'package:project_timeline/languages/rawText/feedbackTranslation/feedbackTranslationHindi.dart';
 import 'package:project_timeline/languages/rawText/feedbackTranslation/feedbackTranslationMarathi.dart';
+import 'package:project_timeline/languages/rawText/homePageTranslation/aboutusTranslation/aboutusTranslationTextEnglish.dart';
+import 'package:project_timeline/languages/rawText/homePageTranslation/aboutusTranslation/aboutusTranslationTextHindi.dart';
+import 'package:project_timeline/languages/rawText/homePageTranslation/aboutusTranslation/aboutusTranslationTextMarathi.dart';
 import 'package:project_timeline/languages/rawText/homePageTranslation/homePageTranslationTextEnglish.dart';
 import 'package:project_timeline/languages/rawText/homePageTranslation/homePageTranslationTextHindi.dart';
 import 'package:project_timeline/languages/rawText/homePageTranslation/homePageTranslationTextMarathi.dart';
@@ -20,11 +23,24 @@ import 'package:project_timeline/languages/rawText/workerTranslation/workerMarat
 import 'package:shared_preferences/shared_preferences.dart';
 
 String language;
-List<String> homePageTranslationText, bottomNavText, feedbackText,donationPageTranslation,
-workerText,workerText2,
-logregText,proText,forgotPassText,
-superText,superText2,superText3,superText4,superText5;
-
+List<String> homePageTranslationText,
+    bottomNavText,
+    feedbackText,
+    donationPageTranslation,
+    workerText,
+    workerText2,
+    logregText,
+    proText,
+    forgotPassText,
+    superText,
+    superText2,
+    superText3,
+    superText4,
+    superText5,
+    aboutusTranslationText,
+    aolTranslationText,
+    iahvTranslationText,
+    developersTranslationText;
 
 setLanguageText() async {
   SharedPreferences _sharedPreferences = await SharedPreferences.getInstance();
@@ -34,51 +50,63 @@ setLanguageText() async {
     bottomNavText = bottomNavTextEnglish;
     feedbackText = feedbackTextEnglish;
 
-    workerText=workerTextEnglish;
-    workerText2=workerTextEnglish;
-    logregText=logregTextEnglish;
-    proText=proTextEnglish;
-    forgotPassText= forgotPassTextEnglish;
-    superText=superTextEnglish;
-    superText2=superText2English;
-    superText3=superText3English;
-    superText4=superText4English;
-    superText5=superText5English;
+    workerText = workerTextEnglish;
+    workerText2 = workerTextEnglish;
+    logregText = logregTextEnglish;
+    proText = proTextEnglish;
+    forgotPassText = forgotPassTextEnglish;
+    superText = superTextEnglish;
+    superText2 = superText2English;
+    superText3 = superText3English;
+    superText4 = superText4English;
+    superText5 = superText5English;
 
     donationPageTranslation = donationPageTranslationEnglish;
+    aboutusTranslationText = aboutusTranslationTextEnglish;
+    aolTranslationText = aolTranslationTextEnglish;
+    iahvTranslationText = iahvTranslationTextEnglish;
+    developersTranslationText = developersTextTranslationEnglish;
   } else if (language == "hi") {
     homePageTranslationText = homePageTranslationTextHindi;
     bottomNavText = bottomNavTextHindi;
     feedbackText = feedbackTextHindi;
 
-     workerText=workerTextHindi;
-    workerText2=workerTextHindi;
-    logregText=logregTextHindi;
-    proText=proTextHindi;
-    forgotPassText= forgotPassTextHindi;
-    superText=superTextHindi;
-    superText2=superText2Hindi;
-    superText3=superText3Hindi;
-    superText4=superText4Hindi;
-    superText5=superText5Hindi;
+    workerText = workerTextHindi;
+    workerText2 = workerTextHindi;
+    logregText = logregTextHindi;
+    proText = proTextHindi;
+    forgotPassText = forgotPassTextHindi;
+    superText = superTextHindi;
+    superText2 = superText2Hindi;
+    superText3 = superText3Hindi;
+    superText4 = superText4Hindi;
+    superText5 = superText5Hindi;
 
     donationPageTranslation = donationpageTranslationTextHindi;
+    aboutusTranslationText = aboutusTranslationTextHindi;
+    aolTranslationText = aolTranslationTextHindi;
+    iahvTranslationText = iahvTranslationTextHindi;
+    developersTranslationText = developersTextTranslationHindi;
   } else if (language == "mr") {
     homePageTranslationText = homePageTranslationTextMarathi;
     bottomNavText = bottomNavTextMarathi;
     feedbackText = feedbackTextMarathi;
 
-      workerText=workerTextMarathi;
-    workerText2=workerTextMarathi;
-    logregText=logregTextMarathi;
-    proText=proTextMarathi;
-    forgotPassText= forgotPassTextMarathi;
-    superText=superTextMarathi;
-    superText2=superText2Marathi;
-    superText3=superText3Marathi;
-    superText4=superText4Marathi;
-    superText5=superText5Marathi;
+    workerText = workerTextMarathi;
+    workerText2 = workerTextMarathi;
+    logregText = logregTextMarathi;
+    proText = proTextMarathi;
+    forgotPassText = forgotPassTextMarathi;
+    superText = superTextMarathi;
+    superText2 = superText2Marathi;
+    superText3 = superText3Marathi;
+    superText4 = superText4Marathi;
+    superText5 = superText5Marathi;
 
     donationPageTranslation = donationPageTranslationtextMarathi;
+    aboutusTranslationText = aboutusTranslationTextMarathi;
+    aolTranslationText = aolTranslationTextMarathi;
+    iahvTranslationText = iahvTranslationTextMarathi;
+    developersTranslationText = developersTextTranslationMarathi;
   }
 }

@@ -5,8 +5,6 @@ import 'package:project_timeline/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SelectLanguage extends StatefulWidget {
-  SelectLanguage({Key key}) : super(key: key);
-
   @override
   _SelectLanguageState createState() => _SelectLanguageState();
 }

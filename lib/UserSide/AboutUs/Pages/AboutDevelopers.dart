@@ -3,9 +3,10 @@ import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:link/link.dart';
 import 'package:project_timeline/UserSide/AboutUs/MainPage/HomeScreen.dart';
-import 'package:project_timeline/UserSide/Feedback/TextPages/DevelopersText.dart';
+
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DevelopersPage extends StatefulWidget {
@@ -40,7 +41,7 @@ class _DevelopersPageState extends State<DevelopersPage> {
             child: Column(
               children: [
                 Text(
-                  DevelopersText[1],
+                  developersTranslationText[1],
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                       fontSize: 18,
@@ -51,7 +52,7 @@ class _DevelopersPageState extends State<DevelopersPage> {
                 SizedBox(height: 25),
                 Link(
                   child: Text(
-                    DevelopersText[2],
+                    developersTranslationText[2],
                     textAlign: TextAlign.justify,
                     style: TextStyle(
                         fontSize: 18,
@@ -84,7 +85,7 @@ class _DevelopersPageState extends State<DevelopersPage> {
                   Align(
                     alignment: Alignment.center,
                     child: Text(
-                      DevelopersText[3],
+                      developersTranslationText[3],
                       style: TextStyle(color: Colors.white, fontSize: 20),
                       textAlign: TextAlign.justify,
                     ),
@@ -96,7 +97,7 @@ class _DevelopersPageState extends State<DevelopersPage> {
                     alignment: Alignment.center,
                     child: Link(
                       child: Text(
-                        DevelopersText[4],
+                        developersTranslationText[4],
                         style: TextStyle(color: commonBGColor, fontSize: 20),
                         textAlign: TextAlign.justify,
                       ),
@@ -121,7 +122,7 @@ class _DevelopersPageState extends State<DevelopersPage> {
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    DevelopersText[5],
+                    developersTranslationText[5],
                     textAlign: TextAlign.justify,
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
@@ -132,7 +133,7 @@ class _DevelopersPageState extends State<DevelopersPage> {
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    DevelopersText[6],
+                    developersTranslationText[6],
                     textAlign: TextAlign.justify,
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
@@ -143,7 +144,7 @@ class _DevelopersPageState extends State<DevelopersPage> {
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    DevelopersText[7],
+                    developersTranslationText[7],
                     textAlign: TextAlign.justify,
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
@@ -154,7 +155,7 @@ class _DevelopersPageState extends State<DevelopersPage> {
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    DevelopersText[8],
+                    developersTranslationText[8],
                     textAlign: TextAlign.justify,
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
@@ -165,7 +166,7 @@ class _DevelopersPageState extends State<DevelopersPage> {
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    DevelopersText[9],
+                    developersTranslationText[9],
                     textAlign: TextAlign.justify,
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
@@ -176,7 +177,7 @@ class _DevelopersPageState extends State<DevelopersPage> {
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    DevelopersText[10],
+                    developersTranslationText[10],
                     textAlign: TextAlign.justify,
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
@@ -186,26 +187,26 @@ class _DevelopersPageState extends State<DevelopersPage> {
           ),
           backgroundImage: 'assets/waterimg.jpg',
           backgroundOpacity: 0.7),
-
     );
   }
+
   void onDonePress() {
     // Do what you want
     Navigator.pop(
       context,
-      MaterialPageRoute(builder: (context) =>  HomeScreen()),
+      MaterialPageRoute(builder: (context) => HomeScreen()),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-         appBar: plainAppBar(context: context, title: 'About SAKEC'),
+      appBar: plainAppBar(context: context, title: 'About SAKEC'),
       body: IntroSlider(
         isShowSkipBtn: false,
         isShowPrevBtn: true,
         isShowDoneBtn: true,
         onDonePress: this.onDonePress,
-
         isShowDotIndicator: true,
         isShowNextBtn: true,
         slides: this.slides,
@@ -214,9 +215,7 @@ class _DevelopersPageState extends State<DevelopersPage> {
         colorDot: Colors.white30,
         renderNextBtn: Icon(Icons.arrow_forward_ios, color: Colors.white),
         renderPrevBtn: Icon(Icons.arrow_back_ios, color: Colors.white),
-
       ),
-
     );
   }
 }

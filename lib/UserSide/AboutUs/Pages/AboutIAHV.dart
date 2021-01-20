@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:project_timeline/UserSide/AboutUs/MainPage/HomeScreen.dart';
-import 'package:project_timeline/UserSide/Feedback/TextPages/IAHVText.dart';
+
 import 'package:project_timeline/admin/CommonWidgets.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AboutIAHV extends StatefulWidget {
@@ -26,7 +27,7 @@ class _AboutIAHVState extends State<AboutIAHV> {
     super.initState();
     slides.add(
       new Slide(
-        title: IAHVText[1],
+        title: iahvTranslationText[1],
         maxLineTitle: 5,
         styleTitle: TextStyle(
             fontFamily: 'DancingScript',
@@ -47,7 +48,7 @@ class _AboutIAHVState extends State<AboutIAHV> {
           child: Padding(
             padding: const EdgeInsets.only(left: 20.0, right: 20.0),
             child: Text(
-              IAHVText[2],
+              iahvTranslationText[2],
               textAlign: TextAlign.justify,
               style: TextStyle(
                   fontSize: 18,
@@ -67,7 +68,7 @@ class _AboutIAHVState extends State<AboutIAHV> {
     slides.add(
       new Slide(
           backgroundImage: 'assets/waterimg.jpg',
-          title: IAHVText[3],
+          title: iahvTranslationText[3],
           maxLineTitle: 5,
           styleTitle: TextStyle(
               color: Colors.white,
@@ -95,7 +96,7 @@ class _AboutIAHVState extends State<AboutIAHV> {
                             width: 15,
                           ),
                           Text(
-                            IAHVText[4],
+                            iahvTranslationText[4],
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w400,
@@ -124,7 +125,7 @@ class _AboutIAHVState extends State<AboutIAHV> {
                           ),
                           Flexible(
                             child: Text(
-                              IAHVText[5],
+                              iahvTranslationText[5],
                               style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
@@ -154,7 +155,7 @@ class _AboutIAHVState extends State<AboutIAHV> {
                           ),
                           Flexible(
                             child: Text(
-                              IAHVText[6],
+                              iahvTranslationText[6],
                               style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
@@ -184,7 +185,7 @@ class _AboutIAHVState extends State<AboutIAHV> {
                           ),
                           Flexible(
                             child: Text(
-                              IAHVText[7],
+                              iahvTranslationText[7],
                               style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
@@ -206,7 +207,7 @@ class _AboutIAHVState extends State<AboutIAHV> {
     );
     slides.add(
       new Slide(
-          title: IAHVText[8],
+          title: iahvTranslationText[8],
           maxLineTitle: 5,
           styleTitle: TextStyle(
               fontFamily: 'DancingScript',
@@ -224,7 +225,7 @@ class _AboutIAHVState extends State<AboutIAHV> {
                   Align(
                     alignment: Alignment.center,
                     child: Text(
-                      IAHVText[9],
+                      iahvTranslationText[9],
                       style: TextStyle(color: Colors.white, fontSize: 20),
                       textAlign: TextAlign.justify,
                     ),
@@ -235,7 +236,7 @@ class _AboutIAHVState extends State<AboutIAHV> {
                   Align(
                     alignment: Alignment.center,
                     child: Text(
-                      IAHVText[10],
+                      iahvTranslationText[10],
                       style: TextStyle(color: Colors.white, fontSize: 20),
                       textAlign: TextAlign.justify,
                     ),
@@ -260,10 +261,10 @@ class _AboutIAHVState extends State<AboutIAHV> {
   //   sharedPreferences = await SharedPreferences.getInstance();
   //   language = sharedPreferences.getString('language');
   //   if (language != 'en') {
-  //     for (var i = 0; i < IAHVText.length; i++) {
-  //       await Language(language).getTranslation(IAHVText[i]).then((value) {
+  //     for (var i = 0; i < iahvTranslationText.length; i++) {
+  //       await Language(language).getTranslation(iahvTranslationText[i]).then((value) {
   //         setState(() {
-  //           IAHVText[i] = value;
+  //           iahvTranslationText[i] = value;
   //         });
   //       });
   //     }

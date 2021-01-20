@@ -2,13 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
-
 import 'package:project_timeline/admin/DocumentManager/core/models/usermodel.dart';
 import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
 import 'package:project_timeline/languages/setLanguageText.dart';
-
 import 'package:provider/provider.dart';
-
 import 'UserSide/Dashboard/Widgets/BottomNav.dart';
 import 'admin/manager/createNewProject/test.dart';
 import 'package:geocoder/geocoder.dart';

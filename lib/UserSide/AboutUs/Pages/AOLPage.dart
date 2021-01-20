@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:project_timeline/UserSide/AboutUs/MainPage/HomeScreen.dart';
-import 'package:project_timeline/UserSide/Feedback/TextPages/AOLText.dart';
+
 import 'package:project_timeline/admin/CommonWidgets.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 
 class AOLPage extends StatefulWidget {
   final String title;
@@ -23,7 +24,7 @@ class _AOLPageState extends State<AOLPage> {
     super.initState();
     slides.add(
       new Slide(
-        title: AOLText[1],
+        title: aolTranslationText[1],
         maxLineTitle: 2,
         styleTitle: TextStyle(
             fontFamily: 'DancingScript',
@@ -43,7 +44,7 @@ class _AOLPageState extends State<AOLPage> {
           child: Padding(
             padding: const EdgeInsets.only(left: 20.0, right: 20.0),
             child: Text(
-              AOLText[2],
+              aolTranslationText[2],
               textAlign: TextAlign.justify,
               style: TextStyle(
                   fontSize: 18,
@@ -63,7 +64,7 @@ class _AOLPageState extends State<AOLPage> {
     slides.add(
       new Slide(
           backgroundImage: 'assets/waterimg.jpg',
-          title: AOLText[3],
+          title: aolTranslationText[3],
           maxLineTitle: 4,
           styleTitle: TextStyle(
               fontFamily: 'DancingScript',
@@ -91,7 +92,7 @@ class _AOLPageState extends State<AOLPage> {
                             width: 15,
                           ),
                           Text(
-                            AOLText[4],
+                            aolTranslationText[4],
                             textAlign: TextAlign.justify,
                             style: TextStyle(
                                 fontSize: 18,
@@ -120,7 +121,7 @@ class _AOLPageState extends State<AOLPage> {
                           ),
                           Flexible(
                             child: Text(
-                              AOLText[5],
+                              aolTranslationText[5],
                               textAlign: TextAlign.justify,
                               style: TextStyle(
                                   fontSize: 18,
@@ -150,7 +151,7 @@ class _AOLPageState extends State<AOLPage> {
                           ),
                           Flexible(
                             child: Text(
-                              AOLText[6],
+                              aolTranslationText[6],
                               textAlign: TextAlign.justify,
                               style: TextStyle(
                                   fontSize: 18,
@@ -180,7 +181,7 @@ class _AOLPageState extends State<AOLPage> {
                           ),
                           Flexible(
                             child: Text(
-                              AOLText[7],
+                              aolTranslationText[7],
                               textAlign: TextAlign.justify,
                               style: TextStyle(
                                   fontSize: 18,
@@ -202,7 +203,7 @@ class _AOLPageState extends State<AOLPage> {
     );
     slides.add(
       new Slide(
-          title: AOLText[8],
+          title: aolTranslationText[8],
           centerWidget: Container(
               width: 205.0,
               height: 190.0,
@@ -215,7 +216,7 @@ class _AOLPageState extends State<AOLPage> {
               child: Column(
             children: [
               Text(
-                AOLText[9],
+                aolTranslationText[9],
                 textAlign: TextAlign.justify,
                 style: TextStyle(
                     fontWeight: FontWeight.w700,
@@ -230,7 +231,7 @@ class _AOLPageState extends State<AOLPage> {
                 padding: const EdgeInsets.only(left: 5, right: 5),
                 child: Center(
                   child: Text(
-                    AOLText[10],
+                    aolTranslationText[10],
                     textAlign: TextAlign.justify,
                     style: TextStyle(fontSize: 18, color: Colors.white70),
                   ),
@@ -240,7 +241,7 @@ class _AOLPageState extends State<AOLPage> {
                 padding: const EdgeInsets.only(left: 5, right: 5),
                 child: Center(
                   child: Text(
-                    AOLText[11],
+                    aolTranslationText[11],
                     textAlign: TextAlign.justify,
                     style: TextStyle(
                         fontSize: 18,
@@ -256,9 +257,9 @@ class _AOLPageState extends State<AOLPage> {
     );
     slides.add(
       new Slide(
-          title: AOLText[12],
+          title: aolTranslationText[12],
           centerWidget: Text(
-            AOLText[13],
+            aolTranslationText[13],
             textAlign: TextAlign.justify,
             style: TextStyle(
                 fontStyle: FontStyle.italic, color: Colors.white, fontSize: 20),
@@ -272,7 +273,7 @@ class _AOLPageState extends State<AOLPage> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    AOLText[14],
+                    aolTranslationText[14],
                     textAlign: TextAlign.justify,
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
@@ -283,7 +284,7 @@ class _AOLPageState extends State<AOLPage> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    AOLText[15],
+                    aolTranslationText[15],
                     textAlign: TextAlign.justify,
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
@@ -294,7 +295,7 @@ class _AOLPageState extends State<AOLPage> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    AOLText[16],
+                    aolTranslationText[16],
                     textAlign: TextAlign.justify,
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
@@ -305,7 +306,7 @@ class _AOLPageState extends State<AOLPage> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    AOLText[17],
+                    aolTranslationText[17],
                     textAlign: TextAlign.justify,
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),

@@ -51,8 +51,6 @@ card1() {
 }
 
 card2() {
-  setLanguageText();
-
   return Card(
     elevation: 5,
     shape: RoundedRectangleBorder(
@@ -84,8 +82,6 @@ card2() {
 }
 
 card3() {
-  setLanguageText();
-
   return Card(
     elevation: 5,
     shape: RoundedRectangleBorder(
@@ -117,8 +113,6 @@ card3() {
 }
 
 card4() {
-  setLanguageText();
-
   return Card(
     elevation: 5,
     shape: RoundedRectangleBorder(
@@ -150,8 +144,6 @@ card4() {
 }
 
 aboutuscard() {
-  setLanguageText();
-
   return Card(
     color: cardColor,
     shape: RoundedRectangleBorder(

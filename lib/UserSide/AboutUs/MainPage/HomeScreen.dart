@@ -4,6 +4,7 @@ import 'package:project_timeline/UserSide/AboutUs/Pages/AboutAOLMain.dart';
 import 'package:project_timeline/UserSide/AboutUs/Pages/AboutDevelopersMain.dart';
 import 'package:project_timeline/UserSide/AboutUs/Pages/AboutIAHVMain.dart';
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -15,13 +16,13 @@ class HomeScreen extends StatefulWidget {
 class HomeWidgetState extends State with SingleTickerProviderStateMixin {
   final List<Widget> tabs = [
     new Tab(
-      text: "About AOL",
+      text: aboutusTranslationText[0],
     ),
     new Tab(
-      text: "About IAHV",
+      text: aboutusTranslationText[1],
     ),
     new Tab(
-      text: "About SAKEC",
+      text: aboutusTranslationText[2],
     )
   ];
 
@@ -44,14 +45,14 @@ class HomeWidgetState extends State with SingleTickerProviderStateMixin {
     return Scaffold(
       backgroundColor: commonBGColor,
       appBar: AppBar(
-       iconTheme: IconThemeData(
-      color: Color(0xff005c9d),
-      ),
-      title: Text("About Us",
-          style: TextStyle(
-            color: Color(0xff005c9d),
-          )),
-      backgroundColor: Colors.white ,
+        iconTheme: IconThemeData(
+          color: Color(0xff005c9d),
+        ),
+        title: Text(aboutusTranslationText[3],
+            style: TextStyle(
+              color: Color(0xff005c9d),
+            )),
+        backgroundColor: Colors.white,
         bottom: TabBar(
           unselectedLabelColor: bubbleindicatorColor,
           indicator: new BubbleTabIndicator(

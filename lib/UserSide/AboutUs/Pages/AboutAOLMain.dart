@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/UserSide/AboutUs/Pages/AOLPage.dart';
-import 'package:project_timeline/UserSide/Feedback/TextPages/AOLText.dart';
+
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 
 class MainAOLPage extends StatefulWidget {
   final String title;
@@ -39,7 +40,7 @@ class _MainAOLPageState extends State<MainAOLPage> {
                   Align(
                     alignment: Alignment.topCenter,
                     child: Text(
-                      AOLText[1],
+                      aolTranslationText[1],
                       style: TextStyle(
                         color: Colors.white70,
                         fontSize: 25.0,
@@ -71,7 +72,7 @@ class _MainAOLPageState extends State<MainAOLPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            AOLText[2],
+                            aolTranslationText[2],
                             textAlign: TextAlign.justify,
                             style: TextStyle(
                                 fontSize: 18,

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/UserSide/AboutUs/Pages/AboutIAHV.dart';
-import 'package:project_timeline/UserSide/Feedback/TextPages/IAHVText.dart';
+
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MainIAHVPage extends StatefulWidget {
@@ -40,7 +41,7 @@ class _MainIAHVPageState extends State<MainIAHVPage> {
           Align(
             alignment: Alignment.topCenter,
             child: Text(
-              IAHVText[1],
+              iahvTranslationText[1],
               style: TextStyle(
                 color: Colors.white70,
                 fontSize: 25.0,
@@ -76,7 +77,7 @@ class _MainIAHVPageState extends State<MainIAHVPage> {
               child: Column(
                 children: [
                   Text(
-                    IAHVText[2],
+                    iahvTranslationText[2],
                     textAlign: TextAlign.justify,
                     style: TextStyle(
                         fontSize: 18,

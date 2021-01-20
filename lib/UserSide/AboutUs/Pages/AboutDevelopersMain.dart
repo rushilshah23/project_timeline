@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:link/link.dart';
 import 'package:project_timeline/UserSide/AboutUs/Pages/AboutDevelopers.dart';
-import 'package:project_timeline/UserSide/Feedback/TextPages/DevelopersText.dart';
+
 import 'package:project_timeline/UserSide/UI/ColorTheme/Theme.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MainDevelopersPage extends StatefulWidget {
@@ -57,7 +58,7 @@ class _MainDevelopersPageState extends State<MainDevelopersPage> {
               child: Column(
                 children: [
                   Text(
-                    DevelopersText[1],
+                    developersTranslationText[1],
                     textAlign: TextAlign.justify,
                     style: TextStyle(
                         fontSize: 18,
@@ -68,7 +69,7 @@ class _MainDevelopersPageState extends State<MainDevelopersPage> {
                   SizedBox(height: 25),
                   Link(
                     child: Text(
-                      DevelopersText[2],
+                      developersTranslationText[2],
                       textAlign: TextAlign.justify,
                       style: TextStyle(
                           fontSize: 18,
