@@ -2,6 +2,9 @@ import 'package:project_timeline/languages/rawText/admin/adminEnglish.dart';
 import 'package:project_timeline/languages/rawText/admin/adminHindi.dart';
 import 'package:project_timeline/languages/rawText/admin/adminMarathi.dart';
 import 'package:project_timeline/languages/rawText/bottomNavText.dart';
+import 'package:project_timeline/languages/rawText/donationPageTranslation/donationPageTranslationTextEnglish.dart';
+import 'package:project_timeline/languages/rawText/donationPageTranslation/donationPageTranslationTextHindi.dart';
+import 'package:project_timeline/languages/rawText/donationPageTranslation/donationPageTranslationTextMarathi.dart';
 import 'package:project_timeline/languages/rawText/feedbackTranslation/feedbackTranslationEnglish.dart';
 import 'package:project_timeline/languages/rawText/feedbackTranslation/feedbackTranslationHindi.dart';
 import 'package:project_timeline/languages/rawText/feedbackTranslation/feedbackTranslationMarathi.dart';
@@ -17,10 +20,11 @@ import 'package:project_timeline/languages/rawText/workerTranslation/workerMarat
 import 'package:shared_preferences/shared_preferences.dart';
 
 String language;
-List<String> homePageTranslationText, bottomNavText, feedbackText,
+List<String> homePageTranslationText, bottomNavText, feedbackText,donationPageTranslation,
 workerText,workerText2,
 logregText,proText,forgotPassText,
 superText,superText2,superText3,superText4,superText5;
+
 
 setLanguageText() async {
   SharedPreferences _sharedPreferences = await SharedPreferences.getInstance();
@@ -41,6 +45,7 @@ setLanguageText() async {
     superText4=superText4English;
     superText5=superText5English;
 
+    donationPageTranslation = donationPageTranslationEnglish;
   } else if (language == "hi") {
     homePageTranslationText = homePageTranslationTextHindi;
     bottomNavText = bottomNavTextHindi;
@@ -57,6 +62,7 @@ setLanguageText() async {
     superText4=superText4Hindi;
     superText5=superText5Hindi;
 
+    donationPageTranslation = donationpageTranslationTextHindi;
   } else if (language == "mr") {
     homePageTranslationText = homePageTranslationTextMarathi;
     bottomNavText = bottomNavTextMarathi;
@@ -73,5 +79,6 @@ setLanguageText() async {
     superText4=superText4Marathi;
     superText5=superText5Marathi;
 
+    donationPageTranslation = donationPageTranslationtextMarathi;
   }
 }
