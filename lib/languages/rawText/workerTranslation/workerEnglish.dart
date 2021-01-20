@@ -1,3 +1,5 @@
+import 'package:project_timeline/admin/worker/workerDaily.dart';
+
 List<String> workerTextEnglish = [
   'Welcome',
   'Projects',
@@ -68,3 +70,8 @@ List<String> workerText2English = [
 ];
 
 
+//  isme https://github.com/shraddhavijay/project_timeline/blob/FinalApp1/lib/admin/worker/workerDaily.dart 
+// file ke labels daalne hai 
+List workerDaily=[
+
+];

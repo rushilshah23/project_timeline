@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
 import 'package:project_timeline/admin/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 
 import '../main.dart';
 
@@ -25,15 +26,15 @@ Future<bool> onBackPressed(BuildContext context) {
   return showDialog(
         context: context,
         builder: (context) => new AlertDialog(
-          title: new Text('Are you sure?'),
-          content: new Text('Do you want to Logout?'),
+          title: new Text(logregText[32]),
+          content: new Text(logregText[33]),
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: new GestureDetector(
                 onTap: () => Navigator.of(context).pop(false),
                 child: Text(
-                  "NO",
+                  logregText[34],
                   style: TextStyle(fontSize: 16),
                 ),
               ),
@@ -50,19 +51,21 @@ Future<bool> onBackPressed(BuildContext context) {
                   _sharedpreferences.getKeys();
                   for (String key in _sharedpreferences.getKeys()) {
                     if (key == "userType" || key == "isLoggedIn") {
+                      debugPrint("========================"+key.toString());
                       _sharedpreferences.remove(key);
                     }
                   }
+                  
                   Navigator.pushAndRemoveUntil(context, PageRouteBuilder(
                     pageBuilder: (BuildContext context, Animation animation,
                         Animation secondaryAnimation) {
                       return MyApp();
                     },
                   ), (Route route) => false);
-                  showToast("Successful Logout");
+                  showToast(logregText[36]);
                 },
                 child: Text(
-                  "YES",
+                  logregText[35],
                   style: TextStyle(fontSize: 16),
                 ),
               ),

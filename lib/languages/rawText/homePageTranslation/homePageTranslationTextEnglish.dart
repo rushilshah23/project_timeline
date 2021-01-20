@@ -4,4 +4,9 @@ List<String> homePageTranslationTextEnglish = [
   'Feedback',
   'LeaderBoard',
   "About Us",
+  "Change Language",
+  "English",
+  "Hindi",
+  'Marathi',
+  "Language Changed Successfully",
 ];

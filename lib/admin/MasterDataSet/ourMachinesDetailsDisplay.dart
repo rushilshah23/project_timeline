@@ -93,54 +93,6 @@ class _OurMachinesDetailsDisplayState extends State<OurMachinesDetailsDisplay> {
                       widget.data[widget.indexes]["vendor"]["contactNo"]
                           .toString()),
 
-                  // Text(widget.data["petrolPumpName"].toString()),
-                  // SizedBox(
-                  //   height: 20,
-                  // ),
-                  // Text("Address:"),
-                  // Text(widget.data["petrolPumpAddress"].toString()),
-                  // SizedBox(
-                  //   height: 20,
-                  // ),
-                  // Text("Phone Number: "),
-                  // Text(widget.data["petrolPumpPhoneNumber"].toString()),
-                  // SizedBox(
-                  //   height: 20,
-                  // ),
-                  // Text("District: "),
-                  // Text(widget.data["petrolPumpDistrict"].toString()),
-                  // SizedBox(
-                  //   height: 20,
-                  // ),
-                  // Text("Town:"),
-                  // Text(widget.data["petrolPumpTown"].toString()),
-                  // SizedBox(
-                  //   height: 20,
-                  // ),
-                  // Text("Pin Code:"),
-                  // Text(widget.data["petrolPumpPinCode"].toString()),
-                  // SizedBox(
-                  //   height: 20,
-                  // ),
-//                  Row(
-//                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                    children: <Widget>[
-//                      RaisedButton(
-//                        onPressed: () {
-//                          debugPrint('Edit');
-//                          editPetrolPump(widget.data);
-//                        },
-//                        child: Text("Edit"),
-//                      ),
-//                      RaisedButton(
-//                        onPressed: () {
-//                          debugPrint("delete");
-//                          deletePetrolPump(widget.data["key"]);
-//                        },
-//                        child: Text("Delete"),
-//                      ),
-//                    ],
-//                  )
                 ],
               ),
             ],

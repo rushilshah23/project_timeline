@@ -37,7 +37,7 @@ class _ChangePassState extends State<ChangePass> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: ThemeAppbar(forgotPassText[22], context),
-      body: Container(
+      body:SingleChildScrollView(child: Container(
         padding: EdgeInsets.all(20),
         child: Form(
           key: _formKey,
@@ -143,6 +143,9 @@ class _ChangePassState extends State<ChangePass> {
                   ),
                 ],
               ),
+              SizedBox(
+                    height: 40,
+                  ),
               Column(
                 children: [
                   RaisedButton(
@@ -177,6 +180,6 @@ class _ChangePassState extends State<ChangePass> {
           ),
         ),
       ),
-    );
+    ));
   }
 }

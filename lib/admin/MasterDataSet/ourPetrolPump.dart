@@ -4,7 +4,7 @@ import 'package:project_timeline/admin/manager/master/petrolMaster/petrolPumpDet
 
 import '../CommonWidgets.dart';
 
-
+import 'package:project_timeline/languages/setLanguageText.dart';
 
 class OurPetrolPumps extends StatefulWidget {
   @override
@@ -70,7 +70,7 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                "Name " +
+                                petrolPumpDataPage[0]+
                                     allPetrolPump[index]["petrolPumpName"]
                                         .toString(),
                                 overflow: TextOverflow.clip,
@@ -86,8 +86,7 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
                                 height: 5,
                               ),
                               Text(
-                                "Address" +
-                                    ": " +
+                                petrolPumpDataPage[1]+
                                     allPetrolPump[index]["petrolPumpAddress"]
                                         .toString(),
                                 overflow: TextOverflow.clip,
@@ -99,8 +98,7 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
                                 width: 10,
                               ),
                               Text(
-                                "Phone No." +
-                                    ": " +
+                                petrolPumpDataPage[2] +
                                     allPetrolPump[index]["petrolPumpPhoneNumber"],
                                 overflow: TextOverflow.clip,
                                 maxLines: 2,
@@ -117,19 +115,7 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
                                 SizedBox(
                                   width: 10,
                                 ),
-//                                IconButton(
-//                                  icon: Icon(Icons.edit),
-//                                  color: Colors.grey,
-//                                  onPressed: () {
-//                                    // debugPrint(allPetrolPumpData[index]["key"].toString());
-//                                    showDialog(
-//                                      context: context,
-//                                      builder: (_) => EditPetrolPump(
-//                                        data: allPetrolPumpData[index],
-//                                      ),
-//                                    );
-//                                  },
-//                                ),
+
                                 IconButton(
                                   icon: Icon(Icons.arrow_forward),
                                   color: Colors.grey,
@@ -142,44 +128,14 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
                                     );
                                   },
                                 ),
-//                            IconButton(
-//                              icon: Icon(Icons.delete),
-//                              color: Colors.grey,
-//                              onPressed: () {
-//                                deletePetrolPump(
-//                                  allPetrolPumpData[index]["key"],
-//                                );
-//                              },
-//                            ),
+
                               ],
                             ))
                       ],
                     )
                   ],
                 ))));
-    // return Container(
-    //   padding: EdgeInsets.only(top: 10),
-    //   child: Column(
-    //     children: [
-    //       ListTile(
-    //         contentPadding: EdgeInsets.all(10),
-    //         title: Text(allPetrolPump[index]["petrolPumpName"].toString()),
-    //         subtitle:
-    //             Text(allPetrolPump[index]["petrolPumpAddress"].toString()),
-    //         onTap: () {
-    //           debugPrint("test" + data.toString());
-    //           return showDialog(
-    //             context: context,
-    //             builder: (_) => PetrolPumpDetails(
-    //               data: data[index],
-    //               indexes: index,
-    //             ),
-    //           );
-    //         },
-    //       ),
-    //     ],
-    //   ),
-    // );
+
   }
 
   @override
@@ -235,15 +191,7 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
                   ));
             }
           }),
-      /*floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (_) => AddPetrolLocation(),
-          );
-        },
-        child: Icon(Icons.add),
-      ),*/
+
     );
   }
 }

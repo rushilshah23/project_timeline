@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../CommonWidgets.dart';
 import 'ourMachinesDetailsDisplay.dart';
-
+import 'package:project_timeline/languages/setLanguageText.dart';
 class OurMachines extends StatefulWidget {
   @override
   _OurMachinesState createState() => _OurMachinesState();
@@ -55,7 +55,7 @@ class _OurMachinesState extends State<OurMachines> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      "Machine Name: " +
+                                      machinesDataPage[0] +
                                           allMachines[index]["machineName"],
                                       overflow: TextOverflow.clip,
                                       maxLines: 2,
@@ -67,7 +67,7 @@ class _OurMachinesState extends State<OurMachines> {
                                       ),
                                     ),
                                     Text(
-                                      "Model: " +
+                                      machinesDataPage[1] +
                                           allMachines[index]["modelName"],
                                       overflow: TextOverflow.clip,
                                       maxLines: 1,
@@ -80,7 +80,7 @@ class _OurMachinesState extends State<OurMachines> {
                                       height: 5,
                                     ),
                                     Text(
-                                      "Operating Weight: " +
+                                      machinesDataPage[2] +
                                           allMachines[index]
                                               ["operatingWeight"] +
                                           " kg",
@@ -90,7 +90,7 @@ class _OurMachinesState extends State<OurMachines> {
                                       style: TextStyle(fontSize: 14),
                                     ),
                                     Text(
-                                      "Engine Power: " +
+                                      machinesDataPage[3]+
                                           allMachines[index]["enginePower"] +
                                           " rpm",
                                       overflow: TextOverflow.clip,
@@ -101,7 +101,7 @@ class _OurMachinesState extends State<OurMachines> {
                                     Row(
                                       children: <Widget>[
                                         Text(
-                                          "Fuel Consumption: " +
+                                          machinesDataPage[4] +
                                               allMachines[index]
                                                       ["fuelConsumption"]
                                                   .toString() +
@@ -115,7 +115,7 @@ class _OurMachinesState extends State<OurMachines> {
                                           width: 10,
                                         ),
                                         Text(
-                                          "Rent" +
+                                          machinesDataPage[5]+
                                               ": " +
                                               allMachines[index]
                                                   ["machineRent"] +
@@ -192,15 +192,7 @@ class _OurMachinesState extends State<OurMachines> {
                   ));
             }
           }),
-      /*floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddNewMachine()),
-          );
-        },
-        child: Icon(Icons.add),
-      ),*/
+
     );
   }
 }

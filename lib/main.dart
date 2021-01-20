@@ -6,6 +6,8 @@ import 'package:project_timeline/admin/DocumentManager/core/models/usermodel.dar
 import 'package:project_timeline/admin/DocumentManager/core/services/authenticationService.dart';
 import 'package:project_timeline/languages/setLanguageText.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'UserSide/Dashboard/Widgets/BottomNav.dart';
 import 'admin/manager/createNewProject/test.dart';
 import 'package:geocoder/geocoder.dart';
@@ -32,9 +34,9 @@ class _MyAppState extends State<MyApp> {
     "Local": Geocoder.local,
     "Google (distant)": Geocoder.google("<API-KEY>"),
   };
+
   @override
   void initState() {
-    setLanguageText();
     super.initState();
   }
 
