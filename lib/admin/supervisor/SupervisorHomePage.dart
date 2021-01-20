@@ -3,7 +3,7 @@ import 'package:project_timeline/admin/DocumentManager/core/models/usermodel.dar
 import 'package:project_timeline/admin/DocumentManager/core/services/pathnavigator.dart';
 import 'package:project_timeline/admin/DocumentManager/ui/screens/home/drive.dart';
 import 'package:project_timeline/admin/DocumentManager/ui/screens/home/shared.dart';
-import 'package:project_timeline/admin/headings.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 import 'package:provider/provider.dart';
 
 import '../CommonWidgets.dart';

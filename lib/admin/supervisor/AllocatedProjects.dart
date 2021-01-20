@@ -4,7 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:project_timeline/admin/headings.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 import 'package:project_timeline/admin/reportGeneration/reportPreviewTesting.dart';
 import '../CommonWidgets.dart';
 import 'allocProjectDetails.dart';

@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
-import 'package:project_timeline/admin/headings.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 import 'package:random_string/random_string.dart';
 
 class WorkerCreationForm extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
-import 'package:project_timeline/admin/headings.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 
 import 'workerDaily.dart';
 import 'workerForm.dart';

@@ -5,7 +5,7 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:project_timeline/admin/ProgressTimeLine/theme.dart';
-import 'package:project_timeline/admin/headings.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 
 class AllocProjDetails extends StatefulWidget {
   Map projectDetails;

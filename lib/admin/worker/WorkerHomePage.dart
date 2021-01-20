@@ -4,7 +4,7 @@ import 'package:project_timeline/admin/MasterDataSet/ourMachines.dart';
 import 'package:project_timeline/admin/MasterDataSet/ourPetrolPump.dart';
 import 'package:project_timeline/admin/ProgressTimeLine/ProgressPage.dart';
 import 'package:project_timeline/admin/dashboard.dart';
-import 'package:project_timeline/admin/headings.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 import 'package:project_timeline/admin/worker/updateWork.dart';
 
 import '../profile.dart';

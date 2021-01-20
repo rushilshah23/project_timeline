@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 
-import '../../headings.dart';
 
 class FeedBackDetails extends StatefulWidget {
   final Map feedBackData;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
-import 'package:project_timeline/admin/headings.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';

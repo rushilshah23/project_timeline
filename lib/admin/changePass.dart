@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_timeline/admin/headings.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

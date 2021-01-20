@@ -4,7 +4,7 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:project_timeline/admin/ProgressTimeLine/theme.dart';
-import 'package:project_timeline/admin/headings.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 import 'package:project_timeline/crowdfunding/ApiRazorPay.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';

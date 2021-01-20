@@ -2,7 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:project_timeline/admin/headings.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 
 class WorkDetails extends StatefulWidget {
   Map data;
