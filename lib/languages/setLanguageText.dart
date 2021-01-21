@@ -24,7 +24,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 String language;
 List homePageTranslationText,
-    bottomNavText,
+    bottomNavText=[
+  'Home',
+  'Projects',
+  'Donations',
+  "IAHV",
+],
     feedbackText,
     donationPageTranslation,
     workerText,

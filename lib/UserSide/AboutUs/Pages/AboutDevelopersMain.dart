@@ -33,7 +33,7 @@ class _MainDevelopersPageState extends State<MainDevelopersPage> {
           image: DecorationImage(
         image: AssetImage('assets/waterimg.jpg'),
         colorFilter:
-            ColorFilter.mode(Colors.black.withOpacity(0.7), BlendMode.dstATop),
+            ColorFilter.mode(Colors.black.withOpacity(0.7), BlendMode.darken),
         fit: BoxFit.fitHeight,
       )),
       padding: EdgeInsets.all(10),
@@ -47,7 +47,7 @@ class _MainDevelopersPageState extends State<MainDevelopersPage> {
                 decoration: new BoxDecoration(
                     shape: BoxShape.circle,
                     image: new DecorationImage(
-                        fit: BoxFit.fill,
+                        fit: BoxFit.contain,
                         image: AssetImage('assets/sakeclogo.jpg')))),
           ),
           SizedBox(height: 10),

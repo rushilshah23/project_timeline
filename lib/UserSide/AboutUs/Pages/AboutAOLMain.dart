@@ -28,7 +28,7 @@ class _MainAOLPageState extends State<MainAOLPage> {
               image: DecorationImage(
                 image: AssetImage('assets/waterimg.jpg'),
                 colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.7), BlendMode.dstATop),
+                    Colors.black.withOpacity(0.7), BlendMode.darken),
                 fit: BoxFit.fitHeight,
               ),
             ),

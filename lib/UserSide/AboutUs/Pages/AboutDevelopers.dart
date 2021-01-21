@@ -33,7 +33,7 @@ class _DevelopersPageState extends State<DevelopersPage> {
             decoration: new BoxDecoration(
                 shape: BoxShape.circle,
                 image: new DecorationImage(
-                    fit: BoxFit.fill,
+                    fit: BoxFit.contain,
                     image: AssetImage('assets/sakeclogo.jpg')))),
         widgetDescription: Center(
           child: Padding(

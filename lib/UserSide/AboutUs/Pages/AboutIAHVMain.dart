@@ -34,7 +34,7 @@ class _MainIAHVPageState extends State<MainIAHVPage> {
         image: AssetImage('assets/waterimg.jpg'),
         fit: BoxFit.fitHeight,
         colorFilter:
-            ColorFilter.mode(Colors.black.withOpacity(0.7), BlendMode.dstATop),
+            ColorFilter.mode(Colors.black.withOpacity(0.7), BlendMode.darken),
       )),
       child: Column(
         children: [
