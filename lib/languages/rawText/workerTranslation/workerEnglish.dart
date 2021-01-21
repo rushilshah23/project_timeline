@@ -70,8 +70,16 @@ List<String> workerText2English = [
 ];
 
 
-//  isme https://github.com/shraddhavijay/project_timeline/blob/FinalApp1/lib/admin/worker/workerDaily.dart 
+//  isme https://github.com/shraddhavijay/project_timeline/blob/FinalApp2/lib/admin/worker/workerDaily.dart 
 // file ke labels daalne hai 
 List workerDaily=[
-
+  'No data found',
+  'Status',
+  'Hours Worked',
+  'Length',
+  "Depth",
+  "Lower width",
+  "Upper width",
+  "Volume Excavated",
+  'Comment',
 ];
