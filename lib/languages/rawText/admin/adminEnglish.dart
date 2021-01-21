@@ -115,6 +115,7 @@ List machinesDataPageEnglish=[
   'Engine Power',
   'Vendor Name',
   'Vendor Contact No',
+  'Details',
 ];
 
 
