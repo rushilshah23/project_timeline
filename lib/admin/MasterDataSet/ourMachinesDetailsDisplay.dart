@@ -35,61 +35,61 @@ class _OurMachinesDetailsDisplayState extends State<OurMachinesDetailsDisplay> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Machine Name: " +
+                  Text(machinesDataPageEnglish[0] + ": " +
                       widget.data[widget.indexes]["machineName"].toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Machine Rent: " +
+                  Text(machinesDataPageEnglish[1] + ": " +
                       widget.data[widget.indexes]["machineRent"].toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Model Name: " +
+                  Text(machinesDataPageEnglish[2] + ": " +
                       widget.data[widget.indexes]["modelName"].toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Amount Of Excavation: " +
+                  Text(machinesDataPageEnglish[3] + ": " +
                       widget.data[widget.indexes]["amountOfExcavation"].toString()+" m3/hr"),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Tank Capacity: " +
+                  Text(machinesDataPageEnglish[4] + ": " +
                       widget.data[widget.indexes]["tankCapacity"].toString()+" litre"),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Fuel Consumption: " +
+                  Text(machinesDataPageEnglish[5] + ": " +
                       widget.data[widget.indexes]["fuelConsumption"]
                           .toString()+" litre"),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Operating Weight: " +
+                  Text(machinesDataPageEnglish[6] + ": " +
                       widget.data[widget.indexes]["operatingWeight"]
                           .toString()+" kg"),
                 
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Bucket Capacity: " +
+                  Text(machinesDataPageEnglish[7] + ": " +
                       widget.data[widget.indexes]["bucketCapacity"].toString() +" litre"),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Engine Power: " +
+                  Text(machinesDataPageEnglish[8] + ": " +
                       widget.data[widget.indexes]["enginePower"].toString()+" rpm"),
 
                         SizedBox(
                     height: 20,
                   ),
-                  Text("Vendor Name: " +
+                  Text(machinesDataPageEnglish[9] + ": " +
                       widget.data[widget.indexes]["vendor"]["name"].toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Vendor Contact No: " +
+                  Text(machinesDataPageEnglish[10] + ": " +
                       widget.data[widget.indexes]["vendor"]["contactNo"]
                           .toString()),
 
