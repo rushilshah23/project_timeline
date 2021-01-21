@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:project_timeline/lib/languages/rawText/workerTranslation/workerEnglish.dart';
+import 'package:project_timeline/languages/rawText/workerTranslation/workerEnglish.dart';
+// import 'package:project_timeline/lib/languages/rawText/workerTranslation/workerEnglish.dart';
 
 class WorkerDaily extends StatefulWidget {
   String name, email, mobile, password, uid, userType, assignedProject;
@@ -56,7 +57,6 @@ class _WorkerDailyState extends State<WorkerDaily> {
         .child("progress");
 
     return Scaffold(
-
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.all(10),
@@ -148,16 +148,19 @@ class _WorkersDetailsDisplayState extends State<WorkersDetailsDisplay> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(workerDaily[1] + ': ' + widget.data["status"].toString()),
+                  Text(
+                      workerDaily[1] + ': ' + widget.data["status"].toString()),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(workerDaily[2] +
+                      ': ' +
+                      widget.data["hoursWorked"].toString()),
                   SizedBox(
                     height: 10,
                   ),
                   Text(
-                      workerDaily[2] + ': ' + widget.data["hoursWorked"].toString()),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(workerDaily[3] + ': ' + widget.data["length"].toString()),
+                      workerDaily[3] + ': ' + widget.data["length"].toString()),
                   SizedBox(
                     height: 10,
                   ),
@@ -165,20 +168,27 @@ class _WorkersDetailsDisplayState extends State<WorkersDetailsDisplay> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(workerDaily[5] + ': ' + widget.data["lowerWidth"].toString()),
+                  Text(workerDaily[5] +
+                      ': ' +
+                      widget.data["lowerWidth"].toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text(workerDaily[6] + ': ' + widget.data["upperWidth"].toString()),
+                  Text(workerDaily[6] +
+                      ': ' +
+                      widget.data["upperWidth"].toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text(workerDaily[7] + ': ' +
+                  Text(workerDaily[7] +
+                      ': ' +
                       widget.data["volumeExcavated"].toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text(workerDaily[8] + ': ' + widget.data["comment"].toString()),
+                  Text(workerDaily[8] +
+                      ': ' +
+                      widget.data["comment"].toString()),
                 ],
               ),
             ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 
 import '../../UI/ColorTheme/Theme.dart';
 import '../../constants.dart';
@@ -18,16 +19,15 @@ class Item1 extends StatelessWidget {
                 ),
                 Align(
                     alignment: FractionalOffset.bottomLeft,
-                    child:  Container(
-                      
-                      padding: EdgeInsets.all(15),
-                      child:Text(
-                  'Conserve water, conserve life.',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: corouseltextColor),
-                )))
+                    child: Container(
+                        padding: EdgeInsets.all(15),
+                        child: Text(
+                          homePageTranslationText[10],
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: corouseltextColor),
+                        )))
               ],
             );
           })
@@ -50,18 +50,17 @@ class Item2 extends StatelessWidget {
                 Container(
                   decoration: carousel2,
                 ),
-                 Align(
+                Align(
                     alignment: FractionalOffset.bottomLeft,
-                    child:  Container(
-                      
-                      padding: EdgeInsets.all(15),
-                    child: Text(
-                  'You never know the worth of water until the well runs dry. ',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: corouseltextColor),
-                )))
+                    child: Container(
+                        padding: EdgeInsets.all(15),
+                        child: Text(
+                          homePageTranslationText[11],
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: corouseltextColor),
+                        )))
               ],
             );
           })

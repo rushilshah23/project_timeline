@@ -1,6 +1,9 @@
 import 'package:project_timeline/languages/rawText/admin/adminEnglish.dart';
 import 'package:project_timeline/languages/rawText/admin/adminHindi.dart';
 import 'package:project_timeline/languages/rawText/admin/adminMarathi.dart';
+import 'package:project_timeline/languages/rawText/appbarTranslation/appbarTranslationTextEnglish.dart';
+import 'package:project_timeline/languages/rawText/appbarTranslation/appbarTranslationTextHindi.dart';
+import 'package:project_timeline/languages/rawText/appbarTranslation/appbarTranslationTextMarathi.dart';
 import 'package:project_timeline/languages/rawText/bottomNavText.dart';
 import 'package:project_timeline/languages/rawText/donationPageTranslation/donationPageTranslationTextEnglish.dart';
 import 'package:project_timeline/languages/rawText/donationPageTranslation/donationPageTranslationTextHindi.dart';
@@ -42,7 +45,8 @@ List homePageTranslationText,
     iahvTranslationText,
     developersTranslationText,
     machinesDataPage,
-    petrolPumpDataPage;
+    petrolPumpDataPage,
+    appbarsTranslationText;
 
 setLanguageText() async {
   SharedPreferences _sharedPreferences = await SharedPreferences.getInstance();
@@ -71,6 +75,7 @@ setLanguageText() async {
     aolTranslationText = aolTranslationTextEnglish;
     iahvTranslationText = iahvTranslationTextEnglish;
     developersTranslationText = developersTextTranslationEnglish;
+    appbarsTranslationText = appbarTranslationTextEnglish;
   } else if (language == "hi") {
     homePageTranslationText = homePageTranslationTextHindi;
     bottomNavText = bottomNavTextHindi;
@@ -94,6 +99,7 @@ setLanguageText() async {
     aolTranslationText = aolTranslationTextHindi;
     iahvTranslationText = iahvTranslationTextHindi;
     developersTranslationText = developersTextTranslationHindi;
+    appbarsTranslationText = appbarTranslationTextHindi;
   } else if (language == "mr") {
     homePageTranslationText = homePageTranslationTextMarathi;
     bottomNavText = bottomNavTextMarathi;
@@ -117,5 +123,6 @@ setLanguageText() async {
     aolTranslationText = aolTranslationTextMarathi;
     iahvTranslationText = iahvTranslationTextMarathi;
     developersTranslationText = developersTextTranslationMarathi;
+    appbarsTranslationText = appbarTranslationTextMarathi;
   }
 }

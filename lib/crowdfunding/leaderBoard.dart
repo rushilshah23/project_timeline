@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:project_timeline/crowdfunding/userDetailModel.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 
 import 'ApiRazorPay.dart';
 
@@ -65,7 +66,7 @@ class _boardState extends State<board> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: plainAppBar(context: context, title: 'Charity Leader Board'),
+      appBar: plainAppBar(context: context, title: appbarsTranslationText[0]),
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -100,7 +101,7 @@ class _boardState extends State<board> {
                 height: MediaQuery.of(context).size.height * 0.12,
                 padding: EdgeInsets.fromLTRB(10, 8, 10, 4),
                 child: Text(
-                  "The measure of life is not its duration, but its donation.",
+                  appbarsTranslationText[1],
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontFamily: 'DancingScript',
@@ -123,7 +124,7 @@ class _boardState extends State<board> {
                           color: Color(0xff018abd),
                         ),
                         child: Text(
-                          "Donate Now",
+                          appbarsTranslationText[2],
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 17,
@@ -143,7 +144,7 @@ class _boardState extends State<board> {
                 height: 15,
               ),
               Text(
-                "Leader Board",
+                appbarsTranslationText[3],
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 27),
               ),
               SizedBox(

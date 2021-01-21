@@ -1,9 +1,10 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:project_timeline/languages/rawText/admin/adminEnglish.dart';
 
 import '../../../CommonWidgets.dart';
 import 'EditPetrolPump.dart';
-import 'package:project_timeline/lib/languages/rawText/admin/adminEnglish.dart';
+// import 'package:project_timeline/lib/languages/rawText/admin/adminEnglish.dart';
 
 class PetrolPumpDetails extends StatefulWidget {
   Map data;
@@ -25,7 +26,6 @@ class _PetrolPumpDetailsState extends State<PetrolPumpDetails> {
       data = widget.data;
       indexes = widget.indexes;
     });
-
   }
 
   deletePetrolPump(keyNode) async {
@@ -68,9 +68,8 @@ class _PetrolPumpDetailsState extends State<PetrolPumpDetails> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-
                   Center(
-                  child: titleStyles(petrolPumpDataPageEnglish[6] + ':', 18),
+                    child: titleStyles(petrolPumpDataPageEnglish[6] + ':', 18),
                   ),
                   Text(petrolPumpDataPageEnglish[0] + ": "),
                   Text(widget.data["petrolPumpName"].toString()),
@@ -102,7 +101,6 @@ class _PetrolPumpDetailsState extends State<PetrolPumpDetails> {
                   SizedBox(
                     height: 20,
                   ),
-
                 ],
               ),
             ],

@@ -9,4 +9,6 @@ List<String> homePageTranslationTextEnglish = [
   "Hindi",
   'Marathi',
   "Language Changed Successfully",
+  'Conserve water, conserve life.',
+  'You never know the worth of water until the well runs dry. ',
 ];

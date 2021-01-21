@@ -4,6 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 
 void main() => runApp(new HeatMap());
 
@@ -49,7 +50,7 @@ class _FirstScreen extends State<HeatMapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: plainAppBar(context: context, title: 'Heat Map'),
+      appBar: plainAppBar(context: context, title: homePageTranslationText[1]),
       body: _child,
     );
   }
