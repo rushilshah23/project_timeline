@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../CommonWidgets.dart';
 import 'EditPetrolPump.dart';
+import 'package:project_timeline/lib/languages/rawText/admin/adminEnglish.dart';
 
 class PetrolPumpDetails extends StatefulWidget {
   Map data;
@@ -69,34 +70,34 @@ class _PetrolPumpDetailsState extends State<PetrolPumpDetails> {
                 children: <Widget>[
 
                   Center(
-                  child: titleStyles('Details:', 18),
+                  child: titleStyles(petrolPumpDataPageEnglish[6] + ':', 18),
                   ),
-                  Text("Name"),
+                  Text(petrolPumpDataPageEnglish[0] + ": "),
                   Text(widget.data["petrolPumpName"].toString()),
                   SizedBox(
                     height: 20,
                   ),
-                  Text("Address:"),
+                  Text(petrolPumpDataPageEnglish[1] + ":"),
                   Text(widget.data["petrolPumpAddress"].toString()),
                   SizedBox(
                     height: 20,
                   ),
-                  Text("Phone Number: "),
+                  Text(petrolPumpDataPageEnglish[2] + ": "),
                   Text(widget.data["petrolPumpPhoneNumber"].toString()),
                   SizedBox(
                     height: 20,
                   ),
-                  Text("District: "),
+                  Text(petrolPumpDataPageEnglish[3] + ": "),
                   Text(widget.data["petrolPumpDistrict"].toString()),
                   SizedBox(
                     height: 20,
                   ),
-                  Text("Town:"),
+                  Text(petrolPumpDataPageEnglish[4] + ":"),
                   Text(widget.data["petrolPumpTown"].toString()),
                   SizedBox(
                     height: 20,
                   ),
-                  Text("Pin Code:"),
+                  Text(petrolPumpDataPageEnglish[5] + ":"),
                   Text(widget.data["petrolPumpPinCode"].toString()),
                   SizedBox(
                     height: 20,
