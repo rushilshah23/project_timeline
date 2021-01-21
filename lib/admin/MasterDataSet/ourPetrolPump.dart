@@ -48,45 +48,51 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
 
   Widget petrolMaster(int index, allPetrolPumpData) {
     return Container(
+        child: GestureDetector(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (_) => PetrolPumpDetails(
+                  data: allPetrolPumpData[index],
+                ),
+              );
+            },
+            child: Card(
+                elevation: 4,
+                margin: EdgeInsets.only(left: 15, right: 15, top: 7, bottom: 7),
+                semanticContainer: true,
+                color: Colors.amberAccent.shade50,
+                child: Container(
 
-        child: Card(
-            elevation: 4,
-            margin: EdgeInsets.only(left: 15, right: 15, top: 7, bottom: 7),
-            semanticContainer: true,
-            color: Colors.amberAccent.shade50,
-            child: Container(
-                child: Column(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
+                   
                         Container(
-                          width: MediaQuery.of(context).size.width / 1.4,
-                          padding: EdgeInsets.only(top: 30,bottom: 30,left: 10,right: 10),
+                          //width: MediaQuery.of(context).size.width / 1.4,
+                          padding: EdgeInsets.only(left: 15,
+                              top: 30, bottom: 30),
                           //padding: EdgeInsets.all(5),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                petrolPumpDataPage[0]+
+                                petrolPumpDataPage[0] +":   "+
                                     allPetrolPump[index]["petrolPumpName"]
                                         .toString(),
                                 overflow: TextOverflow.clip,
                                 maxLines: 1,
                                 softWrap: false,
                                 style: TextStyle(
-                                  fontSize: 14,
-                                  //fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.w900
-                                ),
+                                    fontSize: 14,
+                                    //fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.w900),
                               ),
                               SizedBox(
                                 height: 5,
                               ),
                               Text(
-                                petrolPumpDataPage[1]+
+                                petrolPumpDataPage[1] +":   "+
                                     allPetrolPump[index]["petrolPumpAddress"]
                                         .toString(),
                                 overflow: TextOverflow.clip,
@@ -98,8 +104,9 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
                                 width: 10,
                               ),
                               Text(
-                                petrolPumpDataPage[2] +
-                                    allPetrolPump[index]["petrolPumpPhoneNumber"],
+                                petrolPumpDataPage[2] +":   "+
+                                    allPetrolPump[index]
+                                        ["petrolPumpPhoneNumber"],
                                 overflow: TextOverflow.clip,
                                 maxLines: 2,
                                 softWrap: false,
@@ -108,34 +115,9 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
                             ],
                           ),
                         ),
-                        Container(
-                            margin: EdgeInsets.only(top: 5),
-                            child: Column(
-                              children: <Widget>[
-                                SizedBox(
-                                  width: 10,
-                                ),
-
-                                IconButton(
-                                  icon: Icon(Icons.arrow_forward),
-                                  color: Colors.grey,
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (_) => PetrolPumpDetails(
-                                        data: allPetrolPumpData[index],
-                                      ),
-                                    );
-                                  },
-                                ),
-
-                              ],
-                            ))
-                      ],
-                    )
+                   
                   ],
-                ))));
-
+                )))));
   }
 
   @override
@@ -146,7 +128,7 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
 //      ),
       body: StreamBuilder(
           stream:
-          databaseReference.child("masters").child("petrolMaster").onValue,
+              databaseReference.child("masters").child("petrolMaster").onValue,
           builder: (context, snap) {
             if (snap.hasData &&
                 !snap.hasError &&
@@ -154,20 +136,22 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
               Map data = snap.data.snapshot.value;
               allPetrolPump = [];
               data.forEach(
-                    (index, data) => allPetrolPump.add({"key": index, ...data}),
+                (index, data) => allPetrolPump.add({"key": index, ...data}),
               );
 
               return new Column(
                 children: <Widget>[
-                  SizedBox(height: 10,),
-                  Center(
-//                    child: Text('Our Diesel Stations',
-//                        style: titlestyles(18, Colors.orange)),
-                  child: titleStyles('Our Diesel Stations', 18),
+                  // SizedBox(
+                  //   height: 10,
+                  // ),
+//                   Center(
+// //                    child: Text('Our Diesel Stations',
+// //                        style: titlestyles(18, Colors.orange)),
+//                     child: titleStyles('Our Diesel Stations', 18),
+//                   ),
+                  SizedBox(
+                    height: 20,
                   ),
-
-                  SizedBox(height: 20,),
-
                   new Expanded(
                     child: new ListView.builder(
                       itemCount: allPetrolPump.length,
@@ -187,11 +171,10 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
             } else {
               return Center(
                   child: CircularProgressIndicator(
-                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
-                  ));
+                valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+              ));
             }
           }),
-
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:project_timeline/languages/setLanguageText.dart';
 import '../CommonWidgets.dart';
-import 'package:project_timeline/lib/languages/rawText/admin/adminEnglish.dart';
+
 
 class OurMachinesDetailsDisplay extends StatefulWidget {
   List data;
@@ -30,66 +30,66 @@ class _OurMachinesDetailsDisplayState extends State<OurMachinesDetailsDisplay> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Center(
-                  child: titleStyles(machinesDataPageEnglish[11] + ':', 18),
+                  child: titleStyles(machinesDataPage[11] + ':', 18),
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  Text(machinesDataPageEnglish[0] + ": " +
+                  Text(machinesDataPage[0] + ": " +
                       widget.data[widget.indexes]["machineName"].toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text(machinesDataPageEnglish[1] + ": " +
+                  Text(machinesDataPage[1] + ": " +
                       widget.data[widget.indexes]["machineRent"].toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text(machinesDataPageEnglish[2] + ": " +
+                  Text(machinesDataPage[2] + ": " +
                       widget.data[widget.indexes]["modelName"].toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text(machinesDataPageEnglish[3] + ": " +
+                  Text(machinesDataPage[3] + ": " +
                       widget.data[widget.indexes]["amountOfExcavation"].toString()+" m3/hr"),
                   SizedBox(
                     height: 10,
                   ),
-                  Text(machinesDataPageEnglish[4] + ": " +
+                  Text(machinesDataPage[4] + ": " +
                       widget.data[widget.indexes]["tankCapacity"].toString()+" litre"),
                   SizedBox(
                     height: 10,
                   ),
-                  Text(machinesDataPageEnglish[5] + ": " +
+                  Text(machinesDataPage[5] + ": " +
                       widget.data[widget.indexes]["fuelConsumption"]
                           .toString()+" litre"),
                   SizedBox(
                     height: 10,
                   ),
-                  Text(machinesDataPageEnglish[6] + ": " +
+                  Text(machinesDataPage[6] + ": " +
                       widget.data[widget.indexes]["operatingWeight"]
                           .toString()+" kg"),
                 
                   SizedBox(
                     height: 10,
                   ),
-                  Text(machinesDataPageEnglish[7] + ": " +
+                  Text(machinesDataPage[7] + ": " +
                       widget.data[widget.indexes]["bucketCapacity"].toString() +" litre"),
                   SizedBox(
                     height: 10,
                   ),
-                  Text(machinesDataPageEnglish[8] + ": " +
+                  Text(machinesDataPage[8] + ": " +
                       widget.data[widget.indexes]["enginePower"].toString()+" rpm"),
 
                         SizedBox(
                     height: 20,
                   ),
-                  Text(machinesDataPageEnglish[9] + ": " +
+                  Text(machinesDataPage[9] + ": " +
                       widget.data[widget.indexes]["vendor"]["name"].toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text(machinesDataPageEnglish[10] + ": " +
+                  Text(machinesDataPage[10] + ": " +
                       widget.data[widget.indexes]["vendor"]["contactNo"]
                           .toString()),
 

@@ -29,6 +29,7 @@ List homePageTranslationText,
     donationPageTranslation,
     workerText,
     workerText2,
+    workerDaily,
     logregText,
     proText,
     forgotPassText,
@@ -54,6 +55,7 @@ setLanguageText() async {
 
     workerText = workerTextEnglish;
     workerText2 = workerText2English;
+    workerDaily=workerDailyEnglish;
     logregText = logregTextEnglish;
     proText = proTextEnglish;
     forgotPassText = forgotPassTextEnglish;
@@ -78,6 +80,7 @@ setLanguageText() async {
 
     workerText = workerTextHindi;
     workerText2 = workerText2Hindi;
+    workerDaily=workerDailyHindi;
     logregText = logregTextHindi;
     proText = proTextHindi;
     forgotPassText = forgotPassTextHindi;
@@ -101,6 +104,7 @@ setLanguageText() async {
 
     workerText = workerTextMarathi;
     workerText2 = workerText2Marathi;
+     workerDaily=workerDailyMarathi;
     logregText = logregTextMarathi;
     proText = proTextMarathi;
     forgotPassText = forgotPassTextMarathi;

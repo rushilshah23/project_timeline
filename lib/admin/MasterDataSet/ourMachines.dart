@@ -54,8 +54,10 @@ class _OurMachinesState extends State<OurMachines> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    Text(
-                                      machinesDataPage[0] +
+                                    Container(
+                                    width: MediaQuery.of(context).size.width / 1.4,
+                                    child:Text(
+                                      machinesDataPage[0] +":   "+
                                           allMachines[index]["machineName"],
                                       overflow: TextOverflow.clip,
                                       maxLines: 2,
@@ -65,9 +67,9 @@ class _OurMachinesState extends State<OurMachines> {
                                         //fontStyle: FontStyle.italic,
                                         fontWeight: FontWeight.w900
                                       ),
-                                    ),
+                                    )),
                                     Text(
-                                      machinesDataPage[1] +
+                                      machinesDataPage[2] +":   "+
                                           allMachines[index]["modelName"],
                                       overflow: TextOverflow.clip,
                                       maxLines: 1,
@@ -80,17 +82,17 @@ class _OurMachinesState extends State<OurMachines> {
                                       height: 5,
                                     ),
                                     Text(
-                                      machinesDataPage[2] +
+                                      machinesDataPage[6] +":   "+
                                           allMachines[index]
                                               ["operatingWeight"] +
                                           " kg",
                                       overflow: TextOverflow.clip,
                                       maxLines: 2,
-                                      softWrap: false,
+                                      softWrap: true,
                                       style: TextStyle(fontSize: 14),
                                     ),
                                     Text(
-                                      machinesDataPage[3]+
+                                      machinesDataPage[8]+":   "+
                                           allMachines[index]["enginePower"] +
                                           " rpm",
                                       overflow: TextOverflow.clip,
@@ -98,10 +100,9 @@ class _OurMachinesState extends State<OurMachines> {
                                       softWrap: false,
                                       style: TextStyle(fontSize: 14),
                                     ),
-                                    Row(
-                                      children: <Widget>[
+                                    
                                         Text(
-                                          machinesDataPage[4] +
+                                          machinesDataPage[5] +":   "+
                                               allMachines[index]
                                                       ["fuelConsumption"]
                                                   .toString() +
@@ -115,8 +116,8 @@ class _OurMachinesState extends State<OurMachines> {
                                           width: 10,
                                         ),
                                         Text(
-                                          machinesDataPage[5]+
-                                              ": " +
+                                          machinesDataPage[2]+
+                                              ":   " +
                                               allMachines[index]
                                                   ["machineRent"] +
                                               " Rs/hr",
@@ -126,8 +127,7 @@ class _OurMachinesState extends State<OurMachines> {
                                           style: TextStyle(fontSize: 14),
                                         ),
                                       ],
-                                    ),
-                                  ],
+                                   
                                 )),
                           ],
                         )
@@ -158,14 +158,14 @@ class _OurMachinesState extends State<OurMachines> {
 
               return new Column(
                 children: <Widget>[
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Center(
-//                    child: Text('Our Machines',
-//                        style: titlestyles(18, Colors.orange)),
-                  child: titleStyles('Our Machines', 18),
-                  ),
+                  // SizedBox(
+                  //   height: 10,
+                  // ),
+//                   Center(
+// //                    child: Text('Our Machines',
+// //                        style: titlestyles(18, Colors.orange)),
+//                   child: titleStyles('Our Machines', 18),
+//                   ),
                   SizedBox(
                     height: 20,
                   ),
