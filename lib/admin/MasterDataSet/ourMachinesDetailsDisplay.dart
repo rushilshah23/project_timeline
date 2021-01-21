@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../CommonWidgets.dart';
-
+import 'package:project_timeline/lib/languages/rawText/admin/adminEnglish.dart';
 
 class OurMachinesDetailsDisplay extends StatefulWidget {
   List data;
@@ -30,7 +30,7 @@ class _OurMachinesDetailsDisplayState extends State<OurMachinesDetailsDisplay> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Center(
-                  child: titleStyles('Details:', 18),
+                  child: titleStyles(machinesDataPageEnglish[11] + ':', 18),
                   ),
                   SizedBox(
                     height: 10,
