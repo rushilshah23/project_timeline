@@ -122,10 +122,12 @@ List machinesDataPageEnglish=[
 // file ke labels daalne hai 
 
 List petrolPumpDataPageEnglish=[
-  "Name: " ,
-  "Address: ",
-"Phone No: ",
-
+  'Name',
+  'Address',
+  'Phone Number',
+  'District',
+  "Town",
+  "Pin Code",
 ];
 
 
