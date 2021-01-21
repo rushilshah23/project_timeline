@@ -129,6 +129,7 @@ List petrolPumpDataPageEnglish=[
   'District',
   "Town",
   "Pin Code",
+  "Details",
 ];
 
 
