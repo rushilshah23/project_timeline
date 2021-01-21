@@ -100,21 +100,25 @@ List<String> proTextEnglish = [
   'Suggestions: ',
 ];
 
-//  isme https://github.com/shraddhavijay/project_timeline/blob/FinalApp1/lib/admin/MasterDataSet/ourMachinesDetailsDisplay.dart
+//  isme https://github.com/shraddhavijay/project_timeline/blob/FinalApp2/lib/admin/MasterDataSet/ourMachinesDetailsDisplay.dart
 // file ke labels daalne hai 
 
 List machinesDataPageEnglish=[
-  "Machine Name: ",
-  "Model: ",
-  "Operating Weight: ",
-  "Engine Power: ",
-  "Fuel Consumption: ",
-  "Rent" 
-    
+  'Machine Name',
+  'Machine Rent',
+  'Model Name',
+  'Amount Of Excavation',
+  "Tank Capacity",
+  "Fuel Consumption",
+  "Operating Weight",
+  "Bucket Capacity",
+  'Engine Power',
+  'Vendor Name',
+  'Vendor Contact No',
 ];
 
 
-//  https://github.com/shraddhavijay/project_timeline/blob/FinalApp1/lib/admin/manager/master/petrolMaster/petrolPumpDetails.dart
+//  https://github.com/shraddhavijay/project_timeline/blob/FinalApp2/lib/admin/manager/master/petrolMaster/petrolPumpDetails.dart
 // file ke labels daalne hai 
 
 List petrolPumpDataPageEnglish=[
