@@ -6,7 +6,7 @@ import 'package:project_timeline/admin/CommonWidgets.dart';
 import 'package:project_timeline/admin/ProgressTimeLine/theme.dart';
 import 'package:project_timeline/languages/setLanguageText.dart';
 import 'package:project_timeline/crowdfunding/ApiRazorPay.dart';
-
+import 'package:project_timeline/multilingual/dynamic_translation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'feedbackDetails.dart';
@@ -28,6 +28,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
   List feedbackList = List();
   int feebackDisplayLimit = 1;
   dynamic output;
+  List translatedText=["","",""];
 
   @override
   void initState() {
@@ -75,18 +76,15 @@ class _ProjectDetailsState extends State<ProjectDetails> {
   }
 
   loadTranslatedText() async {
-    // await DynamicTranslation().listtranslate(inputs: proText).then((value) {
-    //   setState(() {
-    //     proText = value;
-    //   });
-    // });
-
-    //   await DynamicTranslate().getTranslatedValue(testStringMap).then((value) {
-    //     setState(() {
-    //       proText = value;
-    //     });
-    //     print("--------------DONE=====-------------" + output.toString());
-    //   });
+   translatedText= await DynamicTranslation().listTranslate(
+                        data: [
+                          widget.projectDetails["projectName"],
+                           widget.projectDetails["projectStatus"],
+                           widget.projectDetails["siteAddress"],                          
+                        ]);
+                        setState(() {
+                          
+                        });
   }
 
   seeMoreFeedback() {
@@ -190,7 +188,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                             )),
                         SizedBox(height: 8),
                         Text(
-                          widget.projectDetails["projectName"].toString(),
+                          translatedText[0].toString()?? widget.projectDetails["projectName"].toString(),
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
@@ -263,7 +261,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                     )),
                                 SizedBox(height: 8),
                                 Text(
-                                  widget.projectDetails["projectStatus"]
+                                  translatedText[1].toString()??widget.projectDetails["projectStatus"]
                                       .toString(),
                                   style: TextStyle(
                                       fontSize: 15,
@@ -317,7 +315,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                 Container(
                   // width: 160,
                   child: Text(
-                    widget.projectDetails["siteAddress"].toString(),
+                    translatedText[2].toString()??widget.projectDetails["siteAddress"].toString(),
                     overflow: TextOverflow.visible,
                     softWrap: true,
                     style: TextStyle(
@@ -327,23 +325,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                   ),
                 ),
                 SizedBox(height: 10),
-                // Text(
-                //     'Soil Type',
-                //     style: TextStyle(
-                //       fontWeight: FontWeight.bold,
-                //       fontSize: 18,
-                //       color: Color(0xff005c9d),
-                //       //fontStyle: FontStyle\.italic,
-                //     )
-                // ),
-                // Text(
-                //   widget.projectDetails["soilType"].toString(),
-                //   style: TextStyle(
-                //       fontSize: 15,
-                //       fontWeight: FontWeight.w500,
-                //       color: Colors.black
-                //   ),
-                // ),
+              
                 SizedBox(height: 20),
                 isUser
                     ? Container(
@@ -470,8 +452,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                 title: Text(
                                     proText[17] + feedbackList[index]["name"]),
                                 subtitle: Text(proText[18] +
-                                    feedbackList[index]["timestamp"] +
-                                    " hrs"),
+                                    feedbackList[index]["timestamp"]),
                                 children: <Widget>[
                                   Container(
                                       padding:

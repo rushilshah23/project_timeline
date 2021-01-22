@@ -5,14 +5,28 @@ import 'package:translator/translator.dart';
 
 class DynamicTranslation {
   var translator = GoogleTranslator();
+  String language;
 
-  Future<String> stringTranslate({String data}) async {
-    String translatedString;
-    translatedString =
-        (await translator.translate(data, from: 'en', to: selectedLanguage))
+  getLanguageText() async {
+    SharedPreferences _sharedPreferences =
+        await SharedPreferences.getInstance();
+   language = _sharedPreferences.getString('language') ?? "en";
+  }
+
+  Future<List> listTranslate({List data}) async {
+    await getLanguageText();
+    if(language!='en'){
+    List translatedList;
+    String translatedString,listToString;
+    listToString= data.join("@@@");
+     translatedString =
+        (await translator.translate(listToString, from: 'en', to: language))
             .toString();
     debugPrint("deep translation " + translatedString);
-    return translatedString;
+    translatedList= translatedString.split("@@@").toList();
+    return translatedList;
+    }
+    else return data;
   }
 
 }

@@ -157,24 +157,24 @@ class _WorkersDetailsDisplayState extends State<WorkersDetailsDisplay> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(workerDaily[3] + ': ' + widget.data["length"].toString()),
+                  Text(workerDaily[3] + ': ' + widget.data["length"].toString()+" m"),
                   SizedBox(
                     height: 10,
                   ),
-                  Text(workerDaily[4] + ': ' + widget.data["depth"].toString()),
+                  Text(workerDaily[4] + ': ' + widget.data["depth"].toString()+" m"),
                   SizedBox(
                     height: 10,
                   ),
-                  Text(workerDaily[5] + ': ' + widget.data["lowerWidth"].toString()),
+                  Text(workerDaily[5] + ': ' + widget.data["lowerWidth"].toString()+" m"),
                   SizedBox(
                     height: 10,
                   ),
-                  Text(workerDaily[6] + ': ' + widget.data["upperWidth"].toString()),
+                  Text(workerDaily[6] + ': ' + widget.data["upperWidth"].toString()+" m"),
                   SizedBox(
                     height: 10,
                   ),
                   Text(workerDaily[7] + ': ' +
-                      widget.data["volumeExcavated"].toString()),
+                      widget.data["volumeExcavated"].toString()+" m3"),
                   SizedBox(
                     height: 10,
                   ),

@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:project_timeline/languages/setLanguageText.dart';
+import 'package:project_timeline/multilingual/dynamic_translation.dart';
 import '../../CommonWidgets.dart';
 import 'ProjectDetails.dart';
-
 
 class AllProjects extends StatefulWidget {
   @override
@@ -21,10 +21,9 @@ class _AllProjectsState extends State<AllProjects> {
     super.initState();
   }
 
-
   Widget displayProject(int index, allProjects) {
-    
 
+    
     return Container(
         child: GestureDetector(
       onTap: () {
@@ -46,7 +45,12 @@ class _AllProjectsState extends State<AllProjects> {
             margin: EdgeInsets.only(left: 5, right: 0, top: 7, bottom: 7),
             semanticContainer: true,
             color: Colors.blue[50],
-            child: Container(
+            child:  FutureBuilder(
+                    future: DynamicTranslation().listTranslate(
+                        data: [allProjects[index]["projectName"],allProjects[index]["projectStatus"]]),
+                    builder: (context, snapshot) {
+                      if(snapshot.hasData){
+                      return Container(
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(20)),
                 child: ListTile(
@@ -82,13 +86,22 @@ class _AllProjectsState extends State<AllProjects> {
                       progressColor: Colors.blue[900],
                     ),
                   ),
-                  title: titleStyles(allProjects[index]["projectName"], 16),
+                  title: titleStyles(snapshot.data[0].toString()??allProjects[index]["projectName"], 16),
+                
                   subtitle: Text(
-                    allProjects[index]["projectStatus"],
+                    snapshot.data[1].toString()??allProjects[index]["projectStatus"],
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
+                
                   trailing: Icon(Icons.arrow_forward_ios),
-                ))),
+                ));
+                }
+                else return Container(
+                  padding: EdgeInsets.symmetric(vertical: 30),
+                  child:Center(child: CircularProgressIndicator(),));
+                }
+                 
+                )),
       ),
     ));
   }

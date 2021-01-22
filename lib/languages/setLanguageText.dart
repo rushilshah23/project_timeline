@@ -23,13 +23,8 @@ import 'package:project_timeline/languages/rawText/workerTranslation/workerMarat
 import 'package:shared_preferences/shared_preferences.dart';
 
 String language;
-List homePageTranslationText,
-    bottomNavText=[
-  'Home',
-  'Projects',
-  'Donations',
-  "IAHV",
-],
+List homePageTranslationText=homePageTranslationTextEnglish,
+    bottomNavText=bottomNavTextEnglish,
     feedbackText,
     donationPageTranslation,
     workerText,
