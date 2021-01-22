@@ -1,7 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:project_timeline/languages/rawText/admin/adminEnglish.dart';
-
+import 'package:project_timeline/multilingual/dynamic_translation.dart';
 import '../../../CommonWidgets.dart';
 import 'EditPetrolPump.dart';
 import 'package:project_timeline/languages/setLanguageText.dart';
@@ -21,38 +20,32 @@ class _PetrolPumpDetailsState extends State<PetrolPumpDetails> {
   final databaseReference = FirebaseDatabase.instance.reference();
   Map data;
   int indexes;
+
+ List translatedText=["","","","","","",""];
+
   @override
   void initState() {
-    setState(() {
-      data = widget.data;
-      indexes = widget.indexes;
-    });
+  
+    loadTranslatedText();
   }
 
-  deletePetrolPump(keyNode) async {
-    try {
-      await databaseReference
-          .child("masters")
-          .child("petrolMaster")
-          .child(keyNode)
-          .remove();
-      await Navigator.of(context).pop();
-      showToast("Deleted Successfully");
-    } catch (e) {
-      debugPrint("This is the error " + e.toString());
-      showToast("Failed. check your internet!");
-    }
+  loadTranslatedText() async {
+   translatedText= await DynamicTranslation().listTranslate(
+                        data: [
+                          widget.data["petrolPumpName"],
+                           widget.data["petrolPumpAddress"],
+                           widget.data["petrolPumpPhoneNumber"],      
+                            widget.data["petrolPumpDistrict"], 
+                            widget.data["petrolPumpTown"],
+                            widget.data["petrolPumpPinCode"]
+                        ]);
+                        setState(() {
+                          
+                        });
   }
 
-  editPetrolPump(Map data) async {
-    await Navigator.of(context).pop();
-    showDialog(
-      context: context,
-      builder: (_) => EditPetrolPump(
-        data: data,
-      ),
-    );
-  }
+ 
+
 
   @override
   Widget build(BuildContext context) {
@@ -73,32 +66,32 @@ class _PetrolPumpDetailsState extends State<PetrolPumpDetails> {
                   child: titleStyles(petrolPumpDataPage[6] + ':', 18),
                   ),
                   Text(petrolPumpDataPage[0] + ": "),
-                  Text(widget.data["petrolPumpName"].toString()),
+                  Text(translatedText[0]??widget.data["petrolPumpName"].toString()),
                   SizedBox(
                     height: 20,
                   ),
                   Text(petrolPumpDataPage[1] + ":"),
-                  Text(widget.data["petrolPumpAddress"].toString()),
+                  Text(translatedText[1]??widget.data["petrolPumpAddress"].toString()),
                   SizedBox(
                     height: 20,
                   ),
                   Text(petrolPumpDataPage[2] + ": "),
-                  Text(widget.data["petrolPumpPhoneNumber"].toString()),
+                  Text(translatedText[2]??widget.data["petrolPumpPhoneNumber"].toString()),
                   SizedBox(
                     height: 20,
                   ),
                   Text(petrolPumpDataPage[3] + ": "),
-                  Text(widget.data["petrolPumpDistrict"].toString()),
+                  Text(translatedText[3]??widget.data["petrolPumpDistrict"].toString()),
                   SizedBox(
                     height: 20,
                   ),
                   Text(petrolPumpDataPage[4] + ":"),
-                  Text(widget.data["petrolPumpTown"].toString()),
+                  Text(translatedText[4]??widget.data["petrolPumpTown"].toString()),
                   SizedBox(
                     height: 20,
                   ),
                   Text(petrolPumpDataPage[5] + ":"),
-                  Text(widget.data["petrolPumpPinCode"].toString()),
+                  Text(translatedText[5]??widget.data["petrolPumpPinCode"].toString()),
                   SizedBox(
                     height: 20,
                   ),

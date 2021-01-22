@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/languages/setLanguageText.dart';
 import '../CommonWidgets.dart';
+import 'package:project_timeline/multilingual/dynamic_translation.dart';
 
 
 class OurMachinesDetailsDisplay extends StatefulWidget {
@@ -15,6 +16,30 @@ class OurMachinesDetailsDisplay extends StatefulWidget {
 }
 
 class _OurMachinesDetailsDisplayState extends State<OurMachinesDetailsDisplay> {
+
+
+List translatedText=["","","","","","",""];
+  @override
+  void initState() {
+    loadTranslatedText();
+  }
+
+  loadTranslatedText() async {
+   translatedText= await DynamicTranslation().listTranslate(
+                        data: [
+                         widget.data[widget.indexes]["machineName"],
+                           widget.data[widget.indexes]["machineRent"],
+                       widget.data[widget.indexes]["modelName"],      
+                            widget.data[widget.indexes]["vendor"]["name"],
+                             widget.data[widget.indexes]["vendor"]["contactNo"]
+                        ]);
+                        setState(() {
+                          
+                        });
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -36,17 +61,17 @@ class _OurMachinesDetailsDisplayState extends State<OurMachinesDetailsDisplay> {
                     height: 10,
                   ),
                   Text(machinesDataPage[0] + ": " +
-                      widget.data[widget.indexes]["machineName"].toString()),
+                     translatedText[0]?? widget.data[widget.indexes]["machineName"].toString()),
                   SizedBox(
                     height: 10,
                   ),
                   Text(machinesDataPage[1] + ": " +
-                      widget.data[widget.indexes]["machineRent"].toString()),
+                      translatedText[1]??  widget.data[widget.indexes]["machineRent"].toString()),
                   SizedBox(
                     height: 10,
                   ),
                   Text(machinesDataPage[2] + ": " +
-                      widget.data[widget.indexes]["modelName"].toString()),
+                     translatedText[2]??   widget.data[widget.indexes]["modelName"].toString()),
                   SizedBox(
                     height: 10,
                   ),
@@ -86,12 +111,12 @@ class _OurMachinesDetailsDisplayState extends State<OurMachinesDetailsDisplay> {
                     height: 20,
                   ),
                   Text(machinesDataPage[9] + ": " +
-                      widget.data[widget.indexes]["vendor"]["name"].toString()),
+                       translatedText[3]?? widget.data[widget.indexes]["vendor"]["name"].toString()),
                   SizedBox(
                     height: 10,
                   ),
                   Text(machinesDataPage[10] + ": " +
-                      widget.data[widget.indexes]["vendor"]["contactNo"]
+                       translatedText[4]?? widget.data[widget.indexes]["vendor"]["contactNo"]
                           .toString()),
                 ],
               ),

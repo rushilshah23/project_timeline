@@ -16,7 +16,7 @@ class DynamicTranslation {
   Future<List> listTranslate({List data}) async {
     await getLanguageText();
     if(language!='en'){
-    List translatedList;
+    List translatedList=[];
     String translatedString,listToString;
     listToString= data.join("@@@");
      translatedString =

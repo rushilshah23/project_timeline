@@ -26,8 +26,26 @@ import 'package:project_timeline/languages/rawText/workerTranslation/workerMarat
 import 'package:shared_preferences/shared_preferences.dart';
 
 String language;
-List homePageTranslationText=homePageTranslationTextEnglish,
-    bottomNavText=bottomNavTextEnglish,
+List homePageTranslationText=homePageTranslationTextEnglish = [
+  'Gallery',
+  'Heat Map',
+  'Feedback',
+  'LeaderBoard',
+  "About Us",
+  "Change Language",
+  "English",
+  "Hindi",
+  'Marathi',
+  "Language Changed Successfully",
+  'Conserve water, conserve life.',
+  'You never know the worth of water until the well runs dry. ',
+],
+    bottomNavText=[
+  'Home',
+  'Projects',
+  'Donations',
+  "IAHV",
+],
     feedbackText,
     donationPageTranslation,
     workerText,

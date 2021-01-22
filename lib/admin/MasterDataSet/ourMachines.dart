@@ -3,6 +3,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_timeline/multilingual/dynamic_translation.dart';
 import '../CommonWidgets.dart';
 import 'ourMachinesDetailsDisplay.dart';
 import 'package:project_timeline/languages/setLanguageText.dart';
@@ -17,16 +18,11 @@ class _OurMachinesState extends State<OurMachines> {
 
   String uid = "8YiMHLBnBaNjmr3yPvk8NWvNPmm2";
 
-  @override
-  void initState() {
-    super.initState();
-  }
 
   Widget displayProject(int index) {
+
+             
     return Container(
-
-        // height: MediaQuery.of(context).size.height/5.5,
-
         child: GestureDetector(
             onTap: () {
               showDialog(
@@ -40,7 +36,17 @@ class _OurMachinesState extends State<OurMachines> {
                 margin: EdgeInsets.only(left: 15, right: 15, top: 7, bottom: 7),
                 semanticContainer: true,
                 color: Colors.amberAccent.shade50,
-                child: Container(
+                child:
+                 FutureBuilder(
+                    future: DynamicTranslation().listTranslate(
+                        data: [
+                          allMachines[index]["machineName"],
+                       allMachines[index]["modelName"],
+                        
+                        ]),
+                    builder: (context, snapshot) {
+                      if(snapshot.hasData){
+                 return Container(
                     padding: EdgeInsets.only(
                         top: 20, bottom: 20, left: 10, right: 10),
                     child: Column(
@@ -58,7 +64,7 @@ class _OurMachinesState extends State<OurMachines> {
                                     width: MediaQuery.of(context).size.width / 1.4,
                                     child:Text(
                                       machinesDataPage[0] +":   "+
-                                          allMachines[index]["machineName"],
+                                        snapshot.data[0]??  allMachines[index]["machineName"],
                                       overflow: TextOverflow.clip,
                                       maxLines: 2,
                                       softWrap: false,
@@ -70,7 +76,7 @@ class _OurMachinesState extends State<OurMachines> {
                                     )),
                                     Text(
                                       machinesDataPage[2] +":   "+
-                                          allMachines[index]["modelName"],
+                                         snapshot.data[1]??  allMachines[index]["modelName"],
                                       overflow: TextOverflow.clip,
                                       maxLines: 1,
                                       softWrap: false,
@@ -132,7 +138,14 @@ class _OurMachinesState extends State<OurMachines> {
                           ],
                         )
                       ],
-                    )))));
+                    ));
+                    
+                    }
+                      else return Container(
+                  padding: EdgeInsets.symmetric(vertical: 30),
+                  child:Center(child: CircularProgressIndicator(),));
+                    })))
+                    );
   }
 
   @override

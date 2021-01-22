@@ -1,7 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/manager/master/petrolMaster/petrolPumpDetails.dart';
-
+import 'package:project_timeline/multilingual/dynamic_translation.dart';
 import '../CommonWidgets.dart';
 
 import 'package:project_timeline/languages/setLanguageText.dart';
@@ -47,6 +47,8 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
   }
 
   Widget petrolMaster(int index, allPetrolPumpData) {
+
+   
     return Container(
         child: GestureDetector(
             onTap: () {
@@ -62,7 +64,18 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
                 margin: EdgeInsets.only(left: 15, right: 15, top: 7, bottom: 7),
                 semanticContainer: true,
                 color: Colors.amberAccent.shade50,
-                child: Container(
+                child:
+                  FutureBuilder(
+                    future: DynamicTranslation().listTranslate(
+                        data: [
+                         allPetrolPump[index]["petrolPumpName"],
+                        allPetrolPump[index]["petrolPumpAddress"],
+                        allPetrolPump[index]["petrolPumpPhoneNumber"],
+                        ]),
+                    builder: (context, snapshot) {
+                      if(snapshot.hasData){
+                
+                return Container(
 
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,7 +91,7 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
                             children: <Widget>[
                               Text(
                                 petrolPumpDataPage[0] +":   "+
-                                    allPetrolPump[index]["petrolPumpName"]
+                                   snapshot.data[0]?? allPetrolPump[index]["petrolPumpName"]
                                         .toString(),
                                 overflow: TextOverflow.clip,
                                 maxLines: 1,
@@ -93,7 +106,7 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
                               ),
                               Text(
                                 petrolPumpDataPage[1] +":   "+
-                                    allPetrolPump[index]["petrolPumpAddress"]
+                                   snapshot.data[1]??  allPetrolPump[index]["petrolPumpAddress"]
                                         .toString(),
                                 overflow: TextOverflow.clip,
                                 maxLines: 2,
@@ -105,7 +118,7 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
                               ),
                               Text(
                                 petrolPumpDataPage[2] +":   "+
-                                    allPetrolPump[index]
+                                   snapshot.data[2]?? allPetrolPump[index]
                                         ["petrolPumpPhoneNumber"],
                                 overflow: TextOverflow.clip,
                                 maxLines: 2,
@@ -117,7 +130,12 @@ class _OurPetrolPumpsState extends State<OurPetrolPumps> {
                         ),
                    
                   ],
-                )))));
+                ));}
+                  else return Container(
+                  padding: EdgeInsets.symmetric(vertical: 30),
+                  child:Center(child: CircularProgressIndicator(),));
+                })
+                )));
   }
 
   @override
