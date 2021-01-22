@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:project_timeline/languages/setLanguageText.dart';
 import 'details_page.dart';
 
 class DbTesting extends StatefulWidget {
@@ -50,7 +51,7 @@ class _DbTestingState extends State<DbTesting> {
                 height: 40,
               ),
               Text(
-                'Gallery',
+                homePageTranslationText[0],
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.w600,
@@ -116,7 +117,7 @@ class _DbTestingState extends State<DbTesting> {
         ),
       );
     } else {
-      return Scaffold(body: Center(child:CircularProgressIndicator()));
+      return Scaffold(body: Center(child: CircularProgressIndicator()));
     }
   }
 }

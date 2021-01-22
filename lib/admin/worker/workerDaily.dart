@@ -56,7 +56,6 @@ class _WorkerDailyState extends State<WorkerDaily> {
         .child("progress");
 
     return Scaffold(
-
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.all(10),
@@ -148,12 +147,14 @@ class _WorkersDetailsDisplayState extends State<WorkersDetailsDisplay> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(workerDaily[1] + ': ' + widget.data["status"].toString()),
+                  Text(
+                      workerDaily[1] + ': ' + widget.data["status"].toString()),
                   SizedBox(
                     height: 10,
                   ),
-                  Text(
-                      workerDaily[2] + ': ' + widget.data["hoursWorked"].toString()),
+                  Text(workerDaily[2] +
+                      ': ' +
+                      widget.data["hoursWorked"].toString()),
                   SizedBox(
                     height: 10,
                   ),
@@ -178,7 +179,9 @@ class _WorkersDetailsDisplayState extends State<WorkersDetailsDisplay> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(workerDaily[8] + ': ' + widget.data["comment"].toString()),
+                  Text(workerDaily[8] +
+                      ': ' +
+                      widget.data["comment"].toString()),
                 ],
               ),
             ],

@@ -62,14 +62,15 @@ class _OurMachinesDetailsDisplayState extends State<OurMachinesDetailsDisplay> {
                   ),
                   Text(machinesDataPage[5] + ": " +
                       widget.data[widget.indexes]["fuelConsumption"]
-                          .toString()+" litre"),
+                          .toString() +
+                      " litre"),
                   SizedBox(
                     height: 10,
                   ),
                   Text(machinesDataPage[6] + ": " +
                       widget.data[widget.indexes]["operatingWeight"]
-                          .toString()+" kg"),
-                
+                          .toString() +
+                      " kg"),
                   SizedBox(
                     height: 10,
                   ),
@@ -92,7 +93,6 @@ class _OurMachinesDetailsDisplayState extends State<OurMachinesDetailsDisplay> {
                   Text(machinesDataPage[10] + ": " +
                       widget.data[widget.indexes]["vendor"]["contactNo"]
                           .toString()),
-
                 ],
               ),
             ],
