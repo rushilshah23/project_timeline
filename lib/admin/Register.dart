@@ -87,6 +87,7 @@ class _RegisterState extends State<Register> {
 
               AuthenticationService().userfromAuthentication(user);
               showToast(logregText[19]);
+               Navigator.pop(context);
             });
           });
         });
@@ -237,7 +238,7 @@ class _RegisterState extends State<Register> {
           showToast(logregText[19]);
         });
       });
-      //Navigator.pop(context);
+      Navigator.pop(context);
     } catch (e) {
       showToast(logregText[20]);
     }
