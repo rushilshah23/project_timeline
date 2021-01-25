@@ -43,9 +43,9 @@ class _DeleteUserPageState extends State<DeleteUserPage> {
                 children: [
                   Text(result['name']),
                   Text(
-                    result['mobile'].toString() +
-                        "  " +
-                        result['email'].toString(),
+                    "Contact no:  "+result['mobile'].toString() ,
+                    // +  "  " +
+                    //     result['email'].toString(),
                     style: TextStyle(color: Colors.grey, fontSize: 14),
                   ),
                 ],
@@ -85,10 +85,12 @@ class _DeleteUserPageState extends State<DeleteUserPage> {
 
   @override
   void initState() {
+     getData();
     setState(() {
      // projectID = widget.assignedProject;
-      getData();
+     
     });
+    debugPrint(items.toString());
     super.initState();
   }
 

@@ -124,6 +124,7 @@ class LoginPageState extends State<LoginPage> {
           print("Verification Failed");
           print("`````````````````````````````````````````");
           print(exception.message);
+          showToast("Failed");
         },
         codeSent: (String verificationId, [int forceResendingToken]) async {
           await pr.hide();
@@ -156,7 +157,17 @@ class LoginPageState extends State<LoginPage> {
                         print("`````````````````````````````````````````");
                         print("Verification Complete");
                         print("`````````````````````````````````````````");
-                        loginUsingOTP(credential, pr);
+                        print(verificationId.toString()+"    "+code);
+                        if(verificationId==code){
+                          Navigator.of(context).pop;
+                          loginUsingOTP(credential, pr);
+                        }
+                        else{
+                           Navigator.of(context).pop;
+                          await pr.hide();
+                          showToast("Failed");
+                        }
+                        
                       },
                     )
                   ],

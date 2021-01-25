@@ -40,7 +40,7 @@ class _DbTestingState extends State<DbTesting> {
   }
 
   Widget build(BuildContext context) {
-    if (projectValues.length != 0) {
+    //if (projectValues.length != 0) {
       return Scaffold(
         backgroundColor: Color(0xFF018abd),
         body: SafeArea(
@@ -116,9 +116,10 @@ class _DbTestingState extends State<DbTesting> {
           ),
         ),
       );
-    } else {
-      return Scaffold(body: Center(child: CircularProgressIndicator()));
-    }
+    //} 
+    // else {
+    //   return Scaffold(body: Center(child: CircularProgressIndicator()));
+    // }
   }
 }
 

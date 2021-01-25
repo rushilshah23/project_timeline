@@ -173,13 +173,12 @@ class _RegisterState extends State<Register> {
                           print("`````````````````````````````````````````");
                           print("Verification Complete");
                           print("`````````````````````````````````````````");
+
+                          try{
                           UserCredential result =
                               await _auth.signInWithCredential(credential);
                           User user = result.user;
-
-                          // RUSHIL PART
-
-                          await DatabaseService(
+                           await DatabaseService(
                             userID: user.uid,
                           ).updateUserData(
                             folderName: user.phoneNumber,
@@ -187,6 +186,15 @@ class _RegisterState extends State<Register> {
                           AuthenticationService().userfromAuthentication(user);
                           //
                           addDB(user.uid);
+                            Navigator.of(context).pop;
+                          }
+                          catch(e){
+                            showToast("Invalid OTP");
+                          }
+                     
+                          // RUSHIL PART
+
+                         
 
                           // if (user != null) {
                           //   print(user);
@@ -229,7 +237,7 @@ class _RegisterState extends State<Register> {
           showToast(logregText[19]);
         });
       });
-      Navigator.pop(context);
+      //Navigator.pop(context);
     } catch (e) {
       showToast(logregText[20]);
     }
