@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:project_timeline/admin/CommonWidgets.dart';
+import 'package:project_timeline/admin/DocumentManager/core/services/database.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class DeleteUserPage extends StatefulWidget {
-  String userType,collectionName;
-  DeleteUserPage(
-      {Key key,
-      this.userType,
-      this.collectionName,
-     })
-      : super(key: key);
+  String userType, collectionName;
+  DeleteUserPage({
+    Key key,
+    this.userType,
+    this.collectionName,
+  }) : super(key: key);
   @override
   _DeleteUserPageState createState() => _DeleteUserPageState();
 }
@@ -24,17 +24,21 @@ class _DeleteUserPageState extends State<DeleteUserPage> {
   final List<DropdownMenuItem> items = [];
   final List<WorkerList> workersList = [];
   CollectionReference workers;
-     
+
   final CollectionReference user =
       FirebaseFirestore.instance.collection("user");
   final databaseReference = FirebaseDatabase.instance.reference();
 
-  Future<void> getData() async {
+  var userid;
 
-    workers=  FirebaseFirestore.instance.collection(widget.collectionName);
+  Future<void> getData() async {
+    workers = FirebaseFirestore.instance.collection(widget.collectionName);
     await workers.get().then((querySnapshot) {
       querySnapshot.docs.forEach((result) {
         setState(() {
+          // ------doc manager code-----
+          userid = result['uid'].toString();
+          // ---------------------------
           items.add(
             DropdownMenuItem(
               child: Container(
@@ -73,6 +77,23 @@ class _DeleteUserPageState extends State<DeleteUserPage> {
             print(e.id);
             await user.doc(e.id).set(e.data()).then((value) async {
               await workers.doc(e.id).delete();
+
+              // Document Manager delete folder
+
+              DatabaseService(
+
+                      // globalRef:
+                      //     widget.globalRef.child(widget.folderId),
+                      userID: userid)
+                  .deleteFolder(
+                folderId: userid,
+                driveRef: databaseReference.child('users'),
+                // widget.folderModel.globalRef,
+
+                // folderName: widget.folderName,
+              );
+
+              // -------
             });
           }
         });
@@ -87,8 +108,6 @@ class _DeleteUserPageState extends State<DeleteUserPage> {
   void initState() {
      getData();
     setState(() {
-     // projectID = widget.assignedProject;
-     
     });
     debugPrint(items.toString());
     super.initState();
@@ -100,14 +119,14 @@ class _DeleteUserPageState extends State<DeleteUserPage> {
     if (items.length > 0)
       return Scaffold(
           body: Container(
-        padding: EdgeInsets.symmetric( horizontal: 7),
+        padding: EdgeInsets.symmetric(horizontal: 7),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               SizedBox(height: 10),
               Center(
-                child: titleStyles('Delete '+widget.userType, 18),
+                child: titleStyles('Delete ' + widget.userType, 18),
               ),
               SizedBox(height: 10),
               Card(
@@ -125,7 +144,7 @@ class _DeleteUserPageState extends State<DeleteUserPage> {
                     items: items,
                     selectedItems: selectedItems,
                     displayClearIcon: false,
-                    hint: "Select "+widget.userType,
+                    hint: "Select " + widget.userType,
                     searchHint: "Select any",
                     onChanged: (value) {
                       print(value);
@@ -173,7 +192,7 @@ class _DeleteUserPageState extends State<DeleteUserPage> {
                   ),
                   child: Center(
                     child: Text(
-                      'Delete '+widget.userType+"s",
+                      'Delete ' + widget.userType + "s",
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
