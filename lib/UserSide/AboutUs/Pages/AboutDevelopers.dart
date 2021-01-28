@@ -124,7 +124,10 @@ class _DevelopersPageState extends State<DevelopersPage> {
                   child: Text(
                     developersTranslationText[5],
                     textAlign: TextAlign.justify,
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
                 SizedBox(
@@ -157,7 +160,11 @@ class _DevelopersPageState extends State<DevelopersPage> {
                   child: Text(
                     developersTranslationText[8],
                     textAlign: TextAlign.justify,
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -178,6 +185,127 @@ class _DevelopersPageState extends State<DevelopersPage> {
                   alignment: Alignment.center,
                   child: Text(
                     developersTranslationText[10],
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    developersTranslationText[11],
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    developersTranslationText[12],
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    developersTranslationText[13],
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    developersTranslationText[14],
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    developersTranslationText[15],
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    developersTranslationText[15],
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    developersTranslationText[17],
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    developersTranslationText[18],
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    developersTranslationText[19],
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    developersTranslationText[20],
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    developersTranslationText[21],
                     textAlign: TextAlign.justify,
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
