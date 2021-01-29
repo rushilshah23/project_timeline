@@ -144,12 +144,18 @@ class _DevelopersPageState extends State<DevelopersPage> {
                 SizedBox(
                   height: 5,
                 ),
+                SizedBox(
+                  height: 5,
+                ),
                 Align(
                   alignment: Alignment.center,
                   child: Text(
                     developersTranslationText[7],
                     textAlign: TextAlign.justify,
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
                 SizedBox(
@@ -160,12 +166,11 @@ class _DevelopersPageState extends State<DevelopersPage> {
                   child: Text(
                     developersTranslationText[8],
                     textAlign: TextAlign.justify,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
+                ),
+                SizedBox(
+                  height: 5,
                 ),
                 SizedBox(
                   height: 5,
@@ -175,7 +180,10 @@ class _DevelopersPageState extends State<DevelopersPage> {
                   child: Text(
                     developersTranslationText[9],
                     textAlign: TextAlign.justify,
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
                 SizedBox(
@@ -247,12 +255,30 @@ class _DevelopersPageState extends State<DevelopersPage> {
                 SizedBox(
                   height: 5,
                 ),
+              ],
+            ),
+          ),
+          backgroundImage: 'assets/waterimg.jpg',
+          backgroundOpacity: 0.7),
+    );
+
+    slides.add(
+      new Slide(
+          widgetDescription: Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    developersTranslationText[15],
+                    developersTranslationText[16],
                     textAlign: TextAlign.justify,
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
                 SizedBox(
@@ -310,6 +336,94 @@ class _DevelopersPageState extends State<DevelopersPage> {
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                 ),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    developersTranslationText[22],
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    developersTranslationText[23],
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    developersTranslationText[24],
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    developersTranslationText[25],
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    developersTranslationText[26],
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    developersTranslationText[27],
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    developersTranslationText[28],
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    developersTranslationText[29],
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
               ],
             ),
           ),
@@ -329,7 +443,7 @@ class _DevelopersPageState extends State<DevelopersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: plainAppBar(context: context, title: 'About SAKEC'),
+      appBar: plainAppBar(context: context, title: aboutusTranslationText[2]),
       body: IntroSlider(
         isShowSkipBtn: false,
         isShowPrevBtn: true,
