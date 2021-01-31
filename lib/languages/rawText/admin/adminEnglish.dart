@@ -36,6 +36,9 @@ List<String> logregTextEnglish = [
   "NO",
   "YES",
   "Successful Logout",
+  "Dear User,",
+  "Your request has been sent to the higher authorities.",
+  "You can login once they validate your identity. ",
 ];
 
 

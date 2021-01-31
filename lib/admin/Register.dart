@@ -7,6 +7,7 @@ import 'package:project_timeline/admin/DocumentManager/core/services/database.da
 import 'package:project_timeline/admin/login.dart';
 import 'package:project_timeline/languages/setLanguageText.dart';
 import 'CommonWidgets.dart';
+import '../main.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -47,6 +48,36 @@ class _RegisterState extends State<Register> {
     super.initState();
   }
 
+  showAlertDialog(BuildContext context) {
+  Widget okButton = FlatButton(
+    child: Text("OK"),
+    onPressed: () { 
+      Navigator.of(context).pop();
+       Navigator.pushAndRemoveUntil(context, PageRouteBuilder(
+                    pageBuilder: (BuildContext context, Animation animation,
+                        Animation secondaryAnimation) {
+                      return MyApp();
+                    },
+                  ), (Route route) => false);
+    },
+  );
+  AlertDialog alert = AlertDialog(
+    title: Text(logregText[37]),
+    content: Text(logregText[38]+"\n\n"+logregText[39]),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
   checkOTP(String phone, BuildContext context) async {}
 
   addUserUsingEmail() async {
@@ -86,16 +117,18 @@ class _RegisterState extends State<Register> {
               );
 
               AuthenticationService().userfromAuthentication(user);
-              showToast(logregText[19]);
-               Navigator.pop(context);
+             
+              // Navigator.pop(context);
             });
           });
         });
-        Navigator.pop(context);
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) {
-          return LoginPage();
-        }));
+         showToast(logregText[19]);
+        showAlertDialog(context);
+        // Navigator.pop(context);
+        // Navigator.pushReplacement(context,
+        //     MaterialPageRoute(builder: (context) {
+        //   return LoginPage();
+        // }));
       } catch (e) {
         showToast(e.toString());
       }
@@ -187,7 +220,7 @@ class _RegisterState extends State<Register> {
                           AuthenticationService().userfromAuthentication(user);
                           //
                           addDB(user.uid);
-                            Navigator.of(context).pop;
+                           // Navigator.of(context).pop;
                           }
                           catch(e){
                             showToast("Invalid OTP");
@@ -236,9 +269,10 @@ class _RegisterState extends State<Register> {
           'signInMethod': "otp"
         }).then((value) {
           showToast(logregText[19]);
+          showAlertDialog(context);
         });
       });
-      Navigator.pop(context);
+     // Navigator.pop(context);
     } catch (e) {
       showToast(logregText[20]);
     }
