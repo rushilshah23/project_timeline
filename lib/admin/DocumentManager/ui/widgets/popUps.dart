@@ -82,8 +82,7 @@ shareWithPopUp(
       UserModel _userModel = Provider.of<UserModel>(context);
       return AlertDialog(
         backgroundColor: Colors.white,
-        title: Text(
-            "Enter emailId or phone No. starting with +91 of the person to give access of the document and seperate by comma, to share with multiple users"),
+        title: Text("Select the users to share with"),
         content: Form(
           key: _sharerKeyName,
           // child: TextFormField(
