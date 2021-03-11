@@ -9,68 +9,61 @@ import 'package:provider/provider.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-  final CollectionReference supervisors =
-      FirebaseFirestore.instance.collection("supervisor");
-   final CollectionReference managers =
-      FirebaseFirestore.instance.collection("manager");
+final CollectionReference supervisors =
+    FirebaseFirestore.instance.collection("supervisor");
+final CollectionReference managers =
+    FirebaseFirestore.instance.collection("manager");
 
-  List<int> selectedUsers = [];
-  List<DropdownMenuItem> dropdwnItems = [];
-    List<UsersList> usersList = [];
+List<int> selectedUsers = [];
+List<DropdownMenuItem> dropdwnItems = [];
+List<UsersList> usersList = [];
 
-  Future<void> getData() async {
-
-    await supervisors.get().then((querySnapshot) {
-     querySnapshot.docs.forEach((element) {
-        usersList.add(UsersList(
-              name: element['name'],
-              mobile: element['mobile'],
-              email:element.data().containsKey("email")? element['email']:"",
-              uid: element['uid']));
-
-     });
+List<String> emailList = [];
+Future<void> getData() async {
+  await supervisors.get().then((querySnapshot) {
+    querySnapshot.docs.forEach((element) {
+      usersList.add(UsersList(
+          name: element['name'],
+          mobile: element['mobile'],
+          email: element.data().containsKey("email") ? element['email'] : "",
+          uid: element['uid']));
     });
-    await managers.get().then((querySnapshot) {
-     querySnapshot.docs.forEach((element) {
-        usersList.add(UsersList(
-              name: element['name'],
-              mobile: element['mobile'],
-              email:element.data().containsKey("email")? element['email']:"",
-              uid: element['uid']));
-
-     });
+  });
+  await managers.get().then((querySnapshot) {
+    querySnapshot.docs.forEach((element) {
+      usersList.add(UsersList(
+          name: element['name'],
+          mobile: element['mobile'],
+          email: element.data().containsKey("email") ? element['email'] : "",
+          uid: element['uid']));
     });
+  });
 
-
-      usersList.forEach((result) {
-
-          dropdwnItems.add(
-            DropdownMenuItem(
-              child: Container(
-                  //color: color,
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(result.name),
-                      Text(
-                                  result.email.toString(),
-                                  style: TextStyle(color: Colors.grey),
-                                ),
-                              
-                           Text(
-                                  result.mobile,
-                                  style: TextStyle(color: Colors.grey),
-                                )
-                    
-                    ],
-                  )),
-              value: result.name,
-            ),
-          );      
-      });
-    
-  }
+  usersList.forEach((result) {
+    dropdwnItems.add(
+      DropdownMenuItem(
+        child: Container(
+            //color: color,
+            padding: EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(result.name),
+                Text(
+                  result.email.toString(),
+                  style: TextStyle(color: Colors.grey),
+                ),
+                Text(
+                  result.mobile,
+                  style: TextStyle(color: Colors.grey),
+                )
+              ],
+            )),
+        value: result.name,
+      ),
+    );
+  });
+}
 
 shareWithPopUp(
   BuildContext context, {
@@ -79,7 +72,7 @@ shareWithPopUp(
   FileModel fileModel,
   String documentSenderId,
   documentType documentType,
-}) async{
+}) async {
   await getData();
   TextEditingController _sharerControllerName = new TextEditingController();
   GlobalKey<FormState> _sharerKeyName = new GlobalKey<FormState>();
@@ -123,27 +116,28 @@ shareWithPopUp(
           // ),
 
           child: SearchableDropdown.multiple(
-                    items: dropdwnItems,
-                    selectedItems: selectedUsers,
-                    hint: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Text("Select Supervisors"),
-                    ),
-                    searchHint: "Select any",
-                    onChanged: (value) {
-                     selectedUsers = value;
-                   
-                      selectedUsers.forEach((element) {
-                        debugPrint(usersList[element].uid.toString());
-                       });
-                    },
-                    closeButton: (selectedItems) {
-                      return (selectedItems.isNotEmpty
-                          ? "Save ${selectedItems.length == 1 ? '"' + dropdwnItems[selectedItems.first].value.toString() + '"' : '(' + selectedItems.length.toString() + ')'}"
-                          : "Save without selection");
-                    },
-                    isExpanded: true,
-                  ),
+            items: dropdwnItems,
+            selectedItems: selectedUsers,
+            hint: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text("Select Supervisors"),
+            ),
+            searchHint: "Select any",
+            onChanged: (value) {
+              selectedUsers = value;
+
+              selectedUsers.forEach((element) {
+                debugPrint(usersList[element].uid.toString());
+              });
+            },
+            closeButton: (selectedItems) {
+              // emailList = selectedItems;
+              return (selectedItems.isNotEmpty
+                  ? "Save ${selectedItems.length == 1 ? '"' + dropdwnItems[selectedItems.first].value.toString() + '"' : '(' + selectedItems.length.toString() + ')'}"
+                  : "Save without selection");
+            },
+            isExpanded: true,
+          ),
         ),
         actions: [
           FlatButton(
@@ -161,8 +155,17 @@ shareWithPopUp(
           FlatButton(
               color: Colors.white,
               onPressed: () async {
-                List<String> emailList;
-                emailList = getEmailList(_sharerControllerName.text);
+                selectedUsers.forEach((element) {
+                  if (usersList[element].email != "") {
+                    emailList.add(usersList[element].email.toString());
+                  } else {
+                    emailList.add(usersList[element].mobile.toString());
+                  }
+                });
+
+                // emailList = getEmailList(_sharerControllerName.text);
+                // emailList = getEmailList(emailList.toString());
+
                 if (_sharerKeyName.currentState.validate()) {
                   await DatabaseService(
                     userID: documentSenderId ?? _userModel.uid,
@@ -174,6 +177,7 @@ shareWithPopUp(
                     folderModel: folderModel ?? null,
                     fileModel: fileModel ?? null,
                   );
+                  emailList.clear();
                   Navigator.pop(context);
                 }
               },
@@ -187,12 +191,9 @@ shareWithPopUp(
   );
 }
 
-
-
-
 class UsersList {
-  UsersList({Key key, this.name, this.mobile, this.uid,this.email});
+  UsersList({Key key, this.name, this.mobile, this.uid, this.email});
   var name;
-  var mobile,email;
+  var mobile, email;
   var uid;
 }
