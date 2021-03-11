@@ -105,8 +105,8 @@ class _BottomNavState extends State<BottomNav> {
     bool status;
 
     if (userType == managerType) {
-      status = await _getUserData("manager");
-      debugPrint("--------------------------" + status.toString());
+      //status = await _getUserData("manager");
+      //debugPrint("--------------------------" + status.toString());
       // if (status == true)
       Navigator.push(
         context,
@@ -122,8 +122,8 @@ class _BottomNavState extends State<BottomNav> {
       );
     }
     if (userType == workerType) {
-      status = await _getUserData("workers");
-      debugPrint("--------------------------" + status.toString());
+      //status = await _getUserData("workers");
+      //debugPrint("--------------------------" + status.toString());
       //if (status == true)
       Navigator.push(
         context,
@@ -139,9 +139,8 @@ class _BottomNavState extends State<BottomNav> {
       );
     }
     if (userType == supervisorType) {
-      status = await _getUserData("supervisor");
-
-      debugPrint("--------------------------" + status.toString());
+      //status = await _getUserData("supervisor");
+      //debugPrint("--------------------------" + status.toString());
       // if (status == true)
       Navigator.push(
         context,

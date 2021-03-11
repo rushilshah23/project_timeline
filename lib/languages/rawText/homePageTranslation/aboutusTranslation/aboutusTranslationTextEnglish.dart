@@ -60,6 +60,9 @@ List<String> developersTextTranslationEnglish = [
   "Prof. Pallavi Khodke",
   "Prof. Manjusha P. Kulkarni",
   'Developers',
+  'Mr Kush Vora',
+  'Ms Shraddha Pawar',
+  'Mr Harshit Parkar',
   'Mr Rushil Shah',
   'Mr Amit Ramani',
   'Ms Siddhi Kadam',
@@ -70,7 +73,4 @@ List<String> developersTextTranslationEnglish = [
   'Mr Atharva Juikar',
   'Mr Tushar Gada',
   'Mr Prateek Veera',
-  'Mr Harshit Parkar',
-  'Mr Kush Vora',
-  'Ms Shraddha Pawar'
 ];

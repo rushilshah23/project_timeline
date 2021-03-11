@@ -53,7 +53,7 @@ class _MyAppState extends State<MyApp> {
         value: AuthenticationService().user,
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'IAHV',
+          title: 'Water Shed Management',
           theme: ThemeData(
             primarySwatch: Colors.blue,
             visualDensity: VisualDensity.adaptivePlatformDensity,

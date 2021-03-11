@@ -15,8 +15,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="IAHV"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Maharashtra Water Shed Management"
+        android:icon="@mipmap/launcher_icon">
         <meta-data android:name="com.google.android.geo.API_KEY"
         android:value="AIzaSyBKQk1s3PSlx1yKFlttDrYbvQu8uyq7BBc"/>
         <activity

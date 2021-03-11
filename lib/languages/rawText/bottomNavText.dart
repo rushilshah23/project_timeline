@@ -2,18 +2,18 @@ List<String> bottomNavTextEnglish = [
   'Home',
   'Projects',
   'Donations',
-  "IAHV",
+  "Water Shed Management",
 ];
 List<String> bottomNavTextHindi = [
   'घर',
   'परियोजना',
   'दान',
-  "IAHV",
+  "जल विभाजन प्रबंधन",
 ];
 
 List<String> bottomNavTextMarathi = [
   'मुख्यपृष्ठ',
   'प्रकल्प',
   'देणगी',
-  "आयएएचव्ही",
+  "पाणी शेड व्यवस्थापन",
 ];
