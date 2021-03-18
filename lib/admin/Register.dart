@@ -49,34 +49,34 @@ class _RegisterState extends State<Register> {
   }
 
   showAlertDialog(BuildContext context) {
-  Widget okButton = FlatButton(
-    child: Text("OK"),
-    onPressed: () { 
-      Navigator.of(context).pop();
-       Navigator.pushAndRemoveUntil(context, PageRouteBuilder(
-                    pageBuilder: (BuildContext context, Animation animation,
-                        Animation secondaryAnimation) {
-                      return MyApp();
-                    },
-                  ), (Route route) => false);
-    },
-  );
-  AlertDialog alert = AlertDialog(
-    title: Text(logregText[37]),
-    content: Text(logregText[38]+"\n\n"+logregText[39]),
-    actions: [
-      okButton,
-    ],
-  );
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context, rootNavigator: true).pop();
+        Navigator.pushAndRemoveUntil(context, PageRouteBuilder(
+          pageBuilder: (BuildContext context, Animation animation,
+              Animation secondaryAnimation) {
+            return MyApp();
+          },
+        ), (Route route) => false);
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      title: Text(logregText[37]),
+      content: Text(logregText[38] + "\n\n" + logregText[39]),
+      actions: [
+        okButton,
+      ],
+    );
 
-  // show the dialog
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
-}
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   checkOTP(String phone, BuildContext context) async {}
 
@@ -117,12 +117,12 @@ class _RegisterState extends State<Register> {
               );
 
               AuthenticationService().userfromAuthentication(user);
-             
+
               // Navigator.pop(context);
             });
           });
         });
-         showToast(logregText[19]);
+        showToast(logregText[19]);
         showAlertDialog(context);
         // Navigator.pop(context);
         // Navigator.pushReplacement(context,
@@ -174,6 +174,10 @@ class _RegisterState extends State<Register> {
             print("Verification Failed");
             print("`````````````````````````````````````````");
             print(exception.message);
+            print("`````````````````````````````````````````");
+            print("`````````````````````````````````````````");
+            print("`````````````````````````````````````````");
+            print("`````````````````````````````````````````");
           },
           codeSent: (String verificationId, [int forceResendingToken]) {
             showDialog(
@@ -208,27 +212,25 @@ class _RegisterState extends State<Register> {
                           print("Verification Complete");
                           print("`````````````````````````````````````````");
 
-                          try{
-                          UserCredential result =
-                              await _auth.signInWithCredential(credential);
-                          User user = result.user;
-                           await DatabaseService(
-                            userID: user.uid,
-                          ).updateUserData(
-                            folderName: user.phoneNumber,
-                          );
-                          AuthenticationService().userfromAuthentication(user);
-                          //
-                          addDB(user.uid);
-                           // Navigator.of(context).pop;
-                          }
-                          catch(e){
+                          try {
+                            UserCredential result =
+                                await _auth.signInWithCredential(credential);
+                            User user = result.user;
+                            await DatabaseService(
+                              userID: user.uid,
+                            ).updateUserData(
+                              folderName: user.phoneNumber,
+                            );
+                            AuthenticationService()
+                                .userfromAuthentication(user);
+                            //
+                            addDB(user.uid);
+                            // Navigator.of(context).pop;
+                          } catch (e) {
                             showToast("Invalid OTP");
                           }
-                     
-                          // RUSHIL PART
 
-                         
+                          // RUSHIL PART
 
                           // if (user != null) {
                           //   print(user);
@@ -272,7 +274,7 @@ class _RegisterState extends State<Register> {
           showAlertDialog(context);
         });
       });
-     // Navigator.pop(context);
+      // Navigator.pop(context);
     } catch (e) {
       showToast(logregText[20]);
     }
