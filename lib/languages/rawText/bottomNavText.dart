@@ -2,7 +2,7 @@ List<String> bottomNavTextEnglish = [
   'Home',
   'Projects',
   'Donations',
-  "Water Shed Management",
+  "Watershed Management",
 ];
 List<String> bottomNavTextHindi = [
   'घर',

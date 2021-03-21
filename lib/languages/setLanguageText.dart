@@ -26,26 +26,26 @@ import 'package:project_timeline/languages/rawText/workerTranslation/workerMarat
 import 'package:shared_preferences/shared_preferences.dart';
 
 String language;
-List homePageTranslationText=homePageTranslationTextEnglish = [
-  'Gallery',
-  'Heat Map',
-  'Feedback',
-  'LeaderBoard',
-  "About Us",
-  "Change Language",
-  "English",
-  "Hindi",
-  'Marathi',
-  "Language Changed Successfully",
-  'Conserve water, conserve life.',
-  'You never know the worth of water until the well runs dry. ',
-],
-    bottomNavText=[
-  'Home',
-  'Projects',
-  'Donations',
-  "Water Shed Management",
-],
+List homePageTranslationText = homePageTranslationTextEnglish = [
+      'Gallery',
+      'Heat Map',
+      'Feedback',
+      'LeaderBoard',
+      "About Us",
+      "Change Language",
+      "English",
+      "Hindi",
+      'Marathi',
+      "Language Changed Successfully",
+      'Conserve water, conserve life.',
+      'You never know the worth of water until the well runs dry. ',
+    ],
+    bottomNavText = [
+      'Home',
+      'Projects',
+      'Donations',
+      "Watershed Management",
+    ],
     feedbackText,
     donationPageTranslation,
     workerText,
@@ -77,7 +77,7 @@ setLanguageText() async {
 
     workerText = workerTextEnglish;
     workerText2 = workerText2English;
-    workerDaily=workerDailyEnglish;
+    workerDaily = workerDailyEnglish;
     logregText = logregTextEnglish;
     proText = proTextEnglish;
     forgotPassText = forgotPassTextEnglish;
@@ -103,7 +103,7 @@ setLanguageText() async {
 
     workerText = workerTextHindi;
     workerText2 = workerText2Hindi;
-    workerDaily=workerDailyHindi;
+    workerDaily = workerDailyHindi;
     logregText = logregTextHindi;
     proText = proTextHindi;
     forgotPassText = forgotPassTextHindi;
@@ -128,7 +128,7 @@ setLanguageText() async {
 
     workerText = workerTextMarathi;
     workerText2 = workerText2Marathi;
-     workerDaily=workerDailyMarathi;
+    workerDaily = workerDailyMarathi;
     logregText = logregTextMarathi;
     proText = proTextMarathi;
     forgotPassText = forgotPassTextMarathi;
