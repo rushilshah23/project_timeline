@@ -34,35 +34,6 @@
           ]
         }
       }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1080654691889:android:43ac1dbb122edd881f1f10",
-        "android_client_info": {
-          "package_name": "com.shraddha.resources_aol"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1080654691889-et1305va9msmtcg7al0v0glbahpalek4.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBlTGOXloNNhzlnsWm0zzyw9fSRSkzzIFw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1080654691889-et1305va9msmtcg7al0v0glbahpalek4.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
     }
   ],
   "configuration_version": "1"
